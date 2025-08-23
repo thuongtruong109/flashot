@@ -1,0 +1,30 @@
+# Lefthook configuration for git hooks
+# Documentation: https://lefthook.dev/configuration/
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: eslint
+      glob: "*.{js,ts,jsx,tsx}"
+      run: bun run eslint --config .config/eslint.config.ts {staged_files}
+      
+    - name: biome
+      glob: "*.{js,ts,jsx,tsx,json}"
+      run: biome check --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+
+commit-msg:
+  jobs:
+    - name: commitlint
+      run: commitlint --config .config/commitlint.config.ts --edit {1}
+
+pre-push:
+  parallel: true
+  jobs:
+    - name: lint-check
+      run: bun run lint
+      
+    - name: biome-check
+      run: bun run biome
+      
+    - name: build
+      run: bun run build

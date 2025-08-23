@@ -1,0 +1,70 @@
+{
+  "name": "flashot",
+  "description": "📟 Rapid generate code snippets into images",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "prepublishOnly": "bun run build",
+    "publish": "npm publish",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint --config .config/eslint.config.ts .",
+    "lint:fix": "eslint --config .config/eslint.config.ts . --fix",
+    "biome": "biome check .",
+    "biome:fix": "biome check --write .",
+    "check": "bun run lint && bun run biome",
+    "check:fix": "bun run lint:fix && bun run biome:fix"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "flashot",
+    "code2img",
+    "code-to-image"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/thuongtruong109/flashot",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thuongtruong109/flashot.git"
+  },
+  "bugs": "https://github.com/thuongtruong109/flashot/issues",
+  "author": "Tran Nguyen Thuong Truong <thuongtruongofficial@gmail.com>",
+  "devDependencies": {
+    "@biomejs/biome": "2.2.0",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@commitlint/types": "^19.8.1",
+    "@eslint/js": "^9.33.0",
+    "@types/bun": "^1.2.20",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "eslint": "^9.33.0",
+    "eslint-plugin-sonarjs": "^3.0.4",
+    "globals": "^16.3.0",
+    "happy-dom": "^18.0.1",
+    "jiti": "^2.5.1",
+    "lefthook": "^1.12.3",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^7.1.2",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@takumi-rs/core": "^0.27.2",
+    "@takumi-rs/helpers": "^0.27.2",
+    "shiki": "^3.11.0"
+  }
+}
