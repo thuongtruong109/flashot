@@ -1,9 +1,12 @@
 import js from "@eslint/js";
+import { globalIgnores } from "eslint/config";
 import sonarjs from "eslint-plugin-sonarjs";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config([
+  tseslint.configs.recommended,
+  sonarjs.configs.recommended,
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
     ignores: ["coverage/**", "dist/**"],
@@ -15,6 +18,5 @@ export default tseslint.config([
       "sonarjs/no-commented-code": "off",
     },
   },
-  tseslint.configs.recommended,
-  sonarjs.configs.recommended,
+  globalIgnores(["dist/**/*"]),
 ]);

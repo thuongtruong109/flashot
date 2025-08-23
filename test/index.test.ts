@@ -1,8 +1,8 @@
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, it } from "vitest";
 import { c2i } from "../src";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import { join } from "node:path";
 
 describe("flashot-test", () => {
   it("convert code to image", async () => {

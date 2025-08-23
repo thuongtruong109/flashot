@@ -1,6 +1,6 @@
+import { type OutputFormat, Renderer } from "@takumi-rs/core";
+import { container, em, percentage, text } from "@takumi-rs/helpers";
 import { getSingletonHighlighter } from "shiki";
-import { OutputFormat, Renderer } from "@takumi-rs/core";
-import { container, text, em, percentage } from "@takumi-rs/helpers";
 import type { ThemeOptions } from "./types/option";
 
 const defaultOptions: Omit<Required<ThemeOptions>, "width" | "height"> = {
@@ -16,13 +16,13 @@ export async function c2i(code: string, options?: ThemeOptions) {
   const mergedOptions = Object.assign({}, defaultOptions, options);
 
   const hl = await getSingletonHighlighter({
-    themes: [mergedOptions.theme!],
-    langs: [mergedOptions.lang!],
+    themes: [mergedOptions.theme],
+    langs: [mergedOptions.lang],
   });
 
   const { tokens, fg, bg } = hl.codeToTokens(code, {
-    theme: mergedOptions.theme!,
-    lang: mergedOptions.lang!,
+    theme: mergedOptions.theme,
+    lang: mergedOptions.lang,
   });
 
   // console.log(tokens);
@@ -53,9 +53,9 @@ export async function c2i(code: string, options?: ThemeOptions) {
                   // backgroundColor: "gray",
                 },
               })
-            : text(token.content, { color: token.color })
+            : text(token.content, { color: token.color }),
         ),
-      })
+      }),
     ),
   });
 
