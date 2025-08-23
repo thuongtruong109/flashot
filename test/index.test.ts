@@ -1,31 +1,48 @@
 import { describe, it } from "vitest";
-import { codeToImage } from "../src";
+import { c2i } from "../src";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 
-const FONT_SOURCE = await fetch(
-  "https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2"
-).then((r) => r.arrayBuffer());
-
-describe("shiki-image", () => {
+describe("flashot-test", () => {
   it("convert code to image", async () => {
     const start = Date.now();
     const code = await readFile(fileURLToPath(import.meta.url), "utf8");
-    const img = await codeToImage(
-      {
-        lang: "js",
-        theme: "ayu-dark",
-        style: { borderRadius: 8 },
-        font: FONT_SOURCE,
-      },
-      code
-    );
+    const img = await c2i(code);
     const outDir = join(process.cwd(), "test/.snapshot");
     await mkdir(outDir, { recursive: true });
     const outPath = join(outDir, "test.png");
     await writeFile(outPath, img);
     const end = Date.now();
     console.log(`Image generated in ${end - start}ms`);
+  });
+});
+
+describe("flashot-demo", () => {
+  it("convert code to image", async () => {
+    const sampleCode = `
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <link rel="icon" type="image/x-icon" href="favicon.ico" />
+          <title>Flashot</title>
+        </head>
+        <body>
+          <h1>Hello, world!</h1>
+          <p>
+            Welcome to Flashot, the tool for converting code snippets into images!
+          </p>
+        </body>
+      </html>
+    `;
+    const img = await c2i(sampleCode, {
+      lang: "html",
+    });
+    const outDir = join(process.cwd(), "test/.snapshot");
+    await mkdir(outDir, { recursive: true });
+    const outPath = join(outDir, "demo.png");
+    await writeFile(outPath, img);
   });
 });

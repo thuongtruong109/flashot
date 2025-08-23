@@ -1,6 +1,51 @@
 # Flashot
 
-> 📟 Rapidly generate code snippets into images
+[![npm version](https://img.shields.io/npm/v/flashot?color=yellow)](https://npmjs.com/package/flashot)
+[![npm downloads](https://img.shields.io/npm/dm/flashot?color=yellow)](https://npm.chart.dev/flashot)
+
+> 📟 Rapidly convert code snippets into images
+
+**Super fast:** (generated in **~150ms**)
+
+<p align="center">
+  <img src="./test/.snapshot/demo.png" alt="Example output" />
+</p>
+
+## Usage
+
+```js
+import { writeFile } from "node:fs/promises";
+import { codeToImage } from "flashot";
+
+const buffer = await codeToImage('console.log("hello, world!");');
+await writeFile("image.png", buffer);
+```
+
+## Options
+
+### `lang`
+
+Code language. See [shiki supported languages](https://shiki.style/languages)
+
+### `theme`
+
+Rendering theme. See [shiki supported theems](https://shiki.style/themes).
+
+### `style`
+
+Additional container styles. See [takumi stylesheets](https://takumi.kane.tw/docs/deep-dives/stylesheets).
+
+### `font`
+
+Font used to render the code. Can be either a string (remote URL to fetch) or an ArrayBuffer.
+
+### `width`
+
+Rendering width. By default is computed as `(columns + 2) * 10`.
+
+### `height`
+
+Rendering height. By default is computed as `(lines + 2) * 20`.
 
 ## Features
 
@@ -10,9 +55,7 @@
 - **[TypeScript](https://www.typescriptlang.org/)** - Type-safe development with strict mode enabled
 - **[Vite](https://vitejs.dev/)** - Lightning-fast build tool with optimized bundling
 - **[Vitest](https://vitest.dev/)** - Blazing fast unit testing framework
-
-### 🛠️ Developer Experience
-
+- **[shiki](https://github.com/shikijs/shiki)** and **[takumi](https://github.com/kane50613/takumi)**
 - **Dual Module Support** - ESM and CommonJS output with proper type definitions
 - **[Biome](https://biomejs.dev/)** - Fast formatter and linter for consistent code style
 - **[ESLint](https://eslint.org/)** - Advanced linting with TypeScript and SonarJS rules
@@ -174,3 +217,7 @@ Tran Nguyen Thuong Truong <thuongtruongofficial@gmail.com>
 ## Acknowledgments
 
 This starter kit builds upon best practices from the Bun and TypeScript communities, incorporating modern tooling for an optimal developer experience.
+
+<!-- https://github.com/bunup/bunup -->
+
+<!-- https://github.com/pedro199288/bun-library-starter -->
