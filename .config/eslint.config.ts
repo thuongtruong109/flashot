@@ -9,7 +9,7 @@ export default tseslint.config([
   sonarjs.configs.recommended,
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
-    ignores: ["coverage/**", "dist/**"],
+    ignores: ["coverage/**", "dist/**", "examples/**"],
     plugins: { js },
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
     rules: {

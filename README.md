@@ -1,19 +1,27 @@
-# Flashot
+<div align="center">
 
-![CI status](https://img.shields.io/github/actions/workflow/status/thuongtruong109/flashot/ci.yml)
-[![Npm version](https://img.shields.io/npm/v/flashot?style=flat&colorA=080f12&colorB=1fa669)](https://npmjs.com/package/flashot)
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./public/readme/dark.png">
+    <img alt="Line banner" src="./public/readme/light.png">
+</picture>
+
+![CI status](https://img.shields.io/github/actions/workflow/status/thuongtruong109/flashot/ci.yml?branch=main&label=ci&logo=github&style=flat&colorA=080f12&colorB=1fa669)
+[![Npm version](https://img.shields.io/npm/v/flashot?style=flat&label=version&colorA=080f12&colorB=1fa669&logo=npm)](https://npmjs.com/package/flashot)
 [![Npm downloads](https://img.shields.io/npm/dm/flashot?style=flat&colorA=080f12&colorB=1fa669)](https://npmjs.com/package/flashot)
 ![Code size](https://img.shields.io/github/languages/code-size/thuongtruong109/flashot?style=flat&colorA=080f12&colorB=1fa669)
 [![JSDocs](https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=080f12&colorB=1fa669)](https://www.jsdocs.io/package/vite-unbundled)
 [![License](https://img.shields.io/github/license/thuongtruong109/flashot.svg?style=flat&colorA=080f12&colorB=1fa669)](https://github.com/antfu/vite-unbundled/blob/main/LICENSE)
 
-> 📟 Rapidly convert code snippets into beautiful images
+Flashot is the **blazing-fast image generation tool** for code snippets, designed for flawless developer experience and speed, **powered by Bun**.
+
+</div>
+
+<div align="center">
 
 **Super fast:** (generated in **~135ms**)
 
-<p align="center">
   <img src="./test/.snapshot/demo.png" alt="Example output" />
-</p>
+</div>
 
 ## 📦 Installation
 
@@ -35,6 +43,22 @@ import { c2i } from "flashot";
 
 const buffer = await c2i('console.log("hello, world!");');
 await writeFile("image.png", buffer);
+```
+
+##### With theme options (default is not needed)
+
+```js
+const defaultOptions = {
+  lang: "js", // custom with your language
+  theme: "ayu-dark", // custom with your theme
+  style: {
+    borderRadius: 8,
+    // ... custom styles
+  },
+  font: "https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2", // custom font
+};
+
+const buffer = await c2i('console.log("hello, world!");', defaultOptions);
 ```
 
 ## ⚙️ API Options
@@ -93,5 +117,4 @@ Tran Nguyen Thuong Truong
 <thuongtruongofficial@gmail.com>
 
 <!-- https://github.com/bunup/bunup -->
-
 <!-- https://github.com/pedro199288/bun-library-starter -->

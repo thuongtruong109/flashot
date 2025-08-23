@@ -39,6 +39,7 @@ describe("flashot-demo", () => {
     `;
     const img = await c2i(sampleCode, {
       lang: "html",
+      theme: "dracula",
     });
     const outDir = join(process.cwd(), "test/.snapshot");
     await mkdir(outDir, { recursive: true });
