@@ -55,13 +55,13 @@ export async function c2i(code: string, options?: ThemeOptions) {
                 style: {
                   minWidth: em(0.5 * token.content.length),
                   minHeight: 0,
-                  backgroundColor: "transparent",
+                  // backgroundColor: "transparent",
                   padding: 0,
                 },
               })
-            : text(token.content, { color: token.color })
+            : text(token.content, { color: token.color }),
         ),
-      })
+      }),
     ),
   });
 
@@ -78,7 +78,7 @@ export async function c2i(code: string, options?: ThemeOptions) {
 
   const res = await renderer.renderAsync(root, {
     format: "Png" as OutputFormat | undefined,
-    width: mergedOptions.width || (columns + 2) * 10,
+    width: mergedOptions.width || (columns + 4) * 10,
     height:
       (mergedOptions.height || (lines + 2) * 23.7) +
       (Number(mergedOptions.style.padding) - 25) * 15,

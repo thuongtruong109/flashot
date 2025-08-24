@@ -1,5 +1,5 @@
 {
-  "name": "flashot-code-to-image-demo",
+  "name": "flashot-starter-js",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "flashot": "^1.0.1"
+    "flashot": "^1.2.0"
   }
 }

@@ -7,10 +7,11 @@
 
 ![CI status](https://img.shields.io/github/actions/workflow/status/thuongtruong109/flashot/ci.yml?branch=main&label=ci&logo=github&style=flat&colorA=080f12&colorB=1fa669)
 [![Npm version](https://img.shields.io/npm/v/flashot?style=flat&label=version&colorA=080f12&colorB=1fa669&logo=npm)](https://npmjs.com/package/flashot)
-[![Npm downloads](https://img.shields.io/npm/dm/flashot?style=flat&colorA=080f12&colorB=1fa669)](https://npmjs.com/package/flashot)
-![Code size](https://img.shields.io/github/languages/code-size/thuongtruong109/flashot?style=flat&colorA=080f12&colorB=1fa669)
-[![JSDocs](https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=080f12&colorB=1fa669)](https://www.jsdocs.io/package/vite-unbundled)
+[![Npm downloads](https://img.shields.io/npm/dm/flashot?style=flat&logo=jsr&colorA=080f12&colorB=1fa669)](https://npmjs.com/package/flashot)
+[![JSDocs](https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&logo=javascript&colorA=080f12&colorB=1fa669)](https://www.jsdocs.io/package/vite-unbundled)
+![Code size](https://img.shields.io/github/languages/code-size/thuongtruong109/flashot?style=flat&logo=bun&colorA=080f12&colorB=1fa669)
 [![License](https://img.shields.io/github/license/thuongtruong109/flashot.svg?style=flat&colorA=080f12&colorB=1fa669)](https://github.com/antfu/vite-unbundled/blob/main/LICENSE)
+[![Sponsor](https://img.shields.io/badge/sponsor-1fa669?logo=githubsponsors&labelColor=080f12)](https://github.com/sponsors/thuongtruong109)
 
 Flashot is the **blazing-fast image generation tool** for code snippets, designed for flawless experience and speed.
 
@@ -48,8 +49,10 @@ import { writeFile } from "node:fs/promises";
 import { c2i } from "flashot";
 
 const buffer = await c2i('console.log("hello, world!");');
-await writeFile("image.png", buffer);
+await writeFile("output.png", buffer); // Export the image
 ```
+
+Then you can use the `buffer` to display the image or send it in a response.
 
 ## ⚙️ API Options (default is not needed)
 
@@ -60,7 +63,7 @@ const defaultOptions = {
   font: "https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2", // custom font
   width: 800, // default is auto
   height: 400, // default is auto
-  backgroundColor: "transparent", // default is theme's background
+  bg: "transparent", // default is theme's background
   gap: 1, // gap between lines (default is 1)
   style: {
     borderRadius: 10, // default is 8
@@ -72,31 +75,28 @@ const defaultOptions = {
 const buffer = await c2i('console.log("hello, world!");', defaultOptions);
 ```
 
-| Option   | Description                                                                              | Default              |
-| -------- | ---------------------------------------------------------------------------------------- | -------------------- |
-| `lang`   | Code language ([supported](https://shiki.style/languages))                               | `"typescript"`       |
-| `theme`  | Rendering theme ([supported](https://shiki.style/themes))                                | `"github-dark"`      |
-| `style`  | Additional container styles ([docs](https://takumi.kane.tw/docs/deep-dives/stylesheets)) | `{}`                 |
-| `font`   | Font for rendering (URL or ArrayBuffer)                                                  | System default       |
-| `width`  | Image width                                                                              | `(columns + 2) * 10` |
-| `height` | Image height                                                                             | `(lines + 2) * 20`   |
+| Option   | Description                                                                              | Default                                                                                            |
+| -------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `lang`   | Code language ([supported](https://shiki.style/languages))                               | `"js"`                                                                                             |
+| `theme`  | Rendering theme ([supported](https://shiki.style/themes))                                | `"dracula"`                                                                                        |
+| `font`   | Font for rendering (URL or ArrayBuffer)                                                  | [`ubuntu`](https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2) |
+| `width`  | Image width                                                                              | System default                                                                                     |
+| `height` | Image height                                                                             | System default                                                                                     |
+| `bg`     | Background color                                                                         | Theme's background                                                                                 |
+| `gap`    | Gap between lines                                                                        | `1`                                                                                                |
+| `style`  | Additional container styles ([docs](https://takumi.kane.tw/docs/deep-dives/stylesheets)) | `{ borderRadius: 8, padding: 25 }`                                                                 |
 
-## 🚀 Features
+## 📚 Technologies
 
-- **[Bun](https://bun.sh)** - Fast all-in-one JavaScript runtime and toolkit
-- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe development with strict mode enabled
-- **[Vite](https://vitejs.dev/)** - Lightning-fast build tool with optimized bundling
-- **[Vitest](https://vitest.dev/)** - Blazing fast unit testing framework
-- **[shiki](https://github.com/shikijs/shiki)** and **[takumi](https://github.com/kane50613/takumi)**
-- **Dual Module Support** - ESM and CommonJS output with proper type definitions
-- **[Biome](https://biomejs.dev/)** - Fast formatter and linter for consistent code style
-- **[ESLint](https://eslint.org/)** - Advanced linting with TypeScript and SonarJS rules
-- **Git Hooks** - Automated quality checks via Lefthook and Commitlint
-- **Watch Mode** - Hot rebuild during development
-- **Test Coverage** - Built-in coverage reporting with v8
-- **UI Testing** - Interactive test UI with `@vitest/ui`
-- **Pre-commit Hooks** - Automatic linting and formatting on commit
-- **Pre-push Validation** - Full build and test suite before pushing
+- ⚡ **[Bun](https://bun.sh)** - Fast all-in-one JavaScript runtime and toolkit
+- 🏗️ **[TypeScript](https://www.typescriptlang.org/)** - Type-safe development with strict mode enabled
+- 📦 **[Vite](https://vitejs.dev/)** - Lightning-fast build tool with optimized bundling
+- 🔋 **[Vitest](https://vitest.dev/)** - Blazing fast unit testing & interactive test UI framework
+- 🪓 **[shiki](https://github.com/shikijs/shiki)** and **[takumi](https://github.com/kane50613/takumi)**
+- 📝 **[Biome](https://biomejs.dev/)** - Fast formatter and linter for consistent code style
+- 🚀 **Dual Module Support** - ESM and CommonJS output with proper type definitions
+- 🔥 **[ESLint](https://eslint.org/)** - Advanced linting with TypeScript and SonarJS rules
+- 🧩 **[Lefthook](https://github.com/evilmartians/lefthook)** and **[Commitlint](https://commitlint.js.org/)** - Automated Git hooks for linting and formatting
 
 ## 🧪 Code Coverage
 
