@@ -5,15 +5,15 @@ import type { ThemeOptions } from "./types/option";
 
 const defaultOptions: Omit<
   Required<ThemeOptions>,
-  "width" | "height" | "backgroundColor"
+  "width" | "height" | "bg"
 > = {
   lang: "js",
   theme: "dracula",
   font: "https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2",
-  padding: 20,
   gap: 1,
   style: {
     borderRadius: 8,
+    padding: 25,
   },
 };
 
@@ -35,28 +35,28 @@ export async function c2i(code: string, options?: ThemeOptions) {
   const root = container({
     style: {
       color: fg,
-      backgroundColor: mergedOptions.backgroundColor ?? bg,
+      backgroundColor: mergedOptions.bg || bg,
       display: "flex",
       flexDirection: "column",
       width: percentage(100),
       height: percentage(100),
-      padding: em(Number(defaultOptions.padding)),
+      padding: em(Number(defaultOptions.style.padding)),
       ...mergedOptions.style,
     },
     children: tokens.map((line) =>
       container({
         style: {
           display: "flex",
-          minHeight: em(mergedOptions.gap),
+          minHeight: em(mergedOptions.gap + 0.5),
         },
         children: line.map((token) =>
           token.content.trim() === ""
             ? container({
                 style: {
                   minWidth: em(0.5 * token.content.length),
-                  minHeight: em(0),
+                  minHeight: 0,
                   backgroundColor: "transparent",
-                  padding: em(0),
+                  padding: 0,
                 },
               })
             : text(token.content, { color: token.color })
@@ -73,15 +73,15 @@ export async function c2i(code: string, options?: ThemeOptions) {
   const renderer = new Renderer({ fonts: [font] });
 
   const _lines = code.split("\n");
-  const lines = _lines.length;
   const columns = Math.max(..._lines.map((l) => l.length));
-  const width = mergedOptions.width ?? (columns + 2) * 10;
-  const height = mergedOptions.height ?? (lines + 2) * 20;
+  const lines = _lines.length;
 
   const res = await renderer.renderAsync(root, {
     format: "Png" as OutputFormat | undefined,
-    width,
-    height,
+    width: mergedOptions.width || (columns + 2) * 10,
+    height:
+      (mergedOptions.height || (lines + 2) * 23.7) +
+      (Number(mergedOptions.style.padding) - 25) * 15,
   });
 
   return res;

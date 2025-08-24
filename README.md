@@ -27,11 +27,17 @@ Flashot is the **blazing-fast image generation tool** for code snippets, designe
 
 ```bash
 bun install flashot
-# or
+```
+
+```bash
 npm install flashot
-# or
+```
+
+```bash
 yarn add flashot
-# or
+```
+
+```bash
 pnpm add flashot
 ```
 
@@ -55,10 +61,10 @@ const defaultOptions = {
   width: 800, // default is auto
   height: 400, // default is auto
   backgroundColor: "transparent", // default is theme's background
-  padding: 30, // default is 20
   gap: 1, // gap between lines (default is 1)
   style: {
     borderRadius: 10, // default is 8
+    padding: 30, // default is 25
     // ... more custom styles
   },
 };
@@ -114,12 +120,7 @@ Please ensure all tests pass and code quality checks succeed before submitting a
 
 ## 📄 License
 
-MIT - See [LICENSE](./LICENSE)
-
-## 👤 Author
-
-Tran Nguyen Thuong Truong
-<thuongtruongofficial@gmail.com>
+[MIT License](./LICENSE) - [Tran Nguyen Thuong Truong](mailto:thuongtruongofficial@gmail.com)
 
 <!-- https://github.com/bunup/bunup -->
 <!-- https://github.com/pedro199288/bun-library-starter -->

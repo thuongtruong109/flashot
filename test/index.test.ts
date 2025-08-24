@@ -18,6 +18,28 @@ describe("flashot-test", () => {
   });
 });
 
+describe("flashot-test-custom", () => {
+  it("convert code to image", async () => {
+    const sampleCode = `package main
+      func main() {
+          fmt.Println("Hello, world!")
+      }`;
+    const img = await c2i(sampleCode, {
+      lang: "go",
+      bg: "transparent",
+      gap: 2,
+      style: {
+        borderRadius: 16,
+        padding: 40,
+      },
+    });
+    const outDir = join(process.cwd(), "test/.snapshot");
+    await mkdir(outDir, { recursive: true });
+    const outPath = join(outDir, "custom.png");
+    await writeFile(outPath, img);
+  });
+});
+
 describe("flashot-demo", () => {
   it("convert code to image", async () => {
     const sampleCode = `<!DOCTYPE html>
@@ -37,7 +59,6 @@ describe("flashot-demo", () => {
     </html>`;
     const img = await c2i(sampleCode, {
       lang: "html",
-      backgroundColor: "transparent",
     });
     const outDir = join(process.cwd(), "test/.snapshot");
     await mkdir(outDir, { recursive: true });
