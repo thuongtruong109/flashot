@@ -3,13 +3,18 @@ import { container, em, percentage, text } from "@takumi-rs/helpers";
 import { getSingletonHighlighter } from "shiki";
 import type { ThemeOptions } from "./types/option";
 
-const defaultOptions: Omit<Required<ThemeOptions>, "width" | "height"> = {
+const defaultOptions: Omit<
+  Required<ThemeOptions>,
+  "width" | "height" | "backgroundColor"
+> = {
   lang: "js",
-  theme: "ayu-dark",
+  theme: "dracula",
+  font: "https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2",
+  padding: 20,
+  gap: 1,
   style: {
     borderRadius: 8,
   },
-  font: "https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2",
 };
 
 export async function c2i(code: string, options?: ThemeOptions) {
@@ -30,32 +35,33 @@ export async function c2i(code: string, options?: ThemeOptions) {
   const root = container({
     style: {
       color: fg,
-      backgroundColor: bg,
+      backgroundColor: mergedOptions.backgroundColor ?? bg,
       display: "flex",
       flexDirection: "column",
       width: percentage(100),
       height: percentage(100),
-      padding: em(1),
+      padding: em(Number(defaultOptions.padding)),
       ...mergedOptions.style,
     },
     children: tokens.map((line) =>
       container({
         style: {
           display: "flex",
-          minHeight: em(1),
+          minHeight: em(mergedOptions.gap),
         },
         children: line.map((token) =>
           token.content.trim() === ""
             ? container({
                 style: {
                   minWidth: em(0.5 * token.content.length),
-                  minHeight: em(1),
-                  // backgroundColor: "gray",
+                  minHeight: em(0),
+                  backgroundColor: "transparent",
+                  padding: em(0),
                 },
               })
-            : text(token.content, { color: token.color }),
+            : text(token.content, { color: token.color })
         ),
-      }),
+      })
     ),
   });
 

@@ -20,26 +20,24 @@ describe("flashot-test", () => {
 
 describe("flashot-demo", () => {
   it("convert code to image", async () => {
-    const sampleCode = `
-      <!DOCTYPE html>
-      <html lang="en">
-        <head>
-          <meta charset="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <link rel="icon" type="image/x-icon" href="favicon.ico" />
-          <title>Flashot</title>
-        </head>
-        <body>
-          <h1>Hello, world!</h1>
-          <p>
-            Welcome to Flashot, the tool for converting code snippets into images!
-          </p>
-        </body>
-      </html>
-    `;
+    const sampleCode = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <title>Flashot</title>
+      </head>
+      <body>
+        <h1>Hello, world!</h1>
+        <p>
+          Welcome to Flashot, the tool for converting code snippets into images!
+        </p>
+      </body>
+    </html>`;
     const img = await c2i(sampleCode, {
       lang: "html",
-      theme: "dracula",
+      backgroundColor: "transparent",
     });
     const outDir = join(process.cwd(), "test/.snapshot");
     await mkdir(outDir, { recursive: true });

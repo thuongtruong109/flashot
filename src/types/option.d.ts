@@ -7,5 +7,8 @@ export interface ThemeOptions {
   font?: ArrayBuffer | string;
   width?: number;
   height?: number;
+  backgroundColor?: string;
+  padding?: number;
+  gap?: number;
   style?: PartialStyle;
 }

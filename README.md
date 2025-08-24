@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./public/readme/dark.png">
-    <img alt="Line banner" src="./public/readme/light.png">
+    <source media="(prefers-color-scheme: dark)" srcset="./public/banner_dark.png">
+    <img alt="Line banner" src="./public/banner_light.png">
 </picture>
 
 ![CI status](https://img.shields.io/github/actions/workflow/status/thuongtruong109/flashot/ci.yml?branch=main&label=ci&logo=github&style=flat&colorA=080f12&colorB=1fa669)
@@ -12,7 +12,7 @@
 [![JSDocs](https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=080f12&colorB=1fa669)](https://www.jsdocs.io/package/vite-unbundled)
 [![License](https://img.shields.io/github/license/thuongtruong109/flashot.svg?style=flat&colorA=080f12&colorB=1fa669)](https://github.com/antfu/vite-unbundled/blob/main/LICENSE)
 
-Flashot is the **blazing-fast image generation tool** for code snippets, designed for flawless developer experience and speed, **powered by Bun**.
+Flashot is the **blazing-fast image generation tool** for code snippets, designed for flawless experience and speed.
 
 </div>
 
@@ -45,23 +45,26 @@ const buffer = await c2i('console.log("hello, world!");');
 await writeFile("image.png", buffer);
 ```
 
-##### With theme options (default is not needed)
+## ⚙️ API Options (default is not needed)
 
 ```js
 const defaultOptions = {
-  lang: "js", // custom with your language
-  theme: "ayu-dark", // custom with your theme
-  style: {
-    borderRadius: 8,
-    // ... custom styles
-  },
+  lang: "ts", // default is javascript
+  theme: "ayu-dark", // default is dracula
   font: "https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2", // custom font
+  width: 800, // default is auto
+  height: 400, // default is auto
+  backgroundColor: "transparent", // default is theme's background
+  padding: 30, // default is 20
+  gap: 1, // gap between lines (default is 1)
+  style: {
+    borderRadius: 10, // default is 8
+    // ... more custom styles
+  },
 };
 
 const buffer = await c2i('console.log("hello, world!");', defaultOptions);
 ```
-
-## ⚙️ API Options
 
 | Option   | Description                                                                              | Default              |
 | -------- | ---------------------------------------------------------------------------------------- | -------------------- |
@@ -95,6 +98,8 @@ const buffer = await c2i('console.log("hello, world!");', defaultOptions);
 | --------- | ------- | -------- | ------- | ------- | ----------------- |
 | All files | 98.52   | 87.5     | 100     | 98.52   |
 | index.ts  | 98.52   | 87.5     | 100     | 98.52   | 65                |
+
+![Coverage](./public/coverage.png)
 
 ## 🤝 Contributing
 
