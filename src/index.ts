@@ -17,7 +17,10 @@ const defaultOptions: Omit<
   },
 };
 
-export async function c2i(code: string, options?: ThemeOptions) {
+export async function c2i(
+  code: string,
+  options?: ThemeOptions,
+): Promise<Buffer<ArrayBufferLike>> {
   const mergedOptions = Object.assign({}, defaultOptions, options);
 
   const hl = await getSingletonHighlighter({
@@ -85,4 +88,15 @@ export async function c2i(code: string, options?: ThemeOptions) {
   });
 
   return res;
+}
+
+export async function urlToImg(url: string): Promise<Buffer<ArrayBufferLike>> {
+  try {
+    const res = await fetch(url);
+    const data2 = await res.text();
+    return c2i(data2);
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 }

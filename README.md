@@ -24,6 +24,13 @@ Flashot is the **blazing-fast image generation tool** for code snippets, designe
   <img src="./test/.snapshot/demo.png" alt="Example output" />
 </div>
 
+## Features
+
+- **Inline code support:** Easily convert inline code snippets to images
+- **URL support:** Fetch code snippets directly from URLs
+- **Customizable themes:** Choose from various themes to match your style
+- **High-quality output:** Generates crisp and clear images which keep the original code's formatting intact
+
 ## 📦 Installation
 
 ```bash
@@ -44,12 +51,31 @@ pnpm add flashot
 
 ## ✨ Usage Example
 
+##### For inline code
+
 ```js
 import { writeFile } from "node:fs/promises";
 import { c2i } from "flashot";
 
-const buffer = await c2i('console.log("hello, world!");');
-await writeFile("output.png", buffer); // Export the image
+const buffer = await c2i('console.log("hello, world!");', {
+  /* add more options*/
+});
+await writeFile("output.png", buffer);
+```
+
+##### For url has raw content
+
+```js
+import { writeFile } from "node:fs/promises";
+import { urlToImg } from "flashot";
+
+const buffer = await urlToImg(
+  "https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json",
+  {
+    /* add more options*/
+  }
+);
+await writeFile("output.png", buffer);
 ```
 
 Then you can use the `buffer` to display the image or send it in a response.
@@ -71,8 +97,6 @@ const defaultOptions = {
     // ... more custom styles
   },
 };
-
-const buffer = await c2i('console.log("hello, world!");', defaultOptions);
 ```
 
 | Option   | Description                                                                              | Default                                                                                            |
