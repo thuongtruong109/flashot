@@ -1,4 +1,17 @@
-# v1.1
+# v1.2.1 - 2025-08-26
+
+## What changed
+
+- Refactor code into smaller modules
+- Image generation format choice (WebP, Png, Jpeg)
+- Quality setting for Jpeg images
+- Define tokens style (ThemedToken)
+- Change default font family (JetBrains Mono)
+- Fix width size rendering
+- Improved error handling for invalid input
+- Ignore publish non-related files
+
+# v1.1.0 - 2025-08-25
 
 ## What changed
 
@@ -6,7 +19,7 @@
 - Improved image generation speed and quality
 - Enhanced customization options for themes and styles
 
-# v1.0 - 2025-08-24
+# v1.0.0 - 2025-08-24
 
 ## What changed
 

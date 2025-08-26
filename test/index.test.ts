@@ -1,17 +1,18 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { OutputFormat } from "@takumi-rs/core";
 import { describe, it } from "vitest";
-import { c2i, urlToImg } from "../src";
+import { codeToImg, urlToImg } from "../src";
 
 describe("inline-test", () => {
   it("default", async () => {
     const start = Date.now();
     const code = await readFile(fileURLToPath(import.meta.url), "utf8");
-    const img = await c2i(code);
+    const img = await codeToImg(code);
     const outDir = join(process.cwd(), "test/.snapshot");
     await mkdir(outDir, { recursive: true });
-    const outPath = join(outDir, "inline.png");
+    const outPath = join(outDir, "inline.webp");
     await writeFile(outPath, img);
     const end = Date.now();
     console.log(`Image generated in ${end - start}ms`);
@@ -33,12 +34,13 @@ describe("inline-test", () => {
         </p>
       </body>
     </html>`;
-    const img = await c2i(sampleCode, {
+    const img = await codeToImg(sampleCode, {
       lang: "html",
+      format: OutputFormat.WebP,
     });
     const outDir = join(process.cwd(), "test/.snapshot");
     await mkdir(outDir, { recursive: true });
-    const outPath = join(outDir, "demo.png");
+    const outPath = join(outDir, "demo.webp");
     await writeFile(outPath, img);
   });
 
@@ -47,13 +49,14 @@ describe("inline-test", () => {
       func main() {
           fmt.Println("Hello, world!")
       }`;
-    const img = await c2i(sampleCode, {
+    const img = await codeToImg(sampleCode, {
       lang: "go",
       bg: "transparent",
+      format: OutputFormat.Png,
       gap: 2,
       style: {
-        borderRadius: 16,
         padding: 40,
+        borderRadius: 16,
       },
     });
     const outDir = join(process.cwd(), "test/.snapshot");
@@ -62,12 +65,15 @@ describe("inline-test", () => {
     await writeFile(outPath, img);
   });
 
-  it("single line code", async () => {
+  it("single-line", async () => {
     const sampleCode = `console.log("Hello, world!");`;
-    const img = await c2i(sampleCode);
+    const img = await codeToImg(sampleCode, {
+      format: OutputFormat.Jpeg,
+      quality: 50,
+    });
     const outDir = join(process.cwd(), "test/.snapshot");
     await mkdir(outDir, { recursive: true });
-    const outPath = join(outDir, "single.png");
+    const outPath = join(outDir, "single.jpeg");
     await writeFile(outPath, img);
   });
 });
@@ -79,7 +85,7 @@ describe("url-test", () => {
     );
     const outDir = join(process.cwd(), "test/.snapshot");
     await mkdir(outDir, { recursive: true });
-    const outPath = join(outDir, "url.png");
+    const outPath = join(outDir, "url.webp");
     await writeFile(outPath, img);
   });
 });

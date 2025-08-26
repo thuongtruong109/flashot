@@ -24,12 +24,14 @@ Flashot is the **blazing-fast image generation tool** for code snippets, designe
   <img src="./test/.snapshot/demo.png" alt="Example output" />
 </div>
 
-## Features
+## ✨ Features
 
-- **Inline code support:** Easily convert inline code snippets to images
-- **URL support:** Fetch code snippets directly from URLs
-- **Customizable themes:** Choose from various themes to match your style
-- **High-quality output:** Generates crisp and clear images which keep the original code's formatting intact
+- 💻 **Inline code support:** Easily convert inline code snippets to images
+- 🌐 **URL support:** Fetch code snippets directly from URLs
+- 🎨 **Customizable themes:** Choose from various themes to match your style
+- 🖼️ **High-quality output:** Generates crisp and clear images which keep the original code's formatting intact
+- ⚡ **Blazing fast:** Optimized for speed, ensuring quick image generation
+- 🛠️ **Flexible API:** Easy to integrate into your projects with a simple API
 
 ## 📦 Installation
 
@@ -49,7 +51,7 @@ yarn add flashot
 pnpm add flashot
 ```
 
-## ✨ Usage Example
+## 🪔 Usage Example
 
 ##### For inline code
 
@@ -85,7 +87,7 @@ Then you can use the `buffer` to display the image or send it in a response.
 ```js
 const defaultOptions = {
   lang: "ts", // default is javascript
-  theme: "ayu-dark", // default is dracula
+  theme: "ayu-dark", // default is github-dark
   font: "https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2", // custom font
   width: 800, // default is auto
   height: 400, // default is auto
@@ -102,7 +104,7 @@ const defaultOptions = {
 | Option   | Description                                                                              | Default                                                                                            |
 | -------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | `lang`   | Code language ([supported](https://shiki.style/languages))                               | `"js"`                                                                                             |
-| `theme`  | Rendering theme ([supported](https://shiki.style/themes))                                | `"dracula"`                                                                                        |
+| `theme`  | Rendering theme ([supported](https://shiki.style/themes))                                | `"github-dark"`                                                                                    |
 | `font`   | Font for rendering (URL or ArrayBuffer)                                                  | [`ubuntu`](https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2) |
 | `width`  | Image width                                                                              | System default                                                                                     |
 | `height` | Image height                                                                             | System default                                                                                     |
@@ -146,5 +148,6 @@ Please ensure all tests pass and code quality checks succeed before submitting a
 
 [MIT License](./LICENSE) - [Tran Nguyen Thuong Truong](mailto:thuongtruongofficial@gmail.com)
 
+<!-- https://github.com/pi0/shiki-image -->
 <!-- https://github.com/bunup/bunup -->
 <!-- https://github.com/pedro199288/bun-library-starter -->

@@ -31,7 +31,8 @@
     "biome:fix": "biome check --write .",
     "check": "bun run lint && bun run biome",
     "check:fix": "bun run lint:fix && bun run biome:fix",
-    "pre": "bun lefthook run pre-commit && bun lefthook run pre-push"
+    "pre": "bun lefthook run pre-commit && bun lefthook run pre-push",
+    "release": "bun test && changelogen --release && npm publish && git push --follow-tags"
   },
   "files": [
     "dist"
