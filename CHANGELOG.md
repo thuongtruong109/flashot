@@ -1,21 +1,22 @@
-# v1.2.1 - 2025-08-26
+# v1.2.0 - 2025-08-26
 
 ## What changed
 
-- Refactor code into smaller modules
+- [Modularize refactor code](https://github.com/thuongtruong109/flashot/commit/f7332a493590b8f74485da727b7d54e23decb614)
 - Image generation format choice (WebP, Png, Jpeg)
 - Quality setting for Jpeg images
 - Define tokens style (ThemedToken)
 - Change default font family (JetBrains Mono)
 - Fix width size rendering
 - Improved error handling for invalid input
-- Ignore publish non-related files
+- Ignore publish non-related files (public/\*\*)
+- Update README description
 
 # v1.1.0 - 2025-08-25
 
 ## What changed
 
-- Added support for fetching code snippets from URLs
+- [Added support for fetching code snippets from URLs](https://github.com/thuongtruong109/flashot/commit/b1396d761c58415a77a7e68a9bb966f217762a10)
 - Improved image generation speed and quality
 - Enhanced customization options for themes and styles
 

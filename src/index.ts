@@ -28,7 +28,9 @@ export async function urlToImg(
   options?: ThemeOptions,
 ): Promise<Buffer<ArrayBufferLike>> {
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      mode: "no-cors",
+    });
     const data2 = await res.text();
     return codeToImg(data2, options);
   } catch (err) {

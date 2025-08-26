@@ -49,7 +49,9 @@ export async function codeToContainer(
 }
 
 export async function loadFont(font: string): Promise<ArrayBuffer> {
-  return await fetch(font).then((r) => r.arrayBuffer());
+  return await fetch(font, {
+    mode: "no-cors",
+  }).then((r) => r.arrayBuffer());
 }
 
 export function renderSize(code: string, opts: Required<ThemeOptions>) {

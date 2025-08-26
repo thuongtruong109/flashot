@@ -35,6 +35,7 @@ export default defineConfig({
     sourcemap: true,
     reportCompressedSize: false,
     cssCodeSplit: false,
+    copyPublicDir: false,
   },
   plugins: [
     dts({
