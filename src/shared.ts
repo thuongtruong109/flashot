@@ -26,5 +26,11 @@ export const defaultOptions: Required<ThemeOptions> = {
     padding: 25,
     borderRadius: 8,
   },
+  lineNumbers: {
+    enabled: true,
+    color: "#7b7f8b",
+    marginRight: 1,
+    minWidth: 1,
+  },
   ...defaultOmitOptions,
 };

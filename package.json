@@ -22,9 +22,10 @@
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",
+    "t": "npm test -- -t",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage",
+    "test:coverage": "vitest run --coverage",
     "lint": "eslint --config .config/eslint.config.ts .",
     "lint:fix": "eslint --config .config/eslint.config.ts . --fix",
     "biome": "biome check .",

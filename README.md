@@ -61,12 +61,12 @@ pnpm add flashot
 
 ```js
 import { writeFile } from "node:fs/promises";
-import { c2i } from "flashot";
+import { codeToImg } from "flashot";
 
-const buffer = await c2i('console.log("hello, world!");', {
+const buffer = await codeToImg('console.log("hello, world!");', {
   /* add more options*/
 });
-await writeFile("output.png", buffer);
+await writeFile("output.webp", buffer);
 ```
 
 ##### For url has raw content
@@ -79,6 +79,7 @@ const buffer = await urlToImg(
   "https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json",
   {
     /* add more options*/
+    format: OutputFormat.Png,
   }
 );
 await writeFile("output.png", buffer);
@@ -93,7 +94,7 @@ const defaultOptions = {
   lang: "ts", // default is javascript
   theme: "ayu-dark", // default is github-dark
   font: "https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2", // default is bunny.net/jetbrains-mono.
-  format: OutputFormat.Png, // default is OutputFormat.Webp, has three options: OutputFormat.Png, OutputFormat.Jpeg, OutputFormat.Webp
+  format: OutputFormat.Png, // default is OutputFormat.Webp (options: OutputFormat.Png, OutputFormat.Jpeg, OutputFormat.Webp)
   quality: 100, // default is 100 (1-100), only applies to JPEG formats
   width: 800, // default is system's width
   height: 400, // default is system's height
@@ -126,7 +127,7 @@ const defaultOptions = {
 - 🏗️ **[TypeScript](https://www.typescriptlang.org/)** - Type-safe development with strict mode enabled
 - 📦 **[Vite](https://vitejs.dev/)** - Lightning-fast build tool with optimized bundling
 - 🧪 **[Vitest](https://vitest.dev/)** - Blazing fast unit testing & interactive test UI framework
-- 🎨 **[shiki](https://github.com/shikijs/shiki)** and **[takumi](https://github.com/kane50613/takumi)**
+- 🎨 **[Shiki](https://github.com/shikijs/shiki)** and **[Takumi](https://github.com/kane50613/takumi)** - Render container highlight
 - 📝 **[Biome](https://biomejs.dev/)** - Fast formatter and linter for consistent code style
 - 🚀 **Dual Module Support** - ESM and CommonJS output with proper type definitions
 - 🔥 **[ESLint](https://eslint.org/)** - Advanced linting with TypeScript and SonarJS rules
@@ -136,8 +137,11 @@ const defaultOptions = {
 
 | File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s |
 | --------- | ------- | -------- | ------- | ------- | ----------------- |
-| All files | 98.52   | 87.5     | 100     | 98.52   |
-| index.ts  | 98.52   | 87.5     | 100     | 98.52   | 65                |
+| All files | 99.17   | 81.25    | 100     | 99.17   |
+| core.ts   | 100     | 100      | 100     | 100     |
+| index.ts  | 100     | 100      | 100     | 100     |
+| shared.ts | 100     | 100      | 100     | 100     |
+| utils.ts  | 98.36   | 78.57    | 100     | 98.36   | 67                |
 
 ![Coverage](./public/coverage.png)
 

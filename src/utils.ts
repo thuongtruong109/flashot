@@ -3,7 +3,7 @@ import type { ThemedToken } from "shiki";
 import { defaultOmitOptions } from "./shared";
 import type { CoreOptions, ThemeOptions } from "./types";
 
-export async function codeToContainer(
+export async function renderContainer(
   code: string,
   opts: Required<ThemeOptions>,
   coreOpts: CoreOptions,
@@ -13,9 +13,7 @@ export async function codeToContainer(
     lang: opts.lang,
   });
 
-  // console.log(tokens);
-
-  const root = container({
+  return container({
     style: {
       color: fg,
       backgroundColor: opts.bg === defaultOmitOptions.bg ? bg : opts.bg,
@@ -25,27 +23,34 @@ export async function codeToContainer(
       height: percentage(100),
       ...opts.style,
     },
-    children: tokens.map((line: ThemedToken[]) =>
+    children: tokens.map((group: ThemedToken[], index: number) =>
       container({
         style: {
           display: "flex",
           minHeight: em(opts.gap + 0.5),
         },
-        children: line.map((token: ThemedToken) =>
-          token.content.trim() === ""
-            ? container({
-                style: {
-                  minWidth: em(0.5 * token.content.length),
-                  minHeight: 0,
-                  padding: 0,
-                },
-              })
-            : text(token.content, { color: token.color ?? fg }),
-        ),
+        children: [
+          text(`${index + 1}`, {
+            color: "#7b7f8b",
+            marginRight: opts.lineNumbers.enabled ? em(1) : 0,
+            minWidth: opts.lineNumbers.enabled ? em(1) : 0,
+            width: opts.lineNumbers.enabled ? em(1) : 0,
+          }),
+          ...group.map((token: ThemedToken) =>
+            token.content.trim() === ""
+              ? container({
+                  style: {
+                    minWidth: em(0.5 * token.content.length),
+                    minHeight: 0,
+                    padding: 0,
+                  },
+                })
+              : text(token.content, { color: token.color }),
+          ),
+        ],
       }),
     ),
   });
-  return root;
 }
 
 export async function loadFont(font: string): Promise<ArrayBuffer> {
@@ -60,7 +65,7 @@ export function renderSize(code: string, opts: Required<ThemeOptions>) {
   const lines = _lines.length;
 
   const width =
-    opts.width === defaultOmitOptions.width ? (columns + 8) * 10 : opts.width;
+    opts.width === defaultOmitOptions.width ? (columns + 20) * 10 : opts.width;
   const height =
     (opts.height === defaultOmitOptions.height
       ? (lines + 2) * 23.7

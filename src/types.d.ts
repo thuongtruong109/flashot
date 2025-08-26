@@ -17,6 +17,12 @@ export type ThemeOptions = {
     padding?: number;
     borderRadius?: number;
   };
+  lineNumbers?: PartialStyle & {
+    enabled?: boolean;
+    color?: string;
+    marginRight?: number;
+    minWidth?: number;
+  };
 };
 
 export type ShikiToken = {

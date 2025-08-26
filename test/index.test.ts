@@ -34,6 +34,9 @@ describe("inline-test", () => {
     const img = await codeToImg(sampleCode, {
       lang: "html",
       format: OutputFormat.WebP,
+      // lineNumbers: {
+      //   enabled: true,
+      // },
     });
     const outDir = join(process.cwd(), "test/.snapshot");
     await mkdir(outDir, { recursive: true });
