@@ -8,10 +8,12 @@ export async function renderContainer(
   opts: Required<ThemeOptions>,
   coreOpts: CoreOptions,
 ) {
-  const { tokens, fg, bg } = coreOpts.highlighter.codeToTokens(code, {
+  const { tokens, fg, bg } = await coreOpts.highlighter.codeToTokens(code, {
     theme: opts.theme,
     lang: opts.lang,
   });
+
+  const lineNumberWidth = Math.max(2, tokens.length.toString().length + 0.5);
 
   return container({
     style: {
@@ -23,33 +25,44 @@ export async function renderContainer(
       height: percentage(100),
       ...opts.style,
     },
-    children: tokens.map((group: ThemedToken[], index: number) =>
-      container({
+    children: tokens.map((group: ThemedToken[], index: number) => {
+      const children: ReturnType<typeof text | typeof container>[] = [];
+
+      if (opts.lineNumbers.enabled) {
+        children.push(
+          text(`${index + 1}`, {
+            color: "#7b7f8b",
+            marginRight: em(1),
+            minWidth: em(lineNumberWidth),
+            width: em(lineNumberWidth),
+            textAlign: "right",
+          }),
+        );
+      }
+
+      children.push(
+        ...group.map((token: ThemedToken) =>
+          token.content.trim() === ""
+            ? container({
+                style: {
+                  minWidth: em(0.5 * token.content.length),
+                  minHeight: 0,
+                  padding: 0,
+                },
+              })
+            : text(token.content, { color: token.color }),
+        ),
+      );
+
+      return container({
         style: {
           display: "flex",
           minHeight: em(opts.gap + 0.5),
+          alignItems: "baseline",
         },
-        children: [
-          text(`${index + 1}`, {
-            color: "#7b7f8b",
-            marginRight: opts.lineNumbers.enabled ? em(1) : 0,
-            minWidth: opts.lineNumbers.enabled ? em(1) : 0,
-            width: opts.lineNumbers.enabled ? em(1) : 0,
-          }),
-          ...group.map((token: ThemedToken) =>
-            token.content.trim() === ""
-              ? container({
-                  style: {
-                    minWidth: em(0.5 * token.content.length),
-                    minHeight: 0,
-                    padding: 0,
-                  },
-                })
-              : text(token.content, { color: token.color }),
-          ),
-        ],
-      }),
-    ),
+        children,
+      });
+    }),
   });
 }
 
