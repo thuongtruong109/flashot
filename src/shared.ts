@@ -8,10 +8,16 @@ export const Font = {
     "https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2",
 };
 
-export const defaultOmitOptions = {
+export const defaultAutoOptions = {
   bg: "null",
   width: 0,
   height: 0,
+  lineNumbers: {
+    enabled: true,
+    startFrom: 1,
+    color: "#7b7f8b",
+    marginRight: 0,
+  },
 };
 
 export const defaultOptions: Required<ThemeOptions> = {
@@ -26,11 +32,5 @@ export const defaultOptions: Required<ThemeOptions> = {
     padding: 25,
     borderRadius: 8,
   },
-  lineNumbers: {
-    enabled: true,
-    color: "#7b7f8b",
-    marginRight: 1,
-    minWidth: 1,
-  },
-  ...defaultOmitOptions,
+  ...defaultAutoOptions,
 };

@@ -24,7 +24,6 @@ export default defineConfig({
       fileName: (format) => `index.${format === "es" ? "js" : "cjs"}`,
     },
     rollupOptions: {
-      // Externalize deps that shouldn't be bundled into library
       external: ["@takumi-rs/core", "@takumi-rs/helpers", "shiki"],
       output: {
         banner,

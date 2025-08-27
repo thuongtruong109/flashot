@@ -1,3 +1,10 @@
+# v1.2.0 - 2025-08-27
+
+## What changed
+
+- Add & custom line count
+- Update default auto options
+
 # v1.2.0 - 2025-08-26
 
 ## What changed

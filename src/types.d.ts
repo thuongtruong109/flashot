@@ -19,9 +19,9 @@ export type ThemeOptions = {
   };
   lineNumbers?: PartialStyle & {
     enabled?: boolean;
+    startFrom?: number;
     color?: string;
-    marginRight?: number;
-    minWidth?: number;
+    marginRight?: LengthUnit | number;
   };
 };
 

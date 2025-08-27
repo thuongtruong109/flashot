@@ -105,21 +105,28 @@ const defaultOptions = {
     padding: 30, // default is 25
     // ... more custom styles
   },
+  lineNumbers: {
+    enabled: true,
+    startFrom: 1,
+    color: "#7b7f8b",
+    marginRight: 0,
+  },
 };
 ```
 
-| Option    | Description                                                                              | Default                                                                                                |
-| --------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `lang`    | Code language ([supported](https://shiki.style/languages))                               | `"js"`                                                                                                 |
-| `theme`   | Rendering theme ([supported](https://shiki.style/themes))                                | `"github-dark"`                                                                                        |
-| `font`    | Font for rendering (URL or ArrayBuffer)                                                  | [`Jetbrains Mono`](https://fonts.bunny.net/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2) |
-| `format`  | Output image format (`OutputFormat.Png`, `OutputFormat.Jpeg`, `OutputFormat.Webp`)       | `OutputFormat.Webp`                                                                                    |
-| `quality` | Image quality (1-100) for JPEG formats                                                   | `100`                                                                                                  |
-| `width`   | Image width                                                                              | System default                                                                                         |
-| `height`  | Image height                                                                             | System default                                                                                         |
-| `bg`      | Background color                                                                         | Theme's background                                                                                     |
-| `gap`     | Gap between lines                                                                        | `1`                                                                                                    |
-| `style`   | Additional container styles ([docs](https://takumi.kane.tw/docs/deep-dives/stylesheets)) | `{ borderRadius: 8, padding: 25 }`                                                                     |
+| Option        | Description                                                                              | Default                                                                                                |
+| ------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `lang`        | Code language ([supported](https://shiki.style/languages))                               | `"js"`                                                                                                 |
+| `theme`       | Rendering theme ([supported](https://shiki.style/themes))                                | `"github-dark"`                                                                                        |
+| `font`        | Font for rendering (URL or ArrayBuffer)                                                  | [`Jetbrains Mono`](https://fonts.bunny.net/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2) |
+| `format`      | Output image format (`OutputFormat.Png`, `OutputFormat.Jpeg`, `OutputFormat.Webp`)       | `OutputFormat.Webp`                                                                                    |
+| `quality`     | Image quality (1-100) for JPEG formats                                                   | `100`                                                                                                  |
+| `width`       | Image width                                                                              | System default                                                                                         |
+| `height`      | Image height                                                                             | System default                                                                                         |
+| `bg`          | Background color                                                                         | Theme's background                                                                                     |
+| `gap`         | Gap between lines                                                                        | `1`                                                                                                    |
+| `style`       | Additional container styles ([docs](https://takumi.kane.tw/docs/deep-dives/stylesheets)) | `{ borderRadius: 8, padding: 25 }`                                                                     |
+| `lineNumbers` | Line number styles                                                                       | `{ enabled: true, color: '#7b7f8b', marginRight: 0 }`                                                  |
 
 ## 📚 Technologies
 
@@ -163,3 +170,4 @@ Please ensure all tests pass and code quality checks succeed before submitting a
 <!-- https://github.com/pi0/shiki-image -->
 <!-- https://github.com/bunup/bunup -->
 <!-- https://github.com/pedro199288/bun-library-starter -->
+<!-- https://stackblitz.com/github/rolldown/tsdown-starter-stackblitz?file=tsconfig.json -->

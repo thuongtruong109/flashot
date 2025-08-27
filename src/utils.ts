@@ -1,6 +1,6 @@
 import { container, em, percentage, text } from "@takumi-rs/helpers";
 import type { ThemedToken } from "shiki";
-import { defaultOmitOptions } from "./shared";
+import { defaultAutoOptions } from "./shared";
 import type { CoreOptions, ThemeOptions } from "./types";
 
 export async function renderContainer(
@@ -18,7 +18,7 @@ export async function renderContainer(
   return container({
     style: {
       color: fg,
-      backgroundColor: opts.bg === defaultOmitOptions.bg ? bg : opts.bg,
+      backgroundColor: opts.bg === defaultAutoOptions.bg ? bg : opts.bg,
       display: "flex",
       flexDirection: "column",
       width: percentage(100),
@@ -28,15 +28,24 @@ export async function renderContainer(
     children: tokens.map((group: ThemedToken[], index: number) => {
       const children: ReturnType<typeof text | typeof container>[] = [];
 
-      if (opts.lineNumbers.enabled) {
+      if (opts.lineNumbers.enabled || defaultAutoOptions.lineNumbers.enabled) {
         children.push(
-          text(`${index + 1}`, {
-            color: "#7b7f8b",
-            marginRight: em(1),
-            minWidth: em(lineNumberWidth),
-            width: em(lineNumberWidth),
-            textAlign: "right",
-          }),
+          text(
+            `${
+              index +
+              (opts.lineNumbers.startFrom ||
+                defaultAutoOptions.lineNumbers.startFrom)
+            }`,
+            {
+              color: opts.lineNumbers.color,
+              marginRight: em(
+                opts.lineNumbers.marginRight ||
+                  defaultAutoOptions.lineNumbers.marginRight,
+              ),
+              minWidth: em(lineNumberWidth),
+              width: em(lineNumberWidth),
+            },
+          ),
         );
       }
 
@@ -78,9 +87,9 @@ export function renderSize(code: string, opts: Required<ThemeOptions>) {
   const lines = _lines.length;
 
   const width =
-    opts.width === defaultOmitOptions.width ? (columns + 20) * 10 : opts.width;
+    opts.width === defaultAutoOptions.width ? (columns + 20) * 10 : opts.width;
   const height =
-    (opts.height === defaultOmitOptions.height
+    (opts.height === defaultAutoOptions.height
       ? (lines + 2) * 23.7
       : opts.height) +
     (Number(opts.style.padding) - 25) * 15;
