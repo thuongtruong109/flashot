@@ -37,10 +37,7 @@
     "release": "bun test && changelogen --release && npm publish && git push --follow-tags"
   },
   "files": [
-    "dist",
-    "README.md",
-    "CHANGELOG.md",
-    "LICENSE"
+    "dist"
   ],
   "keywords": [
     "flashot",

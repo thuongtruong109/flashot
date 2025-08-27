@@ -4,6 +4,7 @@ import core from "./core";
 import { defaultOptions } from "./shared";
 import type { ThemeOptions } from "./types";
 import { loadFont } from "./utils";
+import "./cache";
 
 export { Font } from "./shared";
 

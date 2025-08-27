@@ -4,8 +4,9 @@ import { fileURLToPath } from "node:url";
 import { OutputFormat } from "@takumi-rs/core";
 import { describe, it } from "vitest";
 import { codeToImg, urlToImg } from "../src";
+import { CacheManager } from "../src/cache";
 
-describe("inline-test", () => {
+describe("main-test", () => {
   it("default", async () => {
     const code = await readFile(fileURLToPath(import.meta.url), "utf8");
     const img = await codeToImg(code);
@@ -34,6 +35,9 @@ describe("inline-test", () => {
     const img = await codeToImg(sampleCode, {
       lang: "html",
       format: OutputFormat.WebP,
+      lineNumbers: {
+        enabled: true,
+      },
     });
     const outDir = join(process.cwd(), "test/.snapshot");
     await mkdir(outDir, { recursive: true });
@@ -56,6 +60,7 @@ describe("inline-test", () => {
         borderRadius: 16,
       },
       lineNumbers: {
+        enabled: true,
         startFrom: 2,
         color: "#67CEDC",
         marginRight: 2,
@@ -67,21 +72,7 @@ describe("inline-test", () => {
     await writeFile(outPath, img);
   });
 
-  it("single-line", async () => {
-    const sampleCode = `console.log("Hello, world!");`;
-    const img = await codeToImg(sampleCode, {
-      format: OutputFormat.Jpeg,
-      quality: 50,
-    });
-    const outDir = join(process.cwd(), "test/.snapshot");
-    await mkdir(outDir, { recursive: true });
-    const outPath = join(outDir, "single.jpeg");
-    await writeFile(outPath, img);
-  });
-});
-
-describe("url-test", () => {
-  it("default", async () => {
+  it("url", async () => {
     const img = await urlToImg(
       "https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json",
     );
@@ -89,5 +80,25 @@ describe("url-test", () => {
     await mkdir(outDir, { recursive: true });
     const outPath = join(outDir, "url.webp");
     await writeFile(outPath, img);
+  });
+
+  it("cache", async () => {
+    const cache = CacheManager.getInstance();
+    console.log("Cache stats (before):", cache.stats());
+
+    const sampleCode = `console.log("Hello, world!");`;
+    const img = await codeToImg(sampleCode, {
+      format: OutputFormat.Jpeg,
+      quality: 50,
+    });
+    const outDir = join(process.cwd(), "test/.snapshot");
+    await mkdir(outDir, { recursive: true });
+    const outPath = join(outDir, "cache.jpeg");
+    await writeFile(outPath, img);
+
+    console.log("Cache stats (present):", cache.stats());
+
+    cache.clear();
+    console.log("Cache stats (after):", cache.stats());
   });
 });

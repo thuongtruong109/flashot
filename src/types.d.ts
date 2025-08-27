@@ -34,3 +34,9 @@ export type CoreOptions = {
   highlighter: HighlighterCore;
   renderer: NativeRenderer;
 };
+
+export type TokenData = {
+  tokens: ThemedToken[][];
+  fg: string;
+  bg: string;
+};

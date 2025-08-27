@@ -38,6 +38,7 @@ Flashot is the **blazing-fast image generation tool** for code snippets, designe
 - 🔋 **Easy integration:** Simple API for seamless integration into your projects
 - 📦 **Lightweight:** Minimal dependencies to keep your project lean
 - 📏 **Line numbers:** Support for displaying & customizing line numbers
+- 🗂️ **Cache management:** Efficiently handles caching for improved performance (render, tokens, sizes, fonts)
 
 ## 📦 Installation
 
@@ -108,7 +109,7 @@ const defaultOptions = {
     // ... more custom styles
   },
   lineNumbers: {
-    enabled: true,
+    enabled: false,
     startFrom: 1,
     color: "#7b7f8b",
     marginRight: 0,
@@ -128,7 +129,7 @@ const defaultOptions = {
 | `bg`          | Background color                                                                         | Theme's background                                                                                     |
 | `gap`         | Gap between lines                                                                        | `1`                                                                                                    |
 | `style`       | Additional container styles ([docs](https://takumi.kane.tw/docs/deep-dives/stylesheets)) | `{ borderRadius: 8, padding: 25 }`                                                                     |
-| `lineNumbers` | Line number styles                                                                       | `{ enabled: true, color: '#7b7f8b', marginRight: 0 }`                                                  |
+| `lineNumbers` | Line number styles                                                                       | `{ enabled: false, color: '#7b7f8b', marginRight: 0 }`                                                 |
 
 ## 📚 Technologies
 
