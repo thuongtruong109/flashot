@@ -26,6 +26,7 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
+    "bench": "bun run bench.ts",
     "lint": "eslint --config .config/eslint.config.ts .",
     "lint:fix": "eslint --config .config/eslint.config.ts . --fix",
     "biome": "biome check .",
@@ -36,7 +37,10 @@
     "release": "bun test && changelogen --release && npm publish && git push --follow-tags"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
   ],
   "keywords": [
     "flashot",
@@ -71,6 +75,7 @@
     "happy-dom": "^18.0.1",
     "jiti": "^2.5.1",
     "lefthook": "^1.12.3",
+    "tinybench": "^5.0.1",
     "typescript-eslint": "^8.39.1",
     "vite": "^7.1.2",
     "vite-plugin-dts": "^4.5.4",

@@ -7,7 +7,7 @@
 
 ![CI status](https://img.shields.io/github/actions/workflow/status/thuongtruong109/flashot/ci.yml?branch=main&label=ci&logo=github&style=flat&colorA=080f12&colorB=1fa669)
 [![Npm version](https://img.shields.io/npm/v/flashot?style=flat&label=version&colorA=080f12&colorB=1fa669&logo=npm)](https://npmjs.com/package/flashot)
-[![Npm downloads](https://img.shields.io/npm/dm/flashot?style=flat&logo=jsr&colorA=080f12&colorB=1fa669)](https://npmjs.com/package/flashot)
+[![Npm downloads](https://img.shields.io/npm/dm/flashot?style=flat&logo=npm&colorA=080f12&colorB=1fa669)](https://npmjs.com/package/flashot)
 [![JSDocs](https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&logo=javascript&colorA=080f12&colorB=1fa669)](https://www.jsdocs.io/package/vite-unbundled)
 ![Code size](https://img.shields.io/github/languages/code-size/thuongtruong109/flashot?style=flat&logo=bun&colorA=080f12&colorB=1fa669)
 [![License](https://img.shields.io/github/license/thuongtruong109/flashot.svg?style=flat&colorA=080f12&colorB=1fa669)](https://github.com/antfu/vite-unbundled/blob/main/LICENSE)
@@ -36,6 +36,8 @@ Flashot is the **blazing-fast image generation tool** for code snippets, designe
 - 🔷 **TypeScript support:** Fully typed for better developer experience
 - 🔍 **Extensive testing:** Thoroughly tested with a comprehensive suite of unit tests
 - 🔋 **Easy integration:** Simple API for seamless integration into your projects
+- 📦 **Lightweight:** Minimal dependencies to keep your project lean
+- 📏 **Line numbers:** Support for displaying & customizing line numbers
 
 ## 📦 Installation
 
@@ -139,6 +141,7 @@ const defaultOptions = {
 - 🚀 **Dual Module Support** - ESM and CommonJS output with proper type definitions
 - 🔥 **[ESLint](https://eslint.org/)** - Advanced linting with TypeScript and SonarJS rules
 - 🧩 **[Lefthook](https://github.com/evilmartians/lefthook)** and **[Commitlint](https://commitlint.js.org/)** - Automated Git hooks for linting and formatting
+- 🛠️ **[Tinybench](https://github.com/tinybench/tinybench)** - A tiny benchmarking library for measuring performance
 
 ## 🧪 Code Coverage
 
@@ -151,6 +154,14 @@ const defaultOptions = {
 | utils.ts  | 98.36   | 78.57    | 100     | 98.36   | 67                |
 
 ![Coverage](./public/coverage.png)
+
+## 🏁 Benchmarks
+
+| No  | Task name               | Latency avg (ns)   | Latency med (ns)      | Throughput avg (ops/s) | Throughput med (ops/s) | Samples |
+| --- | ----------------------- | ------------------ | --------------------- | ---------------------- | ---------------------- | ------- |
+| 0   | small code (10 lines)   | 201215722 ± 4.80%  | 186069100 ± 8369100   | 5 ± 3.54%              | 5 ± 0                  | 64      |
+| 1   | medium code (100 lines) | 349906927 ± 6.43%  | 317186800 ± 6326800   | 3 ± 3.95%              | 3 ± 0                  | 64      |
+| 2   | large code (1000 lines) | 1726190939 ± 0.46% | 1715535300 ± 13138650 | 1 ± 0.45%              | 1 ± 0                  | 64      |
 
 ## 🤝 Contributing
 

@@ -1,13 +1,11 @@
-# v1.2.0 - 2025-08-27
+# [v1.2.1 - 2025-08-27](https://github.com/thuongtruong109/flashot/releases/tag/v1.2.1)
 
-## What changed
+- [Add & custom line count](https://github.com/thuongtruong109/flashot/commit/6048f393de5a4a591ddb6e7a1618bca240b97c1d)
+- [Patch default auto options](https://github.com/thuongtruong109/flashot/commit/b02067c6cde3b546393e4fd966224257d3e9f12e)
 
-- Add & custom line count
-- Update default auto options
+**Full Changelog**: https://github.com/thuongtruong109/flashot/commits/v1.2.1
 
-# v1.2.0 - 2025-08-26
-
-## What changed
+# [v1.2.0 - 2025-08-26](https://github.com/thuongtruong109/flashot/releases/tag/v1.2.0)
 
 - [Modularize refactor code](https://github.com/thuongtruong109/flashot/commit/f7332a493590b8f74485da727b7d54e23decb614)
 - Image generation format choice (WebP, Png, Jpeg)
@@ -19,17 +17,17 @@
 - Ignore publish non-related files (public/\*\*)
 - Update README description
 
-# v1.1.0 - 2025-08-25
+**Full Changelog**: https://github.com/thuongtruong109/flashot/commits/v1.2.0
 
-## What changed
+# [v1.1.0 - 2025-08-25](https://github.com/thuongtruong109/flashot/releases/tag/v1.1.0)
 
 - [Added support for fetching code snippets from URLs](https://github.com/thuongtruong109/flashot/commit/b1396d761c58415a77a7e68a9bb966f217762a10)
 - Improved image generation speed and quality
 - Enhanced customization options for themes and styles
 
-# v1.0.0 - 2025-08-24
+**Full Changelog**: https://github.com/thuongtruong109/flashot/commits/v1.1.0
 
-## What changed
+# [v1.0.0 - 2025-08-24](https://github.com/thuongtruong109/flashot/releases/tag/v1.0.0)
 
 - Init project, package
 - Inline code direct convert

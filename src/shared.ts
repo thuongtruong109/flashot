@@ -18,7 +18,7 @@ export const defaultAutoOptions = {
     color: "#7b7f8b",
     marginRight: 0,
   },
-};
+} as const;
 
 export const defaultOptions: Required<ThemeOptions> = {
   lang: "js",
@@ -34,3 +34,8 @@ export const defaultOptions: Required<ThemeOptions> = {
   },
   ...defaultAutoOptions,
 };
+
+Object.freeze(defaultOptions);
+Object.freeze(defaultOptions.style);
+Object.freeze(defaultAutoOptions);
+Object.freeze(defaultAutoOptions.lineNumbers);

@@ -50,6 +50,12 @@ Thank you for your interest in contributing! This guide covers setup, developmen
   bun test:coverage
   ```
 
+## 🏁 Benchmark
+
+```bash
+bun bench
+```
+
 ## 🏗️ Build
 
 - **Build for production:**
