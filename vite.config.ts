@@ -1,34 +1,24 @@
-import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 import pkg from "./package.json";
-
-const license = readFileSync(resolve(__dirname, "LICENSE"), "utf-8");
-const banner = `
-  /**
-  * ${pkg.name} v${pkg.version}
-  * ${license
-    .split("\n")
-    .map((line) => ` * ${line}`.trimEnd())
-    .join("\n")}
-  */`;
+import { config } from "./tsdown.config";
 
 export default defineConfig({
   esbuild: {
-    banner,
+    banner: config.banner,
   },
   build: {
     lib: {
-      entry: resolve(__dirname, "src/index.ts"),
+      entry: resolve(__dirname, config.entry),
       name: pkg.name,
       formats: ["es", "cjs"],
       fileName: (format) => `index.${format === "es" ? "js" : "cjs"}`,
     },
     rollupOptions: {
-      external: ["@takumi-rs/core", "@takumi-rs/helpers", "shiki"],
+      external: config.external,
       output: {
-        banner,
+        banner: config.banner,
         globals: {},
       },
     },

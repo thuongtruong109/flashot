@@ -1,7 +1,7 @@
 {
   "name": "flashot",
   "description": "📟 Rapidly snapshot code snippets as images",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -36,7 +36,8 @@
     "check": "bun run lint && bun run biome",
     "check:fix": "bun run lint:fix && bun run biome:fix",
     "pre": "bun lefthook run pre-commit && bun lefthook run pre-push",
-    "release": "bun test && changelogen --release && npm publish && git push --follow-tags"
+    "release": "bun test && changelogen --release && npm publish && git push --follow-tags",
+    "publish:jsr": "npx jsr publish"
   },
   "files": [
     "dist"
@@ -48,7 +49,9 @@
     "snapshot",
     "snippets",
     "code-embed",
-    "bun"
+    "bun",
+    "typescript",
+    "library"
   ],
   "license": "MIT",
   "homepage": "https://github.com/thuongtruong109/flashot",

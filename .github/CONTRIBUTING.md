@@ -17,6 +17,10 @@ Thank you for your interest in contributing! This guide covers setup, developmen
    bun install
    # or
    npm install
+   # or
+   yarn install
+   # or
+   pnpm install
    ```
 
 3. **Configure Git hooks (recommended):**
@@ -133,4 +137,4 @@ bun bench
 
 ## 🤝 Need Help?
 
-Open an issue or discussion on GitHub if you need assistance.
+Open an [issue](https://github.com/thuongtruong109/flashot/issues/new/choose), or [discussions](https://github.com/thuongtruong109/flashot/discussions/new/choose) on GitHub if you need assistance.

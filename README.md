@@ -13,7 +13,7 @@
 [![License](https://img.shields.io/github/license/thuongtruong109/flashot.svg?style=flat&colorA=080f12&colorB=1fa669)](https://github.com/antfu/vite-unbundled/blob/main/LICENSE)
 [![Sponsor](https://img.shields.io/badge/sponsor-1fa669?logo=githubsponsors&labelColor=080f12)](https://github.com/sponsors/thuongtruong109)
 
-Flashot is the **blazing-fast image generation tool** for code snippets, designed for flawless experience and speed.
+Flashot is the **blazing-fast image generation tool** for code snippets with elegant design, speed, and flawless experience.
 
 </div>
 
@@ -39,12 +39,9 @@ Flashot is the **blazing-fast image generation tool** for code snippets, designe
 - 📦 **Lightweight:** Minimal dependencies to keep your project lean
 - 📏 **Line numbers:** Support for displaying & customizing line numbers
 - 🗂️ **Cache management:** Efficiently handles caching for improved performance (render, tokens, sizes, fonts)
+- 🔧 **Flexible environment support:** Works seamlessly in various environments (Node.js, Bun, Deno, Workers, …)
 
 ## 📦 Installation
-
-```bash
-bun install flashot
-```
 
 ```bash
 npm install flashot
@@ -56,6 +53,18 @@ yarn add flashot
 
 ```bash
 pnpm add flashot
+```
+
+```bash
+bun install flashot
+```
+
+```bash
+deno add flashot
+```
+
+```bash
+npx jsr add @thuongtruong/flashot
 ```
 
 ## 🪔 Usage Example
@@ -178,7 +187,7 @@ Please ensure all tests pass and code quality checks succeed before submitting a
 
 ## 💬 Discussions
 
-Head over to the [discussions](https://github.com/thuongtruong109/flashot/discussions) to share your ideas.
+Head over to the [discussions](https://github.com/thuongtruong109/flashot/discussions/new/choose) to share your ideas.
 
 ## 📄 License
 

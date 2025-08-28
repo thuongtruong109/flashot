@@ -3,8 +3,9 @@
 - [Add & custom line count](https://github.com/thuongtruong109/flashot/commit/6048f393de5a4a591ddb6e7a1618bca240b97c1d)
 - [Patch default auto options](https://github.com/thuongtruong109/flashot/commit/b02067c6cde3b546393e4fd966224257d3e9f12e)
 - [Benchmark test](https://github.com/thuongtruong109/flashot/commit/a960e9f5d24a010b7397cf1582060d5c3e24df24)
-- [Perfomancing with render caching]()
-- Migrating to [tsdown](https://tsdown.dev) as default build tool
+- Perfomancing with [render caching](https://github.com/thuongtruong109/flashot/commit/705c338e3173a89ea20161516a90526ca11aa0f8) and highlight caching
+- [Migrating to `tsdown` as default build tool](https://github.com/thuongtruong109/flashot/commit/bd8e95e23e73b8251703f2b1edf079d00fbbfbf6)
+- Support to Jsr package
 
 **Full Changelog**: https://github.com/thuongtruong109/flashot/commits/v1.2.1
 
