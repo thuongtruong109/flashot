@@ -131,19 +131,6 @@ const defaultOptions = {
 | `style`       | Additional container styles ([docs](https://takumi.kane.tw/docs/deep-dives/stylesheets)) | `{ borderRadius: 8, padding: 25 }`                                                                     |
 | `lineNumbers` | Line number styles                                                                       | `{ enabled: false, color: '#7b7f8b', marginRight: 0 }`                                                 |
 
-## 📚 Technologies
-
-- ⚡ **[Bun](https://bun.sh)** - Fast all-in-one JavaScript runtime and toolkit
-- 🏗️ **[TypeScript](https://www.typescriptlang.org/)** - Type-safe development with strict mode enabled
-- 📦 **[Vite](https://vitejs.dev/)** - Lightning-fast build tool with optimized bundling
-- 🧪 **[Vitest](https://vitest.dev/)** - Blazing fast unit testing & interactive test UI framework
-- 🎨 **[Shiki](https://github.com/shikijs/shiki)** and **[Takumi](https://github.com/kane50613/takumi)** - Render container highlight
-- 📝 **[Biome](https://biomejs.dev/)** - Fast formatter and linter for consistent code style
-- 🚀 **Dual Module Support** - ESM and CommonJS output with proper type definitions
-- 🔥 **[ESLint](https://eslint.org/)** - Advanced linting with TypeScript and SonarJS rules
-- 🧩 **[Lefthook](https://github.com/evilmartians/lefthook)** and **[Commitlint](https://commitlint.js.org/)** - Automated Git hooks for linting and formatting
-- 🛠️ **[Tinybench](https://github.com/tinybench/tinybench)** - A tiny benchmarking library for measuring performance
-
 ## 🧪 Code Coverage
 
 | File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s |
@@ -164,6 +151,20 @@ const defaultOptions = {
 | 1   | medium code (100 lines) | 349906927 ± 6.43%  | 317186800 ± 6326800   | 3 ± 3.95%              | 3 ± 0                  | 64      |
 | 2   | large code (1000 lines) | 1726190939 ± 0.46% | 1715535300 ± 13138650 | 1 ± 0.45%              | 1 ± 0                  | 64      |
 
+## 📚 Technologies
+
+- ⚡ **[Bun](https://bun.sh)** - Fast all-in-one JavaScript runtime and toolkit
+- 🏗️ **[TypeScript](https://www.typescriptlang.org/)** - Type-safe development with strict mode enabled
+- 📦 **[Vite](https://vitejs.dev/)** - Lightning-fast build tool with optimized bundling
+- 🪓 **[Tsdown](https://rolldown/tsdown)** - A powerful tool for TypeScript package
+- 🧪 **[Vitest](https://vitest.dev/)** - Blazing fast unit testing & interactive test UI framework
+- 🎨 **[Shiki](https://github.com/shikijs/shiki)** and **[Takumi](https://github.com/kane50613/takumi)** - Render container highlight
+- 📝 **[Biome](https://biomejs.dev/)** - Fast formatter and linter for consistent code style
+- 🚀 **Dual Module Support** - ESM and CommonJS output with proper type definitions
+- 🔥 **[ESLint](https://eslint.org/)** - Advanced linting with TypeScript and SonarJS rules
+- 🧩 **[Lefthook](https://github.com/evilmartians/lefthook)** and **[Commitlint](https://commitlint.js.org/)** - Automated Git hooks for linting and formatting
+- 🛠️ **[Tinybench](https://github.com/tinybench/tinybench)** - A tiny benchmarking library for measuring performance
+
 ## 🤝 Contributing
 
 Contributions are welcome! This starter kit uses:
@@ -174,6 +175,10 @@ Contributions are welcome! This starter kit uses:
 Please ensure all tests pass and code quality checks succeed before submitting a PR.
 
 > Check [CONTRIBUTING.md](./.github/CONTRIBUTING.md) for more information.
+
+## 💬 Discussions
+
+Head over to the [discussions](https://github.com/thuongtruong109/flashot/discussions) to share your ideas.
 
 ## 📄 License
 

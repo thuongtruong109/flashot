@@ -5,12 +5,14 @@ import dts from "vite-plugin-dts";
 import pkg from "./package.json";
 
 const license = readFileSync(resolve(__dirname, "LICENSE"), "utf-8");
-const banner = `/**
-${license
-  .split("\n")
-  .map((line) => ` * ${line}`.trimEnd())
-  .join("\n")}
- */`;
+const banner = `
+  /**
+  * ${pkg.name} v${pkg.version}
+  * ${license
+    .split("\n")
+    .map((line) => ` * ${line}`.trimEnd())
+    .join("\n")}
+  */`;
 
 export default defineConfig({
   esbuild: {

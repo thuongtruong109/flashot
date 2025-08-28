@@ -58,9 +58,15 @@ bun bench
 
 ## 🏗️ Build
 
-- **Build for production:**
+- **Build with tsdown (default):**
+
   ```bash
   bun run build
+  ```
+
+- **Build with Vite:**
+  ```bash
+  bun run build:vite
   ```
 
 ## 🧹 Lint & Format

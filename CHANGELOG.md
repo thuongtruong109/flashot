@@ -1,9 +1,10 @@
-# [v1.2.1 - 2025-08-27](https://github.com/thuongtruong109/flashot/releases/tag/v1.2.1)
+# [v1.2.1 - 2025-08-28](https://github.com/thuongtruong109/flashot/releases/tag/v1.2.1)
 
 - [Add & custom line count](https://github.com/thuongtruong109/flashot/commit/6048f393de5a4a591ddb6e7a1618bca240b97c1d)
 - [Patch default auto options](https://github.com/thuongtruong109/flashot/commit/b02067c6cde3b546393e4fd966224257d3e9f12e)
 - [Benchmark test](https://github.com/thuongtruong109/flashot/commit/a960e9f5d24a010b7397cf1582060d5c3e24df24)
 - [Perfomancing with render caching]()
+- Migrating to [tsdown](https://tsdown.dev) as default build tool
 
 **Full Changelog**: https://github.com/thuongtruong109/flashot/commits/v1.2.1
 

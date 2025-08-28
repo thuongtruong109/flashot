@@ -21,7 +21,7 @@ export type ThemeOptions = {
     enabled?: boolean;
     startFrom?: number;
     color?: string;
-    marginRight?: LengthUnit | number;
+    marginRight?: number;
   };
 };
 
