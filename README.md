@@ -8,12 +8,17 @@
 ![CI status](https://img.shields.io/github/actions/workflow/status/thuongtruong109/flashot/ci.yml?branch=main&label=ci&logo=github&style=flat&colorA=080f12&colorB=1fa669)
 [![Npm version](https://img.shields.io/npm/v/flashot?style=flat&label=version&colorA=080f12&colorB=1fa669&logo=npm)](https://npmjs.com/package/flashot)
 [![Npm downloads](https://img.shields.io/npm/dm/flashot?style=flat&logo=npm&colorA=080f12&colorB=1fa669)](https://npmjs.com/package/flashot)
+[![Jsr version](https://img.shields.io/jsr/v/%40thuongtruong/flashot?style=flat&label=version&colorA=080f12&colorB=1fa669&logo=jsr)](https://npmjs.com/package/flashot)
 [![JSDocs](https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&logo=javascript&colorA=080f12&colorB=1fa669)](https://www.jsdocs.io/package/vite-unbundled)
 ![Code size](https://img.shields.io/github/languages/code-size/thuongtruong109/flashot?style=flat&logo=bun&colorA=080f12&colorB=1fa669)
-[![License](https://img.shields.io/github/license/thuongtruong109/flashot.svg?style=flat&colorA=080f12&colorB=1fa669)](https://github.com/antfu/vite-unbundled/blob/main/LICENSE)
 [![Sponsor](https://img.shields.io/badge/sponsor-1fa669?logo=githubsponsors&labelColor=080f12)](https://github.com/sponsors/thuongtruong109)
 
-Flashot is the **blazing-fast image generation tool** for code snippets with elegant design, speed, and flawless experience.
+[![Bundlephobia min size](https://badgen.net/bundlephobia/min/flashot)](https://bundlephobia.com/package/flashot)
+[![Bundlephobia tree-shaking](https://badgen.net/bundlephobia/tree-shaking/flashot)](https://bundlephobia.com/package/flashot)
+[![Bundlephobia dependency count](https://badgen.net/bundlephobia/dependency-count/flashot)](https://bundlephobia.com/package/flashot)
+[![License](https://img.shields.io/github/license/thuongtruong109/flashot.svg)](https://github.com/antfu/vite-unbundled/blob/main/LICENSE)
+
+**Flashot** - the **blazing-fast image generation tool** for code snippets with elegant design, speed, and flawless experience
 
 </div>
 

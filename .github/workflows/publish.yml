@@ -35,26 +35,35 @@ jobs:
         if: ${{ inputs.jsr || inputs.npm }}
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Bun
         if: ${{ inputs.jsr || inputs.npm }}
-        uses: actions/setup-node@v4
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: "lts/*"
-          registry-url: "https://registry.npmjs.org"
-          cache: npm
+          bun-version: latest
 
-      - name: Install npm dependencies
-        if: ${{ inputs.jsr  || inputs.npm  }}
+      - name: Cache Bun dependencies
+        if: ${{ inputs.jsr || inputs.npm }}
+        uses: actions/cache@v4
+        with:
+          path: |
+            .bun
+            node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lockb') }}
+
+      - name: Install dependencies and build
+        if: ${{ inputs.jsr || inputs.npm }}
         run: |
-          npm i
-          npm run build
+          bun install
+          bun run build
 
-      - name: Publish to jsr
+      - name: Publish to JSR
         if: ${{ inputs.jsr }}
-        run: npx jsr publish --allow-dirty
+        run: bunx jsr publish --allow-dirty
+
+      - name: Setup npm registry
+        if: ${{ inputs.npm }}
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
 
       - name: Publish to npm
-        if: ${{ inputs.npm  }}
-        run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        if: ${{ inputs.npm }}
+        run: bun run --bun npm publish --provenance --access public

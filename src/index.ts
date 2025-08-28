@@ -6,7 +6,6 @@ import { defaultOptions } from "./shared";
 import type { ThemeOptions } from "./types";
 import { loadFont } from "./utils";
 
-export * from "./cache";
 export { Font } from "./shared";
 
 const highlighterCache = new Map<string, HighlighterCore>();
