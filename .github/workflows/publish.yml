@@ -1,8 +1,25 @@
 name: Publish
+
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      jsr:
+        type: boolean
+        default: true
+        description: publish to JSR
+      npm:
+        description: publish to npm
+        type: boolean
+        default: true
+
+  workflow_call:
+    inputs:
+      jsr:
+        type: boolean
+        default: true
+      npm:
+        type: boolean
+        default: true
 
 jobs:
   publish:
@@ -10,13 +27,34 @@ jobs:
     permissions:
       contents: read
       id-token: write
+    env:
+      PARCEL_WORKER_BACKEND: process
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Deno
-        uses: denoland/setup-deno@v1
+      - name: Checkout repository
+        if: ${{ inputs.jsr || inputs.npm }}
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        if: ${{ inputs.jsr || inputs.npm }}
+        uses: actions/setup-node@v4
         with:
-          deno-version: v1.x
-      - name: Install dependencies
-        run: deno install
-      - name: Publish package
-        run: npx jsr publish
+          node-version: "lts/*"
+          registry-url: "https://registry.npmjs.org"
+          cache: npm
+
+      - name: Install npm dependencies
+        if: ${{ inputs.jsr  || inputs.npm  }}
+        run: |
+          npm i
+          npm run build
+
+      - name: Publish to jsr
+        if: ${{ inputs.jsr }}
+        run: npx jsr publish --allow-dirty
+
+      - name: Publish to npm
+        if: ${{ inputs.npm  }}
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

@@ -60,7 +60,7 @@ bun install flashot
 ```
 
 ```bash
-deno add flashot
+deno add jsr:@thuongtruong109/flashot
 ```
 
 ```bash

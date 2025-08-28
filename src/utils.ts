@@ -3,10 +3,10 @@ import type { ThemedToken } from "shiki";
 import { defaultAutoOptions } from "./shared";
 import type { CoreOptions, ThemeOptions, TokenData } from "./types";
 
-const lineNumberWidthCache = new Map<number, number>();
-const tokenCache = new Map<string, TokenData>();
-const fontCache = new Map<string, Promise<ArrayBuffer>>();
-const sizeCache = new Map<
+export const lineNumberWidthCache = new Map<number, number>();
+export const tokenCache = new Map<string, TokenData>();
+export const fontCache = new Map<string, Promise<ArrayBuffer>>();
+export const sizeCache = new Map<
   string,
   { width: number; height: number; timestamp: number }
 >();
@@ -187,20 +187,4 @@ export function renderSize(
 
   sizeCache.set(cacheKey, result);
   return { width, height };
-}
-
-export function clearCaches(): void {
-  lineNumberWidthCache.clear();
-  tokenCache.clear();
-  fontCache.clear();
-  sizeCache.clear();
-}
-
-export function getCacheSizes() {
-  return {
-    lineNumberWidthCache: lineNumberWidthCache.size,
-    tokenCache: tokenCache.size,
-    fontCache: fontCache.size,
-    sizeCache: sizeCache.size,
-  };
 }

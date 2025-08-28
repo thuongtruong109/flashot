@@ -1,4 +1,15 @@
-import { clearCaches, getCacheSizes } from "./utils";
+import {
+  fontCache,
+  lineNumberWidthCache,
+  sizeCache,
+  tokenCache,
+} from "./utils";
+
+let disposeHighlighters: (() => void) | undefined;
+
+export function setHighlighterDisposeFunction(fn: () => void) {
+  disposeHighlighters = fn;
+}
 
 export class CacheManager {
   private static instance: CacheManager;
@@ -14,7 +25,7 @@ export class CacheManager {
   checkMemoryUsage(): void {
     const memUsage = process.memoryUsage();
     if (memUsage.heapUsed > 100 * 1024 * 1024) {
-      clearCaches();
+      this.clear();
     }
   }
 
@@ -38,8 +49,14 @@ export class CacheManager {
     }
   }
 
-  clear() {
-    return clearCaches();
+  clear(): void {
+    lineNumberWidthCache.clear();
+    tokenCache.clear();
+    fontCache.clear();
+    sizeCache.clear();
+    if (disposeHighlighters) {
+      disposeHighlighters();
+    }
   }
 
   stats(): {
@@ -56,7 +73,12 @@ export class CacheManager {
     const memUsage = process.memoryUsage();
 
     return {
-      cache: getCacheSizes(),
+      cache: {
+        lineNumberWidthCache: lineNumberWidthCache.size,
+        tokenCache: tokenCache.size,
+        fontCache: fontCache.size,
+        sizeCache: sizeCache.size,
+      },
       used: Math.round(memUsage.heapUsed / 1024),
       total: Math.round(memUsage.heapTotal / 1024),
       limit: Math.round((memUsage.heapTotal + memUsage.external) / 1024),
