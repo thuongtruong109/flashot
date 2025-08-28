@@ -42,4 +42,4 @@ jobs:
         uses: codespell-project/actions-codespell@v2
         with:
           check_filenames: true
-          skip: "./.git,./docs,*_test.go"
+          skip: "./.git,./bun.lock,./**/**/package-lock.json"

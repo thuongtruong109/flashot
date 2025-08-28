@@ -5,7 +5,7 @@
 - [Benchmark test](https://github.com/thuongtruong109/flashot/commit/a960e9f5d24a010b7397cf1582060d5c3e24df24)
 - Perfomancing with [render caching](https://github.com/thuongtruong109/flashot/commit/705c338e3173a89ea20161516a90526ca11aa0f8) and highlight caching
 - [Migrating to `tsdown` as default build tool](https://github.com/thuongtruong109/flashot/commit/bd8e95e23e73b8251703f2b1edf079d00fbbfbf6)
-- Support to Jsr package
+- [Publish to Jsr package](https://github.com/thuongtruong109/flashot/commit/e23f8348a736b02e54dfb9a87a5e43be57566025)
 
 **Full Changelog**: https://github.com/thuongtruong109/flashot/commits/v1.2.1
 
