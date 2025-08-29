@@ -3,17 +3,21 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { OutputFormat } from "@takumi-rs/core";
 import { describe, it } from "vitest";
-import { codeToImg, urlToImg } from "../src";
+import { bufferToImg, codeToImg, pathToImg, urlToImg } from "../src";
 import { CacheManager } from "../src/cache";
+
+const exportImg = async (name: string, file: Buffer<ArrayBufferLike>) => {
+  const outDir = join(process.cwd(), "test/.snapshot");
+  await mkdir(outDir, { recursive: true });
+  const outPath = join(outDir, name);
+  await writeFile(outPath, file);
+};
 
 describe("main-test", () => {
   it("default", async () => {
     const code = await readFile(fileURLToPath(import.meta.url), "utf8");
     const img = await codeToImg(code);
-    const outDir = join(process.cwd(), "test/.snapshot");
-    await mkdir(outDir, { recursive: true });
-    const outPath = join(outDir, "inline.webp");
-    await writeFile(outPath, img);
+    await exportImg("inline.webp", img);
   });
 
   it("demo", async () => {
@@ -39,10 +43,7 @@ describe("main-test", () => {
         enabled: true,
       },
     });
-    const outDir = join(process.cwd(), "test/.snapshot");
-    await mkdir(outDir, { recursive: true });
-    const outPath = join(outDir, "demo.webp");
-    await writeFile(outPath, img);
+    await exportImg("demo.webp", img);
   });
 
   it("custom", async () => {
@@ -66,35 +67,37 @@ describe("main-test", () => {
         marginRight: 2,
       },
     });
-    const outDir = join(process.cwd(), "test/.snapshot");
-    await mkdir(outDir, { recursive: true });
-    const outPath = join(outDir, "custom.png");
-    await writeFile(outPath, img);
+    await exportImg("custom.png", img);
   });
 
   it("url", async () => {
     const img = await urlToImg(
       "https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json",
     );
-    const outDir = join(process.cwd(), "test/.snapshot");
-    await mkdir(outDir, { recursive: true });
-    const outPath = join(outDir, "url.webp");
-    await writeFile(outPath, img);
+    await exportImg("url.webp", img);
+  });
+
+  it("buffer", async () => {
+    const img = await bufferToImg(
+      "<Buffer 54 68 69 73 20 69 73 20 61 20 62 75 66 66 65 72 20 65 78 61 6d 70 6c 65 2e>",
+    );
+    await exportImg("buffer.webp", img);
+  });
+
+  it("path", async () => {
+    const img = await pathToImg("../src/index.ts");
+    await exportImg("path.webp", img);
   });
 
   it("cache", async () => {
     const cache = CacheManager.getInstance();
     console.log("Cache stats (before):", cache.stats());
 
-    const sampleCode = `console.log("Hello, world!");`;
-    const img = await codeToImg(sampleCode, {
+    const img = await codeToImg(`console.log("Hello, world!");`, {
       format: OutputFormat.Jpeg,
       quality: 50,
     });
-    const outDir = join(process.cwd(), "test/.snapshot");
-    await mkdir(outDir, { recursive: true });
-    const outPath = join(outDir, "cache.jpeg");
-    await writeFile(outPath, img);
+    await exportImg("cache.jpeg", img);
 
     console.log("Cache stats (present):", cache.stats());
 

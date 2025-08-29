@@ -8,9 +8,8 @@
 ![CI status](https://img.shields.io/github/actions/workflow/status/thuongtruong109/flashot/ci.yml?branch=main&label=ci&logo=github&style=flat&colorA=080f12&colorB=1fa669)
 [![Npm version](https://img.shields.io/npm/v/flashot?style=flat&label=version&colorA=080f12&colorB=1fa669&logo=npm)](https://npmjs.com/package/flashot)
 [![Npm downloads](https://img.shields.io/npm/dm/flashot?style=flat&logo=npm&colorA=080f12&colorB=1fa669)](https://npmjs.com/package/flashot)
-[![Jsr version](https://img.shields.io/jsr/v/%40thuongtruong/flashot?style=flat&label=version&colorA=080f12&colorB=1fa669&logo=jsr)](https://npmjs.com/package/flashot)
-[![JSDocs](https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&logo=javascript&colorA=080f12&colorB=1fa669)](https://www.jsdocs.io/package/vite-unbundled)
-![Code size](https://img.shields.io/github/languages/code-size/thuongtruong109/flashot?style=flat&logo=bun&colorA=080f12&colorB=1fa669)
+[![Jsr version](https://img.shields.io/jsr/v/%40thuongtruong/flashot?style=flat&label=version&colorA=080f12&colorB=1fa669&logo=jsr)](https://jsr.io/@thuongtruong/flashot)
+[![JSDocs](https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&logo=javascript&colorA=080f12&colorB=1fa669)](https://www.jsdocs.io/package/flashot)
 [![Sponsor](https://img.shields.io/badge/sponsor-1fa669?logo=githubsponsors&labelColor=080f12)](https://github.com/sponsors/thuongtruong109)
 
 [![Bundlephobia min size](https://badgen.net/bundlephobia/min/flashot)](https://bundlephobia.com/package/flashot)
@@ -18,7 +17,7 @@
 [![Bundlephobia dependency count](https://badgen.net/bundlephobia/dependency-count/flashot)](https://bundlephobia.com/package/flashot)
 [![License](https://img.shields.io/github/license/thuongtruong109/flashot.svg)](https://github.com/antfu/vite-unbundled/blob/main/LICENSE)
 
-**Flashot** - the **blazing-fast image generation tool** for code snippets with elegant design, speed, and flawless experience
+**Flashot** is the **blazing-fast image generation tool** for code snippets with elegant design and flawless speed
 
 </div>
 
@@ -83,10 +82,10 @@ import { codeToImg } from "flashot";
 const buffer = await codeToImg('console.log("hello, world!");', {
   /* add more options*/
 });
-await writeFile("output.webp", buffer);
+await writeFile("inline.webp", buffer);
 ```
 
-##### For url has raw content
+##### For raw content url
 
 ```js
 import { writeFile } from "node:fs/promises";
@@ -99,10 +98,36 @@ const buffer = await urlToImg(
     format: OutputFormat.Png,
   }
 );
-await writeFile("output.png", buffer);
+await writeFile("url.png", buffer);
 ```
 
-Then you can use the `buffer` to display the image or send it in a response.
+##### For buffer
+
+```js
+import { writeFile } from "node:fs/promises";
+import { bufferToImg } from "flashot";
+
+const buffer =
+  "<Buffer 54 68 69 73 20 69 73 20 61 20 62 75 66 66 65 72 20 65 78 61 6d 70 6c 65 2e>";
+const img = await bufferToImg(buffer, {
+  /* add more options*/
+});
+await writeFile("buffer.png", img);
+```
+
+##### For path dir
+
+```js
+import { writeFile } from "node:fs/promises";
+import { pathToImg } from "flashot";
+
+const img = await pathToImg("../package.json", {
+  /* add more options*/
+});
+await writeFile("path.png", img);
+```
+
+👉 Then you can use the `buffer` to display the image or send it in a response.
 
 ## ⚙️ API Options (default is not needed)
 
@@ -159,11 +184,12 @@ const defaultOptions = {
 
 ## 🏁 Benchmarks
 
-| No  | Task name               | Latency avg (ns)   | Latency med (ns)      | Throughput avg (ops/s) | Throughput med (ops/s) | Samples |
-| --- | ----------------------- | ------------------ | --------------------- | ---------------------- | ---------------------- | ------- |
-| 0   | small code (10 lines)   | 201215722 ± 4.80%  | 186069100 ± 8369100   | 5 ± 3.54%              | 5 ± 0                  | 64      |
-| 1   | medium code (100 lines) | 349906927 ± 6.43%  | 317186800 ± 6326800   | 3 ± 3.95%              | 3 ± 0                  | 64      |
-| 2   | large code (1000 lines) | 1726190939 ± 0.46% | 1715535300 ± 13138650 | 1 ± 0.45%              | 1 ± 0                  | 64      |
+| No  | Task name  | Latency avg (ns)   | Latency med (ns)      | Throughput avg (ops/s) | Throughput med (ops/s) | Samples |
+| --- | ---------- | ------------------ | --------------------- | ---------------------- | ---------------------- | ------- |
+| 1   | 1 lines    | 10175455 ± 1.43%   | 10075900 ± 106800     | 99 ± 1.05%             | 99 ± 1                 | 99      |
+| 2   | 10 lines   | 39056303 ± 0.45%   | 38845500 ± 405750     | 26 ± 0.44%             | 26 ± 0                 | 64      |
+| 3   | 100 lines  | 343126433 ± 0.29%  | 343616650 ± 2711850   | 3 ± 0.29%              | 3 ± 0                  | 64      |
+| 4   | 1000 lines | 1726190939 ± 0.46% | 1715535300 ± 13138650 | 1 ± 0.45%              | 1 ± 0                  | 64      |
 
 ## 📚 Technologies
 

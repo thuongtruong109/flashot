@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { Renderer } from "@takumi-rs/core";
 import { createHighlighter, type HighlighterCore } from "shiki";
 import { setHighlighterDisposeFunction } from "./cache";
@@ -71,6 +73,32 @@ export async function urlToImg(
     console.error(err);
     throw err;
   }
+}
+
+export function bufferToImg(
+  buffer: string,
+  options?: ThemeOptions,
+): Promise<Buffer<ArrayBufferLike>> {
+  const data = Buffer.from(
+    buffer
+      .replace(/[<>]/g, "")
+      .split(" ")
+      .slice(1)
+      .reduce((acc: number[], val) => {
+        acc.push(Number.parseInt(val, 16));
+        return acc;
+      }, []),
+  );
+
+  return codeToImg(data.toString("utf-8"), options);
+}
+
+export function pathToImg(
+  path: string,
+  options?: ThemeOptions,
+): Promise<Buffer<ArrayBufferLike>> {
+  const data = readFileSync(resolve(__dirname, path), "utf-8");
+  return codeToImg(data, options);
 }
 
 setHighlighterDisposeFunction(() => {

@@ -1,3 +1,10 @@
+# [v1.3.0 - 2025-08-28](https://github.com/thuongtruong109/flashot/releases/tag/v1.3.0)
+
+- Support converting buffer to image
+- Support converting content readed file path to images
+
+**Full Changelog**: https://github.com/thuongtruong109/flashot/commits/v1.3.0
+
 # [v1.2.1 - 2025-08-28](https://github.com/thuongtruong109/flashot/releases/tag/v1.2.1)
 
 - [Add & custom line count](https://github.com/thuongtruong109/flashot/commit/6048f393de5a4a591ddb6e7a1618bca240b97c1d)
@@ -46,3 +53,20 @@
 - [fix width size](https://github.com/thuongtruong109/flashot/commit/ddd2e6878ac646d69122b219fc454ba4582b9306)
 
 **Full Changelog**: https://github.com/thuongtruong109/flashot/commits/v1.0
+
+<!-- ### &nbsp;&nbsp;&nbsp;🚀 Features
+
+- **beta**: Display line number &nbsp;-&nbsp; by @thuongtruong109 [<samp>(f7745)</samp>](https://github.com/thuongtruong109/flashot/commit/f7745ac)
+
+### &nbsp;&nbsp;&nbsp;🐞 Bug Fixes
+
+- **container**: Restart duplicate group render line number &nbsp;-&nbsp; by @thuongtruong109 [<samp>(6048f)</samp>](https://github.com/thuongtruong109/flashot/commit/6048f39)
+- **params**: Patch default auto options &nbsp;-&nbsp; by @thuongtruong109 [<samp>(b0206)</samp>](https://github.com/thuongtruong109/flashot/commit/b02067c)
+- **workflows**: Update ci script &nbsp;-&nbsp; by @thuongtruong109 [<samp>(e2b3c)</samp>](https://github.com/thuongtruong109/flashot/commit/e2b3c3a)
+
+### &nbsp;&nbsp;&nbsp;🏎 Performance
+
+- **index**: Highlight caching &nbsp;-&nbsp; by @thuongtruong109 [<samp>(ab238)</samp>](https://github.com/thuongtruong109/flashot/commit/ab238af)
+- **utils**: Support caching &nbsp;-&nbsp; by @thuongtruong109 [<samp>(705c3)</samp>](https://github.com/thuongtruong109/flashot/commit/705c338)
+
+##### &nbsp;&nbsp;&nbsp;&nbsp;[View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v1.2.0...v1.2.1) -->

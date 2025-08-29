@@ -4,4 +4,5 @@ dist
 coverage
 *.log
 .DS_Store
+.test-cache
 api
