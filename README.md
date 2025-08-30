@@ -9,15 +9,14 @@
 [![Npm version](https://img.shields.io/npm/v/flashot?style=flat&label=version&colorA=080f12&colorB=1fa669&logo=npm)](https://npmjs.com/package/flashot)
 [![Npm downloads](https://img.shields.io/npm/dm/flashot?style=flat&logo=npm&colorA=080f12&colorB=1fa669)](https://npmjs.com/package/flashot)
 [![Jsr version](https://img.shields.io/jsr/v/%40thuongtruong/flashot?style=flat&label=version&colorA=080f12&colorB=1fa669&logo=jsr)](https://jsr.io/@thuongtruong/flashot)
+[![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fjsr.io%2Fbadges%2F%40thuongtruong%2Fflashot%2Fscore&style=flat&logo=jsr&label=score&labelColor=080f12&color=1fa669)](https://jsr.io/@thuongtruong/flashot/score)
 [![JSDocs](https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&logo=javascript&colorA=080f12&colorB=1fa669)](https://www.jsdocs.io/package/flashot)
 [![Sponsor](https://img.shields.io/badge/sponsor-1fa669?logo=githubsponsors&labelColor=080f12)](https://github.com/sponsors/thuongtruong109)
-
-[![Bundlephobia min size](https://badgen.net/bundlephobia/min/flashot)](https://bundlephobia.com/package/flashot)
-[![Bundlephobia tree-shaking](https://badgen.net/bundlephobia/tree-shaking/flashot)](https://bundlephobia.com/package/flashot)
-[![Bundlephobia dependency count](https://badgen.net/bundlephobia/dependency-count/flashot)](https://bundlephobia.com/package/flashot)
+[![Bundled min size](https://badgen.net/bundlephobia/min/flashot)](https://bundlephobia.com/package/flashot)
+[![Bundled tree-shaking](https://badgen.net/bundlephobia/tree-shaking/flashot)](https://bundlephobia.com/package/flashot)
 [![License](https://img.shields.io/github/license/thuongtruong109/flashot.svg)](https://github.com/antfu/vite-unbundled/blob/main/LICENSE)
 
-**Flashot** is the **blazing-fast image generation tool** for code snippets with elegant design and flawless speed
+**Flashot** is the **blazing-fast image generation tool** for code snippets with elegant design and flawless performance
 
 </div>
 

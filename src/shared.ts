@@ -13,7 +13,7 @@ export const defaultAutoOptions = {
   width: 0,
   height: 0,
   lineNumbers: {
-    enabled: true,
+    enabled: false,
     startFrom: 1,
     color: "#7b7f8b",
     marginRight: 0,

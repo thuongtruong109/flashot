@@ -7,7 +7,13 @@ const license = readFileSync(resolve(import.meta.dirname, "LICENSE"), "utf-8");
 
 export const config = {
   entry: "./src/index.ts",
-  external: ["@takumi-rs/core", "@takumi-rs/helpers", "shiki"],
+  external: [
+    "node:fs",
+    "node:path",
+    "shiki",
+    "@takumi-rs/core",
+    "@takumi-rs/helpers",
+  ],
   banner: `/**
  * ${pkg.name} v${pkg.version} ${license
    .split("\n")

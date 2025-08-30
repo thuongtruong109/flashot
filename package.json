@@ -37,9 +37,8 @@
     "biome:fix": "biome check --write .",
     "check": "bun run lint && bun run biome",
     "check:fix": "bun run lint:fix && bun run biome:fix && bun run biome:lint && bun run biome:format",
-    "pre": "bun lefthook run pre-commit && bun lefthook run pre-push",
-    "release": "bun test && changelogen --release && npm publish && git push --follow-tags",
-    "publish:jsr": "npx jsr publish"
+    "prepare": "bun lefthook run pre-commit && bun lefthook run pre-push",
+    "publish": "npm publish && npx jsr publish"
   },
   "files": [
     "dist"
@@ -53,7 +52,9 @@
     "code-embed",
     "bun",
     "typescript",
-    "library"
+    "library",
+    "npm",
+    "jsr"
   ],
   "license": "MIT",
   "homepage": "https://github.com/thuongtruong109/flashot",
@@ -78,6 +79,7 @@
     "globals": "^16.3.0",
     "happy-dom": "^18.0.1",
     "jiti": "^2.5.1",
+    "jsr": "^0.13.5",
     "lefthook": "^1.12.3",
     "tinybench": "^5.0.1",
     "tsdown": "^0.14.2",

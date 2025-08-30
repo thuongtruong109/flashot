@@ -42,20 +42,19 @@ export async function renderContainer(
 
   const { tokens, fg, bg } = tokenData;
 
+  const backgroundColor = opts.bg === defaultAutoOptions.bg ? bg : opts.bg;
+
   let lineNumberWidth = lineNumberWidthCache.get(tokens.length);
   if (!lineNumberWidth) {
     lineNumberWidth = Math.max(2, tokens.length.toString().length + 0.5);
     lineNumberWidthCache.set(tokens.length, lineNumberWidth);
   }
-
-  const showLineNumbers =
-    opts.lineNumbers.enabled === true ||
-    defaultAutoOptions.lineNumbers.enabled === true;
-  const startFrom =
+  const lineNumberColor =
+    opts.lineNumbers.color || defaultAutoOptions.lineNumbers.color;
+  const lineNumberStartFrom =
     opts.lineNumbers.startFrom || defaultAutoOptions.lineNumbers.startFrom;
-  const marginRight =
+  const lineNumberMarginRight =
     opts.lineNumbers.marginRight || defaultAutoOptions.lineNumbers.marginRight;
-  const backgroundColor = opts.bg === defaultAutoOptions.bg ? bg : opts.bg;
 
   return container({
     style: {
@@ -70,11 +69,11 @@ export async function renderContainer(
     children: tokens.map((group: ThemedToken[], index: number) => {
       const children: ReturnType<typeof text | typeof container>[] = [];
 
-      if (showLineNumbers) {
+      if (opts.lineNumbers.enabled === true) {
         children.push(
-          text(`${index + startFrom}`, {
-            color: opts.lineNumbers.color,
-            marginRight: em(marginRight),
+          text(`${index + lineNumberStartFrom}`, {
+            color: lineNumberColor,
+            marginRight: em(lineNumberMarginRight),
             minWidth: em(lineNumberWidth),
             width: em(lineNumberWidth),
           }),
