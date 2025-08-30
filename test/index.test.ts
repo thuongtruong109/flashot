@@ -42,6 +42,11 @@ describe("main-test", () => {
       lineNumbers: {
         enabled: true,
       },
+      highlight: {
+        enabled: true,
+        at: 10,
+        depth: 4,
+      },
     });
     await exportImg("demo.webp", img);
   });
@@ -65,6 +70,12 @@ describe("main-test", () => {
         startFrom: 2,
         color: "#67CEDC",
         marginRight: 2,
+      },
+      highlight: {
+        enabled: true,
+        backgroundColor: "#15ff0dff",
+        at: 2,
+        depth: 3,
       },
     });
     await exportImg("custom.png", img);

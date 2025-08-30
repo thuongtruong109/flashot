@@ -1,3 +1,11 @@
+## [v1.3.1 - 2025-08-31](https://github.com/thuongtruong109/flashot/releases/tag/v1.3.1)
+
+### 🚀 Features
+
+- **style**: Support for custom syntax highlighting
+
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v1.3.0...v1.3.1) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v1.3.1)
+
 ## [v1.3.0 - 2025-08-30](https://github.com/thuongtruong109/flashot/releases/tag/v1.3.0)
 
 ### 🚀 Features
@@ -7,7 +15,7 @@
 
 ### 🐞 Bug Fixes
 
-- **line-count**: use default option for empty options case - by @thuongtruong109 [<samp>(e2742)</samp>](https://github.com/thuongtruong109/flashot/commit/e2742815596a65513a8ce86dc3c789b231ac4346)
+- **line-count**: use default options for empty case - by @thuongtruong109 [<samp>(74f54)</samp>](https://github.com/thuongtruong109/flashot/commit/74f54d293c8fc97ecd3c7a2be71220efd2889d65)
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v1.2.1...v1.3.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v1.3.0_)
 

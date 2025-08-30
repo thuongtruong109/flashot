@@ -76,6 +76,7 @@ export async function renderContainer(
             marginRight: em(lineNumberMarginRight),
             minWidth: em(lineNumberWidth),
             width: em(lineNumberWidth),
+            textAlign: "center",
           }),
         );
       }
@@ -96,11 +97,31 @@ export async function renderContainer(
         }
       }
 
+      const bgHighLight =
+        opts.highlight?.backgroundColor ||
+        defaultAutoOptions.highlight.backgroundColor;
+      const startHighLight =
+        opts.highlight?.at || defaultAutoOptions.highlight.at;
+      const depthHighLight =
+        opts.highlight?.depth || defaultAutoOptions.highlight.depth;
+      const toHighLight = startHighLight + depthHighLight - 1;
+
       return container({
         style: {
           display: "flex",
-          minHeight: em(opts.gap + 0.5),
           alignItems: "baseline",
+          minHeight: em(opts.gap + 0.5),
+          borderRadius: em(
+            opts.highlight.borderRadius ||
+              defaultAutoOptions.highlight.borderRadius,
+          ),
+
+          backgroundColor:
+            opts.highlight.enabled === true &&
+            index + lineNumberStartFrom >= startHighLight &&
+            index + lineNumberStartFrom <= toHighLight
+              ? bgHighLight
+              : "transparent",
         },
         children,
       });

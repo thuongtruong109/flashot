@@ -31,6 +31,8 @@
 
 - 💻 **Inline code support:** Easily convert inline code snippets to images
 - 🌐 **URL support:** Fetch code snippets directly from URLs
+- 🗂️ **File support:** Convert code snippets from local files
+- 🗃️ **Buffer support:** Convert code snippets from buffers
 - 🎨 **Customizable styles:** Choose from various options to match your style
 - 🖼️ **High-quality output:** Generates crisp and clear images which keep the original code's formatting intact
 - ⚡ **Blazing fast:** Optimized for speed, ensuring quick image generation
@@ -41,7 +43,8 @@
 - 🔋 **Easy integration:** Simple API for seamless integration into your projects
 - 📦 **Lightweight:** Minimal dependencies to keep your project lean
 - 📏 **Line numbers:** Support for displaying & customizing line numbers
-- 🗂️ **Cache management:** Efficiently handles caching for improved performance (render, tokens, sizes, fonts)
+- 🖍️ **Highlighting:** Support for custom syntax highlighting
+- 🗂️ **Render caching:** Efficiently handles caching for improved performance (render, tokens, sizes, fonts)
 - 🔧 **Flexible environment support:** Works seamlessly in various environments (Node.js, Bun, Deno, Workers, …)
 
 ## 📦 Installation
@@ -147,10 +150,17 @@ const defaultOptions = {
     // ... more custom styles
   },
   lineNumbers: {
-    enabled: false,
-    startFrom: 1,
-    color: "#7b7f8b",
-    marginRight: 0,
+    enabled: true, // default is false
+    startFrom: 5, // default is 1
+    color: "#d64141ff", // default is #7b7f8b
+    marginRight: 2, // default is 0
+  },
+  highlight: {
+    enabled: true, // default is false
+    backgroundColor: "#25ce5da1", // default is #347faa23,
+    borderRadius: 2, // default is 0
+    at: 2, // start from at line - default is 1
+    depth: 3, // total lines - default is 1
   },
 };
 ```
@@ -168,6 +178,7 @@ const defaultOptions = {
 | `gap`         | Gap between lines                                                                        | `1`                                                                                                    |
 | `style`       | Additional container styles ([docs](https://takumi.kane.tw/docs/deep-dives/stylesheets)) | `{ borderRadius: 8, padding: 25 }`                                                                     |
 | `lineNumbers` | Line number styles                                                                       | `{ enabled: false, color: '#7b7f8b', marginRight: 0 }`                                                 |
+| `highlight`   | Syntax highlighting styles                                                               | `{ enabled: false, backgroundColor: '#347faa23', borderRadius: 0, at: 1, depth: 1 }`                   |
 
 ## 🧪 Code Coverage
 

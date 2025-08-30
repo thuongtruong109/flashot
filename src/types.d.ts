@@ -23,6 +23,13 @@ export type ThemeOptions = {
     color?: string;
     marginRight?: number;
   };
+  highlight?: PartialStyle & {
+    enabled?: boolean;
+    backgroundColor?: string;
+    borderRadius?: number;
+    at?: number;
+    depth?: number;
+  };
 };
 
 export type ShikiToken = {

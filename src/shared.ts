@@ -18,6 +18,13 @@ export const defaultAutoOptions = {
     color: "#7b7f8b",
     marginRight: 0,
   },
+  highlight: {
+    enabled: false,
+    backgroundColor: "#347faa23",
+    borderRadius: 0,
+    at: 1,
+    depth: 1,
+  },
 } as const;
 
 export const defaultOptions: Required<ThemeOptions> = {
