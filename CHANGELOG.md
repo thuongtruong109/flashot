@@ -2,7 +2,8 @@
 
 ### 🚀 Features
 
-- **style**: Support for custom syntax highlighting
+- **style**: Support for custom syntax highlighting - by @thuongtruong109 [<samp>(724d1)</samp>](https://github.com/thuongtruong109/flashot/commit/724d1ec05c228c2d3cfeac874f31b294833371ea)
+- **docs**: Add tag symbol documentation jsr
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v1.3.0...v1.3.1) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v1.3.1)
 

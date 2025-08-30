@@ -238,3 +238,4 @@ Head over to the [discussions](https://github.com/thuongtruong109/flashot/discus
 <!-- https://github.com/bunup/bunup -->
 <!-- https://github.com/pedro199288/bun-library-starter -->
 <!-- https://stackblitz.com/github/rolldown/tsdown-starter-stackblitz?file=tsconfig.json -->
+<!-- https://dev.to/sojida/building-command-line-interface-cli-tools-with-nodejs-4mob -->

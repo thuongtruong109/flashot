@@ -43,6 +43,22 @@ async function getHighlighter(
   return highlighter;
 }
 
+/**
+ * Converts code string to an image buffer with syntax highlighting.
+ *
+ * @param code - The source code string to convert to image
+ * @param options - Optional theme and rendering options
+ * @returns Promise that resolves to a buffer containing the rendered image
+ *
+ * @example
+ * ```typescript
+ * const code = "console.log('Hello, World!')";
+ * const imageBuffer = await codeToImg(code, {
+ *   theme: 'github-dark',
+ *   lang: 'typescript'
+ * });
+ * ```
+ */
 export async function codeToImg(
   code: string,
   options?: ThemeOptions,
@@ -59,6 +75,22 @@ export async function codeToImg(
   return await core(code, mergedOptions, { highlighter, renderer });
 }
 
+/**
+ * Fetches code from a URL and converts it to an image buffer with syntax highlighting.
+ *
+ * @param url - The URL to fetch the code from
+ * @param options - Optional theme and rendering options
+ * @returns Promise that resolves to a buffer containing the rendered image
+ * @throws Error if the URL cannot be fetched or processed
+ *
+ * @example
+ * ```typescript
+ * const imageBuffer = await urlToImg('https://example.com/code.js', {
+ *   theme: 'monokai',
+ *   lang: 'javascript'
+ * });
+ * ```
+ */
 export async function urlToImg(
   url: string,
   options?: ThemeOptions,
@@ -75,6 +107,22 @@ export async function urlToImg(
   }
 }
 
+/**
+ * Converts a hex buffer string to code and then to an image buffer with syntax highlighting.
+ *
+ * @param buffer - A hex-encoded string containing code data
+ * @param options - Optional theme and rendering options
+ * @returns Promise that resolves to a buffer containing the rendered image
+ *
+ * @example
+ * ```typescript
+ * const hexBuffer = "636f6e736f6c652e6c6f672827SGVsbG8n293b";
+ * const imageBuffer = await bufferToImg(hexBuffer, {
+ *   theme: 'github-light',
+ *   lang: 'javascript'
+ * });
+ * ```
+ */
 export function bufferToImg(
   buffer: string,
   options?: ThemeOptions,
@@ -93,6 +141,22 @@ export function bufferToImg(
   return codeToImg(data.toString("utf-8"), options);
 }
 
+/**
+ * Reads code from a file path and converts it to an image buffer with syntax highlighting.
+ *
+ * @param path - The file path to read code from
+ * @param options - Optional theme and rendering options
+ * @returns Promise that resolves to a buffer containing the rendered image
+ * @throws Error if the file cannot be read
+ *
+ * @example
+ * ```typescript
+ * const imageBuffer = await pathToImg('../package.json', {
+ *   theme: 'dracula',
+ *   lang: 'typescript'
+ * });
+ * ```
+ */
 export function pathToImg(
   path: string,
   options?: ThemeOptions,

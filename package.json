@@ -40,6 +40,10 @@
     "prepare": "bun lefthook run pre-commit && bun lefthook run pre-push",
     "publish": "npm publish && npx jsr publish --allow-dirty"
   },
+  "bin": {
+    "flashot": "./cli.ts"
+  },
+  "flashot": "link:flashot",
   "files": [
     "dist"
   ],
@@ -90,6 +94,7 @@
   "dependencies": {
     "@takumi-rs/core": "^0.27.2",
     "@takumi-rs/helpers": "^0.27.2",
+    "commander": "^14.0.0",
     "shiki": "^3.11.0"
   }
 }
