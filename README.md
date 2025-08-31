@@ -29,22 +29,24 @@
 
 ## ✨ Features
 
-- 💻 **Inline code support:** Easily convert inline code snippets to images
-- 🌐 **URL support:** Fetch code snippets directly from URLs
-- 🗂️ **File support:** Convert code snippets from local files
-- 🗃️ **Buffer support:** Convert code snippets from buffers
+- **Used from CLI:** Use Flashot as a command-line tool for quick image generation
+- **Used from import:** Use Flashot as an importable module in your code:
+  - 💻 **Inline code support:** Easily convert inline code snippets to images
+  - 🌐 **URL support:** Fetch code snippets directly from URLs
+  - 🗂️ **File path support:** Convert code snippets from local files
+  - 🗃️ **Buffer support:** Convert code snippets from buffers
 - 🎨 **Customizable styles:** Choose from various options to match your style
-- 🖼️ **High-quality output:** Generates crisp and clear images which keep the original code's formatting intact
-- ⚡ **Blazing fast:** Optimized for speed, ensuring quick image generation
-- 🛠️ **Easy to use:** Easy to integrate into your projects with a simple API
-- 🪓 **Multi-format support:** Generate images in various formats (PNG, JPEG, WebP)
-- 🔷 **TypeScript support:** Fully typed for better developer experience
-- 🔍 **Extensive testing:** Thoroughly tested with a comprehensive suite of unit tests
-- 🔋 **Easy integration:** Simple API for seamless integration into your projects
 - 📦 **Lightweight:** Minimal dependencies to keep your project lean
 - 📏 **Line numbers:** Support for displaying & customizing line numbers
 - 🖍️ **Highlighting:** Support for custom syntax highlighting
 - 🗂️ **Render caching:** Efficiently handles caching for improved performance (render, tokens, sizes, fonts)
+- 🪓 **Multi-format support:** Generate images in various formats (PNG, JPEG, WebP)
+- 🖼️ **High-quality output:** Generates crisp and clear images which keep the original code's formatting intact
+- ⚡ **Blazing fast:** Optimized for speed, ensuring quick image generation
+- 🛠️ **Easy to use:** Easy to integrate into your projects with a simple API
+- 🔷 **TypeScript support:** Fully typed for better developer experience
+- 🔍 **Extensive testing:** Thoroughly tested with a comprehensive suite of unit tests
+- 🔋 **Easy integration:** Simple API for seamless integration into your projects
 - 🔧 **Flexible environment support:** Works seamlessly in various environments (Node.js, Bun, Deno, Workers, …)
 
 ## 📦 Installation
@@ -73,6 +75,12 @@ deno add jsr:@thuongtruong109/flashot
 npx jsr add @thuongtruong/flashot
 ```
 
+Then quick check from terminal with CLI runner
+
+```bash
+flashot -h
+```
+
 ## 🪔 Usage Example
 
 ##### For inline code
@@ -85,6 +93,12 @@ const buffer = await codeToImg('console.log("hello, world!");', {
   /* add more options*/
 });
 await writeFile("inline.webp", buffer);
+```
+
+or with CLI
+
+```bash
+flashot code "console.log('Hello world')" -t github-light -l javascript -o hello.png
 ```
 
 ##### For raw content url
