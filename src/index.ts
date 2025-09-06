@@ -4,11 +4,11 @@ import { Renderer } from "@takumi-rs/core";
 import { createHighlighter, type HighlighterCore } from "shiki";
 import { setHighlighterDisposeFunction } from "./cache";
 import core from "./core";
-import { defaultOptions } from "./shared";
+import { defaultOptions } from "./options";
 import type { ThemeOptions } from "./types";
 import { loadFont } from "./utils";
 
-export { Font } from "./shared";
+export { Font } from "./options";
 
 const highlighterCache = new Map<string, HighlighterCore>();
 const MAX_HIGHLIGHTERS = 5;

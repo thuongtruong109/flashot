@@ -1,55 +1,64 @@
+import { OutputFormat } from "@takumi-rs/core";
 import type { BundledLanguage, BundledTheme } from "shiki";
-import { defaultOptions } from "../shared";
+import { defaultOptions } from "../options";
 
 export interface CliOptions {
   output: string;
-  theme: string;
   lang: BundledLanguage | string;
+  theme: string;
   font: string;
   fontRatio: string;
   width: string;
   height: string;
+  bg: string;
+  gap: string;
+  format: string;
   quality: string;
-  background: string;
+
   padding: string;
   borderRadius: string;
-  gap: string;
+
   lineNumbers: boolean;
-  lineStart: string;
+  lineStartFrom: string;
   lineColor: string;
+  lineMarginRight: string;
+
   highlight: boolean;
-  highlightBg: string;
+  highlightBackground: string;
+  highlightBorderRadius: string;
   highlightAt: string;
-  verbose?: boolean;
+  highlightDepth: string;
 }
 
-export default function (globalOpts: CliOptions) {
+export default function (cliOpts: CliOptions) {
   return {
-    theme: globalOpts.theme as BundledTheme,
-    lang: globalOpts.lang as BundledLanguage,
-    font: globalOpts.font,
-    fontRatio: Number.parseFloat(globalOpts.fontRatio),
-    width: Number.parseInt(globalOpts.width) || 800,
-    height: Number.parseInt(globalOpts.height) || 600,
-    quality: Number.parseInt(globalOpts.quality),
-    bg: globalOpts.background === "null" ? undefined : globalOpts.background,
-    gap: Number.parseInt(globalOpts.gap),
+    theme: cliOpts.theme as BundledTheme,
+    lang: cliOpts.lang as BundledLanguage,
+    font: cliOpts.font,
+    fontRatio: Number.parseFloat(cliOpts.fontRatio),
+    width: Number.parseInt(cliOpts.width) || 800,
+    height: Number.parseInt(cliOpts.height) || 600,
+    quality: Number.parseInt(cliOpts.quality),
+    bg: cliOpts.bg === "transparent" ? "transparent" : cliOpts.bg,
+    gap: Number.parseInt(cliOpts.gap),
     style: {
-      padding: Number.parseInt(globalOpts.padding),
-      borderRadius: Number.parseInt(globalOpts.borderRadius),
+      padding: Number.parseInt(cliOpts.padding),
+      borderRadius: Number.parseInt(cliOpts.borderRadius),
     },
     lineNumbers: {
-      enabled: globalOpts.lineNumbers,
-      startFrom: Number.parseInt(globalOpts.lineStart),
-      color: globalOpts.lineColor,
+      enabled: cliOpts.lineNumbers,
+      startFrom: Number.parseInt(cliOpts.lineStartFrom),
+      color: cliOpts.lineColor,
       marginRight: defaultOptions.lineNumbers.marginRight,
     },
     highlight: {
-      enabled: globalOpts.highlight,
-      backgroundColor: globalOpts.highlightBg,
+      enabled: cliOpts.highlight,
+      backgroundColor: cliOpts.highlightBackground,
       borderRadius: defaultOptions.highlight.borderRadius,
-      at: Number.parseInt(globalOpts.highlightAt),
+      at: Number.parseInt(cliOpts.highlightAt),
       depth: defaultOptions.highlight.depth,
     },
+    output: cliOpts.output,
+    format: (cliOpts.format as OutputFormat) || OutputFormat.WebP,
   };
 }

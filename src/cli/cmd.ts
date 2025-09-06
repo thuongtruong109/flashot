@@ -10,7 +10,7 @@ export default function (
   program
     .command(`${cmd} <${cmd}>`)
     .description(desc)
-    .action(async (code, options, command) => {
+    .action(async (code, _, command) => {
       const globalOpts = command.parent.opts();
 
       try {

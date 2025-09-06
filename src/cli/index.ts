@@ -3,8 +3,8 @@
 import { writeFileSync } from "node:fs";
 import { Command } from "commander";
 import * as pkg from "../../package.json";
-import { bufferToImg, codeToImg, pathToImg, urlToImg } from "../index";
-import { defaultOptions } from "../shared";
+import { bufferToImg, codeToImg, pathToImg, urlToImg } from "..";
+import { defaultOptions } from "../options";
 import runCmd from "./cmd";
 import menu from "./menu";
 import getOptions, { type CliOptions } from "./option";

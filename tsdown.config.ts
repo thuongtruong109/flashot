@@ -6,7 +6,7 @@ import pkg from "./package.json";
 const license = readFileSync(resolve(import.meta.dirname, "LICENSE"), "utf-8");
 
 export const config = {
-  entry: "./src/index.ts",
+  entry: "./src/package/index.ts",
   external: [
     // "node:fs",
     // "node:path",
@@ -23,7 +23,7 @@ export const config = {
 };
 
 export default defineConfig({
-  entry: [config.entry],
+  entry: [config.entry, "./src/cli/index.ts"],
   format: ["es", "cjs"],
   platform: "neutral",
   dts: true,

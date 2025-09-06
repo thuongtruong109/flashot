@@ -1,4 +1,5 @@
 import type { Command } from "commander";
+import * as pkg from "../../package.json";
 import type { ThemeOptions } from "../types";
 
 export default (program: Command, defaultOptions: Required<ThemeOptions>) =>
@@ -14,39 +15,43 @@ export default (program: Command, defaultOptions: Required<ThemeOptions>) =>
       "programming language",
       defaultOptions.lang,
     )
-    .option("--font <font>", "font family to use", defaultOptions.font)
+    .option("-f, --font <font>", "font family to use", defaultOptions.font)
     .option(
-      "--font-ratio <ratio>",
-      "font size ratio",
-      defaultOptions.fontRatio.toString(),
+      "-w, --width <pixels>",
+      "image width",
+      defaultOptions.width.toString(),
     )
-    .option("--width <pixels>", "image width", defaultOptions.width.toString())
     .option(
-      "--height <pixels>",
+      "-h, --height <pixels>",
       "image height",
       defaultOptions.height.toString(),
     )
+    // .option(
+    //   "-q, --quality <percent>",
+    //   "image quality (1-100) (only for Jpeg)",
+    //   defaultOptions.quality.toString()
+    // )
+    .option("-b, --background <color>", "background color", defaultOptions.bg)
     .option(
-      "-q, --quality <percent>",
-      "image quality (1-100)",
-      defaultOptions.quality.toString(),
+      "-g, --gap <pixels>",
+      "gap between lines",
+      defaultOptions.gap.toString(),
     )
-    .option("--background <color>", "background color", defaultOptions.bg)
+    // .option(
+    //   "--format <format>",
+    //   "output image format (Png, Jpeg, WebP)",
+    //   "WebP"
+    // )
     .option(
-      "--padding <pixels>",
+      "-p, --padding <pixels>",
       "padding around code",
-      defaultOptions.style?.padding !== undefined
-        ? defaultOptions.style.padding.toString()
-        : "0",
+      defaultOptions.style.padding?.toString(),
     )
     .option(
-      "--border-radius <pixels>",
+      "-r, --border-radius <pixels>",
       "border radius",
-      defaultOptions.style?.borderRadius !== undefined
-        ? defaultOptions.style.borderRadius.toString()
-        : "0",
+      defaultOptions.style.borderRadius?.toString(),
     )
-    .option("--gap <pixels>", "line gap", defaultOptions.gap.toString())
     .option(
       "--line-numbers",
       "enable line numbers",
@@ -55,9 +60,7 @@ export default (program: Command, defaultOptions: Required<ThemeOptions>) =>
     .option(
       "--line-start <number>",
       "line number start",
-      defaultOptions.lineNumbers.startFrom !== undefined
-        ? defaultOptions.lineNumbers.startFrom.toString()
-        : "1",
+      defaultOptions.lineNumbers.startFrom?.toString(),
     )
     .option(
       "--line-color <color>",
@@ -65,20 +68,33 @@ export default (program: Command, defaultOptions: Required<ThemeOptions>) =>
       defaultOptions.lineNumbers.color,
     )
     .option(
+      "--line-margin <pixels>",
+      "line number margin right",
+      defaultOptions.lineNumbers.marginRight?.toString(),
+    )
+    .option(
       "--highlight",
       "enable line highlighting",
       defaultOptions.highlight.enabled,
     )
     .option(
-      "--highlight-bg <color>",
+      "--highlight-background <color>",
       "highlight background color",
       defaultOptions.highlight.backgroundColor,
     )
     .option(
+      "--highlight-border-radius <pixels>",
+      "highlight border radius",
+      defaultOptions.highlight.borderRadius?.toString(),
+    )
+    .option(
       "--highlight-at <line>",
       "highlight line number",
-      defaultOptions.highlight.at !== undefined
-        ? defaultOptions.highlight.at.toString()
-        : "0",
+      defaultOptions.highlight.at?.toString(),
     )
-    .option("-v, --verbose", "enable verbose output");
+    .option(
+      "--highlight-depth <number>",
+      "highlight depth (shadow effect)",
+      defaultOptions.highlight.depth?.toString(),
+    )
+    .option("-v, --verbose", "enable verbose output", pkg.version);

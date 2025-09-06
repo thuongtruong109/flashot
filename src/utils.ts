@@ -1,6 +1,6 @@
 import { container, em, percentage, text } from "@takumi-rs/helpers";
 import type { ThemedToken } from "shiki";
-import { defaultAutoOptions } from "./shared";
+import { defaultAutoOptions } from "./options";
 import type { CoreOptions, ThemeOptions, TokenData } from "./types";
 
 export const lineNumberWidthCache = new Map<number, number>();
