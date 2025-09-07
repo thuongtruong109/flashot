@@ -23,9 +23,9 @@ export const config = {
 };
 
 export default defineConfig({
-  entry: [config.entry],
+  entry: [config.entry, "./cli/index.ts"],
   format: ["es", "cjs"],
-  platform: "neutral",
+  platform: "node",
   dts: true,
   sourcemap: true,
   minify: true,
@@ -33,6 +33,8 @@ export default defineConfig({
   banner: {
     js: config.banner,
   },
-  outDir: "./dist",
   clean: true,
+  nodeProtocol: true,
+  treeshake: true,
+  target: "esnext",
 });

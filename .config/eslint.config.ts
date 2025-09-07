@@ -15,6 +15,7 @@ export default tseslint.config([
       "@typescript-eslint/no-require-imports": "off",
       "sonarjs/assertions-in-tests": "off",
       "sonarjs/no-commented-code": "off",
+      "sonarjs/no-nested-conditional": "off",
     },
   },
   globalIgnores(["dist/**/*", "api/**/*"]),

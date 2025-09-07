@@ -1,9 +1,10 @@
-## [v1.3.1 - 2025-08-31](https://github.com/thuongtruong109/flashot/releases/tag/v1.3.1)
+## [v1.3.1 - 2025-09-07](https://github.com/thuongtruong109/flashot/releases/tag/v1.3.1)
 
 ### 🚀 Features
 
 - **style**: Support for custom syntax highlighting - by @thuongtruong109 [<samp>(724d1)</samp>](https://github.com/thuongtruong109/flashot/commit/724d1ec05c228c2d3cfeac874f31b294833371ea)
-- **docs**: Add tag symbol documentation jsr
+- **docs**: Add tag symbol documentation jsr - by @thuongtruong109 [<samp>(34821)</samp>](https://github.com/thuongtruong109/flashot/commit/34821b2e2da1fd1f07be77efb12bc17c074d68cb)
+- **cli**: auto bind flags from type - by @thuongtruong109 [<samp>()</samp>]()
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v1.3.0...v1.3.1) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v1.3.1)
 

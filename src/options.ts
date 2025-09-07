@@ -31,7 +31,6 @@ export const defaultOptions: Required<ThemeOptions> = {
   lang: "js",
   theme: "dracula",
   font: Font.JetBrainsMono,
-  fontRatio: 0.63,
   format: OutputFormat.WebP,
   quality: 100,
   gap: 1,

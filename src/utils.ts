@@ -1,6 +1,6 @@
 import { container, em, percentage, text } from "@takumi-rs/helpers";
 import type { ThemedToken } from "shiki";
-import { defaultAutoOptions } from "./shared";
+import { defaultAutoOptions } from "./options";
 import type { CoreOptions, ThemeOptions, TokenData } from "./types";
 
 export const lineNumberWidthCache = new Map<number, number>();
@@ -129,7 +129,13 @@ export async function renderContainer(
   });
 }
 
-export const loadFont = async (font: string): Promise<ArrayBuffer> => {
+export const loadFont = async (
+  font: ArrayBuffer | string,
+): Promise<ArrayBuffer> => {
+  if (font instanceof ArrayBuffer) {
+    return font;
+  }
+
   const cachedFont = fontCache.get(font);
   if (cachedFont) {
     return cachedFont;

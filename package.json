@@ -20,10 +20,11 @@
     "require": "./dist/index.cjs"
   },
   "scripts": {
-    "dev": "tsdown --watch",
-    "dev:vite": "vite build --watch",
-    "build": "tsdown",
-    "build:vite": "vite build",
+    "dev": "vite build --watch",
+    "dev:lib": "tsdown --watch",
+    "build": "vite build",
+    "build:lib": "tsdown",
+    "build:cli": "tsdown --entry ./cli/index.ts --format cjs --dts false --clean false",
     "t": "npm test -- -t",
     "test": "vitest",
     "test:ui": "vitest --ui",
@@ -41,7 +42,7 @@
     "publish": "npm publish && npx jsr publish --allow-dirty"
   },
   "bin": {
-    "flashot": "./cli.ts"
+    "flashot": "./cli/index.ts"
   },
   "flashot": "link:flashot",
   "files": [
@@ -54,6 +55,7 @@
     "snapshot",
     "snippets",
     "code-embed",
+    "nodejs",
     "bun",
     "typescript",
     "library",
