@@ -20,10 +20,11 @@
     "require": "./dist/index.cjs"
   },
   "scripts": {
-    "dev": "tsdown --watch",
-    "dev:vite": "vite build --watch",
-    "build": "tsdown",
-    "build:vite": "vite build",
+    "dev": "vite build --watch",
+    "dev:lib": "tsdown --watch",
+    "build": "vite build",
+    "build:lib": "tsdown",
+    "build:cli": "tsdown --entry ./cli/index.ts --format cjs --dts false --clean false",
     "t": "npm test -- -t",
     "test": "vitest",
     "test:ui": "vitest --ui",

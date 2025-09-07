@@ -16,10 +16,14 @@ export default defineConfig({
       fileName: (format) => `index.${format === "es" ? "js" : "cjs"}`,
     },
     rollupOptions: {
-      external: config.external,
+      external: [
+        ...config.external,
+        "@takumi-rs/helpers",
+        "@takumi-rs/core",
+        "shiki",
+      ],
       output: {
         banner: config.banner,
-        globals: {},
       },
     },
     minify: true,
@@ -31,7 +35,11 @@ export default defineConfig({
   plugins: [
     dts({
       insertTypesEntry: true,
-      rollupTypes: true,
+      rollupTypes: false, // Don't bundle types, keep separate files
+      copyDtsFiles: true,
     }),
   ],
+  resolve: {
+    extensions: [".ts", ".js", ".json"],
+  },
 });

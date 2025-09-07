@@ -1,40 +1,39 @@
 import type { Command } from "commander";
 import * as pkg from "../package.json";
 import type { ThemeOptions } from "../src/types";
-import type { CliOptions } from "./option";
+import { defaultOptions } from "../src/options";
 
-// Create a dummy object with the same keys as CliOptions to extract keys at runtime
-const createCliKeysHelper = (): Record<keyof CliOptions, null> => ({
-  output: null,
-  lang: null,
-  theme: null,
-  font: null,
-  fontRatio: null,
-  width: null,
-  height: null,
-  bg: null,
-  gap: null,
-  format: null,
-  quality: null,
-  padding: null,
-  borderRadius: null,
-  lineNumbers: null,
-  lineStartFrom: null,
-  lineColor: null,
-  lineMarginRight: null,
-  highlight: null,
-  highlightBackground: null,
-  highlightBorderRadius: null,
-  highlightAt: null,
-  highlightDepth: null,
-});
+const createFlattenedCliKeys = () => {
+  const flatKeys = {
+    output: null,
+    ...Object.keys(defaultOptions).reduce((acc, key) => {
+      const value = defaultOptions[key as keyof ThemeOptions];
+      if (
+        typeof value === "object" &&
+        value !== null &&
+        !Array.isArray(value)
+      ) {
+        Object.keys(value).forEach((nestedKey) => {
+          acc[
+            `${key}${nestedKey.charAt(0).toUpperCase()}${nestedKey.slice(1)}`
+          ] = null;
+        });
+      } else {
+        acc[key] = null;
+      }
+      return acc;
+    }, {} as Record<string, null>),
+  };
+
+  return flatKeys;
+};
 
 const CLI_OPTIONS_CONFIG = [
   {
     shortFlag: "-o",
     argName: "<file>",
     description: "output image file path",
-    getDefault: () => "output.png",
+    getDefault: () => "tmp.webp",
   },
   {
     shortFlag: "-l",
@@ -56,44 +55,21 @@ const CLI_OPTIONS_CONFIG = [
       typeof opts.font === "string" ? opts.font : undefined,
   },
   {
-    argName: "<ratio>",
-    description: "font ratio",
-    getDefault: (opts: Required<ThemeOptions>) => opts.fontRatio?.toString(),
-  },
-  {
-    shortFlag: "-w",
-    argName: "<pixels>",
-    description: "image width",
-    getDefault: (opts: Required<ThemeOptions>) => opts.width.toString(),
-  },
-  {
-    shortFlag: "-h",
-    argName: "<pixels>",
-    description: "image height",
-    getDefault: (opts: Required<ThemeOptions>) => opts.height.toString(),
-  },
-  {
-    shortFlag: "-b",
-    argName: "<color>",
-    description: "background color",
-    getDefault: (opts: Required<ThemeOptions>) => opts.bg,
-  },
-  {
-    shortFlag: "-g",
-    argName: "<pixels>",
-    description: "gap between lines",
-    getDefault: (opts: Required<ThemeOptions>) => opts.gap.toString(),
-  },
-  {
     argName: "<format>",
     description: "output image format (Png, Jpeg, WebP)",
-    getDefault: () => "WebP",
+    getDefault: (opts: Required<ThemeOptions>) => opts.format,
   },
   {
     shortFlag: "-q",
     argName: "<percent>",
     description: "image quality (1-100) (only for Jpeg)",
     getDefault: (opts: Required<ThemeOptions>) => opts.quality.toString(),
+  },
+  {
+    shortFlag: "-g",
+    argName: "<pixels>",
+    description: "gap between lines",
+    getDefault: (opts: Required<ThemeOptions>) => opts.gap.toString(),
   },
   {
     shortFlag: "-p",
@@ -107,6 +83,23 @@ const CLI_OPTIONS_CONFIG = [
     description: "border radius",
     getDefault: (opts: Required<ThemeOptions>) =>
       opts.style.borderRadius?.toString(),
+  },
+  {
+    shortFlag: "-b",
+    argName: "<color>",
+    description: "background color",
+    getDefault: () => "not needed!",
+  },
+  {
+    shortFlag: "-w",
+    argName: "<pixels>",
+    description: "image width",
+    getDefault: () => "not needed!",
+  },
+  {
+    argName: "<pixels>",
+    description: "image height",
+    getDefault: () => "not needed!",
   },
   {
     description: "enable line numbers",
@@ -162,15 +155,18 @@ const toKebabCase = (str: string): string => {
   return str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2").toLowerCase();
 };
 
-export default (program: Command, defaultOptions: Required<ThemeOptions>) => {
-  const cliKeys = Object.keys(createCliKeysHelper()) as Array<keyof CliOptions>;
+export default (program: Command) => {
+  const flatKeys = Object.keys(createFlattenedCliKeys());
 
   CLI_OPTIONS_CONFIG.forEach((config, index) => {
-    const key = cliKeys[index];
-    const kebabKey = toKebabCase(key ?? "");
+    const key = flatKeys[index];
+    if (!key) return;
+
+    const kebabKey = toKebabCase(key);
+    const argPart = config.argName ? ` ${config.argName}` : "";
     const flags = config.shortFlag
-      ? `${config.shortFlag}, --${kebabKey}${config.argName || ""}`
-      : `--${kebabKey}${config.argName || ""}`;
+      ? `${config.shortFlag}, --${kebabKey}${argPart}`
+      : `--${kebabKey}${argPart}`;
 
     const defaultValue = config.getDefault(defaultOptions);
     program.option(flags, config.description, defaultValue);

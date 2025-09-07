@@ -98,7 +98,7 @@ await writeFile("inline.webp", buffer);
 or with CLI
 
 ```bash
-flashot code "console.log('Hello world')" -t github-light -l javascript -o tmp/hello.png
+flashot code "console.log('Hello world')"
 ```
 
 ##### For raw content url

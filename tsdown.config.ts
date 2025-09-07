@@ -6,10 +6,10 @@ import pkg from "./package.json";
 const license = readFileSync(resolve(import.meta.dirname, "LICENSE"), "utf-8");
 
 export const config = {
-  entry: "./src/package/index.ts",
+  entry: "./src/index.ts",
   external: [
-    // "node:fs",
-    // "node:path",
+    "node:fs",
+    "node:path",
     "shiki",
     "@takumi-rs/core",
     "@takumi-rs/helpers",
@@ -23,9 +23,9 @@ export const config = {
 };
 
 export default defineConfig({
-  entry: [config.entry, "./src/cli/index.ts"],
+  entry: [config.entry, "./cli/index.ts"],
   format: ["es", "cjs"],
-  platform: "neutral",
+  platform: "node",
   dts: true,
   sourcemap: true,
   minify: true,
@@ -33,7 +33,8 @@ export default defineConfig({
   banner: {
     js: config.banner,
   },
-  outDir: "./dist",
   clean: true,
   nodeProtocol: true,
+  treeshake: true,
+  target: "esnext",
 });

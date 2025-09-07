@@ -37,12 +37,11 @@ export type ThemeOptions = {
   lang?: BundledLanguage;
   theme?: BundledTheme;
   font?: ArrayBuffer | string;
-  fontRatio?: number;
   width?: number;
   height?: number;
   bg?: string;
   gap?: number;
-  format?: OutputFormat.WebP | OutputFormat.Png | OutputFormat.Jpeg;
+  format?: OutputFormat.WebP | OutputFormat.Jpeg | OutputFormat.Png;
   quality?: number;
   style?: PartialStyle & {
     padding?: number;

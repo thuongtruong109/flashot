@@ -1,11 +1,11 @@
 import type { Command } from "commander";
-import type { CliOptions } from "./option";
+import { ThemeOptions } from "../src/types";
 
 export default function (
   program: Command,
   cmd: string,
   desc: string,
-  cb: (arg: string, options: CliOptions) => Promise<void>,
+  cb: (arg: string, options: ThemeOptions & { output: string }) => Promise<void>
 ) {
   program
     .command(`${cmd} <${cmd}>`)
