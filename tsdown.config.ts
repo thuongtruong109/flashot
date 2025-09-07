@@ -35,4 +35,5 @@ export default defineConfig({
   },
   outDir: "./dist",
   clean: true,
+  nodeProtocol: true,
 });

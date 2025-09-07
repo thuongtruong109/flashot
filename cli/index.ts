@@ -2,9 +2,9 @@
 
 import { writeFileSync } from "node:fs";
 import { Command } from "commander";
-import * as pkg from "../../package.json";
-import { bufferToImg, codeToImg, pathToImg, urlToImg } from "..";
-import { defaultOptions } from "../options";
+import * as pkg from "../package.json";
+import { bufferToImg, codeToImg, pathToImg, urlToImg } from "../src";
+import { defaultOptions } from "../src/options";
 import runCmd from "./cmd";
 import menu from "./menu";
 import getOptions, { type CliOptions } from "./option";
@@ -22,7 +22,7 @@ runCmd(
   async (code: string, option: CliOptions) => {
     const imageBuffer = await codeToImg(code, getOptions(option));
     writeFileSync(option.output, imageBuffer);
-  },
+  }
 );
 
 runCmd(
@@ -32,7 +32,7 @@ runCmd(
   async (path: string, option: CliOptions) => {
     const imageBuffer = await pathToImg(path, getOptions(option));
     writeFileSync(option.output, imageBuffer);
-  },
+  }
 );
 
 runCmd(
@@ -42,7 +42,7 @@ runCmd(
   async (url: string, option: CliOptions) => {
     const imageBuffer = await urlToImg(url, getOptions(option));
     writeFileSync(option.output, imageBuffer);
-  },
+  }
 );
 
 runCmd(
@@ -52,7 +52,7 @@ runCmd(
   async (hexstring: string, option: CliOptions) => {
     const imageBuffer = await bufferToImg(hexstring, getOptions(option));
     writeFileSync(option.output, imageBuffer);
-  },
+  }
 );
 
 program.parse(process.argv);

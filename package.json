@@ -41,7 +41,7 @@
     "publish": "npm publish && npx jsr publish --allow-dirty"
   },
   "bin": {
-    "flashot": "./src/cli/index.ts"
+    "flashot": "./cli/index.ts"
   },
   "flashot": "link:flashot",
   "files": [
@@ -54,6 +54,7 @@
     "snapshot",
     "snippets",
     "code-embed",
+    "nodejs",
     "bun",
     "typescript",
     "library",

@@ -129,7 +129,13 @@ export async function renderContainer(
   });
 }
 
-export const loadFont = async (font: string): Promise<ArrayBuffer> => {
+export const loadFont = async (
+  font: ArrayBuffer | string,
+): Promise<ArrayBuffer> => {
+  if (font instanceof ArrayBuffer) {
+    return font;
+  }
+
   const cachedFont = fontCache.get(font);
   if (cachedFont) {
     return cachedFont;

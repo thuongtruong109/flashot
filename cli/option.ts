@@ -1,11 +1,13 @@
 import { OutputFormat } from "@takumi-rs/core";
 import type { BundledLanguage, BundledTheme } from "shiki";
-import { defaultOptions } from "../options";
+import { defaultOptions } from "../src/options";
+import { ThemeOptions } from "../src/types";
 
 export interface CliOptions {
   output: string;
+
   lang: BundledLanguage | string;
-  theme: string;
+  theme: BundledTheme | string;
   font: string;
   fontRatio: string;
   width: string;
@@ -30,17 +32,25 @@ export interface CliOptions {
   highlightDepth: string;
 }
 
-export default function (cliOpts: CliOptions) {
+export default function (
+  cliOpts: CliOptions
+): Required<ThemeOptions> & { output: string } {
   return {
-    theme: cliOpts.theme as BundledTheme,
+    output: cliOpts.output,
     lang: cliOpts.lang as BundledLanguage,
+    theme: cliOpts.theme as BundledTheme,
     font: cliOpts.font,
     fontRatio: Number.parseFloat(cliOpts.fontRatio),
-    width: Number.parseInt(cliOpts.width) || 800,
-    height: Number.parseInt(cliOpts.height) || 600,
+    width: Number.parseInt(cliOpts.width) || defaultOptions.width,
+    height: Number.parseInt(cliOpts.height) || defaultOptions.height,
     quality: Number.parseInt(cliOpts.quality),
-    bg: cliOpts.bg === "transparent" ? "transparent" : cliOpts.bg,
+    bg: cliOpts.bg
+      ? cliOpts.bg === "transparent"
+        ? "transparent"
+        : cliOpts.bg
+      : defaultOptions.bg,
     gap: Number.parseInt(cliOpts.gap),
+    format: (cliOpts.format as OutputFormat) || OutputFormat.WebP,
     style: {
       padding: Number.parseInt(cliOpts.padding),
       borderRadius: Number.parseInt(cliOpts.borderRadius),
@@ -58,7 +68,5 @@ export default function (cliOpts: CliOptions) {
       at: Number.parseInt(cliOpts.highlightAt),
       depth: defaultOptions.highlight.depth,
     },
-    output: cliOpts.output,
-    format: (cliOpts.format as OutputFormat) || OutputFormat.WebP,
   };
 }
