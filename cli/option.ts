@@ -1,7 +1,6 @@
 import type { BundledLanguage, BundledTheme } from "shiki";
 import { defaultOptions } from "../src/options";
 import { ThemeOptions } from "../src/types";
-import { OutputFormat } from "@takumi-rs/core";
 
 export default function (
   opts: ThemeOptions & { output: string }
@@ -20,7 +19,7 @@ export default function (
         : opts.bg
       : defaultOptions.bg,
     gap: Number.parseInt(String(opts.gap)) || defaultOptions.gap,
-    format: (opts.format as OutputFormat) || defaultOptions.format,
+    format: opts.format || defaultOptions.format,
     style: {
       padding:
         Number.parseInt(String(opts.style?.padding)) ||

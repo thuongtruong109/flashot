@@ -29,9 +29,9 @@
 
 ## ✨ Features
 
-- **Used from CLI:** Use Flashot as a command-line tool for quick image generation
-- **Used from import:** Use Flashot as an importable module in your code:
-  - 💻 **Inline code support:** Easily convert inline code snippets to images
+- 🖥️ **Used from CLI:** Use Flashot as a command-line tool for quick image generation
+- 📥 **Used from import:** Use Flashot as an importable module in your code:
+  - 👩‍💻 **Inline code support:** Easily convert inline code snippets to images
   - 🌐 **URL support:** Fetch code snippets directly from URLs
   - 🗂️ **File path support:** Convert code snippets from local files
   - 🗃️ **Buffer support:** Convert code snippets from buffers
@@ -39,8 +39,8 @@
 - 📦 **Lightweight:** Minimal dependencies to keep your project lean
 - 📏 **Line numbers:** Support for displaying & customizing line numbers
 - 🖍️ **Highlighting:** Support for custom syntax highlighting
-- 🗂️ **Render caching:** Efficiently handles caching for improved performance (render, tokens, sizes, fonts)
-- 🪓 **Multi-format support:** Generate images in various formats (PNG, JPEG, WebP)
+- 🗄️ **Render caching:** Efficiently handles caching for improved performance (render, tokens, sizes, fonts)
+- 🪓 **Multi-format support:** Generate images in various formats (png, jpeg, webp, avif)
 - 🖼️ **High-quality output:** Generates crisp and clear images which keep the original code's formatting intact
 - ⚡ **Blazing fast:** Optimized for speed, ensuring quick image generation
 - 🛠️ **Easy to use:** Easy to integrate into your projects with a simple API
@@ -98,7 +98,7 @@ await writeFile("inline.webp", buffer);
 or with CLI
 
 ```bash
-flashot code "console.log('Hello world')"
+flashot code "console.log('Hello world')" <...options>
 ```
 
 ##### For raw content url
@@ -107,14 +107,17 @@ flashot code "console.log('Hello world')"
 import { writeFile } from "node:fs/promises";
 import { urlToImg } from "flashot";
 
-const buffer = await urlToImg(
-  "https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json",
-  {
-    /* add more options*/
-    format: OutputFormat.Png,
-  }
-);
+const buffer = await urlToImg("https://randomfox.ca/floof", {
+  /* add more options*/
+  format: OutputFormat.Png,
+});
 await writeFile("url.png", buffer);
+```
+
+or with CLI
+
+```bash
+flashot url "https://randomfox.ca/floof" <...options>
 ```
 
 ##### For buffer
@@ -131,6 +134,12 @@ const img = await bufferToImg(buffer, {
 await writeFile("buffer.png", img);
 ```
 
+or with CLI
+
+```bash
+flashot buffer "<Buffer 54 68 69 73 20 69 73 20 61 20 62 75 66 66 65 72 20 65 78 61 6d 70 6c 65 2e>" <...options>
+```
+
 ##### For path dir
 
 ```js
@@ -143,7 +152,52 @@ const img = await pathToImg("../package.json", {
 await writeFile("path.png", img);
 ```
 
+or with CLI
+
+```bash
+flashot path "../package.json" <...options>
+```
+
 👉 Then you can use the `buffer` to display the image or send it in a response.
+
+## 🛠 CLI️
+
+```bash
+Usage: flashot [command] [options]
+
+Commands:
+  code <code>                           Convert code string to image
+  file <file>                           Convert code file to image
+  url <url>                             Convert code from URL to image
+  buffer <buffer>                       Convert hex buffer string to image
+  help [command]                        display help for command
+
+Options:
+  -V, --version                         output the version number
+  -o, --output <file>                   output image file path (default: "tmp.webp")
+  -l, --lang <language>                 programming language (default: "js")
+  -t, --theme <theme>                   syntax highlighting theme (default: "dracula")
+  -f, --font <font>                     font family to use (default: "https://fonts.bunny.net/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2")
+  --format <format>                     output image format (png, jpeg, webp, avif) (default: "webp")
+  -q, --quality <percent>               image quality (1-100) (only for jpeg) (default: "100")
+  -g, --gap <pixels>                    gap between lines (default: "1")
+  -p, --style-padding <pixels>          padding around code (default: "25")
+  --style-border-radius <pixels>        border radius (default: "8")
+  -b, --bg <color>                      background color (default: "not needed!")
+  -w, --width <pixels>                  image width (default: "not needed!")
+  -H, --height <pixels>                     image height (default: "not needed!")
+  -L, --line-numbers-enabled                enable line numbers (default: false)
+  --line-numbers-start-from <number>    line number start (default: "1")
+  --line-numbers-color <color>          line number color (default: "#7b7f8b")
+  --line-numbers-margin-right <pixels>  line number margin right (default: "0")
+  --highlight-enabled                   enable line highlighting (default: false)
+  --highlight-background-color <color>  highlight background color (default: "#347faa23")
+  --highlight-border-radius <pixels>    highlight border radius (default: "0")
+  --highlight-at <line>                 highlight line number (default: "1")
+  --highlight-depth <number>            highlight depth (shadow effect) (default: "1")
+  -v, --verbose                         enable verbose output
+  -h, --help                            display help for command
+```
 
 ## ⚙️ API Options (default is not needed)
 
@@ -153,7 +207,7 @@ const defaultOptions = {
   theme: "ayu-dark", // default is github-dark
   font: "https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2", // default is bunny.net/jetbrains-mono.
   format: "png", // default is "webp" (options: png, jpeg, webp, avif)
-  quality: 100, // default is 100 (1-100), only applies to JPEG formats
+  quality: 100, // default is 100 (1-100), only applies to jpeg formats
   width: 800, // default is system's width
   height: 400, // default is system's height
   bg: "transparent", // default is system's background

@@ -82,8 +82,9 @@ describe("main-test", () => {
   it("url", async () => {
     const img = await urlToImg("https://randomfox.ca/floof/", {
       font: Font.Abeezee,
+      format: "avif",
     });
-    await exportImg("url.webp", img);
+    await exportImg("url.avif", img);
   });
 
   it("buffer", async () => {

@@ -1,11 +1,11 @@
 import type { Command } from "commander";
-import * as pkg from "../package.json";
 import type { ThemeOptions } from "../src/types";
 import { defaultOptions } from "../src/options";
 
 const createFlattenedCliKeys = () => {
   const flatKeys = {
     output: null,
+    format: null,
     ...Object.keys(defaultOptions).reduce((acc, key) => {
       const value = defaultOptions[key as keyof ThemeOptions];
       if (
@@ -36,6 +36,12 @@ const CLI_OPTIONS_CONFIG = [
     getDefault: () => "tmp.webp",
   },
   {
+    shortFlag: "-F",
+    argName: "<format>",
+    description: "output image format (png, jpeg, webp, avif)",
+    getDefault: () => "webp",
+  },
+  {
     shortFlag: "-l",
     argName: "<language>",
     description: "programming language",
@@ -53,11 +59,6 @@ const CLI_OPTIONS_CONFIG = [
     description: "font family to use",
     getDefault: (opts: Required<ThemeOptions>) =>
       typeof opts.font === "string" ? opts.font : undefined,
-  },
-  {
-    argName: "<format>",
-    description: "output image format (Png, Jpeg, WebP)",
-    getDefault: (opts: Required<ThemeOptions>) => opts.format,
   },
   {
     shortFlag: "-q",
@@ -79,6 +80,7 @@ const CLI_OPTIONS_CONFIG = [
       opts.style.padding?.toString(),
   },
   {
+    shortFlag: "-r",
     argName: "<pixels>",
     description: "border radius",
     getDefault: (opts: Required<ThemeOptions>) =>
@@ -91,17 +93,19 @@ const CLI_OPTIONS_CONFIG = [
     getDefault: () => "not needed!",
   },
   {
-    shortFlag: "-w",
+    shortFlag: "-W",
     argName: "<pixels>",
     description: "image width",
     getDefault: () => "not needed!",
   },
   {
+    shortFlag: "-H",
     argName: "<pixels>",
     description: "image height",
     getDefault: () => "not needed!",
   },
   {
+    shortFlag: "-L",
     description: "enable line numbers",
     getDefault: (opts: Required<ThemeOptions>) => opts.lineNumbers.enabled,
   },
@@ -171,8 +175,6 @@ export default (program: Command) => {
     const defaultValue = config.getDefault(defaultOptions);
     program.option(flags, config.description, defaultValue);
   });
-
-  program.option("-v, --verbose", "enable verbose output", pkg.version);
 
   return program;
 };

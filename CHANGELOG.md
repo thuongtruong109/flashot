@@ -2,8 +2,8 @@
 
 ### 🚀 Features
 
-- **url**: auto parse response fetched data for JSON type - by @thuongtruong109 [<samp>()</samp>]()
-- **utils**: support export image as avif format - by @thuongtruong109 [<samp>()</samp>]()
+- **url**: auto parse response fetched data for JSON type - by @thuongtruong109 [<samp>(dc8d7)</samp>](https://github.com/thuongtruong109/flashot/commit/dc8d751abf160fede96057c73316346742fe98fc)
+- **utils**: support export image as avif format - by @thuongtruong109 [<samp>(dc8d7)</samp>](https://github.com/thuongtruong109/flashot/commit/dc8d751abf160fede96057c73316346742fe98fc)
 - **feat**: Add CLI support - by @thuongtruong109 [<samp>(d9a82)</samp>](https://github.com/thuongtruong109/flashot/commit/d9a82ecf766468c7c958e9eb47efad3ca37871e0)
 - **docs**: Add tag symbol documentation jsr - by @thuongtruong109 [<samp>(34821)</samp>](https://github.com/thuongtruong109/flashot/commit/34821b2e2da1fd1f07be77efb12bc17c074d68cb)
 - **style**: Support for custom syntax highlighting - by @thuongtruong109 [<samp>(724d1)</samp>](https://github.com/thuongtruong109/flashot/commit/724d1ec05c228c2d3cfeac874f31b294833371ea)
@@ -52,8 +52,8 @@
 ### 🚀 Features
 
 - **refactor**: Modularize refactor code - by @thuongtruong109 [<samp>(f7332)</samp>](https://github.com/thuongtruong109/flashot/commit/f7332a493590b8f74485da727b7d54e23decb614)
-- **format**: Image generation format choice (WebP, Png, Jpeg)
-- **quality**: Quality setting for Jpeg images
+- **format**: Image generation format choice (webp, png, jpeg)
+- **quality**: Quality setting for jpeg images
 - **tokens**: Define tokens style (ThemedToken)
 - **font**: Change default font family (JetBrains Mono)
 
