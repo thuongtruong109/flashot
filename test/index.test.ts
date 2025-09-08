@@ -1,9 +1,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { OutputFormat } from "@takumi-rs/core";
 import { describe, it } from "vitest";
-import { bufferToImg, codeToImg, pathToImg, urlToImg } from "../src";
+import { bufferToImg, codeToImg, Font, pathToImg, urlToImg } from "../src";
 import { CacheManager } from "../src/cache";
 
 const exportImg = async (name: string, file: Buffer<ArrayBufferLike>) => {
@@ -38,7 +37,6 @@ describe("main-test", () => {
 </html>`;
     const img = await codeToImg(sampleCode, {
       lang: "html",
-      format: OutputFormat.WebP,
       lineNumbers: {
         enabled: true,
       },
@@ -59,7 +57,7 @@ describe("main-test", () => {
     const img = await codeToImg(sampleCode, {
       lang: "go",
       bg: "transparent",
-      format: OutputFormat.Png,
+      format: "png",
       gap: 2,
       style: {
         padding: 40,
@@ -82,9 +80,9 @@ describe("main-test", () => {
   });
 
   it("url", async () => {
-    const img = await urlToImg(
-      "https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json",
-    );
+    const img = await urlToImg("https://randomfox.ca/floof/", {
+      font: Font.Abeezee,
+    });
     await exportImg("url.webp", img);
   });
 
@@ -105,7 +103,7 @@ describe("main-test", () => {
     console.log("Cache stats (before):", cache.stats());
 
     const img = await codeToImg(`console.log("Hello, world!");`, {
-      format: OutputFormat.Jpeg,
+      format: "jpeg",
       quality: 50,
     });
     await exportImg("cache.jpeg", img);

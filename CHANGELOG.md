@@ -1,12 +1,18 @@
-## [v1.3.1 - 2025-09-07](https://github.com/thuongtruong109/flashot/releases/tag/v1.3.1)
+## [v1.4.0 - 2025-09-08](https://github.com/thuongtruong109/flashot/releases/tag/v1.4.0)
 
 ### 🚀 Features
 
-- **style**: Support for custom syntax highlighting - by @thuongtruong109 [<samp>(724d1)</samp>](https://github.com/thuongtruong109/flashot/commit/724d1ec05c228c2d3cfeac874f31b294833371ea)
+- **url**: auto parse response fetched data for JSON type - by @thuongtruong109 [<samp>()</samp>]()
+- **utils**: support export image as avif format - by @thuongtruong109 [<samp>()</samp>]()
+- **feat**: Add CLI support - by @thuongtruong109 [<samp>(d9a82)</samp>](https://github.com/thuongtruong109/flashot/commit/d9a82ecf766468c7c958e9eb47efad3ca37871e0)
 - **docs**: Add tag symbol documentation jsr - by @thuongtruong109 [<samp>(34821)</samp>](https://github.com/thuongtruong109/flashot/commit/34821b2e2da1fd1f07be77efb12bc17c074d68cb)
-- **cli**: auto bind flags from type - by @thuongtruong109 [<samp>()</samp>]()
+- **style**: Support for custom syntax highlighting - by @thuongtruong109 [<samp>(724d1)</samp>](https://github.com/thuongtruong109/flashot/commit/724d1ec05c228c2d3cfeac874f31b294833371ea)
 
-##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v1.3.0...v1.3.1) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v1.3.1)
+### 🐞 Bug Fixes
+
+- **cli**: auto bind flags from type - by @thuongtruong109 [<samp>(97746)</samp>](https://github.com/thuongtruong109/flashot/commit/977466249d82c1797ced489ca0688b1758623c89)
+
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v1.3.0...v1.4.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v1.4.0)
 
 ## [v1.3.0 - 2025-08-30](https://github.com/thuongtruong109/flashot/releases/tag/v1.3.0)
 

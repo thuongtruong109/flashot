@@ -1,4 +1,3 @@
-import { OutputFormat } from "@takumi-rs/core";
 import type { ThemeOptions } from "./types";
 
 export const Font = {
@@ -6,6 +5,8 @@ export const Font = {
     "https://fonts.bunny.net/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2",
   UbuntuSansMono:
     "https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2",
+  Abeezee:
+    "https://fonts.bunny.net/abeezee/files/abeezee-latin-400-normal.woff2",
 };
 
 export const defaultAutoOptions = {
@@ -31,7 +32,7 @@ export const defaultOptions: Required<ThemeOptions> = {
   lang: "js",
   theme: "dracula",
   font: Font.JetBrainsMono,
-  format: OutputFormat.WebP,
+  format: "webp",
   quality: 100,
   gap: 1,
   style: {

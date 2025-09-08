@@ -1,6 +1,5 @@
 import type { BundledLanguage, BundledTheme } from "shiki";
 import type { PartialStyle } from "@takumi-rs/helpers";
-import { OutputFormat } from "@takumi-rs/core";
 
 export type ShikiToken = {
   content: string;
@@ -41,7 +40,7 @@ export type ThemeOptions = {
   height?: number;
   bg?: string;
   gap?: number;
-  format?: OutputFormat.WebP | OutputFormat.Jpeg | OutputFormat.Png;
+  format?: "webp" | "avif" | "png" | "jpeg" | "WebP" | "Avif" | "Jpeg" | "Png";
   quality?: number;
   style?: PartialStyle & {
     padding?: number;

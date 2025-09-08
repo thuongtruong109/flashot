@@ -152,7 +152,7 @@ const defaultOptions = {
   lang: "ts", // default is javascript
   theme: "ayu-dark", // default is github-dark
   font: "https://fonts.bunny.net/ubuntu-sans-mono/files/ubuntu-sans-mono-latin-400-normal.woff2", // default is bunny.net/jetbrains-mono.
-  format: OutputFormat.Png, // default is OutputFormat.Webp (options: OutputFormat.Png, OutputFormat.Jpeg, OutputFormat.Webp)
+  format: "png", // default is "webp" (options: png, jpeg, webp, avif)
   quality: 100, // default is 100 (1-100), only applies to JPEG formats
   width: 800, // default is system's width
   height: 400, // default is system's height
@@ -183,8 +183,8 @@ const defaultOptions = {
 | ------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | `lang`        | Code language ([supported](https://shiki.style/languages))                               | `"js"`                                                                                                 |
 | `theme`       | Rendering theme ([supported](https://shiki.style/themes))                                | `"github-dark"`                                                                                        |
-| `font`        | Font for rendering (URL or ArrayBuffer)                                                  | [`Jetbrains Mono`](https://fonts.bunny.net/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2) |
-| `format`      | Output image format (`OutputFormat.Png`, `OutputFormat.Jpeg`, `OutputFormat.Webp`)       | `OutputFormat.Webp`                                                                                    |
+| `font`        | Font for rendering (URL/Buffer/ArrayBuffer)                                              | [`Jetbrains Mono`](https://fonts.bunny.net/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2) |
+| `format`      | Output image format (`png`, `jpeg`, `webp`, `avif`)                                      | `webp`                                                                                                 |
 | `quality`     | Image quality (1-100) for JPEG formats                                                   | `100`                                                                                                  |
 | `width`       | Image width                                                                              | System default                                                                                         |
 | `height`      | Image height                                                                             | System default                                                                                         |
@@ -228,6 +228,7 @@ const defaultOptions = {
 - 🔥 **[ESLint](https://eslint.org/)** - Advanced linting with TypeScript and SonarJS rules
 - 🧩 **[Lefthook](https://github.com/evilmartians/lefthook)** and **[Commitlint](https://commitlint.js.org/)** - Automated Git hooks for linting and formatting
 - 🛠️ **[Tinybench](https://github.com/tinybench/tinybench)** - A tiny benchmarking library for measuring performance
+- 🖥️ **[Commander](https://github.com/tj/commander.js)** - A popular library for building command-line interfaces
 
 ## 🤝 Contributing
 

@@ -99,7 +99,16 @@ export async function urlToImg(
     const res = await fetch(url, {
       mode: "no-cors",
     });
-    const data2 = await res.text();
+    const contentType = res.headers.get("content-type") || "";
+
+    let data2: string;
+
+    if (contentType.includes("application/json")) {
+      const jsonData = await res.json();
+      data2 = JSON.stringify(jsonData, null, 2);
+    } else {
+      data2 = await res.text();
+    }
     return codeToImg(data2, options);
   } catch (err) {
     console.error(err);

@@ -5,7 +5,7 @@ import type { CoreOptions, ThemeOptions, TokenData } from "./types";
 
 export const lineNumberWidthCache = new Map<number, number>();
 export const tokenCache = new Map<string, TokenData>();
-export const fontCache = new Map<string, Promise<ArrayBuffer>>();
+export const fontCache = new Map<string, Promise<Buffer>>();
 export const sizeCache = new Map<
   string,
   { width: number; height: number; timestamp: number }
@@ -130,18 +130,27 @@ export async function renderContainer(
 }
 
 export const loadFont = async (
-  font: ArrayBuffer | string,
-): Promise<ArrayBuffer> => {
+  font: ArrayBuffer | string | Buffer,
+): Promise<Buffer> => {
   if (font instanceof ArrayBuffer) {
+    return Buffer.from(font);
+  }
+
+  if (Buffer.isBuffer(font)) {
     return font;
   }
 
   const cachedFont = fontCache.get(font);
   if (cachedFont) {
-    return cachedFont;
+    try {
+      return await cachedFont;
+    } catch (error) {
+      fontCache.delete(font);
+      throw error;
+    }
   }
 
-  const fontPromise = (async () => {
+  const fontPromise = (async (): Promise<Buffer> => {
     try {
       const response = await fetch(font, {
         mode: "no-cors",
@@ -154,15 +163,33 @@ export const loadFont = async (
         );
       }
 
-      return response.arrayBuffer();
+      const arrayBuffer = await response.arrayBuffer();
+
+      if (arrayBuffer.byteLength === 0) {
+        throw new Error("Font data is empty");
+      }
+
+      return Buffer.from(arrayBuffer);
     } catch (error) {
       fontCache.delete(font);
-      throw error;
+      throw new Error(
+        `Failed to load font from "${font}": ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
     }
   })();
 
+  if (fontCache.size >= 10) {
+    const firstKey = fontCache.keys().next().value;
+    if (firstKey) {
+      fontCache.delete(firstKey);
+    }
+  }
+
   fontCache.set(font, fontPromise);
-  return fontPromise;
+  const arrayBuffer = await fontPromise;
+  return Buffer.from(arrayBuffer);
 };
 
 export function renderSize(
