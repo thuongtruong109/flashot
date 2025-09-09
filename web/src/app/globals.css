@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom styles for syntax highlighting */
+.syntax-comment {
+  color: var(--syntax-comment);
+}
+
+.syntax-keyword {
+  color: var(--syntax-keyword);
+  font-weight: bold;
+}
+
+.syntax-string {
+  color: var(--syntax-string);
+}
+
+.syntax-number {
+  color: var(--syntax-number);
+}
+
+.syntax-function {
+  color: var(--syntax-function);
+}
+
+.syntax-operator {
+  color: var(--syntax-operator);
+}
+
+/* Theme variables */
+.theme-dark {
+  --syntax-comment: #6a9955;
+  --syntax-keyword: #569cd6;
+  --syntax-string: #ce9178;
+  --syntax-number: #b5cea8;
+  --syntax-function: #dcdcaa;
+  --syntax-operator: #d4d4d4;
+}
+
+.theme-light {
+  --syntax-comment: #008000;
+  --syntax-keyword: #0000ff;
+  --syntax-string: #a31515;
+  --syntax-number: #098658;
+  --syntax-function: #795e26;
+  --syntax-operator: #333333;
+}
+
+.theme-monokai {
+  --syntax-comment: #75715e;
+  --syntax-keyword: #f92672;
+  --syntax-string: #e6db74;
+  --syntax-number: #ae81ff;
+  --syntax-function: #a6e22e;
+  --syntax-operator: #f8f8f2;
+}
+
+.theme-github {
+  --syntax-comment: #6a737d;
+  --syntax-keyword: #d73a49;
+  --syntax-string: #032f62;
+  --syntax-number: #005cc5;
+  --syntax-function: #6f42c1;
+  --syntax-operator: #24292e;
+}
+
+/* Inline editing styles */
+.code-editor-container {
+  position: relative;
+}
+
+.code-editor-textarea {
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+}
+
+.code-editor-textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Smooth transitions for editing mode */
+.editing-transition {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Keyboard shortcut styling */
+kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  color: #374151;
+}
+
+/* Hover effect for clickable code */
+.code-clickable {
+  cursor: text;
+  transition: background-color 0.2s ease;
+}
+
+.code-clickable:hover {
+  background-color: rgba(59, 130, 246, 0.05);
+}
