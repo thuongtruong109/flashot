@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://flashot.dev/sitemap.xml",
+    sitemap: "https://flashot.vercel.app/sitemap.xml",
   };
 }

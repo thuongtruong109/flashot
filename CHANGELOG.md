@@ -1,8 +1,13 @@
-<!-- ## [v1.5.0](https://github.com/thuongtruong109/flashot/releases/tag/v1.5.0)
+## v1.5.0
 
 ### 🚀 Features
 
-##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v1.4.0...v1.5.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v1.5.0) -->
+- **web**: Add sample deployment webpage - by @thuongtruong109 [<samp>(46c26)</samp>](https://github.com/thuongtruong109/flashot/commit/46c26cdf4127e5b2a01e5bc48945975e9c3aff18)
+- **refactor**: Refactor codebase to workspace monorepo - by @thuongtruong109 [<samp>(c019d)</samp>](https://github.com/thuongtruong109/flashot/commit/c019d61bfd82c01293563139ba13d5e59a2f443f)
+
+### 🐞 Bug Fixes
+
+- **web**: toggle setting slate sheet, re-arrange layout button
 
 ## [v1.4.0 - 2025-09-09](https://github.com/thuongtruong109/flashot/releases/tag/v1.4.0)
 
