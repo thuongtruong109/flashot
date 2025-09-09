@@ -1,4 +1,10 @@
-## [v1.4.0 - 2025-09-08](https://github.com/thuongtruong109/flashot/releases/tag/v1.4.0)
+<!-- ## [v1.5.0](https://github.com/thuongtruong109/flashot/releases/tag/v1.5.0)
+
+### 🚀 Features
+
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v1.4.0...v1.5.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v1.5.0) -->
+
+## [v1.4.0 - 2025-09-09](https://github.com/thuongtruong109/flashot/releases/tag/v1.4.0)
 
 ### 🚀 Features
 

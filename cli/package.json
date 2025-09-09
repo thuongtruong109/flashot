@@ -1,0 +1,68 @@
+{
+  "name": "@flashot/cli",
+  "description": "📟 Rapidly snapshot code snippets as images",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "tsdown"
+  },
+  "bin": {
+    "flashot": "./dist/index.ts"
+  },
+  "flashot": "link:flashot",
+  "files": [
+    "dist",
+    "package.json",
+    "tsconfig.json"
+  ],
+  "keywords": [
+    "flashot",
+    "@flashot/cli",
+    "code2img",
+    "code-to-image",
+    "snapshot",
+    "snippets",
+    "code-embed",
+    "cli",
+    "nodejs",
+    "bun",
+    "typescript",
+    "library",
+    "npm",
+    "jsr"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/thuongtruong109/flashot",
+  "funding": "https://github.com/sponsors/thuongtruong109",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thuongtruong109/flashot.git"
+  },
+  "bugs": "https://github.com/thuongtruong109/flashot/issues",
+  "author": "Tran Nguyen Thuong Truong <thuongtruongofficial@gmail.com>",
+  "devDependencies": {
+    "@types/bun": "catalog:",
+    "tsdown": "^0.14.2",
+    "flashot": "workspace:*"
+  },
+  "dependencies": {
+    "commander": "^14.0.0"
+  }
+}

@@ -2,11 +2,11 @@
 
 import { writeFileSync } from "node:fs";
 import { Command } from "commander";
+import { bufferToImg, codeToImg, pathToImg, urlToImg } from "../../package/src";
+import type { ThemeOptions } from "../../package/src/types";
 import * as pkg from "../package.json";
-import { bufferToImg, codeToImg, pathToImg, urlToImg } from "../src";
 import runCmd from "./cmd";
 import menu from "./menu";
-import { ThemeOptions } from "../src/types";
 import getOptions from "./option";
 
 const program = new Command();
@@ -22,7 +22,7 @@ runCmd(
   async (code: string, option: ThemeOptions & { output: string }) => {
     const imageBuffer = await codeToImg(code, getOptions(option));
     writeFileSync(option.output, imageBuffer);
-  }
+  },
 );
 
 runCmd(
@@ -32,7 +32,7 @@ runCmd(
   async (path: string, option: ThemeOptions & { output: string }) => {
     const imageBuffer = await pathToImg(path, getOptions(option));
     writeFileSync(option.output, imageBuffer);
-  }
+  },
 );
 
 runCmd(
@@ -42,7 +42,7 @@ runCmd(
   async (url: string, option: ThemeOptions & { output: string }) => {
     const imageBuffer = await urlToImg(url, getOptions(option));
     writeFileSync(option.output, imageBuffer);
-  }
+  },
 );
 
 runCmd(
@@ -52,7 +52,7 @@ runCmd(
   async (hexstring: string, option: ThemeOptions & { output: string }) => {
     const imageBuffer = await bufferToImg(hexstring, getOptions(option));
     writeFileSync(option.output, imageBuffer);
-  }
+  },
 );
 
 program.parse(process.argv);

@@ -1,9 +1,5 @@
 node_modules
-dist
 .idea
-coverage
 *.log
 .DS_Store
-.test-cache
-tmp.webp
 api

@@ -1,28 +1,31 @@
 import type { Command } from "commander";
-import type { ThemeOptions } from "../src/types";
-import { defaultOptions } from "../src/options";
+import { defaultOptions } from "../../package/src/options";
+import type { ThemeOptions } from "../../package/src/types";
 
 const createFlattenedCliKeys = () => {
   const flatKeys = {
     output: null,
     format: null,
-    ...Object.keys(defaultOptions).reduce((acc, key) => {
-      const value = defaultOptions[key as keyof ThemeOptions];
-      if (
-        typeof value === "object" &&
-        value !== null &&
-        !Array.isArray(value)
-      ) {
-        Object.keys(value).forEach((nestedKey) => {
-          acc[
-            `${key}${nestedKey.charAt(0).toUpperCase()}${nestedKey.slice(1)}`
-          ] = null;
-        });
-      } else {
-        acc[key] = null;
-      }
-      return acc;
-    }, {} as Record<string, null>),
+    ...Object.keys(defaultOptions).reduce(
+      (acc, key) => {
+        const value = defaultOptions[key as keyof ThemeOptions];
+        if (
+          typeof value === "object" &&
+          value !== null &&
+          !Array.isArray(value)
+        ) {
+          Object.keys(value).forEach((nestedKey) => {
+            acc[
+              `${key}${nestedKey.charAt(0).toUpperCase()}${nestedKey.slice(1)}`
+            ] = null;
+          });
+        } else {
+          acc[key] = null;
+        }
+        return acc;
+      },
+      {} as Record<string, null>,
+    ),
   };
 
   return flatKeys;

@@ -8,12 +8,16 @@
   "files": {
     "ignoreUnknown": false,
     "includes": [
-      "src/**",
-      "test/**",
       "*.{js,ts,json}",
+      "package/src/**",
+      "package/test/**",
+      "package/*.{js,ts,json}",
+      "package/*.config.ts",
+      "cli/src/**",
+      "cli/*.{js,ts,json}",
+      "cli/*.config.ts",
       ".config/eslint.config.ts",
-      ".config/commitlint.config.ts",
-      "*.config.ts"
+      ".config/commitlint.config.ts"
     ]
   },
   "formatter": {

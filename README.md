@@ -24,7 +24,7 @@
 
 **Super fast:** (generated in **~135ms**)
 
-  <img src="./test/.snapshot/demo.webp" alt="Example output" />
+  <img src="./package/test/.snapshot/demo.webp" alt="Example output" />
 </div>
 
 ## ✨ Features
@@ -51,6 +51,8 @@
 
 ## 📦 Installation
 
+### ⚙️ For API usage, install via your favorite package manager:
+
 ```bash
 npm install flashot
 ```
@@ -75,6 +77,12 @@ deno add jsr:@thuongtruong109/flashot
 npx jsr add @thuongtruong/flashot
 ```
 
+### 🛠 For CLI usage, install globally via npm:
+
+```bash
+npm install -g flashot
+```
+
 Then quick check from terminal with CLI runner
 
 ```bash
@@ -83,7 +91,9 @@ flashot -h
 
 ## 🪔 Usage Example
 
-##### For inline code
+### ⚙️ For API usage, you can import the functions from the package:
+
+##### Inline code
 
 ```js
 import { writeFile } from "node:fs/promises";
@@ -95,13 +105,7 @@ const buffer = await codeToImg('console.log("hello, world!");', {
 await writeFile("inline.webp", buffer);
 ```
 
-or with CLI
-
-```bash
-flashot code "console.log('Hello world')" <...options>
-```
-
-##### For raw content url
+##### Raw content url
 
 ```js
 import { writeFile } from "node:fs/promises";
@@ -114,13 +118,7 @@ const buffer = await urlToImg("https://randomfox.ca/floof", {
 await writeFile("url.png", buffer);
 ```
 
-or with CLI
-
-```bash
-flashot url "https://randomfox.ca/floof" <...options>
-```
-
-##### For buffer
+##### Buffer
 
 ```js
 import { writeFile } from "node:fs/promises";
@@ -134,13 +132,7 @@ const img = await bufferToImg(buffer, {
 await writeFile("buffer.png", img);
 ```
 
-or with CLI
-
-```bash
-flashot buffer "<Buffer 54 68 69 73 20 69 73 20 61 20 62 75 66 66 65 72 20 65 78 61 6d 70 6c 65 2e>" <...options>
-```
-
-##### For path dir
+##### Path dir
 
 ```js
 import { writeFile } from "node:fs/promises";
@@ -152,15 +144,35 @@ const img = await pathToImg("../package.json", {
 await writeFile("path.png", img);
 ```
 
-or with CLI
+### 🛠 For CLI usage, you can run the commands from your terminal:
+
+##### Inline code
+
+```bash
+flashot code "console.log('Hello world')" <...options>
+```
+
+##### Raw content url
+
+```bash
+flashot url "https://randomfox.ca/floof" <...options>
+```
+
+##### Buffer
+
+```bash
+flashot buffer "<Buffer 54 68 69 73 20 69 73 20 61 20 62 75 66 66 65 72 20 65 78 61 6d 70 6c 65 2e>" <...options>
+```
+
+##### Path dir
 
 ```bash
 flashot path "../package.json" <...options>
 ```
 
-👉 Then you can use the `buffer` to display the image or send it in a response.
+## Options
 
-## 🛠 CLI️
+### 🛠 CLI️ options
 
 ```bash
 Usage: flashot [command] [options]
@@ -199,7 +211,7 @@ Options:
   -h, --help                            display help for command
 ```
 
-## ⚙️ API Options (default is not needed)
+### ⚙️ API options (default is not needed)
 
 ```js
 const defaultOptions = {
@@ -306,5 +318,5 @@ Head over to the [discussions](https://github.com/thuongtruong109/flashot/discus
 <!-- https://github.com/pi0/shiki-image -->
 <!-- https://github.com/bunup/bunup -->
 <!-- https://github.com/pedro199288/bun-library-starter -->
-<!-- https://stackblitz.com/github/rolldown/tsdown-starter-stackblitz?file=tsconfig.json -->
+<!-- https://stackblitz.com/github/rolldown/tsdown-starter-stackblitz -->
 <!-- https://dev.to/sojida/building-command-line-interface-cli-tools-with-nodejs-4mob -->

@@ -1,0 +1,79 @@
+{
+  "name": "flashot",
+  "description": "📟 Rapidly snapshot code snippets as images",
+  "version": "1.4.1",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.js"
+  },
+  "scripts": {
+    "dev:vite": "vite build --watch",
+    "dev": "tsdown --watch",
+    "build:vite": "vite build",
+    "build": "tsdown",
+    "t": "npm test -- -t",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "bench": "bun run benchmark.ts",
+    "publish": "npm publish && npx jsr publish --allow-dirty"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "tsconfig.json"
+  ],
+  "keywords": [
+    "flashot",
+    "code2img",
+    "code-to-image",
+    "snapshot",
+    "snippets",
+    "code-embed",
+    "nodejs",
+    "bun",
+    "typescript",
+    "library",
+    "npm",
+    "jsr"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/thuongtruong109/flashot",
+  "funding": "https://github.com/sponsors/thuongtruong109",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thuongtruong109/flashot.git"
+  },
+  "bugs": "https://github.com/thuongtruong109/flashot/issues",
+  "author": "Tran Nguyen Thuong Truong <thuongtruongofficial@gmail.com>",
+  "devDependencies": {
+    "@types/bun": "catalog:",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "happy-dom": "^18.0.1",
+    "tinybench": "^5.0.1",
+    "tsdown": "^0.14.2",
+    "vite": "^7.1.5",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@takumi-rs/core": "^0.29.7",
+    "@takumi-rs/helpers": "^0.29.7",
+    "shiki": "^3.12.2"
+  }
+}

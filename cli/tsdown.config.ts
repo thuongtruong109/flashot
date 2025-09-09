@@ -5,33 +5,23 @@ import pkg from "./package.json";
 
 const license = readFileSync(resolve(import.meta.dirname, "LICENSE"), "utf-8");
 
-export const config = {
-  entry: "./src/index.ts",
-  external: [
-    "node:fs",
-    "node:path",
-    "shiki",
-    "@takumi-rs/core",
-    "@takumi-rs/helpers",
-  ],
-  banner: `/**
+const banner = `/**
  * ${pkg.name} v${pkg.version} ${license
    .split("\n")
    .map((line) => ` * ${line}`.trimEnd())
    .join("\n")}
- */`,
-};
+ */`;
 
 export default defineConfig({
-  entry: [config.entry, "./cli/index.ts"],
+  entry: ["./src/index.ts"],
   format: ["es", "cjs"],
   platform: "node",
   dts: true,
   sourcemap: true,
   minify: true,
-  external: config.external,
+  external: ["node:fs", "commander"],
   banner: {
-    js: config.banner,
+    js: banner,
   },
   clean: true,
   nodeProtocol: true,

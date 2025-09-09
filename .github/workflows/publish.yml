@@ -52,12 +52,14 @@ jobs:
 
       - name: Install dependencies and build
         if: ${{ inputs.jsr || inputs.npm }}
+        working-directory: package
         run: |
           bun install
           bun run build
 
       - name: Publish to JSR
         if: ${{ inputs.jsr }}
+        working-directory: package
         run: bunx jsr publish --allow-dirty
 
       - name: Setup npm registry
@@ -66,4 +68,5 @@ jobs:
 
       - name: Publish to npm
         if: ${{ inputs.npm }}
+        working-directory: package
         run: bun run --bun npm publish --provenance --access public

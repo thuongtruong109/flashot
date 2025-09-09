@@ -3,8 +3,20 @@ name: CI
 on:
   push:
     branches: [main]
+    paths:
+      - ".config/**"
+      - ".github/workflows/*"
+      - "bun.lockb"
+      - "package.json"
+      - "package/**"
   pull_request:
     branches: [main]
+    paths:
+      - ".config/**"
+      - ".github/workflows/*"
+      - "bun.lockb"
+      - "package.json"
+      - "package/**"
 
 jobs:
   test:
@@ -28,10 +40,12 @@ jobs:
           key: ${{ runner.os }}-bun-${{ hashFiles('bun.lockb') }}
 
       - name: Install dependencies
+        working-directory: package
         run: bun install
-
-      - name: Run tests
-        run: bun test
 
       - name: Lint and Format
         run: bun check
+
+      - name: Run tests
+        working-directory: package
+        run: bun test

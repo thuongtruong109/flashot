@@ -16,23 +16,7 @@ export type ThemeOptions = {
 };
 ```
 
-### 2. Code Highlighting/Selection
-
-Highlight specific lines or ranges:
-
-```bash
-# src/types.d.ts
-export type ThemeOptions = {
-  # ...existing options
-  highlight?: {
-    lines: number[];
-    color?: string;
-    backgroundColor?: string;
-  };
-};
-```
-
-### 3. Frame/Window Chrome
+### 2. Frame/Window Chrome
 
 Add macOS/Windows/VS Code-style window frames:
 
@@ -47,7 +31,7 @@ export type ThemeOptions = {
 };
 ```
 
-## 4. SVG Export
+## 3. SVG Export
 
 Add vector format support for scalable images:
 
@@ -56,7 +40,7 @@ Add vector format support for scalable images:
 format?: OutputFormat.WebP | OutputFormat.Png | OutputFormat.Jpeg | OutputFormat.Svg;
 ```
 
-### 5. Base64 Data URL Export
+### 4. Base64 Data URL Export
 
 Direct base64 string output for web embedding:
 
@@ -68,17 +52,7 @@ export async function codeToDataUrl(
 ): Promise<string>;
 ```
 
-### 6. CLI Tool
-
-Create a command-line interface:
-
-```bash
-# New file: src/cli.ts
-flashot --input="console.log('hello')" --output=image.png --theme=dracula
-flashot --file=script.js --theme=github-light --format=webp
-```
-
-### 7. Configuration File Support
+### 5. Configuration File Support
 
 Support for config files (`.flashotrc.json`):
 

@@ -1,9 +1,9 @@
 import type { BundledLanguage, BundledTheme } from "shiki";
-import { defaultOptions } from "../src/options";
-import { ThemeOptions } from "../src/types";
+import { defaultOptions } from "../../package/src/options";
+import type { ThemeOptions } from "../../package/src/types";
 
 export default function (
-  opts: ThemeOptions & { output: string }
+  opts: ThemeOptions & { output: string },
 ): Required<ThemeOptions> & { output: string } {
   return {
     output: opts.output,

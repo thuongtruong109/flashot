@@ -18,5 +18,5 @@ export default tseslint.config([
       "sonarjs/no-nested-conditional": "off",
     },
   },
-  globalIgnores(["dist/**/*", "api/**/*"]),
+  globalIgnores(["package/dist/**/*", "cli/dist/*", "api/**/*", "web/**/*"]),
 ]);

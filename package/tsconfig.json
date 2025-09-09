@@ -22,8 +22,9 @@
 
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noPropertyAccessFromIndexSignature": true
+    "noPropertyAccessFromIndexSignature": true,
+    "types": ["bun-types"]
   },
-  "include": ["src/**/*", "cli"],
-  "exclude": ["node_modules", "dist", "test"]
+  "include": ["./src/**/*"],
+  "exclude": ["./node_modules", "./dist", "./test"]
 }
