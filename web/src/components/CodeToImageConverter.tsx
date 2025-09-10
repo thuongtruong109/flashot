@@ -4,13 +4,13 @@ import React, { useState, useRef, useCallback } from "react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import { themes, copyToClipboard } from "@/utils";
 import { generateAndDownloadImage } from "@/lib/imageGenerator";
-import SettingsSheet from "./SettingsSheet";
-import JSONDataSection from "./JSONDataSection";
-import TipsModal from "./TipsModal";
-import CodeEditor from "./CodeEditor";
-import ActionBar from "./ActionBar";
-import Footer from "./Footer";
-import Brand from "./Brand";
+import SettingsSheet from "@/components/SettingsSheet";
+import JSONDataSection from "@/components/JSONDataSection";
+import TipsModal from "@/components/TipsModal";
+import CodeEditor from "@/components/CodeEditor";
+import ActionBar from "@/components/ActionBar";
+import Footer from "@/components/Footer";
+import Brand from "@/components/Brand";
 
 const defaultCode = `function fibonacci(n) {
   if (n <= 1) return n;
@@ -39,6 +39,8 @@ const CodeToImageConverter: React.FC = () => {
   const [showLineNumbers, setShowLineNumbers] = useState(true);
   const [showSettingsSheet, setShowSettingsSheet] = useState(false);
   const [showTipsModal, setShowTipsModal] = useState(false);
+  const [showJSONModal, setShowJSONModal] = useState(false);
+  const [fileName, setFileName] = useState("flashot-code-snippet");
   const codeRef = useRef<HTMLDivElement>(null);
 
   const updateSetting = <K extends keyof CodeSettings>(
@@ -79,7 +81,7 @@ const CodeToImageConverter: React.FC = () => {
         const success = await generateAndDownloadImage(
           codeRef.current,
           { ...settings, code },
-          `flashot-code-snippet.${format}`
+          `${fileName}.${format}`
         );
 
         if (!success) {
@@ -92,7 +94,7 @@ const CodeToImageConverter: React.FC = () => {
         setIsGenerating(false);
       }
     },
-    [code, settings]
+    [code, settings, fileName]
   );
 
   // Handle code changes from the CodeEditor component
@@ -130,19 +132,21 @@ const CodeToImageConverter: React.FC = () => {
 
       {/* Enhanced Header with glassmorphism effect */}
       <div className="relative bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-sm px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between py-4 lg:py-6 space-y-4 lg:space-y-0">
+        <div className="flex items-center justify-between py-2 lg:py-4">
           {/* Brand Component */}
-          <Brand size="lg" showVersion={true} />
+          <Brand size="sm" showVersion={true} />
 
           {/* Enhanced Action Bar */}
           <ActionBar
             onCopy={handleCopyCode}
             onDownload={handleDownloadImage}
             onShowSettings={() => setShowSettingsSheet(true)}
-            onShowJSON={handleCopyJSON}
+            onShowJSON={() => setShowJSONModal(true)}
             onShowTips={() => setShowTipsModal(true)}
             copySuccess={copySuccess}
             isGenerating={isGenerating}
+            fileName={fileName}
+            onFileNameChange={setFileName}
             className="w-full lg:w-auto"
           />
         </div>
@@ -160,6 +164,8 @@ const CodeToImageConverter: React.FC = () => {
                   onChange={handleCodeChange}
                   settings={settings}
                   showLineNumbers={showLineNumbers}
+                  fileName={fileName}
+                  onFileNameChange={setFileName}
                   className="w-full"
                 />
               </div>
@@ -185,8 +191,8 @@ const CodeToImageConverter: React.FC = () => {
         showLineNumbers={showLineNumbers}
         onCopyJSON={handleCopyJSON}
         copySuccess={jsonCopySuccess}
-        isOpen={false}
-        onClose={() => {}}
+        isOpen={showJSONModal}
+        onClose={() => setShowJSONModal(false)}
       />
 
       {/* Tips Modal Component */}

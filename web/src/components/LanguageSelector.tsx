@@ -52,65 +52,40 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
         Programming Language
       </label>
 
-      <div className="space-y-2">
-        {/* Popular Languages - Quick Select */}
-        <div className="grid grid-cols-4 gap-2 mb-4">
+      <select
+        value={selectedLanguage}
+        onChange={(e) => onLanguageChange(e.target.value as SupportedLanguage)}
+        className="space-y-2 w-full bg-white/80 border border-gray-200/50 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all font-medium text-gray-700"
+      >
+        <optgroup label="🔥 Popular Languages">
           {supportedLanguages.slice(0, 8).map((lang) => (
-            <button
-              key={lang.value}
-              onClick={() => onLanguageChange(lang.value)}
-              className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 flex flex-col items-center space-y-1 ${
-                selectedLanguage === lang.value
-                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
-                  : "bg-white/80 text-gray-700 hover:bg-white/90 border border-gray-200/50"
-              }`}
-            >
-              <span className="text-lg">{lang.icon}</span>
-              <span className="truncate w-full text-center">
-                {lang.label.split(" ")[0]}
-              </span>
-            </button>
+            <option key={lang.value} value={lang.value}>
+              {lang.icon} {lang.label}
+            </option>
           ))}
-        </div>
-
-        {/* Full Language Dropdown */}
-        <select
-          value={selectedLanguage}
-          onChange={(e) =>
-            onLanguageChange(e.target.value as SupportedLanguage)
-          }
-          className="w-full bg-white/80 border border-gray-200/50 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all font-medium text-gray-700"
-        >
-          <optgroup label="🔥 Popular Languages">
-            {supportedLanguages.slice(0, 8).map((lang) => (
-              <option key={lang.value} value={lang.value}>
-                {lang.icon} {lang.label}
-              </option>
-            ))}
-          </optgroup>
-          <optgroup label="⚡ System Languages">
-            {supportedLanguages.slice(8, 14).map((lang) => (
-              <option key={lang.value} value={lang.value}>
-                {lang.icon} {lang.label}
-              </option>
-            ))}
-          </optgroup>
-          <optgroup label="🌐 Web Technologies">
-            {supportedLanguages.slice(14, 19).map((lang) => (
-              <option key={lang.value} value={lang.value}>
-                {lang.icon} {lang.label}
-              </option>
-            ))}
-          </optgroup>
-          <optgroup label="⚙️ Configuration & Others">
-            {supportedLanguages.slice(19).map((lang) => (
-              <option key={lang.value} value={lang.value}>
-                {lang.icon} {lang.label}
-              </option>
-            ))}
-          </optgroup>
-        </select>
-      </div>
+        </optgroup>
+        <optgroup label="⚡ System Languages">
+          {supportedLanguages.slice(8, 14).map((lang) => (
+            <option key={lang.value} value={lang.value}>
+              {lang.icon} {lang.label}
+            </option>
+          ))}
+        </optgroup>
+        <optgroup label="🌐 Web Technologies">
+          {supportedLanguages.slice(14, 19).map((lang) => (
+            <option key={lang.value} value={lang.value}>
+              {lang.icon} {lang.label}
+            </option>
+          ))}
+        </optgroup>
+        <optgroup label="⚙️ Configuration & Others">
+          {supportedLanguages.slice(19).map((lang) => (
+            <option key={lang.value} value={lang.value}>
+              {lang.icon} {lang.label}
+            </option>
+          ))}
+        </optgroup>
+      </select>
     </div>
   );
 };

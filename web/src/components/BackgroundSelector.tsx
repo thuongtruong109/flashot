@@ -58,12 +58,8 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
   if (!isVisible) return null;
 
   return (
-    <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-white/20 shadow-lg">
+    <div>
       <h4 className="text-lg font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-6 flex items-center">
-        <div className="relative mr-3">
-          <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg blur opacity-20"></div>
-          <Palette className="relative w-5 h-5 text-transparent bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text" />
-        </div>
         Background Gallery
       </h4>
 
@@ -74,7 +70,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
             <span className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mr-2"></span>
             Gradient Backgrounds
           </h5>
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-5 gap-2">
             {backgrounds
               .filter((bg) => bg.startsWith("linear-gradient"))
               .map((bg, index) => (
@@ -82,7 +78,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
                   key={index}
                   onClick={() => onBackgroundChange(bg)}
                   className={cn(
-                    "group relative w-full h-12 rounded-lg border-2 transition-all duration-200 shadow-md hover:shadow-lg",
+                    "group relative w-full h-10 rounded-lg border-2 transition-all duration-200 shadow-md hover:shadow-lg",
                     selectedBackground === bg
                       ? "border-blue-500 ring-2 ring-blue-200 scale-105"
                       : "border-gray-200/50 hover:border-gray-300 hover:scale-105"

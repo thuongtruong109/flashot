@@ -200,76 +200,297 @@ export const escapeHtml = (text: string): string => {
 
 export const syntaxHighlight = (
   code: string,
-  lang: SupportedLanguage
+  lang: SupportedLanguage,
+  theme?: Theme
 ): string => {
-  if (lang === "javascript" || lang === "typescript") {
-    // Create an array to store tokens with their types
-    const currentIndex = 0;
-
-    // Tokenize the code
-    const patterns = [
+  const getPatternsByLanguage = (language: SupportedLanguage) => {
+    const common = [
       { type: "comment" as const, regex: /\/\*[\s\S]*?\*\/|\/\/.*$/gm },
       { type: "string" as const, regex: /(['"`])((?:(?!\1)[^\\]|\\.)*)(\1)/g },
-      {
-        type: "keyword" as const,
-        regex:
-          /\b(function|const|let|var|if|else|for|while|return|class|extends|import|export|from|async|await|try|catch|finally)\b/g,
-      },
       { type: "number" as const, regex: /\b(\d+(?:\.\d+)?)\b/g },
-      { type: "function" as const, regex: /\b(\w+)(?=\s*\()/g },
     ];
 
-    // Find all matches for each pattern
-    const allMatches: SyntaxMatch[] = [];
-    patterns.forEach((pattern) => {
-      let match;
-      const regex = new RegExp(pattern.regex.source, pattern.regex.flags);
-      while ((match = regex.exec(code)) !== null) {
-        allMatches.push({
-          type: pattern.type,
-          start: match.index,
-          end: match.index + match[0].length,
-          text: match[0],
-        });
-      }
-    });
+    const languagePatterns: Record<SupportedLanguage, any[]> = {
+      javascript: [
+        ...common,
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(function|const|let|var|if|else|for|while|return|class|extends|import|export|from|async|await|try|catch|finally|new|this|typeof|instanceof)\b/g,
+        },
+        { type: "function" as const, regex: /\b(\w+)(?=\s*\()/g },
+      ],
+      typescript: [
+        ...common,
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(function|const|let|var|if|else|for|while|return|class|extends|import|export|from|async|await|try|catch|finally|new|this|typeof|instanceof|interface|type|enum|public|private|protected|readonly)\b/g,
+        },
+        { type: "function" as const, regex: /\b(\w+)(?=\s*\()/g },
+      ],
+      python: [
+        { type: "comment" as const, regex: /#.*$/gm },
+        {
+          type: "string" as const,
+          regex: /(['"`])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
+        },
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(def|class|if|elif|else|for|while|return|import|from|as|try|except|finally|with|lambda|and|or|not|is|in|None|True|False)\b/g,
+        },
+        { type: "number" as const, regex: /\b(\d+(?:\.\d+)?)\b/g },
+        { type: "function" as const, regex: /\b(\w+)(?=\s*\()/g },
+      ],
+      java: [
+        ...common,
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(public|private|protected|static|final|class|interface|extends|implements|if|else|for|while|return|new|this|super|import|package|try|catch|finally|throw|throws)\b/g,
+        },
+        { type: "function" as const, regex: /\b(\w+)(?=\s*\()/g },
+      ],
+      cpp: [
+        ...common,
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(#include|#define|int|float|double|char|void|if|else|for|while|return|class|public|private|protected|namespace|using|std|cout|cin|endl)\b/g,
+        },
+        { type: "function" as const, regex: /\b(\w+)(?=\s*\()/g },
+      ],
+      c: [
+        ...common,
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(#include|#define|int|float|double|char|void|if|else|for|while|return|struct|typedef|printf|scanf)\b/g,
+        },
+        { type: "function" as const, regex: /\b(\w+)(?=\s*\()/g },
+      ],
+      html: [
+        { type: "comment" as const, regex: /<!--[\s\S]*?-->/g },
+        {
+          type: "string" as const,
+          regex: /(['"`])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
+        },
+        { type: "keyword" as const, regex: /<\/?[\w\s="/.':;#-\/\?]+>/g },
+      ],
+      css: [
+        { type: "comment" as const, regex: /\/\*[\s\S]*?\*\//g },
+        {
+          type: "string" as const,
+          regex: /(['"`])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
+        },
+        { type: "keyword" as const, regex: /[\w-]+(?=\s*:)/g },
+        {
+          type: "number" as const,
+          regex: /\b(\d+(?:\.\d+)?(?:px|em|rem|%|vh|vw|pt|pc|in|cm|mm)?)\b/g,
+        },
+      ],
+      json: [
+        { type: "string" as const, regex: /("[^"]*")/g },
+        { type: "number" as const, regex: /\b(\d+(?:\.\d+)?)\b/g },
+        { type: "keyword" as const, regex: /\b(true|false|null)\b/g },
+      ],
+      // Add fallback for other languages
+      php: [
+        ...common,
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(function|class|if|else|for|while|return|public|private|protected|static|extends|implements|namespace|use|try|catch|finally|throw|echo|print|var|const)\b/g,
+        },
+      ],
+      ruby: [
+        { type: "comment" as const, regex: /#.*$/gm },
+        {
+          type: "string" as const,
+          regex: /(['"`])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
+        },
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(def|class|if|elsif|else|for|while|return|require|include|module|end|do|begin|rescue|ensure|yield|and|or|not|nil|true|false)\b/g,
+        },
+      ],
+      go: [
+        ...common,
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(func|package|import|if|else|for|while|return|var|const|type|struct|interface|go|defer|select|switch|case|default|range|make|new|chan|map)\b/g,
+        },
+      ],
+      rust: [
+        ...common,
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(fn|let|mut|if|else|for|while|return|struct|enum|impl|trait|pub|use|mod|crate|match|Some|None|Ok|Err|Result|Option)\b/g,
+        },
+      ],
+      swift: [
+        ...common,
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(func|class|struct|if|else|for|while|return|var|let|import|public|private|internal|fileprivate|override|static|final|protocol|extension|enum|case|default|switch|guard|defer)\b/g,
+        },
+      ],
+      kotlin: [
+        ...common,
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(fun|class|if|else|for|while|return|val|var|import|public|private|internal|protected|override|open|final|abstract|interface|enum|object|companion|data|sealed)\b/g,
+        },
+      ],
+      scala: [
+        ...common,
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(def|class|object|if|else|for|while|return|val|var|import|public|private|protected|override|abstract|final|sealed|case|match|try|catch|finally|throw|extends|with|trait)\b/g,
+        },
+      ],
+      csharp: [
+        ...common,
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(class|interface|if|else|for|while|return|public|private|protected|static|readonly|const|override|virtual|abstract|sealed|using|namespace|try|catch|finally|throw|new|this|base)\b/g,
+        },
+      ],
+      scss: [
+        { type: "comment" as const, regex: /\/\*[\s\S]*?\*\/|\/\/.*$/gm },
+        {
+          type: "string" as const,
+          regex: /(['"`])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
+        },
+        { type: "keyword" as const, regex: /[\w-]+(?=\s*:)/g },
+      ],
+      xml: [
+        { type: "comment" as const, regex: /<!--[\s\S]*?-->/g },
+        { type: "keyword" as const, regex: /<\/?[\w\s="/.':;#-\/\?]+>/g },
+      ],
+      yaml: [
+        { type: "comment" as const, regex: /#.*$/gm },
+        { type: "keyword" as const, regex: /^[\s]*[\w-]+(?=\s*:)/gm },
+      ],
+      sql: [
+        { type: "comment" as const, regex: /--.*$/gm },
+        {
+          type: "string" as const,
+          regex: /(['"`])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
+        },
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(SELECT|FROM|WHERE|INSERT|UPDATE|DELETE|CREATE|TABLE|INDEX|JOIN|LEFT|RIGHT|INNER|OUTER|ON|AS|ORDER|BY|GROUP|HAVING|UNION|ALL|DISTINCT|LIMIT|OFFSET)\b/gi,
+        },
+      ],
+      shell: [
+        { type: "comment" as const, regex: /#.*$/gm },
+        {
+          type: "string" as const,
+          regex: /(['"`])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
+        },
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(echo|cd|ls|pwd|mkdir|rmdir|rm|cp|mv|grep|find|sed|awk|sort|uniq|head|tail|cat|less|more|chmod|chown|sudo|su|ps|kill|jobs|bg|fg|nohup|crontab|which|whereis|locate|man|history|alias|unalias|export|env|set|unset|source|bash|sh|zsh|fish)\b/g,
+        },
+      ],
+      powershell: [
+        { type: "comment" as const, regex: /#.*$/gm },
+        {
+          type: "string" as const,
+          regex: /(['"`])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
+        },
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(Get-|Set-|New-|Remove-|Clear-|Add-|Copy-|Move-|Rename-|Test-|Start-|Stop-|Restart-|Suspend-|Resume-|Wait-|Write-|Read-|Select-|Where-|ForEach-|Sort-|Group-|Measure-|Compare-|Tee-|Out-|Export-|Import-|ConvertTo-|ConvertFrom-|if|else|elseif|switch|for|foreach|while|do|until|break|continue|return|function|param|begin|process|end|try|catch|finally|throw)\b/gi,
+        },
+      ],
+      dockerfile: [
+        { type: "comment" as const, regex: /#.*$/gm },
+        {
+          type: "string" as const,
+          regex: /(['"`])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
+        },
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(FROM|RUN|CMD|LABEL|MAINTAINER|EXPOSE|ENV|ADD|COPY|ENTRYPOINT|VOLUME|USER|WORKDIR|ARG|ONBUILD|STOPSIGNAL|HEALTHCHECK|SHELL)\b/gi,
+        },
+      ],
+      markdown: [
+        { type: "comment" as const, regex: /<!--[\s\S]*?-->/g },
+        { type: "keyword" as const, regex: /^#{1,6}\s.*/gm },
+        { type: "string" as const, regex: /\*\*.*?\*\*|__.*?__|`.*?`/g },
+      ],
+    };
 
-    // Sort matches by start position
-    allMatches.sort((a, b) => a.start - b.start);
+    return languagePatterns[language] || common;
+  };
 
-    // Remove overlapping matches (keep the first one)
-    const nonOverlapping: SyntaxMatch[] = [];
-    allMatches.forEach((match) => {
-      const isOverlapping = nonOverlapping.some(
-        (existing) =>
-          (match.start >= existing.start && match.start < existing.end) ||
-          (match.end > existing.start && match.end <= existing.end)
-      );
-      if (!isOverlapping) {
-        nonOverlapping.push(match);
-      }
-    });
+  const patterns = getPatternsByLanguage(lang);
 
-    // Build the highlighted code
-    let result = "";
-    let lastIndex = 0;
+  // Find all matches for each pattern
+  const allMatches: SyntaxMatch[] = [];
+  patterns.forEach((pattern) => {
+    let match;
+    const regex = new RegExp(pattern.regex.source, pattern.regex.flags);
+    while ((match = regex.exec(code)) !== null) {
+      allMatches.push({
+        type: pattern.type,
+        start: match.index,
+        end: match.index + match[0].length,
+        text: match[0],
+      });
+    }
+  });
 
-    nonOverlapping.forEach((match) => {
-      // Add text before the match
-      result += escapeHtml(code.slice(lastIndex, match.start));
-      // Add the highlighted match
-      result += `<span class="syntax-${match.type}">${escapeHtml(
-        match.text
-      )}</span>`;
-      lastIndex = match.end;
-    });
+  // Sort matches by start position
+  allMatches.sort((a, b) => a.start - b.start);
 
-    // Add remaining text
-    result += escapeHtml(code.slice(lastIndex));
+  // Remove overlapping matches (keep the first one)
+  const nonOverlapping: SyntaxMatch[] = [];
+  allMatches.forEach((match) => {
+    const isOverlapping = nonOverlapping.some(
+      (existing) =>
+        (match.start >= existing.start && match.start < existing.end) ||
+        (match.end > existing.start && match.end <= existing.end)
+    );
+    if (!isOverlapping) {
+      nonOverlapping.push(match);
+    }
+  });
 
-    return result;
-  }
-  return escapeHtml(code);
+  // Build the highlighted code with theme colors
+  let result = "";
+  let lastIndex = 0;
+
+  nonOverlapping.forEach((match) => {
+    // Add text before the match
+    result += escapeHtml(code.slice(lastIndex, match.start));
+    // Add the highlighted match with theme color
+    const color = theme ? theme[match.type] || theme.foreground : undefined;
+    const style = color ? ` style="color: ${color}"` : "";
+    result += `<span class="syntax-${match.type}"${style}>${escapeHtml(
+      match.text
+    )}</span>`;
+    lastIndex = match.end;
+  });
+
+  // Add remaining text
+  result += escapeHtml(code.slice(lastIndex));
+
+  return result;
 };
 
 export const copyToClipboard = async (text: string): Promise<boolean> => {

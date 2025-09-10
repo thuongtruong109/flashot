@@ -1,7 +1,17 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Eye, Edit3, Maximize2, Minimize2, Code, Sparkles } from "lucide-react";
+import {
+  Eye,
+  Edit3,
+  Maximize2,
+  Minimize2,
+  Code,
+  Sparkles,
+  Edit2,
+  Check,
+  X,
+} from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import { themes, syntaxHighlight } from "@/utils";
 
@@ -10,6 +20,8 @@ interface CodeEditorProps {
   onChange: (code: string) => void;
   settings: CodeSettings;
   showLineNumbers: boolean;
+  fileName?: string;
+  onFileNameChange?: (fileName: string) => void;
   className?: string;
 }
 
@@ -18,12 +30,17 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   onChange,
   settings,
   showLineNumbers,
+  fileName,
+  onFileNameChange,
   className = "",
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isEditingFileName, setIsEditingFileName] = useState(false);
+  const [tempFileName, setTempFileName] = useState(fileName || "untitled");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const previewRef = useRef<HTMLPreElement>(null);
+  const fileNameInputRef = useRef<HTMLInputElement>(null);
   const currentTheme = themes[settings.theme as ThemeName];
 
   // Auto-focus when entering edit mode
@@ -35,6 +52,19 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
     }
   }, [isEditing]);
 
+  // Auto-focus filename input when editing starts
+  useEffect(() => {
+    if (isEditingFileName && fileNameInputRef.current) {
+      fileNameInputRef.current.focus();
+      fileNameInputRef.current.select();
+    }
+  }, [isEditingFileName]);
+
+  // Update temp filename when fileName prop changes
+  useEffect(() => {
+    setTempFileName(fileName || "untitled");
+  }, [fileName]);
+
   // Handle click on preview to start editing
   const handlePreviewClick = useCallback(() => {
     setIsEditing(true);
@@ -44,6 +74,37 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   const handleBlur = useCallback(() => {
     setIsEditing(false);
   }, []);
+
+  // Filename editing handlers
+  const handleFileNameEdit = useCallback(() => {
+    setIsEditingFileName(true);
+  }, []);
+
+  const handleFileNameSave = useCallback(() => {
+    const trimmedName = tempFileName.trim();
+    if (trimmedName && onFileNameChange) {
+      onFileNameChange(trimmedName);
+    } else {
+      setTempFileName(fileName || "untitled");
+    }
+    setIsEditingFileName(false);
+  }, [tempFileName, fileName, onFileNameChange]);
+
+  const handleFileNameCancel = useCallback(() => {
+    setTempFileName(fileName || "untitled");
+    setIsEditingFileName(false);
+  }, [fileName]);
+
+  const handleFileNameKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        handleFileNameSave();
+      } else if (e.key === "Escape") {
+        handleFileNameCancel();
+      }
+    },
+    [handleFileNameSave, handleFileNameCancel]
+  );
 
   // Handle key shortcuts
   const handleKeyDown = useCallback(
@@ -113,48 +174,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           : ""
       } ${className}`}
     >
-      {/* Floating Editor Controls */}
       <div
-        className={`absolute top-4 right-4 z-20 flex items-center space-x-2 ${
-          isEditing ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-        } transition-all duration-200`}
-      >
-        <div className="flex items-center space-x-1 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1 shadow-lg border border-white/20">
-          <button
-            onClick={() => setIsEditing(!isEditing)}
-            className={`p-1.5 rounded-md transition-all duration-200 ${
-              isEditing
-                ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
-                : "hover:bg-gray-100 text-gray-600"
-            }`}
-            title={isEditing ? "Preview (Esc)" : "Edit Code"}
-          >
-            {isEditing ? (
-              <Eye className="w-3 h-3" />
-            ) : (
-              <Edit3 className="w-3 h-3" />
-            )}
-          </button>
-
-          <button
-            onClick={() => setIsFullscreen(!isFullscreen)}
-            className="p-1.5 rounded-md hover:bg-gray-100 text-gray-600 transition-all duration-200"
-            title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
-          >
-            {isFullscreen ? (
-              <Minimize2 className="w-3 h-3" />
-            ) : (
-              <Maximize2 className="w-3 h-3" />
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* Enhanced Code Container */}
-      <div
-        className={`relative overflow-hidden transition-all duration-300 shadow-xl hover:shadow-2xl ${
-          isFullscreen ? "w-full max-w-7xl bg-white rounded-2xl" : ""
-        }`}
+        className="relative overflow-hidden transition-all duration-300 shadow-xl hover:shadow-2xl"
         style={{
           background: isFullscreen
             ? "white"
@@ -185,14 +206,68 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
               </div>
               <div className="flex items-center space-x-2">
                 <Code className="w-4 h-4 text-gray-500" />
-                <span className="text-sm font-medium text-gray-600">
-                  {settings.language}.
-                  {settings.language === "javascript"
-                    ? "js"
-                    : settings.language === "typescript"
-                    ? "ts"
-                    : "txt"}
-                </span>
+                {fileName && onFileNameChange ? (
+                  <div className="flex items-center space-x-1">
+                    {isEditingFileName ? (
+                      <div className="flex items-center space-x-1">
+                        <input
+                          ref={fileNameInputRef}
+                          type="text"
+                          value={tempFileName}
+                          onChange={(e) => setTempFileName(e.target.value)}
+                          onKeyDown={handleFileNameKeyDown}
+                          onBlur={handleFileNameSave}
+                          className="px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:border-blue-500 bg-white/80"
+                          style={{ minWidth: "120px" }}
+                        />
+                        <span className="text-xs text-gray-500">
+                          .
+                          {settings.language === "javascript"
+                            ? "js"
+                            : settings.language === "typescript"
+                            ? "ts"
+                            : "txt"}
+                        </span>
+                        <button
+                          onClick={handleFileNameSave}
+                          className="p-1 text-green-600 hover:text-green-700 transition-colors"
+                        >
+                          <Check className="w-3 h-3" />
+                        </button>
+                        <button
+                          onClick={handleFileNameCancel}
+                          className="p-1 text-red-600 hover:text-red-700 transition-colors"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div
+                        className="flex items-center space-x-1 group cursor-pointer"
+                        onClick={handleFileNameEdit}
+                      >
+                        <span className="text-sm font-medium text-gray-600 group-hover:text-blue-600 transition-colors">
+                          {fileName}.
+                          {settings.language === "javascript"
+                            ? "js"
+                            : settings.language === "typescript"
+                            ? "ts"
+                            : "txt"}
+                        </span>
+                        <Edit2 className="w-3 h-3 text-gray-400 group-hover:text-blue-500 opacity-0 group-hover:opacity-100 transition-all" />
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <span className="text-sm font-medium text-gray-600">
+                    {settings.language}.
+                    {settings.language === "javascript"
+                      ? "js"
+                      : settings.language === "typescript"
+                      ? "ts"
+                      : "txt"}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -263,7 +338,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                       dangerouslySetInnerHTML={{
                         __html: syntaxHighlight(
                           code,
-                          settings.language as SupportedLanguage
+                          settings.language as SupportedLanguage,
+                          currentTheme
                         ),
                       }}
                     />
@@ -336,7 +412,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                 />
               </div>
 
-              {/* Edit mode help text */}
               <div className="absolute bottom-2 right-2">
                 <div className="bg-green-500/90 text-white text-xs px-2 py-1 rounded-md backdrop-blur-sm">
                   Press <kbd className="bg-white/20 px-1 rounded">Esc</kbd> or
@@ -347,14 +422,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           )}
         </div>
       </div>
-
-      {/* Fullscreen Backdrop */}
-      {isFullscreen && (
-        <div
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
-          onClick={() => setIsFullscreen(false)}
-        />
-      )}
     </div>
   );
 };

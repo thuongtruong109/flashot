@@ -14,19 +14,13 @@ const TipsModal: React.FC<TipsModalProps> = ({ isOpen, onClose }) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Flashot Help Center"
+      title="Quick Guide"
       icon={<Info className="w-7 h-7 text-blue-600" />}
       maxWidth="2xl"
     >
       <div className="p-6 space-y-8">
         {/* Quick Start Guide */}
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200/50">
-          <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center mr-3">
-              <span className="text-white font-bold text-lg">🚀</span>
-            </div>
-            Quick Start Guide
-          </h3>
           <div className="space-y-3">
             <div className="flex items-start space-x-3">
               <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">

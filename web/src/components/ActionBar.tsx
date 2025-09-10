@@ -14,6 +14,7 @@ import {
   Sparkles,
   Zap,
   ChevronDown,
+  Edit2,
 } from "lucide-react";
 
 interface ActionBarProps {
@@ -24,6 +25,8 @@ interface ActionBarProps {
   onShowTips: () => void;
   copySuccess: boolean;
   isGenerating: boolean;
+  fileName: string;
+  onFileNameChange: (fileName: string) => void;
   className?: string;
 }
 
@@ -35,41 +38,51 @@ const ActionBar: React.FC<ActionBarProps> = ({
   onShowTips,
   copySuccess,
   isGenerating,
+  fileName,
+  onFileNameChange,
   className = "",
 }) => {
   const [showExportMenu, setShowExportMenu] = useState(false);
+  const [isEditingFileName, setIsEditingFileName] = useState(false);
+  const [tempFileName, setTempFileName] = useState(fileName);
   const exportMenuRef = useRef<HTMLDivElement>(null);
+  const fileNameInputRef = useRef<HTMLInputElement>(null);
 
   const exportFormats = [
     {
       value: "png",
       label: "PNG",
-      description: "High quality, transparent background",
+      icon: "🖼️",
     },
     {
       value: "jpg",
       label: "JPG",
-      description: "Smaller file size, solid background",
+      icon: "📷",
     },
     {
       value: "webp",
       label: "WebP",
-      description: "Modern format, great compression",
+      icon: "🚀",
     },
     {
       value: "avif",
       label: "AVIF",
-      description: "Next-gen format, smallest size",
+      icon: "⚡",
     },
-    { value: "svg", label: "SVG", description: "Vector format, scalable" },
+    {
+      value: "svg",
+      label: "SVG",
+      icon: "🔧",
+    },
   ];
 
-  // Close dropdown when clicking outside
+  // Close dropdown when clicking outside (but not when editing filename)
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         exportMenuRef.current &&
-        !exportMenuRef.current.contains(event.target as Node)
+        !exportMenuRef.current.contains(event.target as Node) &&
+        !isEditingFileName
       ) {
         setShowExportMenu(false);
       }
@@ -77,7 +90,47 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [isEditingFileName]);
+
+  // Update temp filename when fileName prop changes
+  useEffect(() => {
+    setTempFileName(fileName);
+  }, [fileName]);
+
+  // Auto-focus filename input when editing starts
+  useEffect(() => {
+    if (isEditingFileName && fileNameInputRef.current) {
+      fileNameInputRef.current.focus();
+      fileNameInputRef.current.select();
+    }
+  }, [isEditingFileName]);
+
+  const handleFileNameEdit = () => {
+    setIsEditingFileName(true);
+  };
+
+  const handleFileNameSave = () => {
+    const trimmedName = tempFileName.trim();
+    if (trimmedName) {
+      onFileNameChange(trimmedName);
+    } else {
+      setTempFileName(fileName); // Reset to original if empty
+    }
+    setIsEditingFileName(false);
+  };
+
+  const handleFileNameCancel = () => {
+    setTempFileName(fileName);
+    setIsEditingFileName(false);
+  };
+
+  const handleFileNameKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleFileNameSave();
+    } else if (e.key === "Escape") {
+      handleFileNameCancel();
+    }
+  };
 
   const handleExportClick = (format: string) => {
     onDownload(format);
@@ -104,7 +157,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
     },
     {
       icon: FileText,
-      label: "JSON",
+      label: "Data",
       onClick: onShowJSON,
       variant: "secondary" as const,
       color: "emerald",
@@ -119,14 +172,14 @@ const ActionBar: React.FC<ActionBarProps> = ({
   ) => {
     // Smaller, more refined buttons with Tailwind vibe
     const baseStyles =
-      "group relative flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-200 font-medium text-sm shadow-sm hover:shadow-md transform hover:scale-[1.02] active:scale-[0.98]";
+      "group relative flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-200 font-medium text-sm shadow-sm transform hover:scale-[1.02] active:scale-[0.98]";
 
     if (disabled) {
       return `${baseStyles} bg-gray-100 text-gray-400 cursor-not-allowed shadow-none transform-none hover:scale-100`;
     }
 
     // More refined color palette with better contrast
-    return `${baseStyles} bg-white hover:bg-gray-50 text-gray-700 hover:text-gray-900 border border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-md`;
+    return `${baseStyles} bg-white hover:bg-gray-50 text-gray-700 hover:text-gray-900 border border-gray-200 shadow-sm`;
   };
 
   const getIconStyles = (color: string, variant: "primary" | "secondary") => {
@@ -187,7 +240,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
                 <Download className="w-4 h-4" />
               )}
               <span className="font-medium">
-                {isGenerating ? "Generating..." : "Export PNG"}
+                {isGenerating ? "Generating..." : "Export"}
               </span>
             </button>
 
@@ -207,8 +260,52 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
           {/* Export Format Dropdown */}
           {showExportMenu && (
-            <div className="absolute top-full right-0 mt-2 w-60 bg-white backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
+            <div className="absolute top-full right-0 mt-2 w-64 bg-white backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
               <div className="p-2">
+                {/* File Name Section */}
+                <div
+                  className="px-3 py-2 mb-2 border-b border-gray-100"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
+                    File Name
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    {isEditingFileName ? (
+                      <div className="flex-1 flex items-center space-x-1">
+                        <input
+                          ref={fileNameInputRef}
+                          type="text"
+                          value={tempFileName}
+                          onChange={(e) => setTempFileName(e.target.value)}
+                          onKeyDown={handleFileNameKeyDown}
+                          onBlur={handleFileNameSave}
+                          className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                          placeholder="Enter filename"
+                        />
+                        <button
+                          onClick={handleFileNameSave}
+                          className="p-1 text-green-600 hover:text-green-700 transition-colors"
+                        >
+                          <Check className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex-1 flex items-center space-x-2">
+                        <span className="flex-1 text-sm font-medium text-gray-700 truncate">
+                          {fileName}
+                        </span>
+                        <button
+                          onClick={handleFileNameEdit}
+                          className="p-1 text-blue-500 hover:text-blue-600 transition-colors"
+                        >
+                          <Edit2 className="w-3 h-3" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
                 <div className="text-xs font-medium text-gray-500 uppercase tracking-wide px-3 py-2 mb-1">
                   Export Formats
                 </div>
@@ -216,17 +313,12 @@ const ActionBar: React.FC<ActionBarProps> = ({
                   <button
                     key={format.value}
                     onClick={() => handleExportClick(format.value)}
-                    className="w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-gray-50 rounded-lg transition-all group"
+                    className="w-full flex items-center space-x-3 px-3 py-2.5 text-left hover:bg-gray-50 rounded-lg transition-all group"
                   >
-                    <div className="flex-shrink-0">
-                      <Download className="w-4 h-4 text-blue-500 group-hover:text-blue-600 transition-colors" />
-                    </div>
+                    <div className="flex-shrink-0 text-lg">{format.icon}</div>
                     <div className="flex-1">
                       <div className="font-medium text-gray-900 group-hover:text-blue-700">
                         {format.label}
-                      </div>
-                      <div className="text-xs text-gray-500 group-hover:text-blue-600">
-                        {format.description}
                       </div>
                     </div>
                   </button>
@@ -272,19 +364,59 @@ const ActionBar: React.FC<ActionBarProps> = ({
           {showExportMenu && (
             <div className="absolute top-full left-0 right-0 mt-2 bg-white backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
               <div className="p-2">
+                {/* File Name Section for Mobile */}
+                <div
+                  className="px-3 py-2 mb-2 border-b border-gray-100"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
+                    File Name
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    {isEditingFileName ? (
+                      <div className="flex-1 flex items-center space-x-1">
+                        <input
+                          ref={fileNameInputRef}
+                          type="text"
+                          value={tempFileName}
+                          onChange={(e) => setTempFileName(e.target.value)}
+                          onKeyDown={handleFileNameKeyDown}
+                          onBlur={handleFileNameSave}
+                          className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                          placeholder="Enter filename"
+                        />
+                        <button
+                          onClick={handleFileNameSave}
+                          className="p-1 text-green-600 hover:text-green-700 transition-colors"
+                        >
+                          <Check className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex-1 flex items-center space-x-2">
+                        <span className="flex-1 text-sm font-medium text-gray-700 truncate">
+                          {fileName}
+                        </span>
+                        <button
+                          onClick={handleFileNameEdit}
+                          className="p-1 text-blue-500 hover:text-blue-600 transition-colors"
+                        >
+                          <Edit2 className="w-3 h-3" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
                 {exportFormats.map((format) => (
                   <button
                     key={format.value}
                     onClick={() => handleExportClick(format.value)}
-                    className="w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-gray-50 rounded-lg transition-all group"
+                    className="w-full flex items-center space-x-3 px-3 py-2.5 text-left hover:bg-gray-50 rounded-lg transition-all group"
                   >
-                    <Download className="w-4 h-4 text-blue-500 group-hover:text-blue-600 transition-colors flex-shrink-0" />
+                    <div className="flex-shrink-0 text-lg">{format.icon}</div>
                     <div className="flex-1">
                       <div className="font-medium text-gray-900 group-hover:text-blue-700">
                         {format.label}
-                      </div>
-                      <div className="text-xs text-gray-500 group-hover:text-blue-600">
-                        {format.description}
                       </div>
                     </div>
                   </button>

@@ -50,16 +50,13 @@ const Brand: React.FC<BrandProps> = ({
         </div>
       </div>
       <div>
-        <h1
-          className={`${classes.title} bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-tight`}
-        >
-          Flashot
-        </h1>
         <div className="flex items-center space-x-2">
-          <div className="w-1 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse"></div>
-          <p className={`${classes.subtitle} text-gray-600 font-medium`}>
-            Code to Beautiful Images
-          </p>
+          <h1
+            className={`${classes.title} bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-tight`}
+          >
+            Flashot
+          </h1>
+
           {showVersion && (
             <div className="px-2 py-0.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 text-xs font-semibold rounded-full border border-blue-200/50">
               v2.0

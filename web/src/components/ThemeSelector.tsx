@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { Palette } from "lucide-react";
 import { ThemeName } from "@/types";
 
 interface ThemeSelectorProps {
@@ -87,65 +86,33 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
         Code Theme
       </label>
 
-      <div className="space-y-3">
-        {/* Theme Grid */}
-        <div className="grid grid-cols-2 gap-2">
+      <select
+        value={selectedTheme}
+        onChange={(e) => onThemeChange(e.target.value as ThemeName)}
+        className="space-y-3 w-full bg-white/80 border border-gray-200/50 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all font-medium text-gray-700"
+      >
+        <optgroup label="🎨 Popular Themes">
           {themes.slice(0, 4).map((theme) => (
-            <button
-              key={theme.value}
-              onClick={() => onThemeChange(theme.value)}
-              className={`p-3 rounded-lg border-2 transition-all duration-200 ${
-                selectedTheme === theme.value
-                  ? "border-blue-500 ring-2 ring-blue-200 bg-blue-50/50"
-                  : "border-gray-200/50 hover:border-gray-300 bg-white/50"
-              }`}
-            >
-              <div className="flex items-center space-x-2 mb-1">
-                <div
-                  className="w-4 h-4 rounded-full border-2 border-white shadow-sm"
-                  style={{ backgroundColor: theme.colors.bg }}
-                ></div>
-                <div
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: theme.colors.accent }}
-                ></div>
-              </div>
-              <div className="text-xs font-medium text-gray-700 text-left">
-                {theme.label}
-              </div>
-            </button>
+            <option key={theme.value} value={theme.value}>
+              {theme.label}
+            </option>
           ))}
-        </div>
-
-        {/* Full Theme Dropdown */}
-        <select
-          value={selectedTheme}
-          onChange={(e) => onThemeChange(e.target.value as ThemeName)}
-          className="w-full bg-white/80 border border-gray-200/50 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all font-medium text-gray-700"
-        >
-          <optgroup label="🎨 Popular Themes">
-            {themes.slice(0, 4).map((theme) => (
-              <option key={theme.value} value={theme.value}>
-                {theme.label}
-              </option>
-            ))}
-          </optgroup>
-          <optgroup label="✨ Premium Themes">
-            {themes.slice(4, 8).map((theme) => (
-              <option key={theme.value} value={theme.value}>
-                {theme.label}
-              </option>
-            ))}
-          </optgroup>
-          <optgroup label="🚀 Developer Favorites">
-            {themes.slice(8).map((theme) => (
-              <option key={theme.value} value={theme.value}>
-                {theme.label}
-              </option>
-            ))}
-          </optgroup>
-        </select>
-      </div>
+        </optgroup>
+        <optgroup label="✨ Premium Themes">
+          {themes.slice(4, 8).map((theme) => (
+            <option key={theme.value} value={theme.value}>
+              {theme.label}
+            </option>
+          ))}
+        </optgroup>
+        <optgroup label="🚀 Developer Favorites">
+          {themes.slice(8).map((theme) => (
+            <option key={theme.value} value={theme.value}>
+              {theme.label}
+            </option>
+          ))}
+        </optgroup>
+      </select>
     </div>
   );
 };
