@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Terminal, Github, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 interface HeroSectionProps {
   isVisible: boolean;
@@ -59,13 +60,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isVisible }) => {
         </div>
 
         <div className="flex flex-col sm:flex-row justify-center items-center gap-3">
-          <button className="group flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md">
+          <Link
+            href="/playground"
+            className="group flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md"
+          >
             <Terminal className="w-4 h-4 group-hover:scale-110 transition-transform" />
-            <span>npm install flashot</span>
-            <div className="ml-1 px-1.5 py-0.5 bg-white/20 rounded text-xs font-mono">
-              CLI
-            </div>
-          </button>
+            <span>Try playground</span>
+          </Link>
 
           <button
             onClick={() =>

@@ -9,7 +9,6 @@ import JSONDataSection from "app/playground/_components/JSONDataSection";
 import TipsModal from "app/playground/_components/TipsModal";
 import CodeEditor from "app/playground/_components/CodeEditor";
 import ActionBar from "app/playground/_components/ActionBar";
-import Footer from "app/components/Footer";
 import Brand from "app/playground/_components/Brand";
 
 const defaultCode = `function fibonacci(n) {
@@ -42,9 +41,19 @@ export default function Page() {
   const [showTipsModal, setShowTipsModal] = useState(false);
   const [showJSONModal, setShowJSONModal] = useState(false);
   const [fileName, setFileName] = useState("flashot-code-snippet");
-  const [showSettingsPanel, setShowSettingsPanel] = useState(true);
+  const [showSettingsPanel, setShowSettingsPanel] = useState(false); // Start with false to prevent SSR issues
+  const [isClient, setIsClient] = useState(false);
   const codeRef = useRef<HTMLDivElement>(null);
   const settingsPanelRef = useRef<HTMLDivElement>(null);
+
+  // Handle client-side mounting
+  useEffect(() => {
+    setIsClient(true);
+    // Set initial settings panel state based on screen size
+    if (typeof window !== "undefined" && window.innerWidth >= 1024) {
+      setShowSettingsPanel(true);
+    }
+  }, []);
 
   // Close settings panel when clicking outside (mobile only)
   useEffect(() => {
@@ -53,14 +62,21 @@ export default function Page() {
         settingsPanelRef.current &&
         !settingsPanelRef.current.contains(event.target as Node) &&
         showSettingsPanel &&
+        typeof window !== "undefined" &&
         window.innerWidth < 1024 // Only on mobile
       ) {
         setShowSettingsPanel(false);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    if (typeof document !== "undefined") {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      if (typeof document !== "undefined") {
+        document.removeEventListener("mousedown", handleClickOutside);
+      }
+    };
   }, [showSettingsPanel]);
 
   // Set initial settings panel visibility based on screen size
@@ -68,10 +84,12 @@ export default function Page() {
   useEffect(() => {
     const handleResize = () => {
       // On desktop (lg screens), always show the panel
-      if (window.innerWidth >= 1024) {
-        setShowSettingsPanel(true);
-      } else {
-        setShowSettingsPanel(false);
+      if (typeof window !== "undefined") {
+        if (window.innerWidth >= 1024) {
+          setShowSettingsPanel(true);
+        } else {
+          setShowSettingsPanel(false);
+        }
       }
     };
 
@@ -79,10 +97,16 @@ export default function Page() {
     handleResize();
 
     // Add event listener for window resize
-    window.addEventListener("resize", handleResize);
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", handleResize);
+    }
 
     // Cleanup
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", handleResize);
+      }
+    };
   }, []);
 
   const updateSetting = <K extends keyof CodeSettings>(
@@ -159,7 +183,7 @@ export default function Page() {
             onDownload={handleDownloadImage}
             onShowSettings={() => {
               // Only toggle settings panel on mobile screens
-              if (window.innerWidth < 1024) {
+              if (typeof window !== "undefined" && window.innerWidth < 1024) {
                 setShowSettingsPanel(!showSettingsPanel);
               }
             }}
@@ -181,7 +205,7 @@ export default function Page() {
         <div className="flex-1 overflow-y-auto scroll-smooth custom-scrollbar transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 h-full flex justify-center">
           <div
             ref={codeRef}
-            className="w-full max-w-3xl"
+            className="w-full max-w-3xl mt-0 lg:mt-12"
             style={{ height: "33vh" }}
           >
             <CodeEditor

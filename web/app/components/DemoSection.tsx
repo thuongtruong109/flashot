@@ -219,8 +219,7 @@ await writeFile("buffer.png", img);`,
               <Play className="w-3 h-3 group-hover:scale-110 transition-transform" />
               Generate Image
               <div className="flex items-center gap-1 text-green-400 transition-all duration-200">
-                <div className="w-1 h-1 bg-green-400 rounded-full animate-pulse" />
-                ~135ms
+                ~ 135ms
               </div>
             </button>
           </div>

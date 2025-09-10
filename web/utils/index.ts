@@ -183,7 +183,7 @@ export const fontFamilies = [
 ];
 
 export const escapeHtml = (text: string): string => {
-  if (typeof window === "undefined") {
+  if (typeof window === "undefined" || typeof document === "undefined") {
     // Server-side fallback
     return text
       .replace(/&/g, "&amp;")
@@ -495,6 +495,10 @@ export const syntaxHighlight = (
 
 export const copyToClipboard = async (text: string): Promise<boolean> => {
   try {
+    if (typeof navigator === "undefined" || !navigator.clipboard) {
+      console.warn("Clipboard API not available");
+      return false;
+    }
     await navigator.clipboard.writeText(text);
     return true;
   } catch (error) {

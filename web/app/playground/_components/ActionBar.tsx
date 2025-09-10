@@ -86,8 +86,14 @@ const ActionBar: React.FC<ActionBarProps> = ({
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    if (typeof document !== "undefined") {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      if (typeof document !== "undefined") {
+        document.removeEventListener("mousedown", handleClickOutside);
+      }
+    };
   }, []);
 
   const handleExportClick = (format: string) => {
@@ -128,7 +134,10 @@ const ActionBar: React.FC<ActionBarProps> = ({
   const buttons = allButtons.filter((button) => {
     // Don't show settings button on desktop (lg screens) as it will always be open
     const isSettingsButton = button.icon === Settings;
-    return !isSettingsButton || window.innerWidth < 1024;
+    return (
+      !isSettingsButton ||
+      (typeof window !== "undefined" && window.innerWidth < 1024)
+    );
   });
 
   const getButtonStyles = (

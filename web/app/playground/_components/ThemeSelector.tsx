@@ -159,15 +159,9 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
             className="w-full flex items-center space-x-2.5 px-2.5 py-2 text-sm text-left hover:bg-blue-50/60 rounded-lg transition-all duration-150 group"
           >
             <span className="text-lg">{theme.icon}</span>
-            <div className="flex items-center space-x-2">
-              <div
-                className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: theme.colors.bg }}
-              ></div>
-              <span className="font-medium text-gray-900 group-hover:text-blue-700">
-                {theme.label}
-              </span>
-            </div>
+            <span className="font-medium text-gray-900 group-hover:text-blue-700">
+              {theme.label}
+            </span>
           </button>
         ))}
       </div>,
@@ -191,13 +185,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
           >
             <div className="flex items-center space-x-2.5">
               <span className="text-lg">{selectedThemeObj?.icon}</span>
-              <div className="flex items-center space-x-2">
-                <div
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: selectedThemeObj?.colors.bg }}
-                ></div>
-                <span className="text-sm">{selectedThemeObj?.label}</span>
-              </div>
+              <span className="text-sm">{selectedThemeObj?.label}</span>
             </div>
             <ChevronDown
               className={`w-4 h-4 transition-transform duration-200 group-hover:scale-110 ${
