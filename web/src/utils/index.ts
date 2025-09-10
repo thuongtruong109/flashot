@@ -508,3 +508,34 @@ export const cn = (
 ): string => {
   return classes.filter(Boolean).join(" ");
 };
+
+export const getFileExtension = (language: string): string => {
+  const extensions: Record<string, string> = {
+    javascript: "js",
+    typescript: "ts",
+    python: "py",
+    java: "java",
+    cpp: "cpp",
+    c: "c",
+    csharp: "cs",
+    php: "php",
+    ruby: "rb",
+    go: "go",
+    rust: "rs",
+    swift: "swift",
+    kotlin: "kt",
+    scala: "scala",
+    html: "html",
+    css: "css",
+    scss: "scss",
+    json: "json",
+    xml: "xml",
+    yaml: "yml",
+    markdown: "md",
+    sql: "sql",
+    shell: "sh",
+    powershell: "ps1",
+    dockerfile: "dockerfile",
+  };
+  return extensions[language] || "txt";
+};

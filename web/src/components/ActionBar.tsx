@@ -43,10 +43,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   className = "",
 }) => {
   const [showExportMenu, setShowExportMenu] = useState(false);
-  const [isEditingFileName, setIsEditingFileName] = useState(false);
-  const [tempFileName, setTempFileName] = useState(fileName);
   const exportMenuRef = useRef<HTMLDivElement>(null);
-  const fileNameInputRef = useRef<HTMLInputElement>(null);
 
   const exportFormats = [
     {
@@ -76,13 +73,12 @@ const ActionBar: React.FC<ActionBarProps> = ({
     },
   ];
 
-  // Close dropdown when clicking outside (but not when editing filename)
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         exportMenuRef.current &&
-        !exportMenuRef.current.contains(event.target as Node) &&
-        !isEditingFileName
+        !exportMenuRef.current.contains(event.target as Node)
       ) {
         setShowExportMenu(false);
       }
@@ -90,47 +86,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isEditingFileName]);
-
-  // Update temp filename when fileName prop changes
-  useEffect(() => {
-    setTempFileName(fileName);
-  }, [fileName]);
-
-  // Auto-focus filename input when editing starts
-  useEffect(() => {
-    if (isEditingFileName && fileNameInputRef.current) {
-      fileNameInputRef.current.focus();
-      fileNameInputRef.current.select();
-    }
-  }, [isEditingFileName]);
-
-  const handleFileNameEdit = () => {
-    setIsEditingFileName(true);
-  };
-
-  const handleFileNameSave = () => {
-    const trimmedName = tempFileName.trim();
-    if (trimmedName) {
-      onFileNameChange(trimmedName);
-    } else {
-      setTempFileName(fileName); // Reset to original if empty
-    }
-    setIsEditingFileName(false);
-  };
-
-  const handleFileNameCancel = () => {
-    setTempFileName(fileName);
-    setIsEditingFileName(false);
-  };
-
-  const handleFileNameKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleFileNameSave();
-    } else if (e.key === "Escape") {
-      handleFileNameCancel();
-    }
-  };
+  }, []);
 
   const handleExportClick = (format: string) => {
     onDownload(format);
@@ -260,52 +216,8 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
           {/* Export Format Dropdown */}
           {showExportMenu && (
-            <div className="absolute top-full right-0 mt-2 w-64 bg-white backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
+            <div className="absolute top-full right-0 mt-2 w-64 bg-white backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-[70] overflow-hidden">
               <div className="p-2">
-                {/* File Name Section */}
-                <div
-                  className="px-3 py-2 mb-2 border-b border-gray-100"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
-                    File Name
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    {isEditingFileName ? (
-                      <div className="flex-1 flex items-center space-x-1">
-                        <input
-                          ref={fileNameInputRef}
-                          type="text"
-                          value={tempFileName}
-                          onChange={(e) => setTempFileName(e.target.value)}
-                          onKeyDown={handleFileNameKeyDown}
-                          onBlur={handleFileNameSave}
-                          className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                          placeholder="Enter filename"
-                        />
-                        <button
-                          onClick={handleFileNameSave}
-                          className="p-1 text-green-600 hover:text-green-700 transition-colors"
-                        >
-                          <Check className="w-3 h-3" />
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="flex-1 flex items-center space-x-2">
-                        <span className="flex-1 text-sm font-medium text-gray-700 truncate">
-                          {fileName}
-                        </span>
-                        <button
-                          onClick={handleFileNameEdit}
-                          className="p-1 text-blue-500 hover:text-blue-600 transition-colors"
-                        >
-                          <Edit2 className="w-3 h-3" />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
                 <div className="text-xs font-medium text-gray-500 uppercase tracking-wide px-3 py-2 mb-1">
                   Export Formats
                 </div>
@@ -365,48 +277,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
             <div className="absolute top-full left-0 right-0 mt-2 bg-white backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
               <div className="p-2">
                 {/* File Name Section for Mobile */}
-                <div
-                  className="px-3 py-2 mb-2 border-b border-gray-100"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
-                    File Name
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    {isEditingFileName ? (
-                      <div className="flex-1 flex items-center space-x-1">
-                        <input
-                          ref={fileNameInputRef}
-                          type="text"
-                          value={tempFileName}
-                          onChange={(e) => setTempFileName(e.target.value)}
-                          onKeyDown={handleFileNameKeyDown}
-                          onBlur={handleFileNameSave}
-                          className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                          placeholder="Enter filename"
-                        />
-                        <button
-                          onClick={handleFileNameSave}
-                          className="p-1 text-green-600 hover:text-green-700 transition-colors"
-                        >
-                          <Check className="w-3 h-3" />
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="flex-1 flex items-center space-x-2">
-                        <span className="flex-1 text-sm font-medium text-gray-700 truncate">
-                          {fileName}
-                        </span>
-                        <button
-                          onClick={handleFileNameEdit}
-                          className="p-1 text-blue-500 hover:text-blue-600 transition-colors"
-                        >
-                          <Edit2 className="w-3 h-3" />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
+
                 {exportFormats.map((format) => (
                   <button
                     key={format.value}

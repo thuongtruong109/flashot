@@ -63,7 +63,9 @@ const Modal: React.FC<ModalProps> = ({
         )}
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto">{children}</div>
+        <div className="flex-1 overflow-y-auto enhanced-scrollbar-light">
+          {children}
+        </div>
       </div>
     </div>
   );

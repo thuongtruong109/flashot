@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import { themes, copyToClipboard } from "@/utils";
 import { generateAndDownloadImage } from "@/lib/imageGenerator";
-import SettingsSheet from "@/components/SettingsSheet";
+import SettingsPanel from "@/components/SettingsPanel";
 import JSONDataSection from "@/components/JSONDataSection";
 import TipsModal from "@/components/TipsModal";
 import CodeEditor from "@/components/CodeEditor";
@@ -37,11 +37,50 @@ const CodeToImageConverter: React.FC = () => {
   const [copySuccess, setCopySuccess] = useState(false);
   const [jsonCopySuccess, setJsonCopySuccess] = useState(false);
   const [showLineNumbers, setShowLineNumbers] = useState(true);
-  const [showSettingsSheet, setShowSettingsSheet] = useState(false);
   const [showTipsModal, setShowTipsModal] = useState(false);
   const [showJSONModal, setShowJSONModal] = useState(false);
   const [fileName, setFileName] = useState("flashot-code-snippet");
+  const [showSettingsPanel, setShowSettingsPanel] = useState(false);
   const codeRef = useRef<HTMLDivElement>(null);
+  const settingsPanelRef = useRef<HTMLDivElement>(null);
+
+  // Close settings panel when clicking outside (mobile only)
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        settingsPanelRef.current &&
+        !settingsPanelRef.current.contains(event.target as Node) &&
+        showSettingsPanel &&
+        window.innerWidth < 1024 // Only on mobile
+      ) {
+        setShowSettingsPanel(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showSettingsPanel]);
+
+  // Set initial settings panel visibility based on screen size
+  useEffect(() => {
+    const handleResize = () => {
+      // Only auto-manage visibility if not manually toggled by user
+      if (window.innerWidth >= 1024) {
+        setShowSettingsPanel(true);
+      } else {
+        setShowSettingsPanel(false);
+      }
+    };
+
+    // Set initial state
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const updateSetting = <K extends keyof CodeSettings>(
     key: K,
@@ -105,7 +144,7 @@ const CodeToImageConverter: React.FC = () => {
   const currentTheme = themes[settings.theme as ThemeName];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 relative overflow-hidden flex flex-col">
+    <div className="h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 relative overflow-hidden flex flex-col">
       {/* Enhanced Grid Background Pattern */}
       <div className="absolute inset-0 opacity-[0.04]">
         <div
@@ -140,7 +179,7 @@ const CodeToImageConverter: React.FC = () => {
           <ActionBar
             onCopy={handleCopyCode}
             onDownload={handleDownloadImage}
-            onShowSettings={() => setShowSettingsSheet(true)}
+            onShowSettings={() => setShowSettingsPanel(!showSettingsPanel)}
             onShowJSON={() => setShowJSONModal(true)}
             onShowTips={() => setShowTipsModal(true)}
             copySuccess={copySuccess}
@@ -152,37 +191,48 @@ const CodeToImageConverter: React.FC = () => {
         </div>
       </div>
 
-      {/* Enhanced Main Container */}
-      <div className="flex-1 p-4 sm:p-6 lg:p-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 gap-8">
-            {/* Code Editor Section */}
-            <div className="flex justify-center">
-              <div ref={codeRef} className="w-full max-w-4xl">
-                <CodeEditor
-                  code={code}
-                  onChange={handleCodeChange}
-                  settings={settings}
-                  showLineNumbers={showLineNumbers}
-                  fileName={fileName}
-                  onFileNameChange={setFileName}
-                  className="w-full"
-                />
+      {/* Main Container with Sidebar Layout */}
+      <div className="flex-1 flex min-h-0">
+        {/* Main Content Area */}
+        <div
+          className={`flex-1 overflow-y-auto scroll-smooth custom-scrollbar transition-all duration-300 ease-in-out ${
+            showSettingsPanel ? "lg:pr-80" : "lg:pr-0"
+          }`}
+        >
+          <div className="p-4 sm:p-6 lg:p-8 min-h-full">
+            <div className="max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 gap-8">
+                {/* Code Editor Section */}
+                <div className="flex justify-center">
+                  <div ref={codeRef} className="w-full max-w-4xl">
+                    <CodeEditor
+                      code={code}
+                      onChange={handleCodeChange}
+                      settings={settings}
+                      showLineNumbers={showLineNumbers}
+                      fileName={fileName}
+                      onFileNameChange={setFileName}
+                      className="w-full"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Settings Sheet Component */}
-      <SettingsSheet
-        isOpen={showSettingsSheet}
-        settings={settings}
-        showLineNumbers={showLineNumbers}
-        onClose={() => setShowSettingsSheet(false)}
-        onUpdateSetting={updateSetting}
-        onToggleLineNumbers={setShowLineNumbers}
-      />
+        {/* Fixed Settings Sidebar */}
+        <SettingsPanel
+          settings={settings}
+          showLineNumbers={showLineNumbers}
+          fileName={fileName}
+          isVisible={showSettingsPanel}
+          onUpdateSetting={updateSetting}
+          onToggleLineNumbers={setShowLineNumbers}
+          onFileNameChange={setFileName}
+          onToggleVisibility={() => setShowSettingsPanel(!showSettingsPanel)}
+        />
+      </div>
 
       {/* JSON Data Sheet Component */}
       <JSONDataSection
@@ -202,7 +252,13 @@ const CodeToImageConverter: React.FC = () => {
       />
 
       {/* Footer */}
-      <Footer />
+      <div
+        className={`transition-all duration-300 ease-in-out ${
+          showSettingsPanel ? "lg:pr-80" : "lg:pr-0"
+        }`}
+      >
+        <Footer />
+      </div>
     </div>
   );
 };

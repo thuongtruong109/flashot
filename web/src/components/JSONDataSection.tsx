@@ -48,7 +48,7 @@ const JSONDataSection: React.FC<JSONDataSectionProps> = ({
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="p-4 bg-gradient-to-b from-white/80 to-white/60 h-full overflow-y-auto">
+        <div className="p-4 bg-gradient-to-b from-white/80 to-white/60 h-full overflow-y-auto enhanced-scrollbar-light">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent flex items-center">
               <div className="relative mr-2">
@@ -82,7 +82,7 @@ const JSONDataSection: React.FC<JSONDataSectionProps> = ({
             </button>
           </div>
 
-          <div className="bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 rounded-lg p-3 max-h-[calc(100vh-200px)] overflow-auto shadow-lg">
+          <div className="bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 rounded-lg p-3 max-h-[calc(100vh-200px)] overflow-auto shadow-lg enhanced-scrollbar-dark">
             <div className="mb-3 text-xs text-gray-400 font-medium flex items-center justify-between">
               <span className="flex items-center space-x-2">
                 <span className="w-2 h-2 bg-green-400 rounded-full"></span>

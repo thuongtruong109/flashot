@@ -13,7 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
-import { themes, syntaxHighlight } from "@/utils";
+import { themes, syntaxHighlight, getFileExtension } from "@/utils";
 
 interface CodeEditorProps {
   code: string;
@@ -80,31 +80,32 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
     setIsEditingFileName(true);
   }, []);
 
-  const handleFileNameSave = useCallback(() => {
-    const trimmedName = tempFileName.trim();
-    if (trimmedName && onFileNameChange) {
-      onFileNameChange(trimmedName);
-    } else {
-      setTempFileName(fileName || "untitled");
-    }
-    setIsEditingFileName(false);
-  }, [tempFileName, fileName, onFileNameChange]);
-
-  const handleFileNameCancel = useCallback(() => {
-    setTempFileName(fileName || "untitled");
-    setIsEditingFileName(false);
-  }, [fileName]);
+  // Auto-save filename on change
+  const handleFileNameChange = useCallback(
+    (value: string) => {
+      setTempFileName(value);
+      if (value.trim() && onFileNameChange) {
+        onFileNameChange(value.trim());
+      }
+    },
+    [onFileNameChange]
+  );
 
   const handleFileNameKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter") {
-        handleFileNameSave();
-      } else if (e.key === "Escape") {
-        handleFileNameCancel();
+      if (e.key === "Enter" || e.key === "Escape") {
+        setIsEditingFileName(false);
       }
     },
-    [handleFileNameSave, handleFileNameCancel]
+    []
   );
+
+  const handleFileNameBlur = useCallback(() => {
+    setIsEditingFileName(false);
+    if (!tempFileName.trim()) {
+      setTempFileName(fileName || "untitled");
+    }
+  }, [tempFileName, fileName]);
 
   // Handle key shortcuts
   const handleKeyDown = useCallback(
@@ -214,32 +215,15 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                           ref={fileNameInputRef}
                           type="text"
                           value={tempFileName}
-                          onChange={(e) => setTempFileName(e.target.value)}
+                          onChange={(e) => handleFileNameChange(e.target.value)}
                           onKeyDown={handleFileNameKeyDown}
-                          onBlur={handleFileNameSave}
-                          className="px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:border-blue-500 bg-white/80"
+                          onBlur={handleFileNameBlur}
+                          className="px-2 py-1 text-xs bg-transparent border-none outline-none focus:outline-none text-gray-700 font-medium"
                           style={{ minWidth: "120px" }}
                         />
                         <span className="text-xs text-gray-500">
-                          .
-                          {settings.language === "javascript"
-                            ? "js"
-                            : settings.language === "typescript"
-                            ? "ts"
-                            : "txt"}
+                          .{getFileExtension(settings.language)}
                         </span>
-                        <button
-                          onClick={handleFileNameSave}
-                          className="p-1 text-green-600 hover:text-green-700 transition-colors"
-                        >
-                          <Check className="w-3 h-3" />
-                        </button>
-                        <button
-                          onClick={handleFileNameCancel}
-                          className="p-1 text-red-600 hover:text-red-700 transition-colors"
-                        >
-                          <X className="w-3 h-3" />
-                        </button>
                       </div>
                     ) : (
                       <div
@@ -247,12 +231,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                         onClick={handleFileNameEdit}
                       >
                         <span className="text-sm font-medium text-gray-600 group-hover:text-blue-600 transition-colors">
-                          {fileName}.
-                          {settings.language === "javascript"
-                            ? "js"
-                            : settings.language === "typescript"
-                            ? "ts"
-                            : "txt"}
+                          {fileName}.{getFileExtension(settings.language)}
                         </span>
                         <Edit2 className="w-3 h-3 text-gray-400 group-hover:text-blue-500 opacity-0 group-hover:opacity-100 transition-all" />
                       </div>
@@ -321,7 +300,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                 )}
 
                 {/* Code Display */}
-                <div className="flex-1 overflow-x-auto">
+                <div className="flex-1 overflow-x-auto custom-scrollbar">
                   <pre
                     ref={previewRef}
                     className="px-4"
