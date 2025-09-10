@@ -31,6 +31,8 @@ const CodeToImageConverter: React.FC = () => {
     showWindowControls: true,
     fontFamily: "Fira Code",
     fontSize: 14,
+    showLineCount: true,
+    showFileName: true,
   });
 
   const [isGenerating, setIsGenerating] = useState(false);
@@ -40,7 +42,7 @@ const CodeToImageConverter: React.FC = () => {
   const [showTipsModal, setShowTipsModal] = useState(false);
   const [showJSONModal, setShowJSONModal] = useState(false);
   const [fileName, setFileName] = useState("flashot-code-snippet");
-  const [showSettingsPanel, setShowSettingsPanel] = useState(false);
+  const [showSettingsPanel, setShowSettingsPanel] = useState(true);
   const codeRef = useRef<HTMLDivElement>(null);
   const settingsPanelRef = useRef<HTMLDivElement>(null);
 
@@ -62,9 +64,10 @@ const CodeToImageConverter: React.FC = () => {
   }, [showSettingsPanel]);
 
   // Set initial settings panel visibility based on screen size
+  // and keep it always open on desktop
   useEffect(() => {
     const handleResize = () => {
-      // Only auto-manage visibility if not manually toggled by user
+      // On desktop (lg screens), always show the panel
       if (window.innerWidth >= 1024) {
         setShowSettingsPanel(true);
       } else {
@@ -145,79 +148,51 @@ const CodeToImageConverter: React.FC = () => {
 
   return (
     <div className="h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 relative overflow-hidden flex flex-col">
-      {/* Enhanced Grid Background Pattern */}
-      <div className="absolute inset-0 opacity-[0.04]">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-            radial-gradient(circle at 20px 20px, rgba(99, 102, 241, 0.8) 1.5px, transparent 0),
-            radial-gradient(circle at 80px 80px, rgba(139, 92, 246, 0.6) 1px, transparent 0)
-          `,
-            backgroundSize: "100px 100px",
-          }}
-        ></div>
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-            linear-gradient(90deg, rgba(71, 85, 105, 0.1) 0.5px, transparent 0),
-            linear-gradient(rgba(71, 85, 105, 0.08) 0.5px, transparent 0)
-          `,
-            backgroundSize: "40px 40px",
-          }}
-        ></div>
-      </div>
-
-      {/* Enhanced Header with glassmorphism effect */}
       <div className="relative bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-sm px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between py-2 lg:py-4">
           {/* Brand Component */}
-          <Brand size="sm" showVersion={true} />
+          <Brand showVersion={true} />
 
           {/* Enhanced Action Bar */}
           <ActionBar
             onCopy={handleCopyCode}
             onDownload={handleDownloadImage}
-            onShowSettings={() => setShowSettingsPanel(!showSettingsPanel)}
+            onShowSettings={() => {
+              // Only toggle settings panel on mobile screens
+              if (window.innerWidth < 1024) {
+                setShowSettingsPanel(!showSettingsPanel);
+              }
+            }}
             onShowJSON={() => setShowJSONModal(true)}
             onShowTips={() => setShowTipsModal(true)}
             copySuccess={copySuccess}
             isGenerating={isGenerating}
             fileName={fileName}
             onFileNameChange={setFileName}
+            showSettingsPanel={showSettingsPanel}
             className="w-full lg:w-auto"
           />
         </div>
       </div>
 
       {/* Main Container with Sidebar Layout */}
-      <div className="flex-1 flex min-h-0">
+      <div className="flex-1 flex h-[calc(100vh-3rem)] lg:h-[calc(100vh-4rem)] transition-all duration-300 w-full">
         {/* Main Content Area */}
-        <div
-          className={`flex-1 overflow-y-auto scroll-smooth custom-scrollbar transition-all duration-300 ease-in-out ${
-            showSettingsPanel ? "lg:pr-80" : "lg:pr-0"
-          }`}
-        >
-          <div className="p-4 sm:p-6 lg:p-8 min-h-full">
-            <div className="max-w-6xl mx-auto">
-              <div className="grid grid-cols-1 gap-8">
-                {/* Code Editor Section */}
-                <div className="flex justify-center">
-                  <div ref={codeRef} className="w-full max-w-4xl">
-                    <CodeEditor
-                      code={code}
-                      onChange={handleCodeChange}
-                      settings={settings}
-                      showLineNumbers={showLineNumbers}
-                      fileName={fileName}
-                      onFileNameChange={setFileName}
-                      className="w-full"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div className="flex-1 overflow-y-auto scroll-smooth custom-scrollbar transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 h-full flex justify-center">
+          <div
+            ref={codeRef}
+            className="w-full max-w-3xl"
+            style={{ height: "33vh" }}
+          >
+            <CodeEditor
+              code={code}
+              onChange={handleCodeChange}
+              settings={settings}
+              showLineNumbers={showLineNumbers}
+              fileName={fileName}
+              onFileNameChange={setFileName}
+              className="w-full h-full"
+            />
           </div>
         </div>
 
@@ -254,7 +229,7 @@ const CodeToImageConverter: React.FC = () => {
       {/* Footer */}
       <div
         className={`transition-all duration-300 ease-in-out ${
-          showSettingsPanel ? "lg:pr-80" : "lg:pr-0"
+          showSettingsPanel ? "lg:pr-80" : "w-full"
         }`}
       >
         <Footer />

@@ -19,6 +19,8 @@ export interface CodeSettings {
   showWindowControls: boolean;
   fontFamily: string;
   fontSize: number;
+  showLineCount?: boolean;
+  showFileName?: boolean;
 }
 
 export interface SyntaxMatch {

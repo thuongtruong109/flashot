@@ -84,7 +84,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   const handleFileNameChange = useCallback(
     (value: string) => {
       setTempFileName(value);
-      if (value.trim() && onFileNameChange) {
+      if (onFileNameChange) {
         onFileNameChange(value.trim());
       }
     },
@@ -102,10 +102,9 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
 
   const handleFileNameBlur = useCallback(() => {
     setIsEditingFileName(false);
-    if (!tempFileName.trim()) {
-      setTempFileName(fileName || "untitled");
-    }
-  }, [tempFileName, fileName]);
+    // Don't reset tempFileName - let it stay as user intended (even if empty)
+    // The fileName prop will be updated through onFileNameChange calls
+  }, []);
 
   // Handle key shortcuts
   const handleKeyDown = useCallback(
@@ -176,13 +175,16 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
       } ${className}`}
     >
       <div
-        className="relative overflow-hidden transition-all duration-300 shadow-xl hover:shadow-2xl"
+        className="relative overflow-hidden transition-all duration-300 shadow-xl hover:shadow-2xl h-full"
         style={{
           background: isFullscreen
             ? "white"
             : settings.showBackground
             ? settings.background
             : "transparent",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
           padding: settings.showBackground ? `${settings.padding}px` : "0",
           borderRadius: `${settings.borderRadius}px`,
         }}
@@ -206,8 +208,10 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                 <div className="w-3 h-3 bg-gradient-to-br from-green-400 to-green-600 rounded-full shadow-sm"></div>
               </div>
               <div className="flex items-center space-x-2">
-                <Code className="w-4 h-4 text-gray-500" />
-                {fileName && onFileNameChange ? (
+                {settings.showFileName &&
+                fileName &&
+                fileName.trim() &&
+                onFileNameChange ? (
                   <div className="flex items-center space-x-1">
                     {isEditingFileName ? (
                       <div className="flex items-center space-x-1">
@@ -237,22 +241,15 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                       </div>
                     )}
                   </div>
-                ) : (
-                  <span className="text-sm font-medium text-gray-600">
-                    {settings.language}.
-                    {settings.language === "javascript"
-                      ? "js"
-                      : settings.language === "typescript"
-                      ? "ts"
-                      : "txt"}
-                  </span>
-                )}
+                ) : null}
               </div>
             </div>
 
-            <span className="flex items-center space-x-2 text-xs text-gray-500">
-              {lineCount} lines
-            </span>
+            {settings.showLineCount && (
+              <span className="flex items-center space-x-2 text-xs text-gray-500">
+                {lineCount} lines
+              </span>
+            )}
           </div>
         )}
 
@@ -306,7 +303,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                     className="px-4"
                     style={{
                       color: currentTheme.foreground,
-                      fontFamily: `${settings.fontFamily}, monospace`,
+                      fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
                       fontSize: `${settings.fontSize}px`,
                       lineHeight: 1.6,
                       margin: 0,
@@ -354,7 +351,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                     className="select-none flex flex-col items-end px-3 py-4"
                     style={{
                       color: currentTheme.foreground + "60",
-                      fontFamily: `${settings.fontFamily}, monospace`,
+                      fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
                       fontSize: `${settings.fontSize}px`,
                       lineHeight: 1.6,
                       borderColor: currentTheme.foreground,
@@ -381,7 +378,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                   className="flex-1 resize-none border-none outline-none p-4 bg-transparent"
                   style={{
                     color: currentTheme.foreground,
-                    fontFamily: `${settings.fontFamily}, monospace`,
+                    fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
                     fontSize: `${settings.fontSize}px`,
                     lineHeight: 1.6,
                     minHeight: "200px",

@@ -65,29 +65,20 @@ const JSONDataSection: React.FC<JSONDataSectionProps> = ({
             </button>
           </div>
 
-          <div className="mb-4">
-            <button
-              onClick={onCopyJSON}
-              className="group relative flex items-center space-x-2 px-3 py-2.5 w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-lg transition-all duration-200 font-semibold shadow-lg shadow-emerald-500/25"
-            >
-              {copySuccess ? (
-                <Check className="w-4 h-4 transition-transform group-hover:scale-110" />
-              ) : (
-                <Copy className="w-4 h-4 transition-transform group-hover:scale-110" />
-              )}
-              <span>{copySuccess ? "✓ Copied!" : "📋 Copy JSON"}</span>
-              {copySuccess && (
-                <div className="absolute inset-0 bg-white/20 rounded-xl animate-pulse"></div>
-              )}
-            </button>
-          </div>
-
           <div className="bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 rounded-lg p-3 max-h-[calc(100vh-200px)] overflow-auto shadow-lg enhanced-scrollbar-dark">
             <div className="mb-3 text-xs text-gray-400 font-medium flex items-center justify-between">
-              <span className="flex items-center space-x-2">
-                <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                <span>JSON Configuration</span>
-              </span>
+              <button
+                onClick={onCopyJSON}
+                className="group relative flex items-center space-x-1 px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md transition-all duration-200 text-xs font-medium"
+                title="Copy JSON"
+              >
+                {copySuccess ? (
+                  <Check className="w-3 h-3" />
+                ) : (
+                  <Copy className="w-3 h-3" />
+                )}
+                <span>{copySuccess ? "Copied!" : "Copy"}</span>
+              </button>
               <span className="bg-gray-800 px-2 py-1 rounded-md text-green-400">
                 {formattedJSON.split("\n").length} lines
               </span>

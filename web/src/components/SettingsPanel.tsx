@@ -1,7 +1,24 @@
 "use client";
 
 import React, { useState, useRef, useEffect, forwardRef } from "react";
-import { Settings, Edit2, Check, X, ChevronRight } from "lucide-react";
+import {
+  Settings,
+  Edit2,
+  Check,
+  X,
+  ChevronRight,
+  FileText,
+  Palette,
+  Type,
+  Move,
+  CornerRightDown,
+  Eye,
+  Monitor,
+  Hash,
+  BarChart3,
+  Folder,
+  Paintbrush,
+} from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import { getFileExtension } from "@/utils";
 import LanguageSelector from "./LanguageSelector";
@@ -74,9 +91,8 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
     // Auto-save filename on change
     const handleFileNameChange = (value: string) => {
       setTempFileName(value);
-      if (value.trim()) {
-        onFileNameChange(value.trim());
-      }
+      // Always call onFileNameChange, even with empty string
+      onFileNameChange(value.trim());
     };
 
     const handleFileNameKeyDown = (
@@ -89,9 +105,8 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
 
     const handleFileNameBlur = () => {
       setIsEditingFileName(false);
-      if (!tempFileName.trim()) {
-        setTempFileName(fileName);
-      }
+      // Don't reset tempFileName - let it stay as user intended (even if empty)
+      // The fileName prop will be updated through onFileNameChange calls
     };
 
     return (
@@ -99,8 +114,13 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
         {/* Mobile Backdrop */}
         {isVisible && (
           <div
-            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 lg:hidden"
-            onClick={onToggleVisibility}
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-20 lg:hidden"
+            onClick={() => {
+              // Only allow toggle on mobile screens
+              if (window.innerWidth < 1024) {
+                onToggleVisibility?.();
+              }
+            }}
           />
         )}
 
@@ -109,8 +129,8 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
           ref={ref}
           className={`
         ${isVisible ? "translate-x-0" : "translate-x-full"}
-        fixed lg:relative top-0 right-0 z-40
-        w-80 lg:w-80 h-screen lg:h-screen
+         w-80 lg:w-80 fixed lg:relative top-0 right-0 z-30
+         h-[100vh] lg:max-h-[calc(100vh-60px)]
         bg-white/95 backdrop-blur-xl shadow-2xl
         border-l border-white/20
         transition-transform duration-300 ease-in-out
@@ -118,33 +138,13 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
         flex flex-col
       `}
         >
-          {/* Header */}
-          <div className="sticky top-0 z-10 p-4 bg-gradient-to-b from-white/90 to-white/80 backdrop-blur-xl border-b border-white/20 flex-shrink-0">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent flex items-center">
-                <div className="relative mr-2">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-20"></div>
-                  <Settings className="relative w-5 h-5 text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text" />
-                </div>
-                Settings
-              </h3>
-              <button
-                onClick={onToggleVisibility}
-                className="p-1.5 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-white/60 transition-all duration-200 group"
-                title="Close Settings"
-              >
-                <X className="w-4 h-4 group-hover:scale-110 transition-transform" />
-              </button>
-            </div>
-          </div>
-
           {/* Scrollable Content */}
           <div className="flex-1 overflow-y-auto overflow-x-hidden scroll-smooth settings-scrollbar">
-            <div className="p-4 pb-8 space-y-5">
+            <div className="p-3 pb-16 space-y-4">
               {/* File Name Section */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-3 border border-white/20 shadow-lg">
-                <h4 className="text-sm font-semibold text-gray-800 mb-3 flex items-center">
-                  <span className="w-2 h-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mr-2"></span>
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
+                  <FileText className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
                   File Name
                 </h4>
                 <div className="flex items-center space-x-2">
@@ -157,7 +157,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         onChange={(e) => handleFileNameChange(e.target.value)}
                         onKeyDown={handleFileNameKeyDown}
                         onBlur={handleFileNameBlur}
-                        className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        className="flex-1 px-2.5 py-1.5 text-sm border border-gray-300/60 hover:border-gray-400/80 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/60 transition-all duration-200"
                         placeholder="Enter filename"
                       />
                       <span className="text-sm text-gray-500">
@@ -185,32 +185,32 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
               />
 
               {/* Background Theme Section */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-3 border border-white/20 shadow-lg">
-                <h4 className="text-sm font-semibold text-gray-800 mb-3 flex items-center">
-                  <span className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mr-2"></span>
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
+                  <Palette className="w-3.5 h-3.5 text-purple-600 mr-1.5" />
                   Background Theme
                 </h4>
                 <div className="flex gap-2">
                   <button
                     onClick={() => onUpdateSetting("theme", "light")}
-                    className={`flex-1 p-2 rounded-lg border-2 transition-all ${
+                    className={`flex-1 p-2 rounded-lg border transition-all duration-200 group ${
                       settings.theme === "light"
-                        ? "border-blue-500 bg-blue-50"
-                        : "border-gray-200 hover:border-gray-300"
+                        ? "border-blue-500 bg-blue-50/80 shadow-sm"
+                        : "border-gray-200/60 hover:border-gray-300/80 hover:bg-gray-50/50"
                     }`}
                   >
-                    <div className="w-full h-8 bg-white rounded-md border mb-1"></div>
+                    <div className="w-full h-6 bg-white rounded border mb-1.5 shadow-xs group-hover:shadow-sm transition-shadow"></div>
                     <span className="text-xs font-medium">Light</span>
                   </button>
                   <button
                     onClick={() => onUpdateSetting("theme", "dark")}
-                    className={`flex-1 p-2 rounded-lg border-2 transition-all ${
+                    className={`flex-1 p-2 rounded-lg border transition-all duration-200 group ${
                       settings.theme === "dark"
-                        ? "border-blue-500 bg-blue-50"
-                        : "border-gray-200 hover:border-gray-300"
+                        ? "border-blue-500 bg-blue-50/80 shadow-sm"
+                        : "border-gray-200/60 hover:border-gray-300/80 hover:bg-gray-50/50"
                     }`}
                   >
-                    <div className="w-full h-8 bg-gray-800 rounded-md border mb-1"></div>
+                    <div className="w-full h-6 bg-gray-800 rounded border mb-1.5 shadow-xs group-hover:shadow-sm transition-shadow"></div>
                     <span className="text-xs font-medium">Dark</span>
                   </button>
                 </div>
@@ -231,10 +231,10 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
               />
 
               {/* Font Size */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-3 border border-white/20 shadow-lg">
-                <label className="text-sm font-semibold text-gray-800 mb-3 flex items-center justify-between">
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
                   <div className="flex items-center">
-                    <span className="w-2 h-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-full mr-2"></span>
+                    <Type className="w-3.5 h-3.5 text-orange-600 mr-1.5" />
                     Font Size
                   </div>
                   <span className="text-xs bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent font-bold">
@@ -261,10 +261,10 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
               </div>
 
               {/* Padding */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-3 border border-white/20 shadow-lg">
-                <label className="text-sm font-semibold text-gray-800 mb-3 flex items-center justify-between">
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
                   <div className="flex items-center">
-                    <span className="w-2 h-2 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full mr-2"></span>
+                    <Move className="w-3.5 h-3.5 text-pink-600 mr-1.5" />
                     Padding
                   </div>
                   <span className="text-xs bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent font-bold">
@@ -291,10 +291,10 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
               </div>
 
               {/* Border Radius */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-3 border border-white/20 shadow-lg">
-                <label className="text-sm font-semibold text-gray-800 mb-3 flex items-center justify-between">
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
                   <div className="flex items-center">
-                    <span className="w-2 h-2 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full mr-2"></span>
+                    <CornerRightDown className="w-3.5 h-3.5 text-teal-600 mr-1.5" />
                     Border Radius
                   </div>
                   <span className="text-xs bg-gradient-to-r from-teal-500 to-cyan-500 bg-clip-text text-transparent font-bold">
@@ -322,15 +322,16 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
 
               {/* Display Options */}
               <div>
-                <h4 className="text-sm font-semibold text-gray-800 mb-4 flex items-center">
-                  <span className="w-2 h-2 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full mr-2"></span>
+                <h4 className="text-xs font-semibold text-gray-700 mb-3 flex items-center">
+                  <Eye className="w-3.5 h-3.5 text-indigo-600 mr-1.5" />
                   Display Options
                 </h4>
                 <div className="space-y-4">
                   <label className="flex items-center justify-between group cursor-pointer">
-                    <div className="flex items-center">
+                    <div className="flex items-center space-x-2">
+                      <Paintbrush className="w-4 h-4 text-purple-600" />
                       <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
-                        🎨 Show Background
+                        Show Background
                       </span>
                     </div>
                     <input
@@ -339,14 +340,15 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                       onChange={(e) =>
                         onUpdateSetting("showBackground", e.target.checked)
                       }
-                      className="w-5 h-5 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/50 transition-all"
+                      className="w-4 h-4 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/40 border-gray-300 hover:border-gray-400 transition-all duration-200"
                     />
                   </label>
 
                   <label className="flex items-center justify-between group cursor-pointer">
-                    <div className="flex items-center">
+                    <div className="flex items-center space-x-2">
+                      <Monitor className="w-4 h-4 text-blue-600" />
                       <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
-                        🪟 Window Controls
+                        Window Controls
                       </span>
                     </div>
                     <input
@@ -355,21 +357,56 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                       onChange={(e) =>
                         onUpdateSetting("showWindowControls", e.target.checked)
                       }
-                      className="w-5 h-5 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/50 transition-all"
+                      className="w-4 h-4 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/40 border-gray-300 hover:border-gray-400 transition-all duration-200"
                     />
                   </label>
 
                   <label className="flex items-center justify-between group cursor-pointer">
-                    <div className="flex items-center">
+                    <div className="flex items-center space-x-2">
+                      <Hash className="w-4 h-4 text-green-600" />
                       <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
-                        🔢 Line Numbers
+                        Line Numbers
                       </span>
                     </div>
                     <input
                       type="checkbox"
                       checked={showLineNumbers}
                       onChange={(e) => onToggleLineNumbers(e.target.checked)}
-                      className="w-5 h-5 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/50 transition-all"
+                      className="w-4 h-4 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/40 border-gray-300 hover:border-gray-400 transition-all duration-200"
+                    />
+                  </label>
+
+                  <label className="flex items-center justify-between group cursor-pointer">
+                    <div className="flex items-center space-x-2">
+                      <BarChart3 className="w-4 h-4 text-orange-600" />
+                      <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
+                        Line Count Display
+                      </span>
+                    </div>
+                    <input
+                      type="checkbox"
+                      checked={settings.showLineCount || false}
+                      onChange={(e) =>
+                        onUpdateSetting("showLineCount", e.target.checked)
+                      }
+                      className="w-4 h-4 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/40 border-gray-300 hover:border-gray-400 transition-all duration-200"
+                    />
+                  </label>
+
+                  <label className="flex items-center justify-between group cursor-pointer">
+                    <div className="flex items-center space-x-2">
+                      <Folder className="w-4 h-4 text-yellow-600" />
+                      <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
+                        File Name Display
+                      </span>
+                    </div>
+                    <input
+                      type="checkbox"
+                      checked={settings.showFileName || false}
+                      onChange={(e) =>
+                        onUpdateSetting("showFileName", e.target.checked)
+                      }
+                      className="w-4 h-4 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/40 border-gray-300 hover:border-gray-400 transition-all duration-200"
                     />
                   </label>
                 </div>

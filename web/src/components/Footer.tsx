@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Github, Heart, Code2, Package, Coffee } from "lucide-react";
 
 const Footer: React.FC = () => {
@@ -8,18 +9,18 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="relative border-t border-white/20 mt-auto w-full">
-      <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
+      <div className="w-full px-6 sm:px-8 lg:px-12 py-12">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {/* Brand Section */}
             <div className="space-y-4">
-              <div className="flex items-end space-x-3">
-                <div className="relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-xl blur opacity-20 group-hover:opacity-30 transition-opacity"></div>
-                  <div className="relative bg-white/90 p-2 rounded-lg shadow-lg">
-                    <Code2 className="w-4 h-4 text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text" />
-                  </div>
-                </div>
+              <div className="flex items-start space-x-2">
+                <Image
+                  src="/favicon.png"
+                  alt="Flashot"
+                  width={36}
+                  height={20}
+                />
                 <h3 className="text-2xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                   Flashot
                 </h3>
@@ -29,34 +30,54 @@ const Footer: React.FC = () => {
                 beautiful themes, multiple export formats, and professional
                 styling.
               </p>
-              <div className="flex items-center space-x-4">
-                <a
-                  href="https://github.com/thuongtruong109/flashot"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-1 text-gray-600 hover:text-blue-600 transition-colors group"
-                >
-                  <Github className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                  <span className="text-sm font-medium">GitHub</span>
-                </a>
-                <a
-                  href="https://www.npmjs.com/package/flashot"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-1 text-gray-600 hover:text-red-600 transition-colors group"
-                >
-                  <Package className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                  <span className="text-sm font-medium">Npm</span>
-                </a>
-                <a
-                  href="https://jsr.io/@thuongtruong/flashot"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-1 text-gray-600 hover:text-yellow-600 transition-colors group"
-                >
-                  <Code2 className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                  <span className="text-sm font-medium">JSR</span>
-                </a>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-4">
+                  <a
+                    href="https://github.com/thuongtruong109/flashot"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-1 text-gray-600 hover:text-blue-600 transition-colors group"
+                  >
+                    <Github className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                    <span className="text-sm font-medium">GitHub</span>
+                  </a>
+                  <a
+                    href="https://www.npmjs.com/package/flashot"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-1 text-gray-600 hover:text-red-600 transition-colors group"
+                  >
+                    <Package className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                    <span className="text-sm font-medium">Npm</span>
+                  </a>
+                  <a
+                    href="https://jsr.io/@thuongtruong/flashot"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-1 text-gray-600 hover:text-yellow-600 transition-colors group"
+                  >
+                    <Code2 className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                    <span className="text-sm font-medium">Jsr</span>
+                  </a>
+                </div>
+
+                {/* Product Hunter Badge */}
+                <div className="pt-2">
+                  <a
+                    href=""
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block"
+                  >
+                    <Image
+                      src="/product-hunt.avif"
+                      alt="Flashot - Transform your code into stunning shareable images | Product Hunt"
+                      width={250}
+                      height={54}
+                      className="hover:opacity-80 transition-opacity"
+                    />
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -165,7 +186,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Bottom Section */}
-          <div className="mt-8 pt-6 border-t border-gray-200/50">
+          <div className="mt-12 pt-8 border-t border-gray-200/50">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <div className="flex items-center space-x-1 text-sm text-gray-600">
                 <span>© {currentYear} Flashot.</span>
@@ -182,12 +203,9 @@ const Footer: React.FC = () => {
                 </a>
               </div>
 
-              <div className="flex items-center space-x-6 text-xs text-gray-500">
-                <span className="flex items-center space-x-1">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span>All systems operational</span>
-                </span>
-                <span>v2.0.0</span>
+              <div className="flex items-center space-x-1 text-xs text-gray-500">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span>All systems operational</span>
               </div>
             </div>
           </div>

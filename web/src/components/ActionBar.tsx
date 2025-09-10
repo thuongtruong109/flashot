@@ -27,6 +27,7 @@ interface ActionBarProps {
   isGenerating: boolean;
   fileName: string;
   onFileNameChange: (fileName: string) => void;
+  showSettingsPanel?: boolean;
   className?: string;
 }
 
@@ -40,6 +41,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   isGenerating,
   fileName,
   onFileNameChange,
+  showSettingsPanel = false,
   className = "",
 }) => {
   const [showExportMenu, setShowExportMenu] = useState(false);
@@ -94,21 +96,14 @@ const ActionBar: React.FC<ActionBarProps> = ({
   };
 
   // Remove copy code button from header as requested
-  const buttons = [
+  // Filter out settings button on wide screens when settings panel is open
+  const allButtons = [
     {
       icon: Info,
       label: "Help",
       onClick: onShowTips,
       variant: "secondary" as const,
       color: "amber",
-      disabled: false,
-    },
-    {
-      icon: Settings,
-      label: "Settings",
-      onClick: onShowSettings,
-      variant: "secondary" as const,
-      color: "slate",
       disabled: false,
     },
     {
@@ -119,7 +114,22 @@ const ActionBar: React.FC<ActionBarProps> = ({
       color: "emerald",
       disabled: false,
     },
+    {
+      icon: Settings,
+      label: "Settings",
+      onClick: onShowSettings,
+      variant: "secondary" as const,
+      color: "slate",
+      disabled: false,
+    },
   ];
+
+  // Filter the settings button on desktop screens when appropriate
+  const buttons = allButtons.filter((button) => {
+    // Don't show settings button on desktop (lg screens) as it will always be open
+    const isSettingsButton = button.icon === Settings;
+    return !isSettingsButton || window.innerWidth < 1024;
+  });
 
   const getButtonStyles = (
     variant: "primary" | "secondary",
@@ -216,7 +226,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
           {/* Export Format Dropdown */}
           {showExportMenu && (
-            <div className="absolute top-full right-0 mt-2 w-64 bg-white backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-[70] overflow-hidden">
+            <div className="absolute top-full right-0 mt-2 w-64 bg-white backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-[100] overflow-hidden">
               <div className="p-2">
                 <div className="text-xs font-medium text-gray-500 uppercase tracking-wide px-3 py-2 mb-1">
                   Export Formats
@@ -244,12 +254,12 @@ const ActionBar: React.FC<ActionBarProps> = ({
       {/* Mobile Layout */}
       <div className="flex lg:hidden items-center space-x-2 w-full">
         {/* Primary action with dropdown for mobile */}
-        <div className="flex-1 relative" ref={exportMenuRef}>
+        <div className="w-auto relative" ref={exportMenuRef}>
           <div className="flex">
             <button
               onClick={() => handleExportClick("png")}
               disabled={isGenerating}
-              className="flex-1 flex items-center justify-center space-x-2 px-4 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-l-lg transition-all duration-200 font-medium shadow-sm hover:shadow-md"
+              className="flex items-center justify-center space-x-2 px-4 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-l-lg transition-all duration-200 font-medium shadow-sm hover:shadow-md"
             >
               {isGenerating ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -274,7 +284,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
           {/* Mobile Export Format Dropdown */}
           {showExportMenu && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white backdrop-blur-xl border border-gray-200 rounded-xl shadow-lg z-[100] overflow-hidden">
               <div className="p-2">
                 {/* File Name Section for Mobile */}
 
@@ -307,17 +317,17 @@ const ActionBar: React.FC<ActionBarProps> = ({
           </button>
 
           <button
-            onClick={onShowSettings}
-            className="p-2.5 bg-white hover:bg-gray-50 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300 transition-all"
-          >
-            <Settings className="w-4 h-4 text-slate-500" />
-          </button>
-
-          <button
             onClick={onShowJSON}
             className="p-2.5 bg-white hover:bg-gray-50 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300 transition-all"
           >
             <FileText className="w-4 h-4 text-emerald-500" />
+          </button>
+
+          <button
+            onClick={onShowSettings}
+            className="p-2.5 bg-white hover:bg-gray-50 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300 transition-all"
+          >
+            <Settings className="w-4 h-4 text-slate-500" />
           </button>
         </div>
       </div>

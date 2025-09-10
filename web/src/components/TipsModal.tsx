@@ -18,7 +18,7 @@ const TipsModal: React.FC<TipsModalProps> = ({ isOpen, onClose }) => {
       icon={<Info className="w-7 h-7 text-blue-600" />}
       maxWidth="2xl"
     >
-      <div className="p-6 space-y-8">
+      <div className="p-4 space-y-6">
         {/* Quick Start Guide */}
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200/50">
           <div className="space-y-3">
@@ -60,51 +60,51 @@ const TipsModal: React.FC<TipsModalProps> = ({ isOpen, onClose }) => {
             </div>
             Keyboard Shortcuts
           </h3>
-          <div className="bg-white/70 backdrop-blur-sm rounded-xl p-5 space-y-3 border border-gray-200/50">
-            <div className="flex items-center justify-between py-2 px-3 hover:bg-gray-50/50 rounded-lg transition-colors">
+          <div className="bg-white/70 backdrop-blur-sm rounded-xl p-3 space-y-2 border border-gray-200/50">
+            <div className="flex items-center justify-between py-1.5 px-2 hover:bg-gray-50/50 rounded-lg transition-colors">
               <span className="text-sm font-medium text-gray-700">
                 Click to edit code
               </span>
               <div className="flex items-center space-x-1">
-                <kbd className="px-3 py-1.5 bg-gray-200 rounded-md text-xs font-medium">
+                <kbd className="px-2 py-1 bg-gray-200 rounded text-xs font-medium">
                   Click
                 </kbd>
               </div>
             </div>
-            <div className="flex items-center justify-between py-2 px-3 hover:bg-gray-50/50 rounded-lg transition-colors">
+            <div className="flex items-center justify-between py-1.5 px-2 hover:bg-gray-50/50 rounded-lg transition-colors">
               <span className="text-sm font-medium text-gray-700">
                 Toggle fullscreen
               </span>
               <div className="flex items-center space-x-1">
-                <kbd className="px-3 py-1.5 bg-gray-200 rounded-md text-xs font-medium">
+                <kbd className="px-2 py-1 bg-gray-200 rounded text-xs font-medium">
                   F11
                 </kbd>
               </div>
             </div>
-            <div className="flex items-center justify-between py-2 px-3 hover:bg-gray-50/50 rounded-lg transition-colors">
+            <div className="flex items-center justify-between py-1.5 px-2 hover:bg-gray-50/50 rounded-lg transition-colors">
               <span className="text-sm font-medium text-gray-700">
                 Exit editing
               </span>
               <div className="flex items-center space-x-1">
-                <kbd className="px-3 py-1.5 bg-gray-200 rounded-md text-xs font-medium">
+                <kbd className="px-2 py-1 bg-gray-200 rounded text-xs font-medium">
                   Esc
                 </kbd>
                 <span className="text-xs text-gray-400">or</span>
-                <kbd className="px-3 py-1.5 bg-gray-200 rounded-md text-xs font-medium">
+                <kbd className="px-2 py-1 bg-gray-200 rounded text-xs font-medium">
                   Ctrl + Enter
                 </kbd>
               </div>
             </div>
-            <div className="flex items-center justify-between py-2 px-3 hover:bg-gray-50/50 rounded-lg transition-colors">
+            <div className="flex items-center justify-between py-1.5 px-2 hover:bg-gray-50/50 rounded-lg transition-colors">
               <span className="text-sm font-medium text-gray-700">
                 Indent/Unindent
               </span>
               <div className="flex items-center space-x-1">
-                <kbd className="px-3 py-1.5 bg-gray-200 rounded-md text-xs font-medium">
+                <kbd className="px-2 py-1 bg-gray-200 rounded text-xs font-medium">
                   Tab
                 </kbd>
                 <span className="text-xs text-gray-400">/</span>
-                <kbd className="px-3 py-1.5 bg-gray-200 rounded-md text-xs font-medium">
+                <kbd className="px-2 py-1 bg-gray-200 rounded text-xs font-medium">
                   Shift + Tab
                 </kbd>
               </div>
