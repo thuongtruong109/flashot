@@ -4,13 +4,13 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import { themes, copyToClipboard } from "@/utils";
 import { generateAndDownloadImage } from "@/lib/imageGenerator";
-import SettingsPanel from "@/components/SettingsPanel";
-import JSONDataSection from "@/components/JSONDataSection";
-import TipsModal from "@/components/TipsModal";
-import CodeEditor from "@/components/CodeEditor";
-import ActionBar from "@/components/ActionBar";
-import Footer from "@/components/Footer";
-import Brand from "@/components/Brand";
+import SettingsPanel from "app/playground/_components/SettingsPanel";
+import JSONDataSection from "app/playground/_components/JSONDataSection";
+import TipsModal from "app/playground/_components/TipsModal";
+import CodeEditor from "app/playground/_components/CodeEditor";
+import ActionBar from "app/playground/_components/ActionBar";
+import Footer from "app/components/Footer";
+import Brand from "app/playground/_components/Brand";
 
 const defaultCode = `function fibonacci(n) {
   if (n <= 1) return n;
@@ -19,7 +19,7 @@ const defaultCode = `function fibonacci(n) {
 
 console.log(fibonacci(10)); // 55`;
 
-const CodeToImageConverter: React.FC = () => {
+export default function Page() {
   const [code, setCode] = useState(defaultCode);
   const [settings, setSettings] = useState<CodeSettings>({
     language: "javascript",
@@ -225,17 +225,6 @@ const CodeToImageConverter: React.FC = () => {
         isOpen={showTipsModal}
         onClose={() => setShowTipsModal(false)}
       />
-
-      {/* Footer */}
-      <div
-        className={`transition-all duration-300 ease-in-out ${
-          showSettingsPanel ? "lg:pr-80" : "w-full"
-        }`}
-      >
-        <Footer />
-      </div>
     </div>
   );
-};
-
-export default CodeToImageConverter;
+}
