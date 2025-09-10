@@ -2,7 +2,7 @@
 echo 🚀 Setting up Flashot Web - Code to Image Converter
 echo ==================================================
 
-REM Check if we're in the right directory
+REM
 if not exist "package.json" (
     echo ❌ Error: Please run this script from the web directory
     exit /b 1
@@ -10,9 +10,6 @@ if not exist "package.json" (
 
 echo 📦 Installing dependencies...
 npm install
-
-echo 🎨 Installing additional image generation dependencies...
-npm install html2canvas @types/html2canvas
 
 echo 🔧 Setting up development environment...
 echo ✅ Dependencies installed successfully!

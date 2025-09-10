@@ -3,7 +3,6 @@
 echo "🚀 Setting up Flashot Web - Code to Image Converter"
 echo "=================================================="
 
-# Check if we're in the right directory
 if [ ! -f "package.json" ]; then
     echo "❌ Error: Please run this script from the web directory"
     exit 1
@@ -11,9 +10,6 @@ fi
 
 echo "📦 Installing dependencies..."
 npm install
-
-echo "🎨 Installing additional image generation dependencies..."
-npm install html2canvas @types/html2canvas
 
 echo "🔧 Setting up development environment..."
 echo "✅ Dependencies installed successfully!"

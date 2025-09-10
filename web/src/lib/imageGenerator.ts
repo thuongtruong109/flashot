@@ -6,7 +6,8 @@ export interface ImageGenerationOptions extends CodeSettings {
 
 export const generateCodeImage = async (
   elementRef: HTMLElement | null,
-  options: ImageGenerationOptions
+  options: ImageGenerationOptions,
+  format: string = "png"
 ): Promise<string | null> => {
   if (!elementRef || typeof window === "undefined") {
     console.error("Element reference is null or running in SSR");
@@ -22,9 +23,29 @@ export const generateCodeImage = async (
       useCORS: true,
       allowTaint: true,
       logging: false,
+      background: format === "jpg" ? "#ffffff" : undefined, // White background for JPG
     });
 
-    return canvas.toDataURL("image/png", 1.0);
+    // Handle different formats
+    switch (format.toLowerCase()) {
+      case "jpg":
+      case "jpeg":
+        return canvas.toDataURL("image/jpeg", 0.95);
+      case "webp":
+        return canvas.toDataURL("image/webp", 0.95);
+      case "avif":
+        // AVIF support is limited, fallback to WebP
+        if (canvas.toDataURL("image/avif")) {
+          return canvas.toDataURL("image/avif", 0.85);
+        }
+        return canvas.toDataURL("image/webp", 0.85);
+      case "svg":
+        // SVG generation is complex, fallback to PNG for now
+        return canvas.toDataURL("image/png", 1.0);
+      case "png":
+      default:
+        return canvas.toDataURL("image/png", 1.0);
+    }
   } catch (error) {
     console.error("Failed to generate image:", error);
     return null;
@@ -48,7 +69,9 @@ export const generateAndDownloadImage = async (
   options: ImageGenerationOptions,
   filename?: string
 ): Promise<boolean> => {
-  const dataUrl = await generateCodeImage(elementRef, options);
+  // Extract format from filename
+  const format = filename ? filename.split(".").pop() || "png" : "png";
+  const dataUrl = await generateCodeImage(elementRef, options, format);
 
   if (dataUrl) {
     downloadImage(dataUrl, filename);

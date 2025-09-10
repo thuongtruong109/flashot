@@ -34,42 +34,85 @@ const JSONDataSection: React.FC<JSONDataSectionProps> = ({
 
   return (
     <div
-      className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg border-l border-gray-200 z-50 transition-transform duration-300 ${
-        isOpen ? "translate-x-0" : "translate-x-full"
+      className={`fixed top-0 left-0 h-full w-80 bg-white/95 backdrop-blur-xl shadow-2xl border-r border-white/20 z-50 transition-all duration-300 ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
-      <div className="p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-            <FileText className="w-5 h-5 mr-2" />
-            Raw JSON Data
+      <div className="p-6 bg-gradient-to-b from-white/80 to-white/60 h-full overflow-y-auto">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent flex items-center">
+            <div className="relative mr-3">
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-lg blur opacity-20"></div>
+              <FileText className="relative w-6 h-6 text-transparent bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text" />
+            </div>
+            JSON Data
           </h3>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100/50 rounded-xl transition-all"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="mb-4">
+        <div className="mb-6">
           <button
             onClick={onCopyJSON}
-            className="flex items-center space-x-2 px-3 py-2 w-full bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+            className="group relative flex items-center space-x-2 px-4 py-3 w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl transition-all duration-200 font-semibold shadow-lg shadow-emerald-500/25"
           >
             {copySuccess ? (
-              <Check className="w-4 h-4 text-green-600" />
+              <Check className="w-4 h-4 transition-transform group-hover:scale-110" />
             ) : (
-              <Copy className="w-4 h-4" />
+              <Copy className="w-4 h-4 transition-transform group-hover:scale-110" />
             )}
-            <span>{copySuccess ? "Copied!" : "Copy JSON"}</span>
+            <span>{copySuccess ? "✓ Copied!" : "📋 Copy JSON"}</span>
+            {copySuccess && (
+              <div className="absolute inset-0 bg-white/20 rounded-xl animate-pulse"></div>
+            )}
           </button>
         </div>
 
-        <div className="bg-gray-50 rounded-lg p-4 max-h-[calc(100vh-200px)] overflow-y-auto">
-          <pre className="text-xs text-gray-700 whitespace-pre-wrap font-mono">
-            {formattedJSON}
-          </pre>
+        <div className="bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4 max-h-[calc(100vh-240px)] overflow-auto shadow-lg">
+          <div className="mb-3 text-xs text-gray-400 font-medium flex items-center justify-between">
+            <span className="flex items-center space-x-2">
+              <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+              <span>JSON Configuration</span>
+            </span>
+            <span className="bg-gray-800 px-2 py-1 rounded-md text-green-400">
+              {formattedJSON.split("\n").length} lines
+            </span>
+          </div>
+          <div className="relative">
+            <pre className="text-sm text-gray-300 whitespace-pre-wrap font-mono leading-relaxed overflow-x-auto">
+              <code className="language-json">
+                {formattedJSON.split("\n").map((line, index) => (
+                  <div key={index} className="flex">
+                    <span className="text-gray-600 select-none w-8 text-right pr-2 flex-shrink-0">
+                      {index + 1}
+                    </span>
+                    <span
+                      className="flex-1"
+                      dangerouslySetInnerHTML={{
+                        __html: line
+                          .replace(
+                            /(".*?")/g,
+                            '<span class="text-green-400">$1</span>'
+                          )
+                          .replace(
+                            /(:\s*)(true|false|null|\d+)/g,
+                            '$1<span class="text-blue-400">$2</span>'
+                          )
+                          .replace(
+                            /([{}[\],])/g,
+                            '<span class="text-gray-500">$1</span>'
+                          ),
+                      }}
+                    />
+                  </div>
+                ))}
+              </code>
+            </pre>
+          </div>
         </div>
       </div>
     </div>
