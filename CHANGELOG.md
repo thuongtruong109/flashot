@@ -2,7 +2,7 @@
 
 ### 🚀 Features
 
-- **build**: config CI/CD workflow - by @thuongtruong109 [<samp>(a47b5)</samp>](https://github.com/thuongtruong109/flashot/commit/a47b54869ffb61804f668ecbc6be0307dda4cc6f)
+- **build**: config CI workflow - by @thuongtruong109 [<samp>(c307c)</samp>](https://github.com/thuongtruong109/flashot/commit/c307c51d3cb9cf5ba08de2f7bf9c39543a31aab9)
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.0.0...v2.1.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.1.0)
 
