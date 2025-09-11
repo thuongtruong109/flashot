@@ -97,11 +97,6 @@ jobs:
         working-directory: package
         run: bun run build
 
-      - name: 🧪 Run benchmark tests
-        working-directory: package
-        run: bun run bench
-        continue-on-error: true
-
   test-api:
     name: 🚀 Test API
     runs-on: ubuntu-latest
@@ -287,28 +282,28 @@ jobs:
       - name: 🔍 Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
 
-  # summary:
-  #   name: 📋 CI Summary
-  #   runs-on: ubuntu-latest
-  #   needs: [test-package, test-api, test-web, test-cli, security-scan]
-  #   if: always()
+  summary:
+    name: 📋 CI Summary
+    runs-on: ubuntu-latest
+    needs: [test-package, test-api, test-web, test-cli, security-scan]
+    if: always()
 
-  #   steps:
-  #     - name: 📊 Check CI Results
-  #       run: |
-  #         echo "## 📋 CI Summary" >> $GITHUB_STEP_SUMMARY
-  #         echo "| Component | Status |" >> $GITHUB_STEP_SUMMARY
-  #         echo "|-----------|--------|" >> $GITHUB_STEP_SUMMARY
-  #         echo "| 📦 Package | ${{ needs.test-package.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
-  #         echo "| 🚀 API | ${{ needs.test-api.result == 'success' && '✅ Passed' || needs.test-api.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
-  #         echo "| 🌐 Web | ${{ needs.test-web.result == 'success' && '✅ Passed' || needs.test-web.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
-  #         echo "| 🖥️ CLI | ${{ needs.test-cli.result == 'success' && '✅ Passed' || needs.test-cli.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
-  #         echo "| 🔒 Security | ${{ needs.security-scan.result == 'success' && '✅ Passed' || needs.security-scan.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+    steps:
+      - name: 📊 Check CI Results
+        run: |
+          echo "## 📋 CI Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Component | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| 📦 Package | ${{ needs.test-package.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🚀 API | ${{ needs.test-api.result == 'success' && '✅ Passed' || needs.test-api.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🌐 Web | ${{ needs.test-web.result == 'success' && '✅ Passed' || needs.test-web.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🖥️ CLI | ${{ needs.test-cli.result == 'success' && '✅ Passed' || needs.test-cli.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🔒 Security | ${{ needs.security-scan.result == 'success' && '✅ Passed' || needs.security-scan.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
 
-  #         # Check if any required job failed
-  #         if [[ "${{ needs.test-package.result }}" == "failure" ]]; then
-  #           echo "❌ CI failed due to package test failures"
-  #           exit 1
-  #         fi
+          # Check if any required job failed
+          if [[ "${{ needs.test-package.result }}" == "failure" ]]; then
+            echo "❌ CI failed due to package test failures"
+            exit 1
+          fi
 
-  #         echo "✅ CI completed successfully!"
+          echo "✅ CI completed successfully!"
