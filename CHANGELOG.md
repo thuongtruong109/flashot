@@ -1,4 +1,12 @@
-## v2.0.0
+## [v2.1.0 - 2025-09-12](https://github.com/thuongtruong109/flashot/releases/tag/v2.1.0)
+
+### 🚀 Features
+
+- **build**: config CI/CD workflow - by @thuongtruong109 [<samp>(a47b5)</samp>](https://github.com/thuongtruong109/flashot/commit/a47b54869ffb61804f668ecbc6be0307dda4cc6f)
+
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.0.0...v2.1.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.1.0)
+
+## [v2.0 - 2025-09-11](https://github.com/thuongtruong109/flashot/releases/tag/v2.0.0)
 
 ### 🚀 Features
 
@@ -10,6 +18,8 @@
 ### 🐞 Bug Fixes
 
 - **web**: toggle setting slate sheet, re-arrange layout button
+
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v1.4.0...v2.0.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.0.0)
 
 ## [v1.4.0 - 2025-09-09](https://github.com/thuongtruong109/flashot/releases/tag/v1.4.0)
 

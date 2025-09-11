@@ -34,6 +34,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       package-changed: ${{ steps.changes.outputs.package }}
+      api-changed: ${{ steps.changes.outputs.api }}
+      web-changed: ${{ steps.changes.outputs.web }}
+      cli-changed: ${{ steps.changes.outputs.cli }}
 
     steps:
       - name: 📥 Checkout
@@ -62,33 +65,23 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            .bun
+            ~/.bun/install/cache
             node_modules
-            package/node_modules
-            api/node_modules
-            web/node_modules
-            cli/node_modules
           key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb', '**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-bun-
 
-      - name: 📦 Install root dependencies
-        run: bun install
-
-      - name: 🔧 Install package dependencies
-        working-directory: package
+      - name: 📦 Install workspace dependencies
         run: bun install
 
       - name: 🧹 Lint and Format
         run: bun check
 
       - name: 🧪 Run package tests
-        working-directory: package
-        run: bun test
+        run: bun run --filter package test
 
       - name: 📊 Generate test coverage
-        working-directory: package
-        run: bun run test:coverage
+        run: bun run --filter package test:coverage
 
       - name: 📤 Upload coverage to Codecov
         uses: codecov/codecov-action@v4
@@ -100,19 +93,17 @@ jobs:
           fail_ci_if_error: false
 
       - name: 🏗️ Build package
-        working-directory: package
-        run: bun run build
+        run: bun run --filter package build
 
       - name: 🧪 Run benchmark tests
-        working-directory: package
-        run: bun run bench
+        run: bun run --filter package bench
         continue-on-error: true
 
   test-api:
     name: 🚀 Test API
     runs-on: ubuntu-latest
     needs: test-package
-    if: needs.test-package.outputs.package-changed == 'true' || contains(github.event.head_commit.message, '[test-api]')
+    if: needs.test-package.outputs.api-changed == 'true' || needs.test-package.outputs.package-changed == 'true' || contains(github.event.head_commit.message, '[test-api]')
 
     steps:
       - name: 📥 Checkout
@@ -127,40 +118,29 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            .bun
+            ~/.bun/install/cache
             node_modules
-            package/node_modules
-            api/node_modules
           key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb', '**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-bun-
 
-      - name: 📦 Install package dependencies
-        working-directory: package
+      - name: 📦 Install workspace dependencies
         run: bun install
 
       - name: 🏗️ Build package
-        working-directory: package
-        run: bun run build
-
-      - name: 📦 Install API dependencies
-        working-directory: api
-        run: bun install
+        run: bun run --filter package build
 
       - name: 🔧 Lint API
-        working-directory: api
-        run: bun run lint
+        run: bun run --filter api lint
         continue-on-error: true
 
       - name: 🏗️ Build API
-        working-directory: api
-        run: bun run build
+        run: bun run --filter api build
 
       - name: 🧪 Test API endpoints
-        working-directory: api
         run: |
           # Start API in background
-          bun run start &
+          cd api && bun run start &
           API_PID=$!
 
           # Wait for API to start
@@ -176,7 +156,8 @@ jobs:
   test-web:
     name: 🌐 Test Web
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, '[test-web]') || github.event_name == 'pull_request'
+    needs: test-package
+    if: needs.test-package.outputs.web-changed == 'true' || needs.test-package.outputs.package-changed == 'true' || contains(github.event.head_commit.message, '[test-web]') || github.event_name == 'pull_request'
 
     steps:
       - name: 📥 Checkout
@@ -191,40 +172,31 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            .bun
+            ~/.bun/install/cache
             node_modules
-            package/node_modules
-            web/node_modules
             web/.next
           key: ${{ runner.os }}-web-${{ hashFiles('**/bun.lockb', '**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-web-
 
-      - name: 📦 Install package dependencies
-        working-directory: package
+      - name: 📦 Install workspace dependencies
         run: bun install
 
       - name: 🏗️ Build package
-        working-directory: package
-        run: bun run build
-
-      - name: 📦 Install web dependencies
-        working-directory: web
-        run: bun install
+        run: bun run --filter package build
 
       - name: 🔧 Lint web
-        working-directory: web
-        run: bun run lint
+        run: bun run --filter web lint
         continue-on-error: true
 
       - name: 🏗️ Build web
-        working-directory: web
-        run: bun run build
+        run: bun run --filter web build
 
   test-cli:
     name: 🖥️ Test CLI
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, '[test-cli]') || github.event_name == 'pull_request'
+    needs: test-package
+    if: needs.test-package.outputs.cli-changed == 'true' || needs.test-package.outputs.package-changed == 'true' || contains(github.event.head_commit.message, '[test-cli]') || github.event_name == 'pull_request'
 
     steps:
       - name: 📥 Checkout
@@ -239,38 +211,28 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            .bun
+            ~/.bun/install/cache
             node_modules
-            package/node_modules
-            cli/node_modules
           key: ${{ runner.os }}-cli-${{ hashFiles('**/bun.lockb', '**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-cli-
 
-      - name: 📦 Install package dependencies
-        working-directory: package
+      - name: 📦 Install workspace dependencies
         run: bun install
 
       - name: 🏗️ Build package
-        working-directory: package
-        run: bun run build
-
-      - name: 📦 Install CLI dependencies
-        working-directory: cli
-        run: bun install
+        run: bun run --filter package build
 
       - name: 🏗️ Build CLI
-        working-directory: cli
-        run: bun run build
+        run: bun run --filter cli build
 
       - name: 🧪 Test CLI commands
-        working-directory: cli
         run: |
           # Test CLI help command
-          bun run cli --help || exit 1
+          cd cli && bun run cli --help || exit 1
 
           # Test version command
-          bun run cli --version || exit 1
+          cd cli && bun run cli --version || exit 1
         continue-on-error: true
 
   security-scan:
@@ -282,10 +244,17 @@ jobs:
       - name: 📥 Checkout
         uses: actions/checkout@v4
 
+      - name: ⚡ Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: 📦 Install workspace dependencies
+        run: bun install
+
       - name: 🔍 Run dependency audit
         run: |
-          cd package && bun audit || true
-          cd ../api && bun audit || true
+          bun audit || true
 
       - name: 🛡️ Run CodeQL Analysis
         uses: github/codeql-action/init@v3
