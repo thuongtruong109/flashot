@@ -1,7 +1,8 @@
-## v1.5.0
+## v2.0.0
 
 ### 🚀 Features
 
+- **api**: Add API service deployment - by @thuongtruong109 [<samp>(28724)</samp>](https://github.com/thuongtruong109/flashot/commit/28724cde6091b5135f8de624510244b706765076)
 - **docs**: add landing page - by @thuongtruong109 [<samp>(33c8e)</samp>](https://github.com/thuongtruong109/flashot/commit/33c8e77580cbff104125642ebe7fc55be2253963)
 - **web**: Add sample playground - by @thuongtruong109 [<samp>(46c26)</samp>](https://github.com/thuongtruong109/flashot/commit/46c26cdf4127e5b2a01e5bc48945975e9c3aff18)
 - **refactor**: Refactor codebase to workspace monorepo - by @thuongtruong109 [<samp>(c019d)</samp>](https://github.com/thuongtruong109/flashot/commit/c019d61bfd82c01293563139ba13d5e59a2f443f)

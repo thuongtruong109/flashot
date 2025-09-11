@@ -1,8 +1,8 @@
 {
   "name": "@thuongtruong/flashot",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "exports": "./src/index.ts",
   "publish": {
-    "include": ["src", "LICENSE", "README.md", "package.json"]
+    "include": ["./src", "./package.json", "./LICENSE", "./README.md"]
   }
 }

@@ -13,9 +13,9 @@ export const config = {
   external: [
     "node:fs",
     "node:path",
-    "shiki",
-    "@takumi-rs/core",
-    "@takumi-rs/helpers",
+    // "shiki",
+    // "@takumi-rs/core",
+    // "@takumi-rs/helpers",
   ],
   banner: `/**
  * ${pkg.name} v${pkg.version} ${license
@@ -27,7 +27,7 @@ export const config = {
 
 export default defineConfig({
   entry: [config.entry],
-  format: ["es", "cjs"],
+  format: ["esm", "cjs"],
   platform: "node",
   dts: true,
   sourcemap: true,
@@ -39,5 +39,5 @@ export default defineConfig({
   clean: true,
   nodeProtocol: true,
   treeshake: true,
-  target: "esnext",
+  target: "node18",
 });

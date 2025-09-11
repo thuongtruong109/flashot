@@ -1,7 +1,7 @@
 {
   "name": "flashot",
   "description": "📟 Rapidly snapshot code snippets as images",
-  "version": "1.4.1",
+  "version": "1.4.4",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -25,17 +25,22 @@
     "dev": "tsdown --watch",
     "build:vite": "vite build",
     "build": "tsdown",
-    "t": "npm test -- -t",
+    "t": "bun run test -- -t",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
     "bench": "bun run benchmark.ts",
-    "publish": "npm publish && npx jsr publish --allow-dirty"
+    "publish:pre": "npx cpx ../README.md ./ && npx cpx ../LICENSE ./",
+    "publish:suf": "rm README.md LICENSE",
+    "npm": "bun run publish:pre && bun publish && bun run publish:suf",
+    "jsr": "bun run publish:pre && npx jsr publish --allow-dirty && bun run publish:suf"
   },
   "files": [
     "dist",
     "package.json",
-    "tsconfig.json"
+    "tsconfig.json",
+    "../README.md",
+    "../LICENSE"
   ],
   "keywords": [
     "flashot",
@@ -64,6 +69,7 @@
     "@types/bun": "catalog:",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
+    "cpx": "^1.5.0",
     "happy-dom": "^18.0.1",
     "tinybench": "^5.0.1",
     "tsdown": "^0.14.2",
@@ -75,5 +81,13 @@
     "@takumi-rs/core": "^0.29.7",
     "@takumi-rs/helpers": "^0.29.7",
     "shiki": "^3.12.2"
+  },
+  "peerDependenciesMeta": {
+    "@shikijs/langs": {
+      "optional": true
+    },
+    "@shikijs/themes": {
+      "optional": true
+    }
   }
 }

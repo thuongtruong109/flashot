@@ -281,7 +281,75 @@ const defaultOptions = {
 | 3   | 100 lines  | 343126433 ± 0.29%  | 343616650 ± 2711850   | 3 ± 0.29%              | 3 ± 0                  | 64      |
 | 4   | 1000 lines | 1726190939 ± 0.46% | 1715535300 ± 13138650 | 1 ± 0.45%              | 1 ± 0                  | 64      |
 
-## 📚 Technologies
+## � Docker Deployment
+
+Flashot API is available as Docker images on both GitHub Container Registry and Docker Hub.
+
+### Quick Start with Docker
+
+```bash
+# Pull from GitHub Container Registry
+docker pull ghcr.io/thuongtruong109/flashot-api:latest
+
+# Or pull from Docker Hub
+docker pull thuongtruong109/flashot-api:latest
+
+# Run the container
+docker run -p 8080:8080 ghcr.io/thuongtruong109/flashot-api:latest
+```
+
+### Docker Compose
+
+```bash
+# Clone the repository
+git clone https://github.com/thuongtruong109/flashot.git
+cd flashot
+
+# Start with Docker Compose
+docker-compose up -d
+```
+
+### Container Registries
+
+- **GitHub Container Registry**: `ghcr.io/thuongtruong109/flashot-api`
+- **Docker Hub**: `thuongtruong109/flashot-api`
+
+### Available Tags
+
+- `latest` - Latest stable release
+- `main` - Latest development build
+- `main-<sha>` - Specific commit builds
+
+### API Endpoints
+
+Once running, the API provides several endpoints:
+
+- `POST /` - Convert code string to image
+- `POST /url` - Convert code from URL to image
+- `POST /file` - Convert code from file path to image
+- `POST /buffer` - Convert code from hex buffer to image
+- `GET /options` - Get available configuration options
+- `GET /health` - Health check endpoint
+
+Example usage:
+
+```bash
+curl -X POST http://localhost:8080/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "console.log(\"Hello, World!\");",
+    "options": {
+      "lang": "javascript",
+      "theme": "github-dark",
+      "format": "png"
+    }
+  }' \
+  --output hello-world.png
+```
+
+For detailed deployment instructions, see [api/DEPLOYMENT.md](./api/DEPLOYMENT.md).
+
+## �📚 Technologies
 
 - ⚡ **[Bun](https://bun.sh)** - Fast all-in-one JavaScript runtime and toolkit
 - 🏗️ **[TypeScript](https://www.typescriptlang.org/)** - Type-safe development with strict mode enabled
