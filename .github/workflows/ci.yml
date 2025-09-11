@@ -245,11 +245,9 @@ jobs:
       - name: 🧪 Test CLI commands
         working-directory: cli
         run: |
-          # Test CLI help command
-          bun run cli --help || exit 1
-
-          # Test version command
-          bun run cli --version || exit 1
+          bun link flashot
+          flashot --help || exit 1
+          flashot --version || exit 1
         continue-on-error: true
 
   security-scan:

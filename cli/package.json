@@ -21,7 +21,11 @@
   },
   "scripts": {
     "dev": "tsdown --watch",
-    "build": "tsdown"
+    "build": "tsdown",
+    "publish:pre": "npx cpx ../README.md ./ && npx cpx ../LICENSE ./",
+    "publish:suf": "rm README.md LICENSE",
+    "npm": "bun run publish:pre && bun publish && bun run publish:suf",
+    "jsr": "bun run publish:pre && npx jsr publish --allow-dirty && bun run publish:suf"
   },
   "bin": {
     "flashot": "./dist/index.ts"
@@ -60,7 +64,8 @@
   "devDependencies": {
     "@types/bun": "catalog:",
     "tsdown": "^0.14.2",
-    "flashot": "workspace:*"
+    "flashot": "workspace:*",
+    "cpx": "^1.5.0"
   },
   "dependencies": {
     "commander": "^14.0.0"
