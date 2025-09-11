@@ -17,7 +17,7 @@ const banner = `/**
 
 export default defineConfig({
   entry: ["./src/index.ts"],
-  format: ["es", "cjs"],
+  format: ["esm", "cjs"],
   platform: "node",
   dts: true,
   sourcemap: true,

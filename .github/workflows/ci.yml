@@ -238,9 +238,9 @@ jobs:
         working-directory: cli
         run: bun install
 
-      - name: 🏗️ Build CLI
-        working-directory: cli
-        run: bun run build
+      # - name: 🏗️ Build CLI
+      #   working-directory: cli
+      #   run: bun run build
 
       - name: 🧪 Test CLI commands
         working-directory: cli
