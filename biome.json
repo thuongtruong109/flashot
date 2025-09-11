@@ -16,6 +16,9 @@
       "cli/src/**",
       "cli/*.{js,ts,json}",
       "cli/*.config.ts",
+      "api/src/**",
+      "api/*.{js,ts,json}",
+      "api/*.config.ts",
       ".config/eslint.config.ts",
       ".config/commitlint.config.ts"
     ]

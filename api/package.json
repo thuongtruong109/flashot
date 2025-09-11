@@ -1,0 +1,25 @@
+{
+  "name": "flashot-api",
+  "version": "1.0.0",
+  "description": "API endpoint implementation for flashot",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "start:prod": "NODE_ENV=production node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "build:docker": "docker build -t flashot-api .",
+    "docker:run": "docker run -p 8080:8080 flashot-api"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.0",
+    "flashot": "^1.0.0",
+    "hono": "^4.9.4"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
