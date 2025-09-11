@@ -65,23 +65,24 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            ~/.bun/install/cache
+            .bun
             node_modules
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb', '**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lockb') }}
 
-      - name: 📦 Install workspace dependencies
+      - name: 📦 Install dependencies
+        working-directory: package
         run: bun install
 
       - name: 🧹 Lint and Format
         run: bun check
 
       - name: 🧪 Run package tests
-        run: bun run --filter package test
+        working-directory: package
+        run: bun test
 
       - name: 📊 Generate test coverage
-        run: bun run --filter package test:coverage
+        working-directory: package
+        run: bun test --coverage
 
       - name: 📤 Upload coverage to Codecov
         uses: codecov/codecov-action@v4
@@ -93,10 +94,12 @@ jobs:
           fail_ci_if_error: false
 
       - name: 🏗️ Build package
-        run: bun run --filter package build
+        working-directory: package
+        run: bun run build
 
       - name: 🧪 Run benchmark tests
-        run: bun run --filter package bench
+        working-directory: package
+        run: bun run bench
         continue-on-error: true
 
   test-api:
@@ -118,29 +121,36 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            ~/.bun/install/cache
+            .bun
             node_modules
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb', '**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lockb') }}
 
-      - name: 📦 Install workspace dependencies
+      - name: 📦 Install package dependencies
+        working-directory: package
         run: bun install
 
       - name: 🏗️ Build package
-        run: bun run --filter package build
+        working-directory: package
+        run: bun run build
+
+      - name: 📦 Install API dependencies
+        working-directory: api
+        run: bun install
 
       - name: 🔧 Lint API
-        run: bun run --filter api lint
+        working-directory: api
+        run: bun run lint
         continue-on-error: true
 
       - name: 🏗️ Build API
-        run: bun run --filter api build
+        working-directory: api
+        run: bun run build
 
       - name: 🧪 Test API endpoints
+        working-directory: api
         run: |
           # Start API in background
-          cd api && bun run start &
+          bun run start &
           API_PID=$!
 
           # Wait for API to start
@@ -172,25 +182,31 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            ~/.bun/install/cache
+            .bun
             node_modules
             web/.next
-          key: ${{ runner.os }}-web-${{ hashFiles('**/bun.lockb', '**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-web-
+          key: ${{ runner.os }}-web-${{ hashFiles('bun.lockb') }}
 
-      - name: 📦 Install workspace dependencies
+      - name: 📦 Install package dependencies
+        working-directory: package
         run: bun install
 
       - name: 🏗️ Build package
-        run: bun run --filter package build
+        working-directory: package
+        run: bun run build
+
+      - name: 📦 Install web dependencies
+        working-directory: web
+        run: bun install
 
       - name: 🔧 Lint web
-        run: bun run --filter web lint
+        working-directory: web
+        run: bun run lint
         continue-on-error: true
 
       - name: 🏗️ Build web
-        run: bun run --filter web build
+        working-directory: web
+        run: bun run build
 
   test-cli:
     name: 🖥️ Test CLI
@@ -211,28 +227,34 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            ~/.bun/install/cache
+            .bun
             node_modules
-          key: ${{ runner.os }}-cli-${{ hashFiles('**/bun.lockb', '**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-cli-
+          key: ${{ runner.os }}-cli-${{ hashFiles('bun.lockb') }}
 
-      - name: 📦 Install workspace dependencies
+      - name: 📦 Install package dependencies
+        working-directory: package
         run: bun install
 
       - name: 🏗️ Build package
-        run: bun run --filter package build
+        working-directory: package
+        run: bun run build
+
+      - name: 📦 Install CLI dependencies
+        working-directory: cli
+        run: bun install
 
       - name: 🏗️ Build CLI
-        run: bun run --filter cli build
+        working-directory: cli
+        run: bun run build
 
       - name: 🧪 Test CLI commands
+        working-directory: cli
         run: |
           # Test CLI help command
-          cd cli && bun run cli --help || exit 1
+          bun run cli --help || exit 1
 
           # Test version command
-          cd cli && bun run cli --version || exit 1
+          bun run cli --version || exit 1
         continue-on-error: true
 
   security-scan:
@@ -250,6 +272,7 @@ jobs:
           bun-version: latest
 
       - name: 📦 Install workspace dependencies
+        working-directory: package
         run: bun install
 
       - name: 🔍 Run dependency audit
@@ -265,27 +288,4 @@ jobs:
         uses: github/codeql-action/analyze@v3
 
   summary:
-    name: 📋 CI Summary
-    runs-on: ubuntu-latest
-    needs: [test-package, test-api, test-web, test-cli, security-scan]
-    if: always()
-
-    steps:
-      - name: 📊 Check CI Results
-        run: |
-          echo "## 📋 CI Summary" >> $GITHUB_STEP_SUMMARY
-          echo "| Component | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|-----------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| 📦 Package | ${{ needs.test-package.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| 🚀 API | ${{ needs.test-api.result == 'success' && '✅ Passed' || needs.test-api.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| 🌐 Web | ${{ needs.test-web.result == 'success' && '✅ Passed' || needs.test-web.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| 🖥️ CLI | ${{ needs.test-cli.result == 'success' && '✅ Passed' || needs.test-cli.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| 🔒 Security | ${{ needs.security-scan.result == 'success' && '✅ Passed' || needs.security-scan.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
-
-          # Check if any required job failed
-          if [[ "${{ needs.test-package.result }}" == "failure" ]]; then
-            echo "❌ CI failed due to package test failures"
-            exit 1
-          fi
-
-          echo "✅ CI completed successfully!"
+    name:
