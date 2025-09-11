@@ -1,18 +1,42 @@
-name: 🚀 CD
+name: CD
+
+# on:
+#   workflow_run:
+#     workflows: ["CI"]
+#     types:
+#       - completed
+#     branches: [main]
+#   workflow_dispatch:
+#     inputs:
+#       force_deploy:
+#         description: "Force deployment"
+#         required: false
+#         default: "false"
+#         type: boolean
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
+  push:
     branches: [main]
-  workflow_dispatch:
-    inputs:
-      force_deploy:
-        description: "Force deployment"
-        required: false
-        default: "false"
-        type: boolean
+    paths:
+      - ".config/**"
+      - ".github/workflows/*"
+      - "bun.lockb"
+      - "package.json"
+      - "package/**"
+      - "api/**"
+      - "web/**"
+      - "cli/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - ".config/**"
+      - ".github/workflows/*"
+      - "bun.lockb"
+      - "package.json"
+      - "package/**"
+      - "api/**"
+      - "web/**"
+      - "cli/**"
 
 env:
   REGISTRY_GHCR: ghcr.io
