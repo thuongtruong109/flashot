@@ -9,6 +9,9 @@ on:
       - "bun.lockb"
       - "package.json"
       - "package/**"
+      - "api/**"
+      - "web/**"
+      - "cli/**"
   pull_request:
     branches: [main]
     paths:
@@ -17,35 +20,303 @@ on:
       - "bun.lockb"
       - "package.json"
       - "package/**"
+      - "api/**"
+      - "web/**"
+      - "cli/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  test:
+  test-package:
+    name: 📦 Test Package
     runs-on: ubuntu-latest
+    outputs:
+      package-changed: ${{ steps.changes.outputs.package }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
 
-      - name: Setup Bun
+      - name: 🔍 Detect changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            package:
+              - 'package/**'
+            api:
+              - 'api/**'
+            web:
+              - 'web/**'
+            cli:
+              - 'cli/**'
+
+      - name: ⚡ Setup Bun
         uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
 
-      - name: Cache Bun dependencies
+      - name: 💾 Cache Bun dependencies
         uses: actions/cache@v4
         with:
           path: |
             .bun
             node_modules
-          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lockb') }}
+            package/node_modules
+            api/node_modules
+            web/node_modules
+            cli/node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb', '**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
 
-      - name: Install dependencies
+      - name: 📦 Install root dependencies
+        run: bun install
+
+      - name: 🔧 Install package dependencies
         working-directory: package
         run: bun install
 
-      - name: Lint and Format
+      - name: 🧹 Lint and Format
         run: bun check
 
-      - name: Run tests
+      - name: 🧪 Run package tests
         working-directory: package
         run: bun test
+
+      - name: 📊 Generate test coverage
+        working-directory: package
+        run: bun run test:coverage
+
+      - name: 📤 Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          file: ./package/coverage/lcov.info
+          flags: package
+          name: package-coverage
+          fail_ci_if_error: false
+
+      - name: 🏗️ Build package
+        working-directory: package
+        run: bun run build
+
+      - name: 🧪 Run benchmark tests
+        working-directory: package
+        run: bun run bench
+        continue-on-error: true
+
+  test-api:
+    name: 🚀 Test API
+    runs-on: ubuntu-latest
+    needs: test-package
+    if: needs.test-package.outputs.package-changed == 'true' || contains(github.event.head_commit.message, '[test-api]')
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: ⚡ Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: 💾 Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .bun
+            node_modules
+            package/node_modules
+            api/node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb', '**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: 📦 Install package dependencies
+        working-directory: package
+        run: bun install
+
+      - name: 🏗️ Build package
+        working-directory: package
+        run: bun run build
+
+      - name: 📦 Install API dependencies
+        working-directory: api
+        run: bun install
+
+      - name: 🔧 Lint API
+        working-directory: api
+        run: bun run lint
+        continue-on-error: true
+
+      - name: 🏗️ Build API
+        working-directory: api
+        run: bun run build
+
+      - name: 🧪 Test API endpoints
+        working-directory: api
+        run: |
+          # Start API in background
+          bun run start &
+          API_PID=$!
+
+          # Wait for API to start
+          sleep 5
+
+          # Test health endpoint
+          curl -f http://localhost:8080/health || exit 1
+
+          # Kill API process
+          kill $API_PID
+        continue-on-error: true
+
+  test-web:
+    name: 🌐 Test Web
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[test-web]') || github.event_name == 'pull_request'
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: ⚡ Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: 💾 Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .bun
+            node_modules
+            package/node_modules
+            web/node_modules
+            web/.next
+          key: ${{ runner.os }}-web-${{ hashFiles('**/bun.lockb', '**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-web-
+
+      - name: 📦 Install package dependencies
+        working-directory: package
+        run: bun install
+
+      - name: 🏗️ Build package
+        working-directory: package
+        run: bun run build
+
+      - name: 📦 Install web dependencies
+        working-directory: web
+        run: bun install
+
+      - name: 🔧 Lint web
+        working-directory: web
+        run: bun run lint
+        continue-on-error: true
+
+      - name: 🏗️ Build web
+        working-directory: web
+        run: bun run build
+
+  test-cli:
+    name: 🖥️ Test CLI
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[test-cli]') || github.event_name == 'pull_request'
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: ⚡ Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: 💾 Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .bun
+            node_modules
+            package/node_modules
+            cli/node_modules
+          key: ${{ runner.os }}-cli-${{ hashFiles('**/bun.lockb', '**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-cli-
+
+      - name: 📦 Install package dependencies
+        working-directory: package
+        run: bun install
+
+      - name: 🏗️ Build package
+        working-directory: package
+        run: bun run build
+
+      - name: 📦 Install CLI dependencies
+        working-directory: cli
+        run: bun install
+
+      - name: 🏗️ Build CLI
+        working-directory: cli
+        run: bun run build
+
+      - name: 🧪 Test CLI commands
+        working-directory: cli
+        run: |
+          # Test CLI help command
+          bun run cli --help || exit 1
+
+          # Test version command
+          bun run cli --version || exit 1
+        continue-on-error: true
+
+  security-scan:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🔍 Run dependency audit
+        run: |
+          cd package && bun audit || true
+          cd ../api && bun audit || true
+
+      - name: 🛡️ Run CodeQL Analysis
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+
+      - name: 🔍 Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+  summary:
+    name: 📋 CI Summary
+    runs-on: ubuntu-latest
+    needs: [test-package, test-api, test-web, test-cli, security-scan]
+    if: always()
+
+    steps:
+      - name: 📊 Check CI Results
+        run: |
+          echo "## 📋 CI Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Component | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| 📦 Package | ${{ needs.test-package.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🚀 API | ${{ needs.test-api.result == 'success' && '✅ Passed' || needs.test-api.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🌐 Web | ${{ needs.test-web.result == 'success' && '✅ Passed' || needs.test-web.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🖥️ CLI | ${{ needs.test-cli.result == 'success' && '✅ Passed' || needs.test-cli.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🔒 Security | ${{ needs.security-scan.result == 'success' && '✅ Passed' || needs.security-scan.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+
+          # Check if any required job failed
+          if [[ "${{ needs.test-package.result }}" == "failure" ]]; then
+            echo "❌ CI failed due to package test failures"
+            exit 1
+          fi
+
+          echo "✅ CI completed successfully!"

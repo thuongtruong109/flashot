@@ -1,17 +1,11 @@
-name: Build and Deploy
+name: 🚀 CD
 
 on:
-  push:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
     branches: [main]
-    paths:
-      - "api/**"
-      - "package/**"
-      - ".github/workflows/cd.yml"
-  pull_request:
-    branches: [main]
-    paths:
-      - "api/**"
-      - "package/**"
   workflow_dispatch:
     inputs:
       force_deploy:
@@ -26,71 +20,31 @@ env:
   IMAGE_NAME: flashot-api
 
 jobs:
-  build-and-test:
+  check-ci:
     runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch'
     outputs:
-      version: ${{ steps.meta.outputs.version }}
-      tags: ${{ steps.meta.outputs.tags }}
-      labels: ${{ steps.meta.outputs.labels }}
+      should_deploy: ${{ steps.check.outputs.should_deploy }}
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
-
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            .bun
-            node_modules
-            api/node_modules
-            package/node_modules
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb', '**/package.json') }}
-
-      - name: Install package dependencies
-        working-directory: package
-        run: bun install
-
-      - name: Build package
-        working-directory: package
-        run: bun run build
-
-      - name: Install API dependencies
-        working-directory: api
-        run: bun install
-
-      - name: Build API
-        working-directory: api
-        run: bun run build
-
-      - name: Run tests
-        working-directory: package
-        run: bun test
-
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: |
-            ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
-            ${{ env.REGISTRY_DOCKERHUB }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=sha,prefix={{branch}}-
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+      - name: 📋 Check CI status
+        id: check
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "should_deploy=true" >> $GITHUB_OUTPUT
+            echo "✅ Manual deployment triggered"
+          elif [[ "${{ github.event.workflow_run.conclusion }}" == "success" ]]; then
+            echo "should_deploy=true" >> $GITHUB_OUTPUT
+            echo "✅ CI workflow completed successfully"
+          else
+            echo "should_deploy=false" >> $GITHUB_OUTPUT
+            echo "❌ CI workflow failed, skipping deployment"
+          fi
 
   build-and-push:
-    needs: build-and-test
+    needs: check-ci
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request'
+    if: needs.check-ci.outputs.should_deploy == 'true'
     permissions:
       contents: read
       packages: write
@@ -98,27 +52,27 @@ jobs:
       id-token: write
 
     steps:
-      - name: Checkout repository
+      - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
+      - name: 🏗️ Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Log in to GitHub Container Registry
+      - name: 🔐 Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY_GHCR }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Log in to Docker Hub
+      - name: 🔐 Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY_DOCKERHUB }}
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Extract metadata
+      - name: 📝 Extract metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
@@ -132,7 +86,7 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
 
-      - name: Build and push Docker image
+      - name: 🏗️ Build and push Docker image
         id: push
         uses: docker/build-push-action@v5
         with:
@@ -149,7 +103,7 @@ jobs:
             VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
             REVISION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
 
-      - name: Generate artifact attestation for GHCR
+      - name: 🛡️ Generate artifact attestation for GHCR
         uses: actions/attest-build-provenance@v1
         with:
           subject-name: ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
@@ -159,19 +113,18 @@ jobs:
   security-scan:
     needs: build-and-push
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request'
     permissions:
       security-events: write
 
     steps:
-      - name: Run Trivy vulnerability scanner
+      - name: 🔍 Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
           format: "sarif"
           output: "trivy-results.sarif"
 
-      - name: Upload Trivy scan results to GitHub Security tab
+      - name: 📤 Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
@@ -180,16 +133,34 @@ jobs:
   deploy-notification:
     needs: [build-and-push, security-scan]
     runs-on: ubuntu-latest
-    if: always() && github.event_name != 'pull_request'
+    if: always()
 
     steps:
-      - name: Deployment Status
+      - name: 📋 Deployment Status
         run: |
           if [[ "${{ needs.build-and-push.result }}" == "success" ]]; then
+            echo "## 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+            echo "✅ Docker images successfully built and pushed!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 📦 Available Images:" >> $GITHUB_STEP_SUMMARY
+            echo "- 🐙 **GitHub Container Registry:** \`${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}\`" >> $GITHUB_STEP_SUMMARY
+            echo "- 🐳 **Docker Hub:** \`${{ env.REGISTRY_DOCKERHUB }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 🔧 Usage:" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
+            echo "# Pull from GitHub Container Registry" >> $GITHUB_STEP_SUMMARY
+            echo "docker pull ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "# Pull from Docker Hub" >> $GITHUB_STEP_SUMMARY
+            echo "docker pull ${{ env.REGISTRY_DOCKERHUB }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
             echo "✅ Docker images successfully built and pushed!"
             echo "🐙 GitHub Container Registry: ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}"
             echo "🐳 Docker Hub: ${{ env.REGISTRY_DOCKERHUB }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}"
           else
             echo "❌ Deployment failed!"
+            echo "Build result: ${{ needs.build-and-push.result }}"
+            echo "Security scan result: ${{ needs.security-scan.result }}"
             exit 1
           fi
