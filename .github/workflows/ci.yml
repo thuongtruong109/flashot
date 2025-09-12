@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - ".config/**"
-      - ".github/workflows/*"
+      - "!.github/workflows/cd.yml"
       - "bun.lockb"
       - "package.json"
       - "package/**"
@@ -16,7 +16,7 @@ on:
     branches: [main]
     paths:
       - ".config/**"
-      - ".github/workflows/*"
+      - "!.github/workflows/cd.yml"
       - "bun.lockb"
       - "package.json"
       - "package/**"

@@ -1,5 +1,5 @@
 # Use the official Bun image as base for better performance
-FROM oven/bun:1 as base
+FROM oven/bun:1 AS base
 
 # Set working directory
 WORKDIR /app
@@ -25,7 +25,7 @@ COPY . .
 RUN bun run build
 
 # Create production stage
-FROM oven/bun:1-slim as production
+FROM oven/bun:1-slim AS production
 
 # Install runtime dependencies
 RUN apt-get update && apt-get install -y \
