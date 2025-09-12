@@ -2,8 +2,9 @@
 
 ### 🚀 Features
 
-- **docs**: add usage docs content - by @thuongtruong109 [<samp>(b4f3e)</samp>]()
-- **deploy**: config CD workflow - by @thuongtruong109 [<samp>(c307c)</samp>]()
+- **docs**: integrate raw content to web pages - by @thuongtruong109 [<samp>(350a4)</samp>]()
+- **docs**: add usage docs raw content - by @thuongtruong109 [<samp>(350a4)</samp>](https://github.com/thuongtruong109/flashot/commit/350a44d0834dde1be1d376fdee7e49dd4ff6480c)
+- **deploy**: config CD workflow - by @thuongtruong109 [<samp>(c9da4)</samp>](https://github.com/thuongtruong109/flashot/commit/c9da407707397c63553fb0575cde8558bab70b93)
 - **build**: config CI workflow - by @thuongtruong109 [<samp>(c307c)</samp>](https://github.com/thuongtruong109/flashot/commit/c307c51d3cb9cf5ba08de2f7bf9c39543a31aab9)
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.0.0...v2.1.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.1.0)
