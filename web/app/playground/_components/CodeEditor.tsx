@@ -11,6 +11,7 @@ import {
   Edit2,
   Check,
   X,
+  GripVertical,
 } from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import { themes, syntaxHighlight, getFileExtension } from "@/utils";
@@ -38,9 +39,14 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isEditingFileName, setIsEditingFileName] = useState(false);
   const [tempFileName, setTempFileName] = useState(fileName || "untitled");
+  const [isDragging, setIsDragging] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [containerRect, setContainerRect] = useState<DOMRect | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const previewRef = useRef<HTMLPreElement>(null);
   const fileNameInputRef = useRef<HTMLInputElement>(null);
+  const dragRef = useRef<HTMLDivElement>(null);
   const currentTheme = themes[settings.theme as ThemeName];
 
   // Auto-focus when entering edit mode
@@ -99,6 +105,82 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
     },
     []
   );
+
+  // Drag handlers
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      if (isFullscreen) return; // Disable drag in fullscreen
+
+      const rect = dragRef.current?.getBoundingClientRect();
+      const container = dragRef.current?.parentElement;
+      if (!rect || !container) return;
+
+      // Cache container rect for performance
+      setContainerRect(container.getBoundingClientRect());
+      setIsDragging(true);
+      setDragOffset({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      });
+
+      e.preventDefault();
+      e.stopPropagation(); // Prevent event bubbling
+    },
+    [isFullscreen]
+  );
+
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!isDragging || !containerRect || !dragRef.current) return;
+
+      // Use requestAnimationFrame for smoother movement
+      requestAnimationFrame(() => {
+        if (!containerRect) return;
+
+        const editorRect = dragRef.current?.getBoundingClientRect();
+        if (!editorRect) return;
+
+        const newX = e.clientX - containerRect.left - dragOffset.x;
+        const newY = e.clientY - containerRect.top - dragOffset.y;
+
+        // Allow more freedom with looser constraints - only prevent going completely off-screen
+        const minX = -editorRect.width + 100; // Allow 100px to remain visible
+        const maxX = containerRect.width - 100; // Allow 100px to remain visible
+        const minY = -editorRect.height + 100;
+        const maxY = containerRect.height - 100;
+
+        setPosition({
+          x: Math.max(minX, Math.min(newX, maxX)),
+          y: Math.max(minY, Math.min(newY, maxY)),
+        });
+      });
+    },
+    [isDragging, dragOffset, containerRect]
+  );
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+    setContainerRect(null); // Clear cached rect
+  }, []);
+
+  // Reset position to center on double-click
+  const handleDoubleClick = useCallback(() => {
+    if (!isFullscreen) {
+      setPosition({ x: 0, y: 0 });
+    }
+  }, [isFullscreen]);
+
+  // Add global mouse events for dragging
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+      return () => {
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+      };
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp]);
 
   const handleFileNameBlur = useCallback(() => {
     setIsEditingFileName(false);
@@ -171,13 +253,23 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
       className={`relative group transition-all duration-300 ${
         isFullscreen
           ? "fixed inset-0 z-50 bg-black/95 backdrop-blur-xl p-8 flex items-center justify-center"
-          : ""
-      } ${className}`}
+          : "absolute"
+      } ${className} ${isDragging ? "cursor-grabbing" : "cursor-auto"}`}
+      ref={!isFullscreen ? dragRef : undefined}
+      style={
+        !isFullscreen
+          ? {
+              transform: `translate(${position.x}px, ${position.y}px)`,
+              zIndex: isDragging ? 1000 : 1,
+            }
+          : undefined
+      }
     >
       <div
         className={`relative transition-all duration-300 ${
           settings.showBackground ? "border border-gray-200/50" : "border-0"
-        }`}
+        } ${!isFullscreen ? "cursor-grab active:cursor-grabbing" : ""}`}
+        onMouseDown={!isFullscreen ? handleMouseDown : undefined}
         style={{
           background: isFullscreen
             ? "white"
@@ -221,7 +313,10 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
         {/* Window Controls */}
         {settings.showWindowControls && (
           <div
-            className="flex items-center justify-between px-4 py-3 border-b backdrop-blur-sm"
+            className={`flex items-center justify-between px-4 py-3 border-b backdrop-blur-sm ${
+              !isFullscreen ? "cursor-grab active:cursor-grabbing" : ""
+            }`}
+            onMouseDown={!isFullscreen ? handleMouseDown : undefined}
             style={{
               backgroundColor:
                 settings.theme === "light" ? "#f8f9fa" : "#2a2d3a",
@@ -296,6 +391,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           {!isEditing && (
             <div
               onClick={handlePreviewClick}
+              onMouseDown={(e) => e.stopPropagation()} // Prevent drag in content area
               className="relative cursor-text group py-4 h-full"
               style={{
                 backgroundColor: currentTheme.background,
@@ -373,6 +469,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           {/* Edit Mode */}
           {isEditing && (
             <div
+              onMouseDown={(e) => e.stopPropagation()} // Prevent drag in content area
               className="relative h-full"
               style={{
                 backgroundColor: currentTheme.background,

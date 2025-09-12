@@ -26,7 +26,7 @@ export default function Page() {
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     showBackground: true,
     padding: 32,
-    borderRadius: 8,
+    borderRadius: 10,
     showWindowControls: true,
     fontFamily: "Fira Code",
     fontSize: 14,
@@ -211,13 +211,16 @@ export default function Page() {
       {/* Main Container with Sidebar Layout */}
       <div className="flex-1 flex h-[calc(100vh-3rem)] lg:h-[calc(100vh-4rem)] transition-all duration-300 w-full">
         {/* Main Content Area */}
-        <div className="flex-1 overflow-y-auto scroll-smooth custom-scrollbar transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 h-full flex justify-center relative">
+        <div className="flex-1 overflow-hidden transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 h-full relative">
           {/* Grid Background */}
           <div className="absolute inset-0 pointer-events-none grid-background opacity-60" />
           <div
             ref={codeRef}
-            className="w-full max-w-3xl mt-0 lg:mt-12 relative z-10"
-            style={{ height: "33vh" }}
+            className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl z-10"
+            style={{
+              height: "auto",
+              minHeight: "400px",
+            }}
           >
             <CodeEditor
               code={code}
