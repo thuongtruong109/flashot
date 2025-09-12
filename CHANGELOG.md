@@ -2,6 +2,7 @@
 
 ### 🚀 Features
 
+- **playground**: add width & height adjust options - by @thuongtruong109 [<samp>(1f4a3)</samp>]()
 - **docs**: integrate raw content to web pages - by @thuongtruong109 [<samp>(6d3fa)</samp>](https://github.com/thuongtruong109/flashot/commit/6d3fa44e6a6900d0faa14404c540898488ae0dfb)
 - **docs**: add usage docs raw content - by @thuongtruong109 [<samp>(350a4)</samp>](https://github.com/thuongtruong109/flashot/commit/350a44d0834dde1be1d376fdee7e49dd4ff6480c)
 - **deploy**: config CD workflow - by @thuongtruong109 [<samp>(c9da4)</samp>](https://github.com/thuongtruong109/flashot/commit/c9da407707397c63553fb0575cde8558bab70b93)

@@ -405,6 +405,36 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                 </div>
               </div>
 
+              {/* Shadow */}
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
+                  <div className="flex items-center">
+                    <BarChart3 className="w-3.5 h-3.5 text-purple-600 mr-1.5" />
+                    Shadow
+                  </div>
+                  <span className="text-xs bg-gradient-to-r from-purple-500 to-violet-500 bg-clip-text text-transparent font-bold">
+                    {settings.shadow || 0}px
+                  </span>
+                </label>
+                <div className="relative">
+                  <input
+                    type="range"
+                    min="0"
+                    max="50"
+                    value={settings.shadow || 0}
+                    onChange={(e) =>
+                      onUpdateSetting("shadow", parseInt(e.target.value))
+                    }
+                    className="w-full h-1.5 bg-gradient-to-r from-purple-200 to-violet-200 rounded-lg appearance-none cursor-pointer
+                          [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
+                          [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                          [&::-webkit-slider-thumb]:from-purple-500 [&::-webkit-slider-thumb]:to-violet-500
+                          [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                          [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                  />
+                </div>
+              </div>
+
               {/* Width */}
               <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
                 <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">

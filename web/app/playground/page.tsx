@@ -35,6 +35,7 @@ export default function Page() {
     exportFormat: "webp",
     width: undefined, // Auto-fit by default
     height: undefined, // Auto-fit by default
+    shadow: 20, // Default shadow
   });
 
   const [isGenerating, setIsGenerating] = useState(false);
@@ -210,10 +211,12 @@ export default function Page() {
       {/* Main Container with Sidebar Layout */}
       <div className="flex-1 flex h-[calc(100vh-3rem)] lg:h-[calc(100vh-4rem)] transition-all duration-300 w-full">
         {/* Main Content Area */}
-        <div className="flex-1 overflow-y-auto scroll-smooth custom-scrollbar transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 h-full flex justify-center">
+        <div className="flex-1 overflow-y-auto scroll-smooth custom-scrollbar transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 h-full flex justify-center relative">
+          {/* Grid Background */}
+          <div className="absolute inset-0 pointer-events-none grid-background opacity-60" />
           <div
             ref={codeRef}
-            className="w-full max-w-3xl mt-0 lg:mt-12"
+            className="w-full max-w-3xl mt-0 lg:mt-12 relative z-10"
             style={{ height: "33vh" }}
           >
             <CodeEditor

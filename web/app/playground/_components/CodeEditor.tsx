@@ -176,9 +176,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
     >
       <div
         className={`relative transition-all duration-300 ${
-          settings.showBackground
-            ? "shadow-xl hover:shadow-2xl border border-gray-200/50"
-            : "shadow-none border-0"
+          settings.showBackground ? "border border-gray-200/50" : "border-0"
         }`}
         style={{
           background: isFullscreen
@@ -210,6 +208,14 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           overflow: "hidden",
           display: "flex",
           flexDirection: "column",
+          boxShadow:
+            settings.showBackground && settings.shadow
+              ? `0 ${Math.round(settings.shadow * 0.25)}px ${Math.round(
+                  settings.shadow * 0.5
+                )}px 0 rgba(0, 0, 0, 0.1), 0 ${Math.round(
+                  settings.shadow * 0.5
+                )}px ${settings.shadow}px 0 rgba(0, 0, 0, 0.15)`
+              : "none",
         }}
       >
         {/* Window Controls */}
