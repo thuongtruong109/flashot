@@ -7,6 +7,7 @@ on:
       - completed
     branches: [main]
     paths:
+      - ".github/workflows/cd.yml"
       - "api/**"
   workflow_dispatch:
     inputs:

@@ -2,6 +2,8 @@
 
 ### 🚀 Features
 
+- **docs**: add usage docs content - by @thuongtruong109 [<samp>(b4f3e)</samp>]()
+- **deploy**: config CD workflow - by @thuongtruong109 [<samp>(c307c)</samp>]()
 - **build**: config CI workflow - by @thuongtruong109 [<samp>(c307c)</samp>](https://github.com/thuongtruong109/flashot/commit/c307c51d3cb9cf5ba08de2f7bf9c39543a31aab9)
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.0.0...v2.1.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.1.0)
