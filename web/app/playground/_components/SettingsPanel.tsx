@@ -21,6 +21,9 @@ import {
   Download,
   Image,
   Layers,
+  Sun,
+  Moon,
+  WrapText,
 } from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import { getFileExtension } from "@/utils";
@@ -294,7 +297,10 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                     }`}
                   >
                     <div className="w-full h-6 bg-white rounded border mb-1.5 shadow-xs group-hover:shadow-sm transition-shadow"></div>
-                    <span className="text-xs font-medium">Light</span>
+                    <div className="flex items-center justify-center space-x-1">
+                      <Sun className="w-3 h-3 text-yellow-500" />
+                      <span className="text-xs font-medium">Light</span>
+                    </div>
                   </button>
                   <button
                     onClick={() => onUpdateSetting("theme", "dark")}
@@ -305,7 +311,10 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                     }`}
                   >
                     <div className="w-full h-6 bg-gray-800 rounded border mb-1.5 shadow-xs group-hover:shadow-sm transition-shadow"></div>
-                    <span className="text-xs font-medium">Dark</span>
+                    <div className="flex items-center justify-center space-x-1">
+                      <Moon className="w-3 h-3 text-blue-400" />
+                      <span className="text-xs font-medium">Dark</span>
+                    </div>
                   </button>
                 </div>
               </div>
@@ -649,6 +658,23 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                       checked={settings.showFileName || false}
                       onChange={(e) =>
                         onUpdateSetting("showFileName", e.target.checked)
+                      }
+                      className="w-4 h-4 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/40 border-gray-300 hover:border-gray-400 transition-all duration-200"
+                    />
+                  </label>
+
+                  <label className="flex items-center justify-between cursor-pointer">
+                    <div className="flex items-center gap-2">
+                      <WrapText className="w-4 h-4 text-blue-600" />
+                      <span className="text-sm font-medium text-gray-700">
+                        Word Wrap
+                      </span>
+                    </div>
+                    <input
+                      type="checkbox"
+                      checked={settings.wordWrap || false}
+                      onChange={(e) =>
+                        onUpdateSetting("wordWrap", e.target.checked)
                       }
                       className="w-4 h-4 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/40 border-gray-300 hover:border-gray-400 transition-all duration-200"
                     />

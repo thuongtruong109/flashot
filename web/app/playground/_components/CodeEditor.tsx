@@ -8,7 +8,6 @@ import {
   Minimize2,
   Code,
   Sparkles,
-  Edit2,
   Check,
   X,
   GripVertical,
@@ -22,7 +21,6 @@ interface CodeEditorProps {
   settings: CodeSettings;
   showLineNumbers: boolean;
   fileName?: string;
-  onFileNameChange?: (fileName: string) => void;
   className?: string;
 }
 
@@ -32,20 +30,16 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   settings,
   showLineNumbers,
   fileName,
-  onFileNameChange,
   className = "",
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isEditingFileName, setIsEditingFileName] = useState(false);
-  const [tempFileName, setTempFileName] = useState(fileName || "untitled");
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [containerRect, setContainerRect] = useState<DOMRect | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const previewRef = useRef<HTMLPreElement>(null);
-  const fileNameInputRef = useRef<HTMLInputElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
   const currentTheme = themes[settings.theme as ThemeName];
 
@@ -58,19 +52,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
     }
   }, [isEditing]);
 
-  // Auto-focus filename input when editing starts
-  useEffect(() => {
-    if (isEditingFileName && fileNameInputRef.current) {
-      fileNameInputRef.current.focus();
-      fileNameInputRef.current.select();
-    }
-  }, [isEditingFileName]);
-
-  // Update temp filename when fileName prop changes
-  useEffect(() => {
-    setTempFileName(fileName || "untitled");
-  }, [fileName]);
-
   // Handle click on preview to start editing
   const handlePreviewClick = useCallback(() => {
     setIsEditing(true);
@@ -80,31 +61,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   const handleBlur = useCallback(() => {
     setIsEditing(false);
   }, []);
-
-  // Filename editing handlers
-  const handleFileNameEdit = useCallback(() => {
-    setIsEditingFileName(true);
-  }, []);
-
-  // Auto-save filename on change
-  const handleFileNameChange = useCallback(
-    (value: string) => {
-      setTempFileName(value);
-      if (onFileNameChange) {
-        onFileNameChange(value.trim());
-      }
-    },
-    [onFileNameChange]
-  );
-
-  const handleFileNameKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter" || e.key === "Escape") {
-        setIsEditingFileName(false);
-      }
-    },
-    []
-  );
 
   // Drag handlers
   const handleMouseDown = useCallback(
@@ -181,12 +137,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
       };
     }
   }, [isDragging, handleMouseMove, handleMouseUp]);
-
-  const handleFileNameBlur = useCallback(() => {
-    setIsEditingFileName(false);
-    // Don't reset tempFileName - let it stay as user intended (even if empty)
-    // The fileName prop will be updated through onFileNameChange calls
-  }, []);
 
   // Handle key shortcuts
   const handleKeyDown = useCallback(
@@ -291,7 +241,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
             : settings.height
             ? `${settings.height}px`
             : "auto",
-          minHeight: !isFullscreen && !settings.height ? "200px" : undefined,
+          minHeight: !isFullscreen && !settings.height ? "10px" : undefined,
           maxHeight: isFullscreen
             ? "none"
             : settings.height
@@ -332,40 +282,11 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                 <div className="w-3 h-3 bg-gradient-to-br from-green-400 to-green-600 rounded-full shadow-sm"></div>
               </div>
               <div className="flex items-center space-x-2">
-                {settings.showFileName &&
-                fileName &&
-                fileName.trim() &&
-                onFileNameChange ? (
-                  <div className="flex items-center space-x-1">
-                    {isEditingFileName ? (
-                      <div className="flex items-center space-x-1">
-                        <input
-                          ref={fileNameInputRef}
-                          type="text"
-                          value={tempFileName}
-                          onChange={(e) => handleFileNameChange(e.target.value)}
-                          onKeyDown={handleFileNameKeyDown}
-                          onBlur={handleFileNameBlur}
-                          className="px-2 py-1 text-xs bg-transparent border-none outline-none focus:outline-none text-gray-700 font-medium"
-                          style={{ minWidth: "120px" }}
-                        />
-                        <span className="text-xs text-gray-500">
-                          .{getFileExtension(settings.language)}
-                        </span>
-                      </div>
-                    ) : (
-                      <div
-                        className="flex items-center space-x-1 group cursor-pointer"
-                        onClick={handleFileNameEdit}
-                      >
-                        <span className="text-sm font-medium text-gray-600 group-hover:text-blue-600 transition-colors">
-                          {fileName}.{getFileExtension(settings.language)}
-                        </span>
-                        <Edit2 className="w-3 h-3 text-gray-400 group-hover:text-blue-500 opacity-0 group-hover:opacity-100 transition-all" />
-                      </div>
-                    )}
-                  </div>
-                ) : null}
+                {settings.showFileName && fileName && fileName.trim() && (
+                  <span className="text-sm font-medium text-gray-600">
+                    {fileName}.{getFileExtension(settings.language)}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -392,13 +313,13 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
             <div
               onClick={handlePreviewClick}
               onMouseDown={(e) => e.stopPropagation()} // Prevent drag in content area
-              className="relative cursor-text group py-4 h-full"
+              className="relative cursor-text group py-4 bg-red-200 h-full"
               style={{
                 backgroundColor: currentTheme.background,
                 borderRadius: settings.showWindowControls
                   ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
                   : `${settings.borderRadius}px`,
-                minHeight: "200px",
+                minHeight: "10px",
               }}
             >
               {/* Hover overlay */}
@@ -441,6 +362,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                       lineHeight: 1.6,
                       margin: 0,
                       background: "transparent",
+                      whiteSpace: settings.wordWrap ? "pre-wrap" : "pre",
+                      wordWrap: settings.wordWrap ? "break-word" : "normal",
                     }}
                   >
                     <code
@@ -453,14 +376,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                       }}
                     />
                   </pre>
-                </div>
-              </div>
-
-              {/* Click to edit hint */}
-              <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                <div className="bg-blue-500/90 text-white text-xs px-2 py-1 rounded-md flex items-center space-x-1 backdrop-blur-sm">
-                  <Edit3 className="w-3 h-3" />
-                  <span>Click to edit</span>
                 </div>
               </div>
             </div>
@@ -478,7 +393,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                   : `${settings.borderRadius}px`,
               }}
             >
-              <div className="flex">
+              <div className="flex !pb-0">
                 {/* Line Numbers for Edit Mode */}
                 {showLineNumbers && (
                   <div
@@ -509,28 +424,39 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                   onChange={(e) => onChange(e.target.value)}
                   onKeyDown={handleKeyDown}
                   onBlur={handleBlur}
-                  className="flex-1 resize-none border-none outline-none p-4 bg-transparent"
+                  className="flex-1 resize-none border-none outline-none p-4 bg-transparent custom-scrollbar"
                   style={{
                     color: currentTheme.foreground,
                     fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
                     fontSize: `${settings.fontSize}px`,
                     lineHeight: 1.6,
-                    minHeight: "200px",
+                    minHeight: "10px",
+                    whiteSpace: settings.wordWrap ? "pre-wrap" : "pre",
+                    wordWrap: settings.wordWrap ? "break-word" : "normal",
                   }}
                   placeholder="Start typing your code..."
-                  rows={Math.max(8, lineCount + 2)}
+                  rows={Math.max(1, lineCount)}
                 />
-              </div>
-
-              <div className="absolute bottom-2 right-2">
-                <div className="bg-green-500/90 text-white text-xs px-2 py-1 rounded-md backdrop-blur-sm">
-                  Press <kbd className="bg-white/20 px-1 rounded">Esc</kbd> or
-                  click outside to finish
-                </div>
               </div>
             </div>
           )}
         </div>
+        {isEditing ? (
+          <div className="absolute bottom-1 right-1">
+            <div className="text-slate-300 text-xs px-2">
+              Press{" "}
+              <kbd className="bg-white/30 px-1 rounded text-slate-300">Esc</kbd>{" "}
+              or click outside to finish
+            </div>
+          </div>
+        ) : (
+          <div className="absolute bottom-1 right-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+            <div className="text-slate-300 text-xs flex items-center space-x-1">
+              <Edit3 className="w-3 h-3" />
+              <span>Click to edit</span>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

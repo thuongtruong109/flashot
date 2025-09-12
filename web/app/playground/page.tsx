@@ -36,6 +36,7 @@ export default function Page() {
     width: undefined, // Auto-fit by default
     height: undefined, // Auto-fit by default
     shadow: 20, // Default shadow
+    wordWrap: false, // Default word wrap disabled
   });
 
   const [isGenerating, setIsGenerating] = useState(false);
@@ -228,7 +229,6 @@ export default function Page() {
               settings={settings}
               showLineNumbers={showLineNumbers}
               fileName={fileName}
-              onFileNameChange={setFileName}
               className="w-full h-full"
             />
           </div>

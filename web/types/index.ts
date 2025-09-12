@@ -25,6 +25,7 @@ export interface CodeSettings {
   width?: number;
   height?: number;
   shadow?: number;
+  wordWrap?: boolean;
 }
 
 export interface SyntaxMatch {
