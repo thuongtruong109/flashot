@@ -191,8 +191,22 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           backgroundPosition: "center",
           padding: `${settings.padding}px`,
           borderRadius: `${settings.borderRadius}px`,
-          height: isFullscreen ? "auto" : "400px",
-          maxHeight: isFullscreen ? "none" : "600px",
+          width: isFullscreen
+            ? "auto"
+            : settings.width
+            ? `${settings.width}px`
+            : "auto",
+          height: isFullscreen
+            ? "auto"
+            : settings.height
+            ? `${settings.height}px`
+            : "auto",
+          minHeight: !isFullscreen && !settings.height ? "200px" : undefined,
+          maxHeight: isFullscreen
+            ? "none"
+            : settings.height
+            ? undefined
+            : "800px",
           overflow: "hidden",
           display: "flex",
           flexDirection: "column",

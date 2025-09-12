@@ -58,12 +58,27 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
     const [isEditingFileName, setIsEditingFileName] = useState(false);
     const [tempFileName, setTempFileName] = useState(fileName);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [widthInput, setWidthInput] = useState(
+      settings.width?.toString() || ""
+    );
+    const [heightInput, setHeightInput] = useState(
+      settings.height?.toString() || ""
+    );
     const fileNameInputRef = useRef<HTMLInputElement>(null);
 
     // Update temp filename when fileName prop changes
     useEffect(() => {
       setTempFileName(fileName);
     }, [fileName]);
+
+    // Update width/height inputs when settings change
+    useEffect(() => {
+      setWidthInput(settings.width?.toString() || "");
+    }, [settings.width]);
+
+    useEffect(() => {
+      setHeightInput(settings.height?.toString() || "");
+    }, [settings.height]);
 
     // Handle language change and update filename extension
     const handleLanguageChange = (language: SupportedLanguage) => {
@@ -208,7 +223,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                     </div>
                   ) : (
                     <div
-                      className="flex-1 flex items-center space-x-2 group cursor-pointer"
+                      className="flex-1 flex items-center space-x-2 group cursor-pointer px-2.5 py-1.5 rounded-md border border-gray-300/60 hover:border-gray-400/80"
                       onClick={handleFileNameEdit}
                     >
                       <span className="flex-1 text-sm font-medium text-gray-700 truncate group-hover:text-blue-600 transition-colors">
@@ -386,6 +401,130 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                           [&::-webkit-slider-thumb]:from-teal-500 [&::-webkit-slider-thumb]:to-cyan-500
                           [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
                           [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                  />
+                </div>
+              </div>
+
+              {/* Width */}
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
+                  <div className="flex items-center">
+                    <Move className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
+                    Width
+                  </div>
+                  <span className="text-xs bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent font-bold">
+                    {settings.width ? `${settings.width}px` : "Auto"}
+                  </span>
+                </label>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      onUpdateSetting("width", undefined);
+                      setWidthInput("");
+                    }}
+                    className={`px-2 py-1 text-xs rounded-md transition-colors ${
+                      !settings.width
+                        ? "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                        : "bg-blue-500 text-white"
+                    }`}
+                  >
+                    Auto
+                  </button>
+                  <input
+                    type="number"
+                    min="0"
+                    max="1200"
+                    value={widthInput}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setWidthInput(value);
+
+                      if (value === "") {
+                        onUpdateSetting("width", undefined);
+                      } else {
+                        const numValue = parseInt(value);
+                        if (!isNaN(numValue) && numValue >= 0) {
+                          onUpdateSetting("width", numValue);
+                        }
+                      }
+                    }}
+                    onBlur={() => {
+                      // Ensure consistency on blur
+                      if (widthInput === "") {
+                        onUpdateSetting("width", undefined);
+                      } else {
+                        const numValue = parseInt(widthInput);
+                        if (!isNaN(numValue) && numValue >= 0) {
+                          onUpdateSetting("width", numValue);
+                        } else {
+                          setWidthInput(settings.width?.toString() || "");
+                        }
+                      }
+                    }}
+                    className="flex-1 px-2 py-1 text-xs rounded-md border border-gray-200"
+                    placeholder="600"
+                  />
+                </div>
+              </div>
+
+              {/* Height */}
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
+                  <div className="flex items-center">
+                    <BarChart3 className="w-3.5 h-3.5 text-green-600 mr-1.5" />
+                    Height
+                  </div>
+                  <span className="text-xs bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent font-bold">
+                    {settings.height ? `${settings.height}px` : "Auto"}
+                  </span>
+                </label>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      onUpdateSetting("height", undefined);
+                      setHeightInput("");
+                    }}
+                    className={`px-2 py-1 text-xs rounded-md transition-colors ${
+                      !settings.height
+                        ? "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                        : "bg-green-500 text-white"
+                    }`}
+                  >
+                    Auto
+                  </button>
+                  <input
+                    type="number"
+                    min="0"
+                    max="800"
+                    value={heightInput}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setHeightInput(value);
+
+                      if (value === "") {
+                        onUpdateSetting("height", undefined);
+                      } else {
+                        const numValue = parseInt(value);
+                        if (!isNaN(numValue) && numValue >= 0) {
+                          onUpdateSetting("height", numValue);
+                        }
+                      }
+                    }}
+                    onBlur={() => {
+                      // Ensure consistency on blur
+                      if (heightInput === "") {
+                        onUpdateSetting("height", undefined);
+                      } else {
+                        const numValue = parseInt(heightInput);
+                        if (!isNaN(numValue) && numValue >= 0) {
+                          onUpdateSetting("height", numValue);
+                        } else {
+                          setHeightInput(settings.height?.toString() || "");
+                        }
+                      }
+                    }}
+                    className="flex-1 px-2 py-1 text-xs rounded-md border border-gray-200"
+                    placeholder="400"
                   />
                 </div>
               </div>

@@ -33,6 +33,8 @@ export default function Page() {
     showLineCount: true,
     showFileName: true,
     exportFormat: "webp",
+    width: undefined, // Auto-fit by default
+    height: undefined, // Auto-fit by default
   });
 
   const [isGenerating, setIsGenerating] = useState(false);

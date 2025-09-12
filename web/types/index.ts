@@ -1,4 +1,4 @@
-export interface Theme {
+export interface SyntaxTheme {
   background: string;
   foreground: string;
   comment: string;
@@ -21,7 +21,9 @@ export interface CodeSettings {
   fontSize: number;
   showLineCount?: boolean;
   showFileName?: boolean;
-  exportFormat?: "png" | "jpg" | "webp" | "avif";
+  exportFormat?: "png" | "jpg" | "webp" | "avif" | "svg";
+  width?: number;
+  height?: number;
 }
 
 export interface SyntaxMatch {
