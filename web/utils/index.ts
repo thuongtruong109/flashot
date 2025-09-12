@@ -1,6 +1,11 @@
-import { SyntaxMatch, SupportedLanguage, Theme, ThemeName } from "@/types";
+import {
+  SyntaxMatch,
+  SupportedLanguage,
+  SyntaxTheme,
+  ThemeName,
+} from "@/types";
 
-export const themes: Record<ThemeName, Theme> = {
+export const themes: Record<ThemeName, SyntaxTheme> = {
   dark: {
     background: "#1e1e1e",
     foreground: "#d4d4d4",
@@ -201,7 +206,7 @@ export const escapeHtml = (text: string): string => {
 export const syntaxHighlight = (
   code: string,
   lang: SupportedLanguage,
-  theme?: Theme
+  theme?: SyntaxTheme
 ): string => {
   const getPatternsByLanguage = (language: SupportedLanguage) => {
     const common = [
