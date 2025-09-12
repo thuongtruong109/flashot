@@ -7,6 +7,10 @@
 - **deploy**: config CD workflow - by @thuongtruong109 [<samp>(c9da4)</samp>](https://github.com/thuongtruong109/flashot/commit/c9da407707397c63553fb0575cde8558bab70b93)
 - **build**: config CI workflow - by @thuongtruong109 [<samp>(c307c)</samp>](https://github.com/thuongtruong109/flashot/commit/c307c51d3cb9cf5ba08de2f7bf9c39543a31aab9)
 
+### 🐞 Bug Fixes
+
+- **playground**: fix export menu option & code editor background style matching setting - by @thuongtruong109 [<samp>(2f3e1)</samp>](1)
+
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.0.0...v2.1.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.1.0)
 
 ## [v2.0 - 2025-09-11](https://github.com/thuongtruong109/flashot/releases/tag/v2.0.0)

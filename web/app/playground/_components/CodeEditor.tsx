@@ -175,7 +175,11 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
       } ${className}`}
     >
       <div
-        className="relative overflow-hidden transition-all duration-300 shadow-xl hover:shadow-2xl h-full"
+        className={`relative transition-all duration-300 ${
+          settings.showBackground
+            ? "shadow-xl hover:shadow-2xl border border-gray-200/50"
+            : "shadow-none border-0"
+        }`}
         style={{
           background: isFullscreen
             ? "white"
@@ -185,8 +189,13 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          padding: settings.showBackground ? `${settings.padding}px` : "0",
+          padding: `${settings.padding}px`,
           borderRadius: `${settings.borderRadius}px`,
+          height: isFullscreen ? "auto" : "400px",
+          maxHeight: isFullscreen ? "none" : "600px",
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         {/* Window Controls */}
@@ -254,12 +263,20 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
         )}
 
         {/* Code Content Area */}
-        <div className="relative">
+        <div
+          className="relative flex-1 overflow-auto"
+          style={{
+            backgroundColor: currentTheme.background,
+            borderRadius: settings.showWindowControls
+              ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
+              : `${settings.borderRadius}px`,
+          }}
+        >
           {/* Preview Mode */}
           {!isEditing && (
             <div
               onClick={handlePreviewClick}
-              className="relative cursor-text group py-4"
+              className="relative cursor-text group py-4 h-full"
               style={{
                 backgroundColor: currentTheme.background,
                 borderRadius: settings.showWindowControls
@@ -336,7 +353,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           {/* Edit Mode */}
           {isEditing && (
             <div
-              className="relative"
+              className="relative h-full"
               style={{
                 backgroundColor: currentTheme.background,
                 borderRadius: settings.showWindowControls

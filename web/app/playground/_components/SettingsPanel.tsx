@@ -18,6 +18,7 @@ import {
   BarChart3,
   Folder,
   Paintbrush,
+  Download,
 } from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import { getFileExtension } from "@/utils";
@@ -56,6 +57,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
   ) => {
     const [isEditingFileName, setIsEditingFileName] = useState(false);
     const [tempFileName, setTempFileName] = useState(fileName);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const fileNameInputRef = useRef<HTMLInputElement>(null);
 
     // Update temp filename when fileName prop changes
@@ -109,6 +111,42 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       // The fileName prop will be updated through onFileNameChange calls
     };
 
+    // Monitor for dropdown portals to disable scrolling
+    useEffect(() => {
+      const checkForDropdowns = () => {
+        // Check for dropdown elements with high z-index (portal dropdowns)
+        const dropdownElements = document.querySelectorAll(
+          '[style*="z-index: 99999"], [style*="position: fixed"]'
+        );
+        const hasDropdowns = Array.from(dropdownElements).some(
+          (el) =>
+            (el.textContent && el.textContent.includes("Fira Code")) ||
+            (el.textContent && el.textContent.includes("JavaScript")) ||
+            (el.textContent && el.textContent.includes("Theme")) ||
+            (el.textContent && el.textContent.includes("Background"))
+        );
+        setIsDropdownOpen(hasDropdowns);
+      };
+
+      // Check immediately
+      checkForDropdowns();
+
+      // Set up mutation observer to watch for DOM changes
+      const observer = new MutationObserver(checkForDropdowns);
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+
+      // Also check on click events (for dropdown toggles)
+      document.addEventListener("click", checkForDropdowns);
+
+      return () => {
+        observer.disconnect();
+        document.removeEventListener("click", checkForDropdowns);
+      };
+    }, []);
+
     return (
       <>
         {/* Mobile Backdrop */}
@@ -139,7 +177,11 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       `}
         >
           {/* Scrollable Content */}
-          <div className="flex-1 overflow-y-auto overflow-x-hidden scroll-smooth settings-scrollbar">
+          <div
+            className={`flex-1 overflow-x-hidden scroll-smooth settings-scrollbar ${
+              isDropdownOpen ? "overflow-y-hidden" : "overflow-y-auto"
+            }`}
+          >
             <div className="p-3 pb-16 space-y-4">
               {/* File Name Section */}
               <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
@@ -175,6 +217,34 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                       <Edit2 className="w-3 h-3 text-blue-500 opacity-0 group-hover:opacity-100 transition-all" />
                     </div>
                   )}
+                </div>
+              </div>
+
+              {/* Export Format Section */}
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
+                  <Download className="w-3.5 h-3.5 text-green-600 mr-1.5" />
+                  Export Format
+                </h4>
+                <div className="grid grid-cols-2 gap-2">
+                  {["png", "jpg", "webp", "avif"].map((format) => (
+                    <button
+                      key={format}
+                      onClick={() =>
+                        onUpdateSetting(
+                          "exportFormat",
+                          format as "png" | "jpg" | "webp" | "avif"
+                        )
+                      }
+                      className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 ${
+                        settings.exportFormat === format
+                          ? "bg-green-500 text-white shadow-md"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      }`}
+                    >
+                      {format.toUpperCase()}
+                    </button>
+                  ))}
                 </div>
               </div>
 

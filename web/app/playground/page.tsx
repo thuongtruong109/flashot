@@ -32,6 +32,7 @@ export default function Page() {
     fontSize: 14,
     showLineCount: true,
     showFileName: true,
+    exportFormat: "webp",
   });
 
   const [isGenerating, setIsGenerating] = useState(false);
@@ -40,7 +41,7 @@ export default function Page() {
   const [showLineNumbers, setShowLineNumbers] = useState(true);
   const [showTipsModal, setShowTipsModal] = useState(false);
   const [showJSONModal, setShowJSONModal] = useState(false);
-  const [fileName, setFileName] = useState("flashot-code-snippet");
+  const [fileName, setFileName] = useState("index");
   const [showSettingsPanel, setShowSettingsPanel] = useState(false); // Start with false to prevent SSR issues
   const [isClient, setIsClient] = useState(false);
   const codeRef = useRef<HTMLDivElement>(null);
@@ -139,15 +140,16 @@ export default function Page() {
   };
 
   const handleDownloadImage = useCallback(
-    async (format: string = "png") => {
+    async (format?: string) => {
       if (!codeRef.current) return;
 
+      const exportFormat = format || settings.exportFormat || "png";
       setIsGenerating(true);
       try {
         const success = await generateAndDownloadImage(
           codeRef.current,
           { ...settings, code },
-          `${fileName}.${format}`
+          `${fileName}.${exportFormat}`
         );
 
         if (!success) {
@@ -173,29 +175,33 @@ export default function Page() {
   return (
     <div className="h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 relative overflow-hidden flex flex-col">
       <div className="relative bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-sm px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between py-2 lg:py-4">
+        <div className="flex items-center justify-between py-2 lg:py-4 w-full gap-4">
           {/* Brand Component */}
-          <Brand showVersion={true} />
+          <div className="flex-shrink-0">
+            <Brand showVersion={true} />
+          </div>
 
           {/* Enhanced Action Bar */}
-          <ActionBar
-            onCopy={handleCopyCode}
-            onDownload={handleDownloadImage}
-            onShowSettings={() => {
-              // Only toggle settings panel on mobile screens
-              if (typeof window !== "undefined" && window.innerWidth < 1024) {
-                setShowSettingsPanel(!showSettingsPanel);
-              }
-            }}
-            onShowJSON={() => setShowJSONModal(true)}
-            onShowTips={() => setShowTipsModal(true)}
-            copySuccess={copySuccess}
-            isGenerating={isGenerating}
-            fileName={fileName}
-            onFileNameChange={setFileName}
-            showSettingsPanel={showSettingsPanel}
-            className="w-full lg:w-auto"
-          />
+          <div className="flex-shrink-0">
+            <ActionBar
+              onCopy={handleCopyCode}
+              onDownload={handleDownloadImage}
+              onShowSettings={() => {
+                // Only toggle settings panel on mobile screens
+                if (typeof window !== "undefined" && window.innerWidth < 1024) {
+                  setShowSettingsPanel(!showSettingsPanel);
+                }
+              }}
+              onShowJSON={() => setShowJSONModal(true)}
+              onShowTips={() => setShowTipsModal(true)}
+              copySuccess={copySuccess}
+              isGenerating={isGenerating}
+              fileName={fileName}
+              onFileNameChange={setFileName}
+              showSettingsPanel={showSettingsPanel}
+              className="w-full lg:w-auto"
+            />
+          </div>
         </div>
       </div>
 

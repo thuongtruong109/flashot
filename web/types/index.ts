@@ -21,6 +21,7 @@ export interface CodeSettings {
   fontSize: number;
   showLineCount?: boolean;
   showFileName?: boolean;
+  exportFormat?: "png" | "jpg" | "webp" | "avif";
 }
 
 export interface SyntaxMatch {

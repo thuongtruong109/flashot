@@ -178,21 +178,6 @@ const FontSelector: React.FC<FontSelectorProps> = ({
   const DropdownPortal = () => {
     if (typeof window === "undefined" || !isOpen) return null;
 
-    // Group fonts by category
-    const categories = {
-      popular: fontFamilies.filter((font) => font.category === "popular"),
-      modern: fontFamilies.filter((font) => font.category === "modern"),
-      classic: fontFamilies.filter((font) => font.category === "classic"),
-      system: fontFamilies.filter((font) => font.category === "system"),
-    };
-
-    const categoryLabels = {
-      popular: "Popular Coding Fonts",
-      modern: "Modern Fonts",
-      classic: "Classic Fonts",
-      system: "System Fonts",
-    };
-
     return createPortal(
       <div
         ref={dropdownRef}
@@ -205,38 +190,31 @@ const FontSelector: React.FC<FontSelectorProps> = ({
           zIndex: 99999,
         }}
       >
-        {Object.entries(categories).map(([category, fonts]) => (
-          <div key={category} className="py-1">
-            <div className="text-xs font-medium text-gray-500 uppercase tracking-wide px-3 py-2">
-              {categoryLabels[category as keyof typeof categoryLabels]}
-            </div>
-            {fonts.map((font) => (
-              <button
-                key={font.name}
-                onClick={() => {
-                  onFontChange(font.name);
-                  setIsOpen(false);
-                }}
-                className="w-full flex items-center space-x-2.5 px-3 py-2 text-sm text-left hover:bg-blue-50/60 rounded-lg transition-all group"
-              >
-                <div className="flex-shrink-0 text-lg">{font.icon}</div>
-                <div className="flex flex-col">
-                  <span
-                    className="font-medium text-gray-900 group-hover:text-blue-700"
-                    style={{ fontFamily: font.name }}
-                  >
-                    {font.label}
-                  </span>
-                  {font.hasLigatures && (
-                    <span className="text-xs text-gray-500">
-                      With ligatures
-                    </span>
-                  )}
-                </div>
-              </button>
-            ))}
-          </div>
-        ))}
+        <div className="py-1">
+          {fontFamilies.map((font) => (
+            <button
+              key={font.name}
+              onClick={() => {
+                onFontChange(font.name);
+                setIsOpen(false);
+              }}
+              className="w-full flex items-center space-x-2.5 px-3 py-2 text-sm text-left hover:bg-blue-50/60 rounded-lg transition-all group"
+            >
+              <div className="flex-shrink-0 text-lg">{font.icon}</div>
+              <div className="flex flex-col">
+                <span
+                  className="font-medium text-gray-900 group-hover:text-blue-700"
+                  style={{ fontFamily: font.name }}
+                >
+                  {font.label}
+                </span>
+                {font.hasLigatures && (
+                  <span className="text-xs text-gray-500">With ligatures</span>
+                )}
+              </div>
+            </button>
+          ))}
+        </div>
       </div>,
       document.body
     );

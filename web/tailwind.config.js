@@ -15,6 +15,9 @@ module.exports = {
       fontFamily: {
         mono: ["Fira Code", "Monaco", "Consolas", "Courier New", "monospace"],
       },
+      screens: {
+        xs: "475px",
+      },
     },
   },
   plugins: [],
