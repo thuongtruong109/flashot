@@ -5,7 +5,7 @@ import { Terminal, ArrowRight, Star } from "lucide-react";
 
 const GetStartedSection: React.FC = () => {
   return (
-    <section className="container mx-auto px-6 py-16">
+    <section className="container mx-auto px-6 pt-16">
       <div className="max-w-4xl mx-auto text-center">
         <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-full px-4 py-2 text-sm text-green-300 mb-6">
           <Terminal className="w-4 h-4" />
@@ -93,24 +93,8 @@ const GetStartedSection: React.FC = () => {
                 $ flashot code &quot;console.log(&apos;Hello world&apos;)&quot;
                 -o hello.png
               </code>
-              <div className="flex items-center gap-2 text-xs text-white/60 mt-3">
-                <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
-                <span>Image generated in ~135ms</span>
-              </div>
             </div>
           </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-          <button
-            onClick={() =>
-              window.open("https://www.jsdocs.io/package/flashot", "_blank")
-            }
-            className="group flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-all duration-200 hover:scale-105"
-          >
-            <span>View Documentation</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
         </div>
       </div>
     </section>

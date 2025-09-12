@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative mt-auto w-full bg-gradient-to-b from-black/50 to-black/80 backdrop-blur-sm border-t border-white/10">
+    <footer className="relative mt-auto w-full">
       <div className="w-full px-6 sm:px-8 lg:px-12 py-12">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">

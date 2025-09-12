@@ -1,7 +1,3 @@
-# Flashot Documentation
-
-Welcome to the comprehensive documentation for **Flashot** - the blazing-fast image generation tool for code snippets with elegant design and flawless performance.
-
 ## 📚 Documentation Structure
 
 ### Quick Start
