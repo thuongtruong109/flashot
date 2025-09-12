@@ -65,7 +65,7 @@ const SettingsSheet: React.FC<SettingsSheetProps> = ({
         </div>
 
         {/* Scrollable Content */}
-        <div className="p-4 h-full overflow-y-auto pb-20">
+        <div className="p-4 h-full overflow-y-auto">
           <div className="space-y-5">
             {/* Language Selector Component */}
             <LanguageSelector

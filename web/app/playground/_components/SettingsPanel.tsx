@@ -19,6 +19,8 @@ import {
   Folder,
   Paintbrush,
   Download,
+  Image,
+  Layers,
 } from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import { getFileExtension } from "@/utils";
@@ -131,13 +133,17 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       const checkForDropdowns = () => {
         // Check for dropdown elements with high z-index (portal dropdowns)
         const dropdownElements = document.querySelectorAll(
-          '[style*="z-index: 99999"], [style*="position: fixed"]'
+          '[data-dropdown-type], [style*="z-index: 99999"], [style*="position: fixed"]'
         );
         const hasDropdowns = Array.from(dropdownElements).some(
           (el) =>
+            el.hasAttribute("data-dropdown-type") ||
             (el.textContent && el.textContent.includes("Fira Code")) ||
             (el.textContent && el.textContent.includes("JavaScript")) ||
-            (el.textContent && el.textContent.includes("Theme")) ||
+            (el.textContent && el.textContent.includes("Dark")) ||
+            (el.textContent && el.textContent.includes("Light")) ||
+            (el.textContent && el.textContent.includes("Monokai")) ||
+            (el.textContent && el.textContent.includes("Dracula")) ||
             (el.textContent && el.textContent.includes("Background"))
         );
         setIsDropdownOpen(hasDropdowns);
@@ -193,9 +199,12 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
         >
           {/* Scrollable Content */}
           <div
-            className={`flex-1 overflow-x-hidden scroll-smooth settings-scrollbar ${
+            className={`flex-1 overflow-x-hidden scroll-smooth settings-scrollbar transition-all duration-200 ${
               isDropdownOpen ? "overflow-y-hidden" : "overflow-y-auto"
             }`}
+            style={{
+              marginRight: isDropdownOpen ? "12px" : "0px",
+            }}
           >
             <div className="p-3 pb-16 space-y-4">
               {/* File Name Section */}
@@ -272,7 +281,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
               {/* Background Theme Section */}
               <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
                 <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
-                  <Palette className="w-3.5 h-3.5 text-purple-600 mr-1.5" />
+                  <Layers className="w-3.5 h-3.5 text-purple-600 mr-1.5" />
                   Background Theme
                 </h4>
                 <div className="flex gap-2">
@@ -560,11 +569,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
               </div>
 
               {/* Display Options */}
-              <div>
-                <h4 className="text-xs font-semibold text-gray-700 mb-3 flex items-center">
-                  <Eye className="w-3.5 h-3.5 text-indigo-600 mr-1.5" />
-                  Display Options
-                </h4>
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
                 <div className="space-y-4">
                   <label className="flex items-center justify-between group cursor-pointer">
                     <div className="flex items-center space-x-2">

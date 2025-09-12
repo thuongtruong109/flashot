@@ -11,6 +11,16 @@ import {
   Globe,
   Braces,
   ChevronDown,
+  Zap,
+  Coffee,
+  Cpu,
+  Hash,
+  Layers,
+  Palette,
+  FileCode,
+  Box,
+  Shield,
+  Sparkles,
 } from "lucide-react";
 import { SupportedLanguage } from "@/types";
 
@@ -28,85 +38,85 @@ const supportedLanguages: {
   {
     value: "javascript",
     label: "JavaScript",
-    icon: <Code className="w-4 h-4 text-yellow-600" />,
+    icon: <Zap className="w-4 h-4 text-yellow-500" />,
     category: "Popular",
   },
   {
     value: "typescript",
     label: "TypeScript",
-    icon: <Code className="w-4 h-4 text-blue-600" />,
+    icon: <Sparkles className="w-4 h-4 text-blue-500" />,
     category: "Popular",
   },
   {
     value: "python",
     label: "Python",
-    icon: <Code className="w-4 h-4 text-green-600" />,
+    icon: <Code className="w-4 h-4 text-green-500" />,
     category: "Popular",
   },
   {
     value: "java",
     label: "Java",
-    icon: <Code className="w-4 h-4 text-red-600" />,
+    icon: <Coffee className="w-4 h-4 text-orange-600" />,
     category: "Popular",
   },
   {
     value: "cpp",
     label: "C++",
-    icon: <Code className="w-4 h-4 text-blue-700" />,
+    icon: <Cpu className="w-4 h-4 text-blue-600" />,
     category: "Popular",
   },
   {
     value: "c",
     label: "C",
-    icon: <Code className="w-4 h-4 text-gray-600" />,
+    icon: <Terminal className="w-4 h-4 text-gray-600" />,
     category: "Popular",
   },
   {
     value: "csharp",
     label: "C#",
-    icon: <Code className="w-4 h-4 text-purple-600" />,
+    icon: <Hash className="w-4 h-4 text-purple-600" />,
     category: "Popular",
   },
   {
     value: "php",
     label: "PHP",
-    icon: <Code className="w-4 h-4 text-indigo-600" />,
+    icon: <Globe className="w-4 h-4 text-indigo-600" />,
     category: "Popular",
   },
   {
     value: "ruby",
     label: "Ruby",
-    icon: <Code className="w-4 h-4 text-red-500" />,
+    icon: <Box className="w-4 h-4 text-red-500" />,
     category: "System",
   },
   {
     value: "go",
     label: "Go",
-    icon: <Code className="w-4 h-4 text-cyan-600" />,
+    icon: <Zap className="w-4 h-4 text-cyan-600" />,
     category: "System",
   },
   {
     value: "rust",
     label: "Rust",
-    icon: <Code className="w-4 h-4 text-orange-600" />,
+    icon: <Shield className="w-4 h-4 text-orange-600" />,
     category: "System",
   },
   {
     value: "swift",
     label: "Swift",
-    icon: <Code className="w-4 h-4 text-orange-500" />,
+    icon: <Sparkles className="w-4 h-4 text-orange-500" />,
     category: "System",
   },
   {
     value: "kotlin",
     label: "Kotlin",
-    icon: <Code className="w-4 h-4 text-purple-500" />,
+    icon: <Layers className="w-4 h-4 text-purple-500" />,
     category: "System",
   },
   {
     value: "scala",
     label: "Scala",
-    icon: <Code className="w-4 h-4 text-red-700" />,
+    icon: <Coffee className="w-4 h-4 text-red-600" />,
     category: "System",
   },
   {
@@ -118,13 +128,13 @@ const supportedLanguages: {
   {
     value: "css",
     label: "CSS",
-    icon: <Braces className="w-4 h-4 text-blue-500" />,
+    icon: <Palette className="w-4 h-4 text-blue-500" />,
     category: "Web",
   },
   {
     value: "scss",
     label: "SCSS",
-    icon: <Braces className="w-4 h-4 text-pink-500" />,
+    icon: <Palette className="w-4 h-4 text-pink-500" />,
     category: "Web",
   },
   {
@@ -136,7 +146,7 @@ const supportedLanguages: {
   {
     value: "xml",
     label: "XML",
-    icon: <FileText className="w-4 h-4 text-green-600" />,
+    icon: <FileCode className="w-4 h-4 text-green-600" />,
     category: "Config",
   },
   {
@@ -221,43 +231,54 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
     }
   }, [isOpen]);
 
-  const categories = {
-    Popular: supportedLanguages.filter((lang) => lang.category === "Popular"),
-    System: supportedLanguages.filter((lang) => lang.category === "System"),
-    Web: supportedLanguages.filter((lang) => lang.category === "Web"),
-    Config: supportedLanguages.filter((lang) => lang.category === "Config"),
-  };
-
   const DropdownPortal = () => {
     if (typeof window === "undefined" || !isOpen) return null;
 
     return createPortal(
       <div
         ref={dropdownRef}
-        className="bg-white border border-gray-200 rounded-xl shadow-xl max-h-80 overflow-y-auto"
+        data-dropdown-type="language-selector"
+        className="bg-white/95 backdrop-blur-xl border border-gray-200/50 rounded-2xl shadow-2xl max-h-96 overflow-y-auto custom-scrollbar"
         style={{
           position: "fixed",
           top: dropdownPosition.top,
           left: dropdownPosition.left,
-          width: dropdownPosition.width,
+          width: Math.min(dropdownPosition.width, 260),
           zIndex: 99999,
         }}
       >
-        {supportedLanguages.map((lang) => (
-          <button
-            key={lang.value}
-            onClick={() => {
-              onLanguageChange(lang.value);
-              setIsOpen(false);
-            }}
-            className="w-full flex items-center space-x-2.5 px-2.5 py-2 text-sm text-left hover:bg-blue-50/60 rounded-lg transition-all duration-150 group"
-          >
-            {lang.icon}
-            <span className="font-medium text-gray-900 group-hover:text-blue-700">
-              {lang.label}
-            </span>
-          </button>
-        ))}
+        <div className="p-3">
+          {supportedLanguages.map((lang) => (
+            <button
+              key={lang.value}
+              onClick={() => {
+                onLanguageChange(lang.value);
+                setIsOpen(false);
+              }}
+              className={`w-full flex items-center justify-between space-x-3 px-4 py-3 text-sm text-left rounded-xl transition-all duration-200 group mb-1 ${
+                selectedLanguage === lang.value
+                  ? "bg-gradient-to-r from-blue-500/10 to-blue-600/10 border border-blue-200/50 shadow-sm"
+                  : "hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100/50 border border-transparent"
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <div className="flex-shrink-0">{lang.icon}</div>
+                <span
+                  className={`font-medium transition-colors ${
+                    selectedLanguage === lang.value
+                      ? "text-blue-700"
+                      : "text-gray-700 group-hover:text-gray-900"
+                  }`}
+                >
+                  {lang.label}
+                </span>
+              </div>
+              {selectedLanguage === lang.value && (
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              )}
+            </button>
+          ))}
+        </div>
       </div>,
       document.body
     );
@@ -275,15 +296,17 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           <button
             ref={buttonRef}
             onClick={() => setIsOpen(!isOpen)}
-            className="w-full bg-white/90 hover:bg-white border border-gray-200/60 hover:border-gray-300/80 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/60 transition-all duration-200 font-medium text-gray-700 hover:text-gray-900 flex items-center justify-between shadow-sm hover:shadow group"
+            className="w-full bg-gradient-to-r from-white/95 to-gray-50/95 hover:from-white hover:to-gray-50 border border-gray-200/60 hover:border-blue-300/60 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400/70 transition-all duration-300 font-medium text-gray-700 hover:text-gray-900 flex items-center justify-between shadow-lg hover:shadow-xl group backdrop-blur-sm"
           >
-            <div className="flex items-center space-x-2.5">
-              {selectedLang?.icon}
-              <span className="text-sm">{selectedLang?.label}</span>
+            <div className="flex items-center space-x-3">
+              <div className="flex-shrink-0">{selectedLang?.icon}</div>
+              <span className="text-sm font-semibold">
+                {selectedLang?.label}
+              </span>
             </div>
             <ChevronDown
-              className={`w-4 h-4 transition-transform duration-200 group-hover:scale-110 ${
-                isOpen ? "rotate-180" : ""
+              className={`w-4 h-4 text-gray-400 transition-all duration-300 group-hover:text-blue-500 group-hover:scale-110 ${
+                isOpen ? "rotate-180 text-blue-500" : ""
               }`}
             />
           </button>

@@ -22,7 +22,7 @@ export default function Page() {
   const [code, setCode] = useState(defaultCode);
   const [settings, setSettings] = useState<CodeSettings>({
     language: "javascript",
-    theme: "dark",
+    theme: "dracula",
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     showBackground: true,
     padding: 32,

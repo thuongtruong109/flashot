@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Palette } from "lucide-react";
+import { Eye, Palette } from "lucide-react";
 import { cn } from "@/utils";
 
 interface BackgroundSelectorProps {
@@ -59,17 +59,14 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
 
   return (
     <div>
-      <h4 className="text-lg font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-6 flex items-center">
-        Background Gallery
+      <h4 className="text-xs font-semibold text-gray-700 mb-3 flex items-center">
+        <Palette className="w-3.5 h-3.5 text-indigo-600 mr-1.5" />
+        Background
       </h4>
 
       <div className="space-y-4">
         {/* Gradient Backgrounds */}
         <div>
-          <h5 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
-            <span className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mr-2"></span>
-            Gradient Backgrounds
-          </h5>
           <div className="grid grid-cols-5 gap-2">
             {backgrounds
               .filter((bg) => bg.startsWith("linear-gradient"))
@@ -99,11 +96,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
         </div>
 
         {/* Solid Colors */}
-        <div>
-          <h5 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
-            <span className="w-2 h-2 bg-gradient-to-r from-blue-500 to-teal-500 rounded-full mr-2"></span>
-            Solid Colors
-          </h5>
+        <div className="border-t border-gray-200 border-dashed pt-4">
           <div className="grid grid-cols-5 gap-2">
             {backgrounds
               .filter((bg) => !bg.startsWith("linear-gradient"))
