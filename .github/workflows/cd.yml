@@ -7,7 +7,6 @@ on:
       - completed
     branches: [main]
     paths:
-      - ".github/workflows/cd.yml"
       - "api/**"
   workflow_dispatch:
     inputs:
@@ -65,7 +64,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY_GHCR }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GHCR_TOKEN }}
 
       - name: 📝 Extract metadata
         id: meta
