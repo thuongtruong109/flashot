@@ -1,10 +1,13 @@
-## [v2.1.0 - 2025-09-12](https://github.com/thuongtruong109/flashot/releases/tag/v2.1.0)
+## [v3.0.0 - 2025-09-13](https://github.com/thuongtruong109/flashot/releases/tag/v3.0.0)
 
 ### 🚀 Features
 
 - **playground**:
-  - enable word wrap options - by @thuongtruong109 [<samp>(1f4a3)</samp>]()
-  - adjust width & height - by @thuongtruong109 [<samp>(1f4a3)</samp>]()
+  - framer animation for landing page - by @thuongtruong109 [<samp>(f4a2e)</samp>]()
+  - enable word wrap options - by @thuongtruong109 [<samp>(46a18)</samp>](https://github.com/thuongtruong109/flashot/commit/46a18bd436ab01bbd379793b19898ab8a2a65946)
+  - code editor draggable move - by @thuongtruong109 [<samp>(97671)</samp>](https://github.com/thuongtruong109/flashot/commit/976712d2d502c0e883b5c91baaaff99116d5e08e)
+  - adjust shadow options - by @thuongtruong109 [<samp>(5c940)</samp>](https://github.com/thuongtruong109/flashot/commit/5c940d9277f8827737230a6b4ff67ac2941fd7c6)
+  - adjust width & height - by @thuongtruong109 [<samp>(52d6b)</samp>](https://github.com/thuongtruong109/flashot/commit/52d6be981e1161311ddc88d496b24a0d38b40b07)
 - **docs**:
   - integrate raw content to web pages - by @thuongtruong109 [<samp>(6d3fa)</samp>](https://github.com/thuongtruong109/flashot/commit/6d3fa44e6a6900d0faa14404c540898488ae0dfb)
   - add usage docs raw content - by @thuongtruong109 [<samp>(350a4)</samp>](https://github.com/thuongtruong109/flashot/commit/350a44d0834dde1be1d376fdee7e49dd4ff6480c)
@@ -15,7 +18,7 @@
 
 - **playground**: fix export menu option & code editor background style matching setting - by @thuongtruong109 [<samp>(2f3e1)</samp>](1)
 
-##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.0.0...v2.1.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.1.0)
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.0.0...v3.0.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v3.0.0)
 
 ## [v2.0 - 2025-09-11](https://github.com/thuongtruong109/flashot/releases/tag/v2.0.0)
 
@@ -23,7 +26,7 @@
 
 - **api**: Add API service deployment - by @thuongtruong109 [<samp>(28724)</samp>](https://github.com/thuongtruong109/flashot/commit/28724cde6091b5135f8de624510244b706765076)
 - **docs**: add landing page - by @thuongtruong109 [<samp>(33c8e)</samp>](https://github.com/thuongtruong109/flashot/commit/33c8e77580cbff104125642ebe7fc55be2253963)
-- **web**: Add sample playground - by @thuongtruong109 [<samp>(46c26)</samp>](https://github.com/thuongtruong109/flashot/commit/46c26cdf4127e5b2a01e5bc48945975e9c3aff18)
+- **web**: Add sample playground studio - by @thuongtruong109 [<samp>(46c26)</samp>](https://github.com/thuongtruong109/flashot/commit/46c26cdf4127e5b2a01e5bc48945975e9c3aff18)
 - **refactor**: Refactor codebase to workspace monorepo - by @thuongtruong109 [<samp>(c019d)</samp>](https://github.com/thuongtruong109/flashot/commit/c019d61bfd82c01293563139ba13d5e59a2f443f)
 
 ### 🐞 Bug Fixes

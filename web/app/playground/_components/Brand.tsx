@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { Code2 } from "lucide-react";
+import { _VERSION } from "@/shared";
 
 interface BrandProps {
   showVersion?: boolean;
@@ -27,7 +27,7 @@ const Brand: React.FC<BrandProps> = ({
       </h1>
       {showVersion && (
         <div className="hidden xs:block px-2 py-0.5 !ml-4 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 text-xs font-semibold rounded-full border border-blue-200/50">
-          v1.4.1
+          {_VERSION}
         </div>
       )}
     </div>

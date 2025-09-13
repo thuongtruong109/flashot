@@ -9,7 +9,6 @@
 
 - Syntax Highlighting Intensity - Adjust syntax coloring intensity
 - Tab Size Control - Customize indentation width
-- Word Wrap Toggle - Enable/disable word wrapping
 - Custom Headers/Footers - Add custom text above/below code
 
 3. 🔧 Productivity Features
@@ -34,17 +33,17 @@
 - Version History - Undo/redo for settings changes
 
 Most Valuable Next Features:
-Priority 1 (High Impact, Low Effort):
 
+Priority 1 (High Impact, Low Effort):
 Presets/Templates - Users love quick styling options
 Watermark/Logo - Branding for social media posts
 Corner Radius Fine Control - More precise styling
-Priority 2 (Medium Impact, Medium Effort):
 
+Priority 2 (Medium Impact, Medium Effort):
 Frame Styles - Browser/terminal/phone mockups are very popular
 Auto-Format Code - Clean code before exporting
 High-DPI Export - Essential for crisp social media images
-Priority 3 (High Impact, High Effort):
 
+Priority 3 (High Impact, High Effort):
 Animation Export - Typing animations are trending
 Code Annotations - Great for tutorials/documentatio

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Play } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface DemoSectionProps {
   activeDemo: number;
@@ -80,7 +81,7 @@ import { pathToImg } from "flashot";
 
 const img = await pathToImg("../package.json", {
   theme: "nord",
-  format: "webp",
+  lang: "json",
   style: { borderRadius: 12, padding: 30 }
 });
 await writeFile("path.webp", img);`,
@@ -93,11 +94,11 @@ await writeFile("path.webp", img);`,
 import { urlToImg } from "flashot";
 
 const buffer = await urlToImg("https://api.example.com/data", {
-  format: "png",
+  format: "jpeg",
   theme: "one-dark",
   lineNumbers: { enabled: true }
 });
-await writeFile("url.png", buffer);`,
+await writeFile("url.jpeg", buffer);`,
       language: "typescript",
       bgTheme: "from-blue-900/20 via-purple-900/20 to-violet-900/20",
     },
@@ -108,7 +109,6 @@ import { bufferToImg } from "flashot";
 
 const buffer = "<Buffer 54 68 69 73 20...>";
 const img = await bufferToImg(buffer, {
-  lang: "json",
   theme: "dracula",
   quality: 100,
   lineNumbers: { enabled: true }
@@ -119,154 +119,126 @@ await writeFile("buffer.png", img);`,
     },
   ];
 
-  const usageExamples = [
-    {
-      title: "Inline Code",
-      description: "Generate images from code strings with modern themes",
-      code: `const buffer = await codeToImg('console.log("hello!");', {
-  theme: "monokai"
-});`,
-      theme: "monokai",
-      bgGradient: "from-pink-500/10 to-red-500/10",
-    },
-    {
-      title: "File Path",
-      description: "Convert files with beautiful styling options",
-      code: `const img = await pathToImg("./src/index.js", {
-  theme: "nord"
-});`,
-      theme: "nord",
-      bgGradient: "from-cyan-500/10 to-blue-500/10",
-    },
-    {
-      title: "URL Content",
-      description: "Fetch remote content with dark themes",
-      code: `const img = await urlToImg("https://api.example.com", {
-  theme: "one-dark"
-});`,
-      theme: "one-dark",
-      bgGradient: "from-blue-500/10 to-purple-500/10",
-    },
-    {
-      title: "Buffer Input",
-      description: "Process buffers with vibrant color schemes",
-      code: `const img = await bufferToImg(buffer, {
-  theme: "dracula"
-});`,
-      theme: "dracula",
-      bgGradient: "from-purple-500/10 to-pink-500/10",
-    },
-  ];
-
   return (
-    <section className={`container mx-auto px-6 pb-4 relative overflow-hidden`}>
-      {/* Dynamic Background */}
-      <div
-        className={`absolute inset-0 bg-gradient-to-br rounded-xl opacity-50 transition-all duration-700 ease-in-out`}
-      />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/5 to-black/20" />
-
-      <div className="max-w-5xl mx-auto relative z-10 pt-4">
-        <div className="grid lg:grid-cols-2 gap-8 items-start mb-16">
-          {/* Code Input */}
-          <div className="space-y-4">
-            <div className="flex gap-1 flex-wrap">
-              {codeExamples.map((example, index) => (
-                <button
-                  key={index}
-                  onClick={() => setActiveDemo(index)}
-                  className={`relative px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-300 ${
-                    activeDemo === index
-                      ? "text-white border border-white/20"
-                      : "text-white/50 hover:text-white/80 hover:bg-white/5"
-                  }`}
-                >
-                  {activeDemo === index && (
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-r rounded-md -z-10 transition-all duration-300`}
-                    />
-                  )}
-                  <span className="relative z-10">{example.title}</span>
-                </button>
-              ))}
-            </div>
-
-            <div className="bg-gray-900/50 border border-white/[0.08] rounded-xl p-4 backdrop-blur-sm">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-2 h-2 bg-red-400/80 rounded-full" />
-                <div className="w-2 h-2 bg-yellow-400/80 rounded-full" />
-                <div className="w-2 h-2 bg-green-400/80 rounded-full" />
-                <span className="ml-2 text-white/50 text-xs font-mono">
-                  {codeExamples[activeDemo].language} • input.
-                  {codeExamples[activeDemo].language === "javascript"
-                    ? "js"
-                    : "ts"}
-                </span>
-                <div className="ml-auto">
-                  <div
-                    className={`w-2 h-2 rounded-full bg-gradient-to-r ${codeExamples[activeDemo].bgTheme}`}
+    <motion.section
+      className={`container mx-auto px-6 pb-4 overflow-hidden`}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+    >
+      <div className="max-w-5xl mx-auto relative grid lg:grid-cols-2 gap-8 items-start">
+        <motion.div
+          className="space-y-4"
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          <div className="flex gap-1 flex-wrap">
+            {codeExamples.map((example, index) => (
+              <motion.button
+                key={index}
+                onClick={() => setActiveDemo(index)}
+                className={`relative px-3 py-1.5 text-xs font-medium rounded-md ${
+                  activeDemo === index
+                    ? "text-white border border-white/20"
+                    : "text-white/50 hover:text-white/80 hover:bg-white/5"
+                }`}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                viewport={{ once: true }}
+              >
+                {activeDemo === index && (
+                  <motion.div
+                    className={`absolute inset-0 bg-gradient-to-r rounded-md -z-10 transition-all duration-300`}
+                    layoutId="activeTab"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
-                </div>
-              </div>
-              <pre className="text-xs text-white/90 font-mono leading-relaxed overflow-x-auto">
-                <code>{codeExamples[activeDemo].code}</code>
-              </pre>
-            </div>
-
-            <button
-              className={`group flex items-center gap-2 px-4 py-2 bg-gradient-to-r border border-white/20 text-white text-xs font-medium rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-300 backdrop-blur-sm`}
-            >
-              <Play className="w-3 h-3 group-hover:scale-110 transition-transform" />
-              Generate Image
-              <div className="flex items-center gap-1 text-green-400 transition-all duration-200">
-                ~ 135ms
-              </div>
-            </button>
+                )}
+                <span className="relative z-10">{example.title}</span>
+              </motion.button>
+            ))}
           </div>
-        </div>
 
-        {/* Usage Examples Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {usageExamples.map((example, index) => (
-            <div
-              key={index}
-              className="relative group bg-white/[0.02] border border-white/[0.08] rounded-xl p-4 hover:bg-white/[0.04] hover:border-white/[0.15] transition-all duration-300 overflow-hidden"
-            >
-              {/* Theme gradient background */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${example.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+          <motion.div
+            className="bg-gray-900/50 border border-white/[0.08] rounded-xl p-4 backdrop-blur-sm"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            viewport={{ once: true }}
+          >
+            <div className="flex items-center gap-2 mb-3">
+              <motion.div
+                className="w-2 h-2 bg-red-400/80 rounded-full"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0 }}
               />
-
-              <div className="relative z-10">
-                <div className="flex items-center gap-2 mb-2">
-                  <h4 className="font-medium text-white text-sm">
-                    {example.title}
-                  </h4>
-                  <div
-                    className={`w-2 h-2 rounded-full bg-gradient-to-r ${example.bgGradient} opacity-60`}
-                  />
-                </div>
-
-                <p className="text-white/50 text-xs mb-3 leading-relaxed">
-                  {example.description}
-                </p>
-
-                <div className="space-y-2">
-                  <code className="text-[10px] text-blue-300 bg-white/[0.03] rounded p-2 block overflow-x-auto">
-                    {example.code}
-                  </code>
-
-                  <div className="flex items-center gap-1 text-[10px] text-white/40">
-                    <span>🎨</span>
-                    <span>{example.theme}</span>
-                  </div>
-                </div>
+              <motion.div
+                className="w-2 h-2 bg-yellow-400/80 rounded-full"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+              />
+              <motion.div
+                className="w-2 h-2 bg-green-400/80 rounded-full"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+              />
+              <span className="ml-2 text-white/50 text-xs font-mono">
+                index.
+                {codeExamples[activeDemo].language === "javascript"
+                  ? "js"
+                  : "ts"}
+              </span>
+              <div className="ml-auto">
+                <motion.div
+                  className={`w-2 h-2 rounded-full bg-gradient-to-r ${codeExamples[activeDemo].bgTheme}`}
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                />
               </div>
             </div>
-          ))}
-        </div>
+            <AnimatePresence mode="wait">
+              <motion.pre
+                key={activeDemo}
+                className="text-xs text-white/90 font-mono leading-relaxed overflow-x-auto"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <code>{codeExamples[activeDemo].code}</code>
+              </motion.pre>
+            </AnimatePresence>
+          </motion.div>
+
+          <motion.div
+            className={`group flex items-center w-fit gap-2 px-4 py-2 bg-gradient-to-r border border-white/20 text-white text-xs font-medium rounded-lg backdrop-blur-sm`}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <motion.div
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            >
+              <Play className="w-3 h-3" />
+            </motion.div>
+            Generate Image
+            <motion.div
+              className="flex items-center gap-1 text-green-400 transition-all duration-200"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              ~ 135ms
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

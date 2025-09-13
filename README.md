@@ -12,9 +12,10 @@
 [![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fjsr.io%2Fbadges%2F%40thuongtruong%2Fflashot%2Fscore&style=flat&logo=jsr&label=score&labelColor=080f12&color=1fa669)](https://jsr.io/@thuongtruong/flashot/score)
 [![JSDocs](https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&logo=javascript&colorA=080f12&colorB=1fa669)](https://www.jsdocs.io/package/flashot)
 [![Sponsor](https://img.shields.io/badge/sponsor-1fa669?logo=githubsponsors&labelColor=080f12)](https://github.com/sponsors/thuongtruong109)
-[![Bundled min size](https://badgen.net/bundlephobia/min/flashot)](https://bundlephobia.com/package/flashot)
+
+<!-- [![Bundled min size](https://badgen.net/bundlephobia/min/flashot)](https://bundlephobia.com/package/flashot)
 [![Bundled tree-shaking](https://badgen.net/bundlephobia/tree-shaking/flashot)](https://bundlephobia.com/package/flashot)
-[![License](https://img.shields.io/github/license/thuongtruong109/flashot.svg)](https://github.com/antfu/vite-unbundled/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/thuongtruong109/flashot.svg)](https://github.com/antfu/vite-unbundled/blob/main/LICENSE) -->
 
 **Flashot** is the **blazing-fast image generation tool** for code snippets with elegant design and flawless performance
 

@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Github, Heart, Code2, Package, Coffee } from "lucide-react";
+import { _VERSION } from "@/shared";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -110,14 +111,7 @@ const Footer: React.FC = () => {
                 </a>
               </div>
 
-              <div className="flex items-center space-x-2 text-xs">
-                <div className="flex items-center space-x-1 text-green-400">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span>All systems operational</span>
-                </div>
-                <div className="text-white/40">•</div>
-                <div className="text-white/50">v1.4.1</div>
-              </div>
+              <div className="text-white/50">{_VERSION}</div>
             </div>
           </div>
         </div>

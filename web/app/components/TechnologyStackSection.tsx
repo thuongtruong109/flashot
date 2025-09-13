@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const TechnologyStackSection: React.FC = () => {
   const technologies = [
@@ -81,31 +82,68 @@ const TechnologyStackSection: React.FC = () => {
 
   return (
     <section className="container mx-auto px-6 py-16">
-      <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-2xl font-light text-white mb-3">
+      <motion.div
+        className="max-w-4xl mx-auto text-center"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true, margin: "-100px" }}
+      >
+        <motion.h2
+          className="text-2xl font-light text-white mb-3"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
           Built with Modern Technologies
-        </h2>
-        <p className="text-white/60 text-sm mb-8">
+        </motion.h2>
+        <motion.p
+          className="text-white/60 text-sm mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: true }}
+        >
           Leveraging the best tools for performance, reliability and developer
           experience
-        </p>
+        </motion.p>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true, margin: "-50px" }}
+        >
           {technologies.map((tech, index) => (
-            <div
+            <motion.div
               key={index}
-              className={`bg-gradient-to-br ${tech.color} bg-white/[0.02] border border-white/[0.08] rounded-lg p-3 hover:bg-white/[0.04] transition-all duration-200 group`}
+              className={`bg-gradient-to-br ${tech.color} bg-white/[0.02] border border-white/[0.08] rounded-lg p-3 relative overflow-hidden`}
+              initial={{ opacity: 0, y: 30, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.5 + index * 0.1,
+                ease: "easeOut",
+              }}
+              viewport={{ once: true, margin: "-30px" }}
             >
-              <div className="flex items-center gap-2 mb-2">
+              <motion.div
+                className="flex items-center gap-2 mb-2 relative z-10"
+                initial={{ x: -10, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
+                viewport={{ once: true }}
+              >
                 <div className="w-6 h-6 flex-shrink-0 relative">
                   <Image
                     src={tech.icon}
                     alt={`${tech.name} logo`}
                     width={24}
                     height={24}
-                    className="object-contain group-hover:scale-110 transition-transform duration-300"
+                    className="object-contain"
                     onError={(e) => {
-                      // Fallback: hide image if it fails to load
                       const target = e.target as HTMLImageElement;
                       target.style.display = "none";
                     }}
@@ -114,12 +152,20 @@ const TechnologyStackSection: React.FC = () => {
                 <div className="font-medium text-white text-sm">
                   {tech.name}
                 </div>
-              </div>
-              <div className="text-white/50 text-xs">{tech.desc}</div>
-            </div>
+              </motion.div>
+              <motion.div
+                className="text-white/50 text-xs relative z-10"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                {tech.desc}
+              </motion.div>
+            </motion.div>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

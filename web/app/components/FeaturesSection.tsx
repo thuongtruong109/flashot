@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import {
   Code,
   Palette,
@@ -103,45 +104,90 @@ const FeaturesSection: React.FC = () => {
   return (
     <section className="container mx-auto px-6 py-16">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-full px-4 py-2 text-sm text-purple-300 mb-6">
-            <Sparkles className="w-4 h-4" />
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <motion.div
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-full px-4 py-2 text-sm text-purple-300 mb-6"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            >
+              <Sparkles className="w-4 h-4" />
+            </motion.div>
             Features & Capabilities
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          </motion.div>
+
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold text-white mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            viewport={{ once: true }}
+          >
             Built for{" "}
             <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               Excellence
             </span>
-          </h2>
-          <p className="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed">
+          </motion.h2>
+
+          <motion.p
+            className="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
             Everything you need to create professional, shareable code visuals
             with
             <span className="text-blue-400"> stunning themes</span> and
             <span className="text-purple-400"> pixel-perfect quality</span>
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <motion.div
+          className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: "-100px" }}
+        >
           {features.map((feature, index) => (
-            <div
+            <motion.div
               key={index}
-              className={`group relative bg-white/[0.02] border border-white/[0.08] hover:${feature.color} rounded-xl p-4 hover:bg-white/[0.05] transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm`}
+              className={`group relative bg-white/[0.02] border border-white/[0.08] rounded-xl p-4 backdrop-blur-sm`}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.1,
+                ease: "easeOut",
+              }}
+              viewport={{ once: true, margin: "-50px" }}
             >
               <div className="flex items-center gap-3 mb-3">
-                <div className="flex items-center justify-center w-10 h-10 bg-white/[0.08] rounded-lg group-hover:bg-white/[0.12] transition-all duration-300">
+                <div className="flex items-center justify-center w-10 h-10 bg-white/[0.08] rounded-lg">
                   {feature.icon}
                 </div>
-                <h3 className="font-medium text-white text-sm group-hover:text-blue-200 transition-colors">
+                <h3 className="font-medium text-white text-sm">
                   {feature.title}
                 </h3>
               </div>
-              <p className="text-white/60 text-xs leading-relaxed group-hover:text-white/75 transition-colors">
+              <p className="text-white/60 text-xs leading-relaxed">
                 {feature.description}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
