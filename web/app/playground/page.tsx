@@ -35,7 +35,6 @@ export default function Page() {
     exportFormat: "webp",
     width: undefined, // Auto-fit by default
     height: undefined, // Auto-fit by default
-    shadow: 20, // Default shadow
     wordWrap: false, // Default word wrap disabled
   });
 
@@ -179,7 +178,7 @@ export default function Page() {
   return (
     <div className="h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 relative overflow-hidden flex flex-col">
       <div className="relative bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-sm px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between py-2 lg:py-4 w-full gap-4">
+        <div className="flex items-center justify-between py-2 w-full gap-4">
           {/* Brand Component */}
           <div className="flex-shrink-0">
             <Brand showVersion={true} />
@@ -212,18 +211,19 @@ export default function Page() {
       {/* Main Container with Sidebar Layout */}
       <div className="flex-1 flex h-[calc(100vh-3rem)] lg:h-[calc(100vh-4rem)] transition-all duration-300 w-full">
         {/* Main Content Area */}
-        <div className="flex-1 overflow-hidden transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 h-full relative">
+        <div className="flex-1 transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 h-full relative">
           {/* Grid Background */}
           <div className="absolute inset-0 pointer-events-none grid-background opacity-60" />
           <div
-            ref={codeRef}
             className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl z-10"
             style={{
               height: "auto",
               minHeight: "400px",
+              padding: "20px",
             }}
           >
             <CodeEditor
+              ref={codeRef}
               code={code}
               onChange={handleCodeChange}
               settings={settings}

@@ -11,6 +11,9 @@ interface BackgroundSelectorProps {
 }
 
 const backgrounds = [
+  // Transparent Option
+  "transparent",
+
   // Gradient Backgrounds
   "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
   "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
@@ -65,8 +68,33 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
       </h4>
 
       <div className="space-y-4">
-        {/* Gradient Backgrounds */}
+        {/* Transparent Option */}
         <div>
+          <button
+            onClick={() => onBackgroundChange("transparent")}
+            className={cn(
+              "group relative w-full h-10 rounded-lg border-2 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center",
+              selectedBackground === "transparent"
+                ? "border-blue-500 ring-2 ring-blue-200 scale-105"
+                : "border-gray-200/50 hover:border-gray-300 hover:scale-105"
+            )}
+            style={{
+              background:
+                "repeating-conic-gradient(#808080 0deg 90deg, transparent 90deg 180deg) 0 0/20px 20px",
+            }}
+            title="Transparent Background"
+          >
+            <div className="absolute inset-0 rounded-lg bg-white/10 backdrop-blur-sm"></div>
+            {selectedBackground === "transparent" && (
+              <div className="absolute inset-0 rounded-lg border-2 border-white bg-white/20 flex items-center justify-center">
+                <div className="w-3 h-3 bg-blue-500 rounded-full shadow-lg"></div>
+              </div>
+            )}
+          </button>
+        </div>
+
+        {/* Gradient Backgrounds */}
+        <div className="border-t border-gray-200 border-dashed pt-4">
           <div className="grid grid-cols-5 gap-2">
             {backgrounds
               .filter((bg) => bg.startsWith("linear-gradient"))
@@ -99,7 +127,10 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
         <div className="border-t border-gray-200 border-dashed pt-4">
           <div className="grid grid-cols-5 gap-2">
             {backgrounds
-              .filter((bg) => !bg.startsWith("linear-gradient"))
+              .filter(
+                (bg) =>
+                  !bg.startsWith("linear-gradient") && bg !== "transparent"
+              )
               .map((bg, index) => (
                 <button
                   key={index}

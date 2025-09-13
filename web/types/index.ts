@@ -24,7 +24,6 @@ export interface CodeSettings {
   exportFormat?: "png" | "jpg" | "webp" | "avif" | "svg";
   width?: number;
   height?: number;
-  shadow?: number;
   wordWrap?: boolean;
 }
 

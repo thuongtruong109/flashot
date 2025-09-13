@@ -26,9 +26,9 @@ const Brand: React.FC<BrandProps> = ({
         Flashot <span className="hidden sm:inline-flex">playground</span>
       </h1>
       {showVersion && (
-        <div className="hidden xs:block px-2 py-0.5 !ml-4 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 text-xs font-semibold rounded-full border border-blue-200/50">
+        <span className="hidden xs:block px-2 py-0.5 !ml-4 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 text-xs font-semibold rounded-full border border-blue-200/50">
           {_VERSION}
-        </div>
+        </span>
       )}
     </div>
   );

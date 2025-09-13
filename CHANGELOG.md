@@ -3,11 +3,12 @@
 ### 🚀 Features
 
 - **playground**:
-  - framer animation for landing page - by @thuongtruong109 [<samp>(f4a2e)</samp>]()
+  - add transparent background option - by @thuongtruong109 [<samp>(1f4b1)</samp>]()
   - enable word wrap options - by @thuongtruong109 [<samp>(46a18)</samp>](https://github.com/thuongtruong109/flashot/commit/46a18bd436ab01bbd379793b19898ab8a2a65946)
   - code editor draggable move - by @thuongtruong109 [<samp>(97671)</samp>](https://github.com/thuongtruong109/flashot/commit/976712d2d502c0e883b5c91baaaff99116d5e08e)
-  - adjust shadow options - by @thuongtruong109 [<samp>(5c940)</samp>](https://github.com/thuongtruong109/flashot/commit/5c940d9277f8827737230a6b4ff67ac2941fd7c6)
   - adjust width & height - by @thuongtruong109 [<samp>(52d6b)</samp>](https://github.com/thuongtruong109/flashot/commit/52d6be981e1161311ddc88d496b24a0d38b40b07)
+- **landing**:
+  - framer animation for landing page - by @thuongtruong109 [<samp>(f4a2e)</samp>]()
 - **docs**:
   - integrate raw content to web pages - by @thuongtruong109 [<samp>(6d3fa)</samp>](https://github.com/thuongtruong109/flashot/commit/6d3fa44e6a6900d0faa14404c540898488ae0dfb)
   - add usage docs raw content - by @thuongtruong109 [<samp>(350a4)</samp>](https://github.com/thuongtruong109/flashot/commit/350a44d0834dde1be1d376fdee7e49dd4ff6480c)
