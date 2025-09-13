@@ -557,14 +557,37 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         Show Background
                       </span>
                     </div>
-                    <input
-                      type="checkbox"
-                      checked={settings.showBackground}
-                      onChange={(e) =>
-                        onUpdateSetting("showBackground", e.target.checked)
-                      }
-                      className="w-4 h-4 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/40 border-gray-300 hover:border-gray-400 transition-all duration-200"
-                    />
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        checked={settings.showBackground}
+                        onChange={(e) =>
+                          onUpdateSetting("showBackground", e.target.checked)
+                        }
+                        className="sr-only peer"
+                      />
+                      <div
+                        className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                          settings.showBackground
+                            ? "bg-gradient-to-br from-purple-100 to-purple-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                            : ""
+                        }`}
+                      >
+                        <svg
+                          className={`w-3 h-3 text-purple-700 font-bold transition-opacity duration-200 ${
+                            settings.showBackground
+                              ? "opacity-100"
+                              : "opacity-0"
+                          }`}
+                          fill="currentColor"
+                          stroke="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="3"
+                        >
+                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                        </svg>
+                      </div>
+                    </div>
                   </label>
 
                   <label className="flex items-center justify-between group cursor-pointer">
@@ -574,14 +597,40 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         Window Controls
                       </span>
                     </div>
-                    <input
-                      type="checkbox"
-                      checked={settings.showWindowControls}
-                      onChange={(e) =>
-                        onUpdateSetting("showWindowControls", e.target.checked)
-                      }
-                      className="w-4 h-4 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/40 border-gray-300 hover:border-gray-400 transition-all duration-200"
-                    />
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        checked={settings.showWindowControls}
+                        onChange={(e) =>
+                          onUpdateSetting(
+                            "showWindowControls",
+                            e.target.checked
+                          )
+                        }
+                        className="sr-only peer"
+                      />
+                      <div
+                        className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                          settings.showWindowControls
+                            ? "bg-gradient-to-br from-blue-100 to-blue-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                            : ""
+                        }`}
+                      >
+                        <svg
+                          className={`w-3 h-3 text-blue-700 font-bold transition-opacity duration-200 ${
+                            settings.showWindowControls
+                              ? "opacity-100"
+                              : "opacity-0"
+                          }`}
+                          fill="currentColor"
+                          stroke="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="3"
+                        >
+                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                        </svg>
+                      </div>
+                    </div>
                   </label>
 
                   <label className="flex items-center justify-between group cursor-pointer">
@@ -591,12 +640,33 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         Line Numbers
                       </span>
                     </div>
-                    <input
-                      type="checkbox"
-                      checked={showLineNumbers}
-                      onChange={(e) => onToggleLineNumbers(e.target.checked)}
-                      className="w-4 h-4 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/40 border-gray-300 hover:border-gray-400 transition-all duration-200"
-                    />
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        checked={showLineNumbers}
+                        onChange={(e) => onToggleLineNumbers(e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div
+                        className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                          showLineNumbers
+                            ? "bg-gradient-to-br from-green-100 to-green-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                            : ""
+                        }`}
+                      >
+                        <svg
+                          className={`w-3 h-3 text-green-700 font-bold transition-opacity duration-200 ${
+                            showLineNumbers ? "opacity-100" : "opacity-0"
+                          }`}
+                          fill="currentColor"
+                          stroke="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="3"
+                        >
+                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                        </svg>
+                      </div>
+                    </div>
                   </label>
 
                   <label className="flex items-center justify-between group cursor-pointer">
@@ -606,14 +676,35 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         Line Count Display
                       </span>
                     </div>
-                    <input
-                      type="checkbox"
-                      checked={settings.showLineCount || false}
-                      onChange={(e) =>
-                        onUpdateSetting("showLineCount", e.target.checked)
-                      }
-                      className="w-4 h-4 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/40 border-gray-300 hover:border-gray-400 transition-all duration-200"
-                    />
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        checked={settings.showLineCount || false}
+                        onChange={(e) =>
+                          onUpdateSetting("showLineCount", e.target.checked)
+                        }
+                        className="sr-only peer"
+                      />
+                      <div
+                        className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                          settings.showLineCount
+                            ? "bg-gradient-to-br from-orange-100 to-orange-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                            : ""
+                        }`}
+                      >
+                        <svg
+                          className={`w-3 h-3 text-orange-700 font-bold transition-opacity duration-200 ${
+                            settings.showLineCount ? "opacity-100" : "opacity-0"
+                          }`}
+                          fill="currentColor"
+                          stroke="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="3"
+                        >
+                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                        </svg>
+                      </div>
+                    </div>
                   </label>
 
                   <label className="flex items-center justify-between group cursor-pointer">
@@ -623,14 +714,35 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         File Name Display
                       </span>
                     </div>
-                    <input
-                      type="checkbox"
-                      checked={settings.showFileName || false}
-                      onChange={(e) =>
-                        onUpdateSetting("showFileName", e.target.checked)
-                      }
-                      className="w-4 h-4 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/40 border-gray-300 hover:border-gray-400 transition-all duration-200"
-                    />
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        checked={settings.showFileName || false}
+                        onChange={(e) =>
+                          onUpdateSetting("showFileName", e.target.checked)
+                        }
+                        className="sr-only peer"
+                      />
+                      <div
+                        className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                          settings.showFileName
+                            ? "bg-gradient-to-br from-yellow-100 to-yellow-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                            : ""
+                        }`}
+                      >
+                        <svg
+                          className={`w-3 h-3 text-yellow-700 font-bold transition-opacity duration-200 ${
+                            settings.showFileName ? "opacity-100" : "opacity-0"
+                          }`}
+                          fill="currentColor"
+                          stroke="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="3"
+                        >
+                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                        </svg>
+                      </div>
+                    </div>
                   </label>
 
                   <label className="flex items-center justify-between cursor-pointer">
@@ -640,14 +752,35 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         Word Wrap
                       </span>
                     </div>
-                    <input
-                      type="checkbox"
-                      checked={settings.wordWrap || false}
-                      onChange={(e) =>
-                        onUpdateSetting("wordWrap", e.target.checked)
-                      }
-                      className="w-4 h-4 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/40 border-gray-300 hover:border-gray-400 transition-all duration-200"
-                    />
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        checked={settings.wordWrap || false}
+                        onChange={(e) =>
+                          onUpdateSetting("wordWrap", e.target.checked)
+                        }
+                        className="sr-only peer"
+                      />
+                      <div
+                        className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                          settings.wordWrap
+                            ? "bg-gradient-to-br from-blue-100 to-blue-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                            : ""
+                        }`}
+                      >
+                        <svg
+                          className={`w-3 h-3 text-blue-700 font-bold transition-opacity duration-200 ${
+                            settings.wordWrap ? "opacity-100" : "opacity-0"
+                          }`}
+                          fill="currentColor"
+                          stroke="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="3"
+                        >
+                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                        </svg>
+                      </div>
+                    </div>
                   </label>
                 </div>
               </div>

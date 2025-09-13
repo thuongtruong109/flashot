@@ -230,6 +230,7 @@ export default function Page() {
               showLineNumbers={showLineNumbers}
               fileName={fileName}
               className="w-full h-full"
+              onUpdateSetting={updateSetting}
             />
           </div>
         </div>

@@ -1,6 +1,5 @@
 1. 🎨 Visual Enhancements
 
-- Opacity Control - Adjust background opacity separately from blur
 - Watermark Options - Add custom watermark/logo to images
 - Frame Styles - Different frame styles (browser, terminal, phone, etc.)
 

@@ -3,9 +3,9 @@
 ### 🚀 Features
 
 - **playground**:
-  - add transparent background option - by @thuongtruong109 [<samp>(45ad4)</samp>](https://github.com/thuongtruong109/flashot/commit/45ad465f43081e0ce3152b70dd171e70ca81fe6c)
+  - resizable code editor with border drag controls - by @thuongtruong109 [<samp>(4e2f3)</samp>]()
+  - add transparent background option - by @thuongtruong109 [<samp>(b66fa)</samp>](https://github.com/thuongtruong109/flashot/commit/b66fa2e26723e38d9261416e837350c8b2c0dbf4)
   - enable word wrap options - by @thuongtruong109 [<samp>(46a18)</samp>](https://github.com/thuongtruong109/flashot/commit/46a18bd436ab01bbd379793b19898ab8a2a65946)
-  - code editor draggable move - by @thuongtruong109 [<samp>(97671)</samp>](https://github.com/thuongtruong109/flashot/commit/976712d2d502c0e883b5c91baaaff99116d5e08e)
   - adjust width & height - by @thuongtruong109 [<samp>(52d6b)</samp>](https://github.com/thuongtruong109/flashot/commit/52d6be981e1161311ddc88d496b24a0d38b40b07)
 - **landing**:
   - framer animation for landing page - by @thuongtruong109 [<samp>(f4a2e)</samp>]()

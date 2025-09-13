@@ -10,7 +10,6 @@ import {
   Sparkles,
   Check,
   X,
-  GripVertical,
 } from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import {
@@ -27,25 +26,52 @@ interface CodeEditorProps {
   showLineNumbers: boolean;
   fileName?: string;
   className?: string;
+  onUpdateSetting?: <K extends keyof CodeSettings>(
+    key: K,
+    value: CodeSettings[K]
+  ) => void;
 }
 
 const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
   (
-    { code, onChange, settings, showLineNumbers, fileName, className = "" },
+    {
+      code,
+      onChange,
+      settings,
+      showLineNumbers,
+      fileName,
+      className = "",
+      onUpdateSetting,
+    },
     ref
   ) => {
     const [isEditing, setIsEditing] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
-    const [isDragging, setIsDragging] = useState(false);
+    const [isResizing, setIsResizing] = useState(false);
+    const [resizeDirection, setResizeDirection] = useState<string>("");
+    const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+    const [startSize, setStartSize] = useState({ width: 0, height: 0 });
     const [position, setPosition] = useState({ x: 0, y: 0 });
-    const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-    const [containerRect, setContainerRect] = useState<DOMRect | null>(null);
+    const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
     const [transparentGridDataUrl, setTransparentGridDataUrl] =
       useState<string>("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const previewRef = useRef<HTMLPreElement>(null);
-    const dragRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
     const currentTheme = themes[settings.theme as ThemeName];
+
+    // Callback ref to handle both refs
+    const setRefs = useCallback(
+      (node: HTMLDivElement | null) => {
+        containerRef.current = node;
+        if (typeof ref === "function") {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+      },
+      [ref]
+    );
 
     // Auto-focus when entering edit mode
     useEffect(() => {
@@ -74,81 +100,84 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
       setIsEditing(false);
     }, []);
 
-    // Drag handlers
-    const handleMouseDown = useCallback(
-      (e: React.MouseEvent) => {
-        if (isFullscreen) return; // Disable drag in fullscreen
-
-        const rect = dragRef.current?.getBoundingClientRect();
-        const container = dragRef.current?.parentElement;
-        if (!rect || !container) return;
-
-        // Cache container rect for performance
-        setContainerRect(container.getBoundingClientRect());
-        setIsDragging(true);
-        setDragOffset({
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top,
-        });
+    // Resize handlers
+    const handleResizeStart = useCallback(
+      (e: React.MouseEvent, direction: string) => {
+        if (isFullscreen || !onUpdateSetting || !containerRef.current) return;
 
         e.preventDefault();
-        e.stopPropagation(); // Prevent event bubbling
-      },
-      [isFullscreen]
-    );
+        e.stopPropagation();
 
-    const handleMouseMove = useCallback(
-      (e: MouseEvent) => {
-        if (!isDragging || !containerRect || !dragRef.current) return;
-
-        // Use requestAnimationFrame for smoother movement
-        requestAnimationFrame(() => {
-          if (!containerRect) return;
-
-          const editorRect = dragRef.current?.getBoundingClientRect();
-          if (!editorRect) return;
-
-          const newX = e.clientX - containerRect.left - dragOffset.x;
-          const newY = e.clientY - containerRect.top - dragOffset.y;
-
-          // Allow more freedom with looser constraints - only prevent going completely off-screen
-          const minX = -editorRect.width + 100; // Allow 100px to remain visible
-          const maxX = containerRect.width - 100; // Allow 100px to remain visible
-          const minY = -editorRect.height + 100;
-          const maxY = containerRect.height - 100;
-
-          setPosition({
-            x: Math.max(minX, Math.min(newX, maxX)),
-            y: Math.max(minY, Math.min(newY, maxY)),
-          });
+        const rect = containerRef.current.getBoundingClientRect();
+        setIsResizing(true);
+        setResizeDirection(direction);
+        setStartPos({ x: e.clientX, y: e.clientY });
+        setStartSize({
+          width: settings.width || rect.width,
+          height: settings.height || rect.height,
         });
+        setStartPosition({ x: position.x, y: position.y });
       },
-      [isDragging, dragOffset, containerRect]
+      [isFullscreen, onUpdateSetting, settings.width, settings.height, position]
     );
 
-    const handleMouseUp = useCallback(() => {
-      setIsDragging(false);
-      setContainerRect(null); // Clear cached rect
+    const handleResizeMove = useCallback(
+      (e: MouseEvent) => {
+        if (!isResizing || !onUpdateSetting) return;
+
+        const deltaX = e.clientX - startPos.x;
+        const deltaY = e.clientY - startPos.y;
+
+        let newWidth = startSize.width;
+        let newHeight = startSize.height;
+        let newX = startPosition.x;
+        let newY = startPosition.y;
+
+        if (resizeDirection.includes("right")) {
+          newWidth = Math.max(200, startSize.width + deltaX);
+        }
+        if (resizeDirection.includes("left")) {
+          newWidth = Math.max(200, startSize.width - deltaX);
+          newX = startPosition.x + (startSize.width - newWidth);
+        }
+        if (resizeDirection.includes("bottom")) {
+          newHeight = Math.max(100, startSize.height + deltaY);
+        }
+        if (resizeDirection.includes("top")) {
+          newHeight = Math.max(100, startSize.height - deltaY);
+          newY = startPosition.y + (startSize.height - newHeight);
+        }
+
+        setPosition({ x: newX, y: newY });
+        onUpdateSetting("width", Math.round(newWidth));
+        onUpdateSetting("height", Math.round(newHeight));
+      },
+      [
+        isResizing,
+        onUpdateSetting,
+        startPos,
+        startSize,
+        resizeDirection,
+        startPosition,
+      ]
+    );
+
+    const handleResizeEnd = useCallback(() => {
+      setIsResizing(false);
+      setResizeDirection("");
     }, []);
 
-    // Reset position to center on double-click
-    const handleDoubleClick = useCallback(() => {
-      if (!isFullscreen) {
-        setPosition({ x: 0, y: 0 });
-      }
-    }, [isFullscreen]);
-
-    // Add global mouse events for dragging
+    // Add global mouse events for resizing
     useEffect(() => {
-      if (isDragging) {
-        document.addEventListener("mousemove", handleMouseMove);
-        document.addEventListener("mouseup", handleMouseUp);
+      if (isResizing) {
+        document.addEventListener("mousemove", handleResizeMove);
+        document.addEventListener("mouseup", handleResizeEnd);
         return () => {
-          document.removeEventListener("mousemove", handleMouseMove);
-          document.removeEventListener("mouseup", handleMouseUp);
+          document.removeEventListener("mousemove", handleResizeMove);
+          document.removeEventListener("mouseup", handleResizeEnd);
         };
       }
-    }, [isDragging, handleMouseMove, handleMouseUp]);
+    }, [isResizing, handleResizeMove, handleResizeEnd]);
 
     // Handle key shortcuts
     const handleKeyDown = useCallback(
@@ -216,25 +245,14 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
         className={`relative group transition-all duration-300 ${
           isFullscreen
             ? "fixed inset-0 z-50 bg-black/95 backdrop-blur-xl p-8 flex items-center justify-center"
-            : "absolute"
-        } ${className} ${isDragging ? "cursor-grabbing" : "cursor-auto"}`}
-        ref={!isFullscreen ? dragRef : undefined}
-        style={
-          !isFullscreen
-            ? {
-                transform: `translate(${position.x}px, ${position.y}px)`,
-                zIndex: isDragging ? 1000 : 1,
-                backgroundColor: "transparent", // Ensure transparent background for capture
-              }
-            : undefined
-        }
+            : ""
+        } ${className}`}
       >
         <div
-          ref={ref}
+          ref={setRefs}
           className={`relative transition-all duration-300 ${
             settings.showBackground ? "" : ""
-          } ${!isFullscreen ? "cursor-grab active:cursor-grabbing" : ""}`}
-          onMouseDown={!isFullscreen ? handleMouseDown : undefined}
+          } ${isResizing ? "select-none" : ""}`}
           style={{
             background: isFullscreen
               ? "white"
@@ -274,6 +292,9 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
               : "800px",
             display: "flex",
             flexDirection: "column",
+            transform: !isFullscreen
+              ? `translate(${position.x}px, ${position.y}px)`
+              : undefined,
           }}
         >
           {/* Snip Area Wrapper - Window Controls + Code Content */}
@@ -287,10 +308,7 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
               {/* Window Controls */}
               {settings.showWindowControls && (
                 <div
-                  className={`flex items-center justify-between px-4 py-3 border-b backdrop-blur-sm ${
-                    !isFullscreen ? "cursor-grab active:cursor-grabbing" : ""
-                  }`}
-                  onMouseDown={!isFullscreen ? handleMouseDown : undefined}
+                  className="flex items-center justify-between px-4 py-3 border-b backdrop-blur-sm"
                   style={{
                     backgroundColor:
                       settings.theme === "light" ? "#f8f9fa" : "#2a2d3a",
@@ -330,14 +348,28 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
                   borderRadius: settings.showWindowControls
                     ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
                     : `${settings.borderRadius}px`,
+                  maxHeight: settings.height
+                    ? `${
+                        settings.height -
+                        settings.padding * 2 -
+                        (settings.showWindowControls ? 50 : 0)
+                      }px`
+                    : undefined,
+                  minHeight: settings.height
+                    ? `${Math.max(
+                        100,
+                        settings.height -
+                          settings.padding * 2 -
+                          (settings.showWindowControls ? 50 : 0)
+                      )}px`
+                    : "100px",
                 }}
               >
                 {/* Preview Mode */}
                 {!isEditing && (
                   <div
                     onClick={handlePreviewClick}
-                    onMouseDown={(e) => e.stopPropagation()} // Prevent drag in content area
-                    className="relative cursor-text group h-full flex overflow-hidden custom-scrollbar"
+                    className="relative cursor-text group h-full flex overflow-auto custom-scrollbar"
                     style={{
                       backgroundColor: currentTheme.background,
                       borderRadius: settings.showWindowControls
@@ -406,8 +438,7 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
                 {/* Edit Mode */}
                 {isEditing && (
                   <div
-                    onMouseDown={(e) => e.stopPropagation()} // Prevent drag in content area
-                    className="relative h-full"
+                    className="relative h-full overflow-auto"
                     style={{
                       backgroundColor: currentTheme.background,
                       borderRadius: settings.showWindowControls
@@ -415,7 +446,7 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
                         : `${settings.borderRadius}px`,
                     }}
                   >
-                    <div className="flex !pb-0">
+                    <div className="flex !pb-0 h-full">
                       {/* Line Numbers for Edit Mode */}
                       {showLineNumbers && (
                         <div
@@ -467,6 +498,46 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
           </div>{" "}
           {/* End of shadow wrapper */}
           {/* End of Snip Area Wrapper */}
+          {/* Resize Handles */}
+          {!isFullscreen && onUpdateSetting && (
+            <>
+              {/* Edge handles - positioned on outer frame */}
+              <div
+                className="absolute top-0 left-0 right-0 h-1 cursor-n-resize hover:bg-blue-500/20 transition-colors"
+                onMouseDown={(e) => handleResizeStart(e, "top")}
+              />
+              <div
+                className="absolute bottom-0 left-0 right-0 h-1 cursor-s-resize hover:bg-blue-500/20 transition-colors"
+                onMouseDown={(e) => handleResizeStart(e, "bottom")}
+              />
+              <div
+                className="absolute top-0 bottom-0 left-0 w-1 cursor-w-resize hover:bg-blue-500/20 transition-colors"
+                onMouseDown={(e) => handleResizeStart(e, "left")}
+              />
+              <div
+                className="absolute top-0 bottom-0 right-0 w-1 cursor-e-resize hover:bg-blue-500/20 transition-colors"
+                onMouseDown={(e) => handleResizeStart(e, "right")}
+              />
+
+              {/* Corner handles - positioned at frame corners */}
+              <div
+                className="absolute top-0 left-0 w-3 h-3 cursor-nw-resize hover:bg-blue-500/30 transition-colors"
+                onMouseDown={(e) => handleResizeStart(e, "top-left")}
+              />
+              <div
+                className="absolute top-0 right-0 w-3 h-3 cursor-ne-resize hover:bg-blue-500/30 transition-colors"
+                onMouseDown={(e) => handleResizeStart(e, "top-right")}
+              />
+              <div
+                className="absolute bottom-0 left-0 w-3 h-3 cursor-sw-resize hover:bg-blue-500/30 transition-colors"
+                onMouseDown={(e) => handleResizeStart(e, "bottom-left")}
+              />
+              <div
+                className="absolute bottom-0 right-0 w-3 h-3 cursor-se-resize hover:bg-blue-500/30 transition-colors"
+                onMouseDown={(e) => handleResizeStart(e, "bottom-right")}
+              />
+            </>
+          )}
           {isEditing ? (
             <div className="absolute bottom-1 right-1">
               <div className="text-slate-300 text-xs px-2">
