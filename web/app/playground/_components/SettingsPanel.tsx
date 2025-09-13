@@ -253,7 +253,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                   <Download className="w-3.5 h-3.5 text-green-600 mr-1.5" />
                   Export Format
                 </h4>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-4 gap-2">
                   {["png", "jpg", "webp", "avif"].map((format) => (
                     <button
                       key={format}
@@ -285,7 +285,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
               <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
                 <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
                   <Layers className="w-3.5 h-3.5 text-purple-600 mr-1.5" />
-                  Background Theme
+                  Editor Theme
                 </h4>
                 <div className="flex gap-2">
                   <button
@@ -296,8 +296,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         : "border-gray-200/60 hover:border-gray-300/80 hover:bg-gray-50/50"
                     }`}
                   >
-                    <div className="w-full h-6 bg-white rounded border mb-1.5 shadow-xs group-hover:shadow-sm transition-shadow"></div>
-                    <div className="flex items-center justify-center space-x-1">
+                    <div className="flex items-center justify-center space-x-1 py-1 bg-white rounded-md border shadow-xs group-hover:shadow-sm transition-shadow">
                       <Sun className="w-3 h-3 text-yellow-500" />
                       <span className="text-xs font-medium">Light</span>
                     </div>
@@ -310,10 +309,11 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         : "border-gray-200/60 hover:border-gray-300/80 hover:bg-gray-50/50"
                     }`}
                   >
-                    <div className="w-full h-6 bg-gray-800 rounded border mb-1.5 shadow-xs group-hover:shadow-sm transition-shadow"></div>
-                    <div className="flex items-center justify-center space-x-1">
+                    <div className="flex items-center justify-center space-x-1 py-1 bg-gray-800 rounded-md border shadow-xs group-hover:shadow-sm transition-shadow">
                       <Moon className="w-3 h-3 text-blue-400" />
-                      <span className="text-xs font-medium">Dark</span>
+                      <span className="text-xs text-white font-medium">
+                        Dark
+                      </span>
                     </div>
                   </button>
                 </div>

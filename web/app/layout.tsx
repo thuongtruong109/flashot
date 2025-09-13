@@ -23,15 +23,15 @@ export const metadata: Metadata = {
     "screenshot",
     "flashot",
   ],
-  authors: [{ name: "Flashot Team" }],
-  creator: "Flashot Team",
-  publisher: "Flashot",
+  authors: [{ name: "Tran Nguyen Thuong Truong" }],
+  creator: "Tran Nguyen Thuong Truong",
+  publisher: "Tran Nguyen Thuong Truong",
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://flashot.dev"),
+  metadataBase: new URL("https://flashot.vercel.app"),
   alternates: {
     canonical: "/",
   },
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     title: "Flashot - Code to Image Converter",
     description:
       "Transform your code snippets into beautiful, shareable images with syntax highlighting and customizable themes.",
-    url: "https://flashot.dev",
+    url: "https://flashot.vercel.app",
     siteName: "Flashot",
     type: "website",
     locale: "en_US",
@@ -84,7 +84,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.className} ${firaCode.variable}`}>
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
         <link
           rel="apple-touch-icon"
           sizes="180x180"

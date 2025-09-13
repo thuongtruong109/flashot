@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
-import { Eye, Palette } from "lucide-react";
-import { cn } from "@/utils";
+import React, { useEffect, useState } from "react";
+import { Palette } from "lucide-react";
+import { cn, transparentGridPatterns } from "@/utils";
 
 interface BackgroundSelectorProps {
   selectedBackground: string;
@@ -11,10 +11,10 @@ interface BackgroundSelectorProps {
 }
 
 const backgrounds = [
-  // Transparent Option
+  // Transparent Option (First in gradients list)
   "transparent",
 
-  // Gradient Backgrounds
+  // Premium Gradient Backgrounds
   "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
   "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
   "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
@@ -58,109 +58,133 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
   onBackgroundChange,
   isVisible,
 }) => {
+  const [transparentGridDataUrl, setTransparentGridDataUrl] =
+    useState<string>("");
+
+  useEffect(() => {
+    // Generate transparent grid pattern on client side
+    if (typeof window !== "undefined") {
+      const gridDataUrl = transparentGridPatterns.selector();
+      setTransparentGridDataUrl(gridDataUrl);
+    }
+  }, []);
+
   if (!isVisible) return null;
+
+  const renderBackgroundButton = (
+    bg: string,
+    index: number,
+    isGradient: boolean = false
+  ) => {
+    const isTransparent = bg === "transparent";
+    const isSelected = selectedBackground === bg;
+    const isWhite = bg === "#ffffff";
+    const isDark = bg === "#1a1a1a";
+    const isThemeColor = isWhite || isDark;
+
+    return (
+      <button
+        key={bg}
+        onClick={() => onBackgroundChange(bg)}
+        className={cn(
+          "group relative overflow-hidden transition-all duration-500 ease-out transform-gpu",
+          "w-full h-10 rounded-xl",
+          // 3D Morphism Base Styling
+          "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_2px_4px_rgba(0,0,0,0.1),0_4px_16px_rgba(0,0,0,0.05)] backdrop-blur-md border border-white/20",
+          // Interactive States
+          isSelected
+            ? "scale-105 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2),0_4px_16px_rgba(99,102,241,0.3),0_8px_32px_rgba(99,102,241,0.1)] ring-2 ring-indigo-200/50 z-10"
+            : "hover:scale-102 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15),0_3px_12px_rgba(0,0,0,0.15),0_6px_24px_rgba(0,0,0,0.08)] hover:ring-1 hover:ring-white/30",
+          // Animation delays for staggered effect
+          `animate-in slide-in-from-bottom-4 fade-in duration-700`
+        )}
+        style={{
+          background: isTransparent
+            ? transparentGridDataUrl
+              ? `url("${transparentGridDataUrl}")`
+              : "repeating-conic-gradient(#e5e7eb 0deg 90deg, #f9fafb 90deg 180deg) 0 0/12px 12px"
+            : bg,
+          backgroundRepeat: isTransparent ? "repeat" : "no-repeat",
+          backgroundSize: isTransparent ? "auto" : "cover",
+          animationDelay: `${index * 50}ms`,
+        }}
+        title={
+          isTransparent
+            ? "Transparent Background"
+            : isWhite
+            ? "Light Theme"
+            : isDark
+            ? "Dark Theme"
+            : isGradient
+            ? `Gradient ${index}`
+            : bg
+        }
+      >
+        {/* Glass Morphism Overlay */}
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 via-transparent to-black/5 backdrop-blur-sm" />
+
+        {/* Shimmer Effect */}
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out" />
+
+        {/* Selection Indicator */}
+        {isSelected && (
+          <>
+            {/* Outer Glow */}
+            <div className="absolute inset-0 rounded-xl border-2 border-indigo-400 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10" />
+
+            {/* Inner Check */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
+              <svg
+                width={18}
+                height={18}
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="text-indigo-600"
+              >
+                <circle cx="9" cy="9" r="9" fill="white" fillOpacity="0.85" />
+                <path
+                  d="M5 9.5l2.5 2.5 5-5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          </>
+        )}
+
+        {/* 3D Highlight */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent rounded-t-xl" />
+      </button>
+    );
+  };
 
   return (
     <div>
       <h4 className="text-xs font-semibold text-gray-700 mb-3 flex items-center">
         <Palette className="w-3.5 h-3.5 text-indigo-600 mr-1.5" />
-        Background
+        Frame Theme
       </h4>
 
       <div className="space-y-4">
-        {/* Transparent Option */}
-        <div>
-          <button
-            onClick={() => onBackgroundChange("transparent")}
-            className={cn(
-              "group relative w-full h-10 rounded-lg border-2 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center",
-              selectedBackground === "transparent"
-                ? "border-blue-500 ring-2 ring-blue-200 scale-105"
-                : "border-gray-200/50 hover:border-gray-300 hover:scale-105"
-            )}
-            style={{
-              background:
-                "repeating-conic-gradient(#808080 0deg 90deg, transparent 90deg 180deg) 0 0/20px 20px",
-            }}
-            title="Transparent Background"
-          >
-            <div className="absolute inset-0 rounded-lg bg-white/10 backdrop-blur-sm"></div>
-            {selectedBackground === "transparent" && (
-              <div className="absolute inset-0 rounded-lg border-2 border-white bg-white/20 flex items-center justify-center">
-                <div className="w-3 h-3 bg-blue-500 rounded-full shadow-lg"></div>
-              </div>
-            )}
-          </button>
-        </div>
-
-        {/* Gradient Backgrounds */}
-        <div className="border-t border-gray-200 border-dashed pt-4">
-          <div className="grid grid-cols-5 gap-2">
-            {backgrounds
-              .filter((bg) => bg.startsWith("linear-gradient"))
-              .map((bg, index) => (
-                <button
-                  key={index}
-                  onClick={() => onBackgroundChange(bg)}
-                  className={cn(
-                    "group relative w-full h-10 rounded-lg border-2 transition-all duration-200 shadow-md hover:shadow-lg",
-                    selectedBackground === bg
-                      ? "border-blue-500 ring-2 ring-blue-200 scale-105"
-                      : "border-gray-200/50 hover:border-gray-300 hover:scale-105"
-                  )}
-                  style={{
-                    background: bg,
-                  }}
-                  title={`Gradient ${index + 1}`}
-                >
-                  {selectedBackground === bg && (
-                    <div className="absolute inset-0 rounded-lg border-2 border-white bg-white/20 flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full shadow-lg"></div>
-                    </div>
-                  )}
-                </button>
-              ))}
-          </div>
+        {/* Gradients & Transparent */}
+        <div className="grid grid-cols-5 gap-2">
+          {backgrounds
+            .filter(
+              (bg) => bg.startsWith("linear-gradient") || bg === "transparent"
+            )
+            .map((bg, index) => renderBackgroundButton(bg, index, true))}
         </div>
 
         {/* Solid Colors */}
-        <div className="border-t border-gray-200 border-dashed pt-4">
-          <div className="grid grid-cols-5 gap-2">
-            {backgrounds
-              .filter(
-                (bg) =>
-                  !bg.startsWith("linear-gradient") && bg !== "transparent"
-              )
-              .map((bg, index) => (
-                <button
-                  key={index}
-                  onClick={() => onBackgroundChange(bg)}
-                  className={cn(
-                    "group relative w-full h-10 rounded-lg border-2 transition-all duration-200 shadow-md hover:shadow-lg",
-                    selectedBackground === bg
-                      ? "border-blue-500 ring-2 ring-blue-200 scale-105"
-                      : "border-gray-200/50 hover:border-gray-300 hover:scale-105"
-                  )}
-                  style={{
-                    backgroundColor: bg,
-                  }}
-                  title={bg}
-                >
-                  {selectedBackground === bg && (
-                    <div className="absolute inset-0 rounded-lg border-2 border-white bg-white/20 flex items-center justify-center">
-                      <div
-                        className={cn(
-                          "w-2 h-2 rounded-full shadow-lg",
-                          bg === "#ffffff" || bg.includes("f7fafc")
-                            ? "bg-gray-800"
-                            : "bg-white"
-                        )}
-                      ></div>
-                    </div>
-                  )}
-                </button>
-              ))}
-          </div>
+        <div className="grid grid-cols-5 gap-2">
+          {backgrounds
+            .filter(
+              (bg) => !bg.startsWith("linear-gradient") && bg !== "transparent"
+            )
+            .map((bg, index) => renderBackgroundButton(bg, index + 20, false))}
         </div>
       </div>
     </div>

@@ -28,11 +28,11 @@ export const generateCodeImage = async (
         backgroundColor = "#ffffff"; // Default white for JPG
       }
     } else if (
-      format === "png" &&
+      (format === "png" || format === "webp" || format === "avif") &&
       options.showBackground &&
       options.background === "transparent"
     ) {
-      // PNG with transparent background - only make the outer container transparent
+      // PNG, WebP, AVIF with transparent background - only make the outer container transparent
       // Store original styles of the main element only
       const mainOriginalStyles = {
         background: elementRef.style.background,
@@ -58,27 +58,7 @@ export const generateCodeImage = async (
       elementRef.style.backgroundColor = mainOriginalStyles.backgroundColor;
       elementRef.style.backgroundImage = mainOriginalStyles.backgroundImage;
 
-      // Return early with transparent PNG
-      return canvas.toDataURL("image/png", 1.0);
-    } else if (options.showBackground && options.background === "transparent") {
-      // Other formats (WebP, AVIF) with transparent background - use checkered pattern
-      // We need to temporarily modify the element to show checkered pattern
-      const originalBackground = elementRef.style.background;
-      elementRef.style.background =
-        "repeating-conic-gradient(#808080 0deg 90deg, transparent 90deg 180deg) 0 0/20px 20px";
-
-      // Capture with the checkered pattern
-      const canvas = await html2canvas(elementRef, {
-        useCORS: true,
-        allowTaint: true,
-        logging: false,
-        background: undefined,
-      });
-
-      // Restore original background
-      elementRef.style.background = originalBackground;
-
-      // Return early with the checkered pattern result
+      // Return with appropriate format and transparency
       switch (format.toLowerCase()) {
         case "webp":
           return canvas.toDataURL("image/webp", 0.95);
@@ -87,8 +67,7 @@ export const generateCodeImage = async (
             return canvas.toDataURL("image/avif", 0.85);
           }
           return canvas.toDataURL("image/webp", 0.85);
-        case "svg":
-          return canvas.toDataURL("image/png", 1.0);
+        case "png":
         default:
           return canvas.toDataURL("image/png", 1.0);
       }

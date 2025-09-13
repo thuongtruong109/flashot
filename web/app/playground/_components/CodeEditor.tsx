@@ -13,7 +13,12 @@ import {
   GripVertical,
 } from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
-import { themes, syntaxHighlight, getFileExtension } from "@/utils";
+import {
+  themes,
+  syntaxHighlight,
+  getFileExtension,
+  transparentGridPatterns,
+} from "@/utils";
 
 interface CodeEditorProps {
   code: string;
@@ -35,6 +40,8 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
     const [containerRect, setContainerRect] = useState<DOMRect | null>(null);
+    const [transparentGridDataUrl, setTransparentGridDataUrl] =
+      useState<string>("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const previewRef = useRef<HTMLPreElement>(null);
     const dragRef = useRef<HTMLDivElement>(null);
@@ -48,6 +55,14 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
         textareaRef.current.setSelectionRange(length, length);
       }
     }, [isEditing]);
+
+    // Generate transparent grid pattern on client side
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        const gridDataUrl = transparentGridPatterns.editor();
+        setTransparentGridDataUrl(gridDataUrl);
+      }
+    }, []);
 
     // Handle click on preview to start editing
     const handlePreviewClick = useCallback(() => {
@@ -224,10 +239,20 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
             background: isFullscreen
               ? "white"
               : settings.showBackground
-              ? settings.background
+              ? settings.background === "transparent"
+                ? transparentGridDataUrl
+                  ? `url("${transparentGridDataUrl}")`
+                  : "repeating-conic-gradient(#e2e8f0 0deg 90deg, #f8fafc 90deg 180deg) 0 0/20px 20px"
+                : settings.background
               : "transparent",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
+            backgroundRepeat:
+              settings.showBackground && settings.background === "transparent"
+                ? "repeat"
+                : "no-repeat",
+            backgroundSize:
+              settings.showBackground && settings.background === "transparent"
+                ? "auto"
+                : "cover",
             backgroundPosition: "center",
             padding: `${settings.padding}px`,
             borderRadius: `${settings.borderRadius}px`,

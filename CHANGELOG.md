@@ -3,7 +3,7 @@
 ### 🚀 Features
 
 - **playground**:
-  - add transparent background option - by @thuongtruong109 [<samp>(1f4b1)</samp>]()
+  - add transparent background option - by @thuongtruong109 [<samp>(45ad4)</samp>](https://github.com/thuongtruong109/flashot/commit/45ad465f43081e0ce3152b70dd171e70ca81fe6c)
   - enable word wrap options - by @thuongtruong109 [<samp>(46a18)</samp>](https://github.com/thuongtruong109/flashot/commit/46a18bd436ab01bbd379793b19898ab8a2a65946)
   - code editor draggable move - by @thuongtruong109 [<samp>(97671)</samp>](https://github.com/thuongtruong109/flashot/commit/976712d2d502c0e883b5c91baaaff99116d5e08e)
   - adjust width & height - by @thuongtruong109 [<samp>(52d6b)</samp>](https://github.com/thuongtruong109/flashot/commit/52d6be981e1161311ddc88d496b24a0d38b40b07)

@@ -548,3 +548,10 @@ export const getFileExtension = (language: string): string => {
   };
   return extensions[language] || "txt";
 };
+
+// Re-export transparent grid utilities
+export {
+  generateTransparentGrid,
+  transparentGridPatterns,
+  getTransparentGridCSS,
+} from "./transparentGrid";
