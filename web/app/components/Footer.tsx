@@ -62,7 +62,7 @@ const Footer: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="space-y-4 pt-2 flex flex-col items-end">
+            <div className="space-y-4 pt-2 flex flex-col items-start md:items-end">
               <h4 className="font-medium text-white flex items-center gap-2">
                 <Heart className="w-4 h-4 text-pink-400" />
                 Support the Project
@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
               <p className="text-sm text-white/60 leading-relaxed">
                 Love Flashot? Help us keep improving features!
               </p>
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex gap-3">
                 <a
                   href="https://github.com/sponsors/thuongtruong109"
                   target="_blank"

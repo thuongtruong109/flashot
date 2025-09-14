@@ -3,7 +3,7 @@
 ### 🚀 Features
 
 - **playground**:
-  - add quick guide tour - by @thuongtruong109 [<samp>(1f4b1)</samp>]()
+  - add quick guide tour - by @thuongtruong109 [<samp>(156a1)</samp>](https://github.com/thuongtruong109/flashot/commit/156a14f904615f1eb27f395f362600325e4fc2f0)
   - resizable code editor with border drag controls - by @thuongtruong109 [<samp>(59e9a)</samp>](https://github.com/thuongtruong109/flashot/commit/59e9af620c24a9516cc9bc428112e3fafe14b72f)
   - add transparent background option - by @thuongtruong109 [<samp>(b66fa)</samp>](https://github.com/thuongtruong109/flashot/commit/b66fa2e26723e38d9261416e837350c8b2c0dbf4)
   - enable word wrap options - by @thuongtruong109 [<samp>(46a18)</samp>](https://github.com/thuongtruong109/flashot/commit/46a18bd436ab01bbd379793b19898ab8a2a65946)

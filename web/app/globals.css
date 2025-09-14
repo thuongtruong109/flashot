@@ -47,6 +47,55 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Neumorphism utilities */
+  .neumorphic-light {
+    background: linear-gradient(145deg, #f8fafc, #e2e8f0);
+    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.08),
+      -12px -12px 24px rgba(255, 255, 255, 0.9);
+  }
+
+  .neumorphic-dark {
+    background: linear-gradient(145deg, #1e293b, #0f172a);
+    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.4),
+      -12px -12px 24px rgba(255, 255, 255, 0.02);
+  }
+
+  .neumorphic-inset-light {
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.06),
+      inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+  }
+
+  .neumorphic-inset-dark {
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.2),
+      inset -4px -4px 8px rgba(255, 255, 255, 0.05);
+  }
+
+  .neumorphic-hover-light:hover {
+    box-shadow: 16px 16px 32px rgba(0, 0, 0, 0.12),
+      -16px -16px 32px rgba(255, 255, 255, 0.95);
+  }
+
+  .neumorphic-hover-dark:hover {
+    box-shadow: 16px 16px 32px rgba(0, 0, 0, 0.5),
+      -16px -16px 32px rgba(255, 255, 255, 0.03);
+  }
+
+  /* Smooth animations for neumorphic elements */
+  .neumorphic-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .neumorphic-transition-long {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Text clipping for gradients */
+  .text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 /* Custom styles for syntax highlighting */
