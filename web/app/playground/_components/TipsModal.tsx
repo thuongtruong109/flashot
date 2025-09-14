@@ -14,7 +14,7 @@ const TipsModal: React.FC<TipsModalProps> = ({ isOpen, onClose }) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Quick Guide"
+      title="Quick Start"
       icon={<Info className="w-7 h-7 text-blue-600" />}
       maxWidth="2xl"
     >

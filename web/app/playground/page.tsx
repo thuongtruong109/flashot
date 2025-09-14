@@ -10,6 +10,9 @@ import TipsModal from "app/playground/_components/TipsModal";
 import CodeEditor from "app/playground/_components/CodeEditor";
 import ActionBar from "app/playground/_components/ActionBar";
 import Brand from "app/playground/_components/Brand";
+import FloatingButtons from "app/playground/_components/FloatingButtons";
+import TourGuide from "app/playground/_components/TourGuide";
+import Image from "next/image";
 
 const defaultCode = `function fibonacci(n) {
   if (n <= 1) return n;
@@ -44,6 +47,7 @@ export default function Page() {
   const [showLineNumbers, setShowLineNumbers] = useState(true);
   const [showTipsModal, setShowTipsModal] = useState(false);
   const [showJSONModal, setShowJSONModal] = useState(false);
+  const [showTourGuide, setShowTourGuide] = useState(false);
   const [fileName, setFileName] = useState("index");
   const [showSettingsPanel, setShowSettingsPanel] = useState(false); // Start with false to prevent SSR issues
   const [isClient, setIsClient] = useState(false);
@@ -180,12 +184,12 @@ export default function Page() {
       <div className="relative bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-sm px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between py-2 w-full gap-4">
           {/* Brand Component */}
-          <div className="flex-shrink-0">
+          <div data-tour="brand" className="flex-shrink-0">
             <Brand showVersion={true} />
           </div>
 
           {/* Enhanced Action Bar */}
-          <div className="flex-shrink-0">
+          <div data-tour="action-bar" className="flex-shrink-0">
             <ActionBar
               onCopy={handleCopyCode}
               onDownload={handleDownloadImage}
@@ -197,6 +201,7 @@ export default function Page() {
               }}
               onShowJSON={() => setShowJSONModal(true)}
               onShowTips={() => setShowTipsModal(true)}
+              onShowGuide={() => setShowTourGuide(true)}
               copySuccess={copySuccess}
               isGenerating={isGenerating}
               fileName={fileName}
@@ -213,8 +218,26 @@ export default function Page() {
         {/* Main Content Area */}
         <div className="flex-1 transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 h-full relative">
           {/* Grid Background */}
-          <div className="absolute inset-0 pointer-events-none grid-background opacity-60" />
           <div
+            data-tour="background-selector"
+            className="absolute inset-0 pointer-events-none grid-background opacity-60"
+          />
+          <Image
+            src="/playground_bg.svg"
+            alt="grad_bg"
+            className="absolute inset-0 size-full"
+            fill
+          />
+
+          {/* Floating Action Buttons */}
+          <FloatingButtons
+            data-tour="floating-buttons"
+            onShowTips={() => setShowTipsModal(true)}
+            // onShowGuide={() => setShowTourGuide(true)}
+          />
+
+          <div
+            data-tour="code-editor"
             className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl z-10"
             style={{
               height: "auto",
@@ -237,6 +260,7 @@ export default function Page() {
 
         {/* Fixed Settings Sidebar */}
         <SettingsPanel
+          data-tour="settings-panel"
           settings={settings}
           showLineNumbers={showLineNumbers}
           fileName={fileName}
@@ -263,6 +287,12 @@ export default function Page() {
       <TipsModal
         isOpen={showTipsModal}
         onClose={() => setShowTipsModal(false)}
+      />
+
+      {/* Tour Guide Component */}
+      <TourGuide
+        isOpen={showTourGuide}
+        onClose={() => setShowTourGuide(false)}
       />
     </div>
   );

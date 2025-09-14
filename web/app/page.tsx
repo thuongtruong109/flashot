@@ -7,6 +7,7 @@ import DemoSection from "@/app/components/DemoSection";
 import FeaturesSection from "@/app/components/FeaturesSection";
 import TechnologyStackSection from "@/app/components/TechnologyStackSection";
 import Footer from "@/app/components/Footer";
+import Image from "next/image";
 
 const FlashotLanding: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -69,6 +70,15 @@ const FlashotLanding: React.FC = () => {
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
         }}
       ></div>
+
+      <Image
+        src="/landing_bg.svg"
+        alt="grad_bg"
+        className="fixed inset-0 w-full h-full scale-y-[-1] opacity-40"
+        width={1920}
+        height={1080}
+        priority
+      />
 
       <div className="relative z-10">
         <HeroSection isVisible={isVisible} />

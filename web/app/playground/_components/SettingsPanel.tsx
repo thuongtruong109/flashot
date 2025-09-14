@@ -210,6 +210,34 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
             }}
           >
             <div className="p-3 pb-16 space-y-4">
+              {/* Export Format Section */}
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
+                  <Download className="w-3.5 h-3.5 text-green-600 mr-1.5" />
+                  Export Format
+                </h4>
+                <div className="grid grid-cols-4 gap-2">
+                  {["png", "jpg", "webp", "avif"].map((format) => (
+                    <button
+                      key={format}
+                      onClick={() =>
+                        onUpdateSetting(
+                          "exportFormat",
+                          format as "png" | "jpg" | "webp" | "avif"
+                        )
+                      }
+                      className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 ${
+                        settings.exportFormat === format
+                          ? "bg-green-500 text-white shadow-md"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      }`}
+                    >
+                      {format.toUpperCase()}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* File Name Section */}
               <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
                 <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
@@ -244,34 +272,6 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                       <Edit2 className="w-3 h-3 text-blue-500 opacity-0 group-hover:opacity-100 transition-all" />
                     </div>
                   )}
-                </div>
-              </div>
-
-              {/* Export Format Section */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
-                <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
-                  <Download className="w-3.5 h-3.5 text-green-600 mr-1.5" />
-                  Export Format
-                </h4>
-                <div className="grid grid-cols-4 gap-2">
-                  {["png", "jpg", "webp", "avif"].map((format) => (
-                    <button
-                      key={format}
-                      onClick={() =>
-                        onUpdateSetting(
-                          "exportFormat",
-                          format as "png" | "jpg" | "webp" | "avif"
-                        )
-                      }
-                      className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 ${
-                        settings.exportFormat === format
-                          ? "bg-green-500 text-white shadow-md"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
-                    >
-                      {format.toUpperCase()}
-                    </button>
-                  ))}
                 </div>
               </div>
 

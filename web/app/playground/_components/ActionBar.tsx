@@ -15,6 +15,7 @@ import {
   Zap,
   ChevronDown,
   Edit2,
+  BookOpen,
 } from "lucide-react";
 
 interface ActionBarProps {
@@ -23,6 +24,7 @@ interface ActionBarProps {
   onShowSettings: () => void;
   onShowJSON: () => void;
   onShowTips: () => void;
+  onShowGuide: () => void;
   copySuccess: boolean;
   isGenerating: boolean;
   fileName: string;
@@ -37,6 +39,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   onShowSettings,
   onShowJSON,
   onShowTips,
+  onShowGuide,
   copySuccess,
   isGenerating,
   fileName,
@@ -52,8 +55,16 @@ const ActionBar: React.FC<ActionBarProps> = ({
   // Filter out settings button on wide screens when settings panel is open
   const allButtons = [
     {
+      icon: BookOpen,
+      label: "Guide",
+      onClick: onShowGuide,
+      variant: "secondary" as const,
+      color: "emerald",
+      disabled: false,
+    },
+    {
       icon: Info,
-      label: "Help",
+      label: "Info",
       onClick: onShowTips,
       variant: "secondary" as const,
       color: "amber",
@@ -184,6 +195,13 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
         {/* Secondary actions for mobile */}
         <div className="flex items-center space-x-1">
+          <button
+            onClick={onShowGuide}
+            className="p-2.5 bg-white hover:bg-gray-50 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300 transition-all"
+          >
+            <BookOpen className="w-4 h-4 text-emerald-500" />
+          </button>
+
           <button
             onClick={onShowTips}
             className="p-2.5 bg-white hover:bg-gray-50 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300 transition-all"
