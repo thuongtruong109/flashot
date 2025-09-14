@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useLayoutEffect,
+} from "react";
 import {
   Eye,
   Edit3,
@@ -81,6 +87,28 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
         textareaRef.current.setSelectionRange(length, length);
       }
     }, [isEditing]);
+
+    // Auto-resize textarea so it fills the outer container and relies on outer scrollbar
+    useLayoutEffect(() => {
+      const ta = textareaRef.current;
+      if (!ta) return;
+
+      const resize = () => {
+        // Reset height to get correct scrollHeight
+        ta.style.height = "0px";
+        const sh = ta.scrollHeight;
+        ta.style.height = `${sh}px`;
+      };
+
+      // Resize on content change
+      resize();
+
+      // Observe font-size or width changes that may affect scrollHeight
+      const ro = new ResizeObserver(resize);
+      ro.observe(ta);
+
+      return () => ro.disconnect();
+    }, [code, settings.fontSize, settings.fontFamily, isEditing]);
 
     // Generate transparent grid pattern on client side
     useEffect(() => {
@@ -323,11 +351,10 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
               : settings.height
               ? `${settings.height}px`
               : "auto",
-            minHeight: !isFullscreen && !settings.height ? "10px" : undefined,
             maxHeight: isFullscreen
               ? "none"
               : settings.height
-              ? undefined
+              ? `${settings.height}px`
               : "800px",
             display: "flex",
             flexDirection: "column",
@@ -337,9 +364,9 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
           }}
         >
           {/* Snip Area Wrapper - Window Controls + Code Content */}
-          <div className="relative flex-1 flex flex-col">
+          <div className="relative flex-1 flex flex-col min-h-0">
             <div
-              className="relative flex flex-col flex-1"
+              className="relative flex flex-col flex-1 min-h-0"
               style={{
                 borderRadius: `${settings.borderRadius}px`,
               }}
@@ -387,79 +414,93 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
                   borderRadius: settings.showWindowControls
                     ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
                     : `${settings.borderRadius}px`,
-                  overflow: "hidden", // Prevent outer container from scrolling
+                  minHeight: 0, // Allow flex item to shrink below content size
                 }}
               >
                 {/* Preview Mode */}
                 {!isEditing && (
-                  <div
-                    onClick={handlePreviewClick}
-                    className="relative cursor-text group h-full flex code-editor-scrollbar"
-                    style={{
-                      backgroundColor: currentTheme.background,
-                      borderRadius: settings.showWindowControls
-                        ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
-                        : `${settings.borderRadius}px`,
-                      minHeight: "100%",
-                      height: "100%",
-                      overflow: "auto", // Only this container should scroll
-                    }}
-                  >
-                    {/* Hover overlay */}
-                    <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg pointer-events-none"></div>
+                  <div className="relative flex-1 group min-h-0">
+                    {/* Hover overlay - positioned outside scroll container */}
+                    <div
+                      className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-10"
+                      style={{
+                        borderRadius: settings.showWindowControls
+                          ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
+                          : `${settings.borderRadius}px`,
+                      }}
+                    ></div>
 
-                    {/* Line Numbers */}
-                    {showLineNumbers && (
-                      <div
-                        className="select-none flex flex-col items-end py-4 pl-3 pr-2 flex-shrink-0"
-                        style={{
-                          backgroundColor: currentTheme.background,
-                          color: currentTheme.foreground + "60",
-                          fontFamily: `${settings.fontFamily}, monospace`,
-                          fontSize: `${settings.fontSize}px`,
-                          lineHeight: 1.6,
-                          borderRight: `1px solid ${currentTheme.foreground}20`,
-                          minWidth: "40px",
-                        }}
-                      >
-                        {code.split("\n").map((_, index) => (
-                          <div
-                            key={index}
-                            className="leading-relaxed min-h-[1.6em] flex items-center"
-                          >
-                            {index + 1}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Code Display */}
-                    <div className="flex-1">
-                      <pre
-                        ref={previewRef}
-                        className="py-4 pl-4 pr-2"
-                        style={{
-                          color: currentTheme.foreground,
-                          fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
-                          fontSize: `${settings.fontSize}px`,
-                          lineHeight: 1.6,
-                          margin: 0,
-                          background: "transparent",
-                          whiteSpace: settings.wordWrap ? "pre-wrap" : "pre",
-                          wordWrap: settings.wordWrap ? "break-word" : "normal",
-                          minHeight: "100%",
-                        }}
-                      >
-                        <code
-                          dangerouslySetInnerHTML={{
-                            __html: syntaxHighlight(
-                              code,
-                              settings.language as SupportedLanguage,
-                              currentTheme
-                            ),
+                    {/* Scroll container */}
+                    <div
+                      onClick={handlePreviewClick}
+                      className="cursor-text flex-1 flex code-editor-scrollbar"
+                      style={{
+                        backgroundColor: currentTheme.background,
+                        borderRadius: settings.showWindowControls
+                          ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
+                          : `${settings.borderRadius}px`,
+                        overflow: "auto",
+                        maxWidth: "100%",
+                        height: "100%",
+                        minHeight: 0,
+                      }}
+                    >
+                      {/* Line Numbers */}
+                      {showLineNumbers && (
+                        <div
+                          className="select-none flex flex-col items-end py-4 pl-3 pr-2 flex-shrink-0"
+                          style={{
+                            backgroundColor: currentTheme.background,
+                            color: currentTheme.foreground + "60",
+                            fontFamily: `${settings.fontFamily}, monospace`,
+                            fontSize: `${settings.fontSize}px`,
+                            lineHeight: 1.6,
+                            borderRight: `1px solid ${currentTheme.foreground}20`,
+                            minWidth: "40px",
                           }}
-                        />
-                      </pre>
+                        >
+                          {code.split("\n").map((_, index) => (
+                            <div
+                              key={index}
+                              className="leading-relaxed min-h-[1.6em] flex items-center"
+                            >
+                              {index + 1}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Code Display */}
+                      <div className="flex-1">
+                        <pre
+                          ref={previewRef}
+                          className="py-4 pl-4 pr-2"
+                          style={{
+                            color: currentTheme.foreground,
+                            fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
+                            fontSize: `${settings.fontSize}px`,
+                            lineHeight: 1.6,
+                            margin: 0,
+                            background: "transparent",
+                            whiteSpace: settings.wordWrap ? "pre-wrap" : "pre",
+                            wordWrap: settings.wordWrap
+                              ? "break-word"
+                              : "normal",
+                            width: settings.wordWrap ? "100%" : "max-content",
+                            minWidth: "100%",
+                          }}
+                        >
+                          <code
+                            dangerouslySetInnerHTML={{
+                              __html: syntaxHighlight(
+                                code,
+                                settings.language as SupportedLanguage,
+                                currentTheme
+                              ),
+                            }}
+                          />
+                        </pre>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -467,15 +508,17 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
                 {/* Edit Mode */}
                 {isEditing && (
                   <div
-                    className="relative h-full flex code-editor-scrollbar"
+                    className="relative flex-1 flex code-editor-scrollbar"
                     style={{
                       backgroundColor: currentTheme.background,
                       borderRadius: settings.showWindowControls
                         ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
                         : `${settings.borderRadius}px`,
-                      overflow: "auto", // Only this container should scroll
+                      overflowY: "auto",
+                      overflowX: "auto", // Show X scrollbar on outer
                       height: "100%",
-                      minHeight: "100%",
+                      minHeight: 0,
+                      display: "flex",
                     }}
                   >
                     {/* Line Numbers for Edit Mode */}
@@ -504,26 +547,29 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
                     )}
 
                     {/* Textarea - Exact same structure as preview */}
-                    <div className="flex-1">
+                    <div className="flex-1" style={{ minWidth: "100%" }}>
                       <textarea
                         ref={textareaRef}
                         value={code}
                         onChange={(e) => onChange(e.target.value)}
                         onKeyDown={handleKeyDown}
                         onBlur={handleBlur}
-                        className="py-4 pl-4 pr-2 w-full !overflow-hidden resize-none border-none outline-none bg-transparent hover:bg-white/5 transition-colors duration-200"
+                        className="py-4 pl-4 pr-2 w-full resize-none border-none outline-none bg-transparent hover:bg-white/5 transition-colors duration-200"
                         style={{
                           color: currentTheme.foreground,
                           fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
                           fontSize: `${settings.fontSize}px`,
                           lineHeight: 1.6,
-                          margin: 0, // Same as pre
+                          margin: 0,
                           background: "transparent",
                           whiteSpace: settings.wordWrap ? "pre-wrap" : "pre",
                           wordWrap: settings.wordWrap ? "break-word" : "normal",
-                          overflow: "visible", // Allow content to overflow and be scrollable by parent
-                          minHeight: "100%", // Same as pre - no h-full class
+                          height: "100%",
+                          minHeight: 0,
                           boxSizing: "border-box",
+                          overflowY: "hidden",
+                          overflowX: "hidden", // Hide X scrollbar on textarea
+                          minWidth: settings.wordWrap ? "100%" : "max-content", // Allow horizontal overflow
                         }}
                         placeholder="Start typing your code..."
                       />
