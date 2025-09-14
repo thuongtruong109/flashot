@@ -25,6 +25,11 @@ export interface CodeSettings {
   width?: number;
   height?: number;
   wordWrap?: boolean;
+  showCaption?: boolean;
+  captionText?: string;
+  captionStyle?: "italic" | "normal";
+  captionOpacity?: number;
+  captionPosition?: "top" | "bottom" | "left" | "right";
 }
 
 export interface SyntaxMatch {

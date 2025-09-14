@@ -248,6 +248,45 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
             : ""
         } ${className}`}
       >
+        {/* Caption - positioned outside the resizable container */}
+        {settings.showCaption && settings.captionText && !isFullscreen && (
+          <div
+            className={`absolute z-10 transition-all duration-300 pointer-events-none ${
+              settings.captionPosition === "top"
+                ? "-top-10 left-0 right-0 text-center"
+                : settings.captionPosition === "bottom"
+                ? "-bottom-10 left-0 right-0 text-center"
+                : settings.captionPosition === "left"
+                ? "top-0 bottom-0 -left-24 w-20 flex items-center justify-center"
+                : settings.captionPosition === "right"
+                ? "top-0 bottom-0 -right-24 w-20 flex items-center justify-center"
+                : "-bottom-10 left-0 right-0 text-center" // default to bottom
+            }`}
+            style={{
+              opacity: settings.captionOpacity || 1,
+              color: currentTheme.foreground,
+              fontStyle:
+                settings.captionStyle === "italic" ? "italic" : "normal",
+              fontSize: `${Math.max(11, settings.fontSize - 3)}px`,
+              fontFamily: settings.fontFamily,
+              writingMode:
+                settings.captionPosition === "left" ||
+                settings.captionPosition === "right"
+                  ? "vertical-rl"
+                  : "horizontal-tb",
+              textOrientation:
+                settings.captionPosition === "left" ||
+                settings.captionPosition === "right"
+                  ? "mixed"
+                  : "initial",
+              textShadow: "0 1px 3px rgba(0, 0, 0, 0.3)",
+              letterSpacing: "0.025em",
+            }}
+          >
+            {settings.captionText}
+          </div>
+        )}
+
         <div
           ref={setRefs}
           className={`relative transition-all duration-300 ${
@@ -298,9 +337,9 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
           }}
         >
           {/* Snip Area Wrapper - Window Controls + Code Content */}
-          <div className="relative">
+          <div className="relative flex-1 flex flex-col">
             <div
-              className="relative flex flex-col"
+              className="relative flex flex-col flex-1"
               style={{
                 borderRadius: `${settings.borderRadius}px`,
               }}
@@ -342,40 +381,28 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
 
               {/* Code Content Area */}
               <div
-                className="relative flex-1 overflow-auto"
+                className="relative flex-1 flex flex-col"
                 style={{
                   backgroundColor: currentTheme.background,
                   borderRadius: settings.showWindowControls
                     ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
                     : `${settings.borderRadius}px`,
-                  maxHeight: settings.height
-                    ? `${
-                        settings.height -
-                        settings.padding * 2 -
-                        (settings.showWindowControls ? 50 : 0)
-                      }px`
-                    : undefined,
-                  minHeight: settings.height
-                    ? `${Math.max(
-                        100,
-                        settings.height -
-                          settings.padding * 2 -
-                          (settings.showWindowControls ? 50 : 0)
-                      )}px`
-                    : "100px",
+                  overflow: "hidden", // Prevent outer container from scrolling
                 }}
               >
                 {/* Preview Mode */}
                 {!isEditing && (
                   <div
                     onClick={handlePreviewClick}
-                    className="relative cursor-text group h-full flex overflow-auto custom-scrollbar"
+                    className="relative cursor-text group h-full flex code-editor-scrollbar"
                     style={{
                       backgroundColor: currentTheme.background,
                       borderRadius: settings.showWindowControls
                         ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
                         : `${settings.borderRadius}px`,
-                      minHeight: "10px",
+                      minHeight: "100%",
+                      height: "100%",
+                      overflow: "auto", // Only this container should scroll
                     }}
                   >
                     {/* Hover overlay */}
@@ -384,14 +411,15 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
                     {/* Line Numbers */}
                     {showLineNumbers && (
                       <div
-                        className="select-none flex flex-col items-end px-3 py-4 flex-shrink-0"
+                        className="select-none flex flex-col items-end py-4 pl-3 pr-2 flex-shrink-0"
                         style={{
                           backgroundColor: currentTheme.background,
                           color: currentTheme.foreground + "60",
                           fontFamily: `${settings.fontFamily}, monospace`,
                           fontSize: `${settings.fontSize}px`,
                           lineHeight: 1.6,
-                          borderColor: currentTheme.foreground,
+                          borderRight: `1px solid ${currentTheme.foreground}20`,
+                          minWidth: "40px",
                         }}
                       >
                         {code.split("\n").map((_, index) => (
@@ -406,10 +434,10 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
                     )}
 
                     {/* Code Display */}
-                    <div className="flex-1 overflow-auto custom-scrollbar">
+                    <div className="flex-1">
                       <pre
                         ref={previewRef}
-                        className="px-4 py-4"
+                        className="py-4 pl-4 pr-2"
                         style={{
                           color: currentTheme.foreground,
                           fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
@@ -419,6 +447,7 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
                           background: "transparent",
                           whiteSpace: settings.wordWrap ? "pre-wrap" : "pre",
                           wordWrap: settings.wordWrap ? "break-word" : "normal",
+                          minHeight: "100%",
                         }}
                       >
                         <code
@@ -438,57 +467,65 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
                 {/* Edit Mode */}
                 {isEditing && (
                   <div
-                    className="relative h-full overflow-auto"
+                    className="relative h-full flex code-editor-scrollbar"
                     style={{
                       backgroundColor: currentTheme.background,
                       borderRadius: settings.showWindowControls
                         ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
                         : `${settings.borderRadius}px`,
+                      overflow: "auto", // Only this container should scroll
+                      height: "100%",
+                      minHeight: "100%",
                     }}
                   >
-                    <div className="flex !pb-0 h-full">
-                      {/* Line Numbers for Edit Mode */}
-                      {showLineNumbers && (
-                        <div
-                          className="select-none flex flex-col items-end px-3 py-4"
-                          style={{
-                            color: currentTheme.foreground + "60",
-                            fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
-                            fontSize: `${settings.fontSize}px`,
-                            lineHeight: 1.6,
-                            borderColor: currentTheme.foreground,
-                          }}
-                        >
-                          {code.split("\n").map((_, index) => (
-                            <div
-                              key={index}
-                              className="leading-relaxed min-h-[1.6em] flex items-center"
-                            >
-                              {index + 1}
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                    {/* Line Numbers for Edit Mode */}
+                    {showLineNumbers && (
+                      <div
+                        className="select-none flex flex-col items-end py-4 pl-3 pr-2 flex-shrink-0"
+                        style={{
+                          color: currentTheme.foreground + "60",
+                          fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
+                          fontSize: `${settings.fontSize}px`,
+                          lineHeight: 1.6,
+                          borderRight: `1px solid ${currentTheme.foreground}20`,
+                          minWidth: "40px",
+                          minHeight: "fit-content", // Let it size naturally
+                        }}
+                      >
+                        {code.split("\n").map((_, index) => (
+                          <div
+                            key={index}
+                            className="leading-relaxed min-h-[1.6em] flex items-center"
+                          >
+                            {index + 1}
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
-                      {/* Textarea */}
+                    {/* Textarea - Exact same structure as preview */}
+                    <div className="flex-1">
                       <textarea
                         ref={textareaRef}
                         value={code}
                         onChange={(e) => onChange(e.target.value)}
                         onKeyDown={handleKeyDown}
                         onBlur={handleBlur}
-                        className="flex-1 resize-none border-none outline-none p-4 bg-transparent custom-scrollbar"
+                        className="py-4 pl-4 pr-2 w-full !overflow-hidden resize-none border-none outline-none bg-transparent hover:bg-white/5 transition-colors duration-200"
                         style={{
                           color: currentTheme.foreground,
                           fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
                           fontSize: `${settings.fontSize}px`,
                           lineHeight: 1.6,
-                          minHeight: "10px",
+                          margin: 0, // Same as pre
+                          background: "transparent",
                           whiteSpace: settings.wordWrap ? "pre-wrap" : "pre",
                           wordWrap: settings.wordWrap ? "break-word" : "normal",
+                          overflow: "visible", // Allow content to overflow and be scrollable by parent
+                          minHeight: "100%", // Same as pre - no h-full class
+                          boxSizing: "border-box",
                         }}
                         placeholder="Start typing your code..."
-                        rows={Math.max(1, lineCount)}
                       />
                     </div>
                   </div>

@@ -39,6 +39,11 @@ export default function Page() {
     width: undefined, // Auto-fit by default
     height: undefined, // Auto-fit by default
     wordWrap: false, // Default word wrap disabled
+    showCaption: false, // Default caption disabled
+    captionText: "Figure: Sample code snippet", // Default caption text
+    captionStyle: "normal", // Default normal style
+    captionOpacity: 1, // Default full opacity
+    captionPosition: "bottom", // Default bottom position
   });
 
   const [isGenerating, setIsGenerating] = useState(false);
