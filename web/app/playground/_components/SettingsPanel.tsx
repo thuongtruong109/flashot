@@ -1,5 +1,24 @@
-"use client";
-
+interface SettingsPanelProps {
+  settings: CodeSettings;
+  showLineNumbers: boolean;
+  fileName: string;
+  isVisible?: boolean;
+  activeMenu?: string;
+  onChangeActiveMenu?: (menu: string | undefined) => void;
+  onUpdateSetting: <K extends keyof CodeSettings>(
+    key: K,
+    value: CodeSettings[K]
+  ) => void;
+  onToggleLineNumbers: (value: boolean) => void;
+  onFileNameChange: (fileName: string) => void;
+  onToggleVisibility?: () => void;
+}
+import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
+import { getFileExtension } from "@/utils";
+import LanguageSelector from "./LanguageSelector";
+import ThemeSelector from "./ThemeSelector";
+import FontSelector from "./FontSelector";
+import BackgroundSelector from "./BackgroundSelector";
 import React, { useState, useRef, useEffect, forwardRef } from "react";
 import {
   Settings,
@@ -26,27 +45,11 @@ import {
   WrapText,
   MessageSquare,
   AlignCenter,
+  Loader2,
+  PanelRightClose,
+  PanelRightOpen,
 } from "lucide-react";
-import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
-import { getFileExtension } from "@/utils";
-import LanguageSelector from "./LanguageSelector";
-import ThemeSelector from "./ThemeSelector";
-import FontSelector from "./FontSelector";
-import BackgroundSelector from "./BackgroundSelector";
-
-interface SettingsPanelProps {
-  settings: CodeSettings;
-  showLineNumbers: boolean;
-  fileName: string;
-  isVisible?: boolean;
-  onUpdateSetting: <K extends keyof CodeSettings>(
-    key: K,
-    value: CodeSettings[K]
-  ) => void;
-  onToggleLineNumbers: (value: boolean) => void;
-  onFileNameChange: (fileName: string) => void;
-  onToggleVisibility?: () => void;
-}
+import CustomSelect from "./CustomSelect";
 
 const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
   (
@@ -55,6 +58,8 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       showLineNumbers,
       fileName,
       isVisible = true,
+      activeMenu,
+      onChangeActiveMenu,
       onUpdateSetting,
       onToggleLineNumbers,
       onFileNameChange,
@@ -72,6 +77,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       settings.height?.toString() || ""
     );
     const fileNameInputRef = useRef<HTMLInputElement>(null);
+    const [isExporting, setIsExporting] = useState(false);
 
     // Update temp filename when fileName prop changes
     useEffect(() => {
@@ -202,6 +208,96 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
         flex flex-col
       `}
         >
+          {/* Header with Close (mobile) */}
+          <div className="flex items-center justify-between py-2 border-b border-white/30 bg-white/70 backdrop-blur-md">
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <CustomSelect
+                  options={[
+                    {
+                      value: "All",
+                      label: (
+                        <span className="flex items-center gap-2">
+                          <Settings className="size-3 text-gray-400" /> All
+                        </span>
+                      ),
+                    },
+                    {
+                      value: "File",
+                      label: (
+                        <span className="flex items-center gap-2">
+                          <FileText className="size-3 text-blue-500" /> File
+                        </span>
+                      ),
+                    },
+                    {
+                      value: "Edit",
+                      label: (
+                        <span className="flex items-center gap-2">
+                          <Edit2 className="size-3 text-green-500" /> Edit
+                        </span>
+                      ),
+                    },
+                    {
+                      value: "Select",
+                      label: (
+                        <span className="flex items-center gap-2">
+                          <Check className="size-3 text-emerald-500" /> Select
+                        </span>
+                      ),
+                    },
+                    {
+                      value: "View",
+                      label: (
+                        <span className="flex items-center gap-2">
+                          <Eye className="size-3 text-indigo-500" /> View
+                        </span>
+                      ),
+                    },
+                    {
+                      value: "Background",
+                      label: (
+                        <span className="flex items-center gap-2">
+                          <Paintbrush className="size-3 text-pink-500" />{" "}
+                          Background
+                        </span>
+                      ),
+                    },
+                    {
+                      value: "Caption",
+                      label: (
+                        <span className="flex items-center gap-2">
+                          <MessageSquare className="size-3 text-yellow-500" />{" "}
+                          Caption
+                        </span>
+                      ),
+                    },
+                  ]}
+                  value={activeMenu || "All"}
+                  onChange={(val) =>
+                    onChangeActiveMenu?.(val === "All" ? undefined : val)
+                  }
+                  className="ml-2 text-xs w-36"
+                />
+              </div>
+            </div>
+            {/* Close button (mobile + desktop) */}
+            <button
+              type="button"
+              onClick={() => onToggleVisibility?.()}
+              aria-label="Toggle settings panel"
+              className="text-slate-400 hover:text-gray-500 mr-2 bg-gradient-to-b from-white to-gray-50
+      shadow-[inset_2px_2px_6px_rgba(0,0,0,0.04),inset_-2px_-2px_6px_rgba(255,255,255,0.9),6px_6px_14px_rgba(2,6,23,0.06),-6px_-6px_14px_rgba(255,255,255,0.9)]
+      hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06),inset_-2px_-2px_6px_rgba(255,255,255,1),8px_8px_18px_rgba(2,6,23,0.08),-6px_-6px_14px_rgba(255,255,255,1)]
+      transition-all duration-200 rounded-md p-1.5"
+            >
+              <PanelRightOpen
+                className={`size-[18px] transform ${
+                  isVisible ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+          </div>
           {/* Scrollable Content */}
           <div
             className={`flex-1 overflow-x-hidden scroll-smooth settings-scrollbar transition-all duration-200 ${
@@ -212,350 +308,413 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
             }}
           >
             <div className="p-3 pb-16 space-y-4">
-              {/* Export Format Section */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
-                <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
-                  <Download className="w-3.5 h-3.5 text-green-600 mr-1.5" />
-                  Export Format
-                </h4>
-                <div className="grid grid-cols-4 gap-2">
-                  {["png", "jpg", "webp", "avif"].map((format) => (
+              {/* File Name Section (File) */}
+              {(!activeMenu || activeMenu === "File") && (
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                  <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
+                    <FileText className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
+                    File Name
+                  </h4>
+                  <div className="flex items-center space-x-2">
+                    {isEditingFileName ? (
+                      <div className="flex-1 flex items-center space-x-1">
+                        <input
+                          ref={fileNameInputRef}
+                          type="text"
+                          value={tempFileName}
+                          onChange={(e) => handleFileNameChange(e.target.value)}
+                          onKeyDown={handleFileNameKeyDown}
+                          onBlur={handleFileNameBlur}
+                          className="flex-1 px-2.5 py-1.5 text-sm border border-gray-300/60 hover:border-gray-400/80 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/60 transition-all duration-200"
+                          placeholder="Enter filename"
+                        />
+                        <span className="text-sm text-gray-500">
+                          .{getFileExtension(settings.language)}
+                        </span>
+                      </div>
+                    ) : (
+                      <div
+                        className="flex-1 flex items-center space-x-2 group cursor-pointer px-2.5 py-1.5 rounded-md border border-gray-300/60 hover:border-gray-400/80"
+                        onClick={handleFileNameEdit}
+                      >
+                        <span className="flex-1 text-sm font-medium text-gray-700 truncate group-hover:text-blue-600 transition-colors">
+                          {fileName}.{getFileExtension(settings.language)}
+                        </span>
+                        <Edit2 className="size-3 text-blue-500 opacity-0 group-hover:opacity-100 transition-all" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Language Selector Component (File) */}
+              {(!activeMenu || activeMenu === "File") && (
+                <LanguageSelector
+                  selectedLanguage={settings.language as SupportedLanguage}
+                  onLanguageChange={handleLanguageChange}
+                />
+              )}
+
+              {/* Export Format Section (File) */}
+              {(!activeMenu || activeMenu === "File") && (
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                  <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
+                    <Download className="w-3.5 h-3.5 text-green-600 mr-1.5" />
+                    Export Format
+                  </h4>
+                  <div className="grid grid-cols-4 gap-2">
+                    {["png", "jpg", "webp", "avif"].map((format) => (
+                      <button
+                        key={format}
+                        onClick={() =>
+                          onUpdateSetting(
+                            "exportFormat",
+                            format as "png" | "jpg" | "webp" | "avif"
+                          )
+                        }
+                        className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 capitalize ${
+                          settings.exportFormat === format
+                            ? "bg-green-500 text-white shadow-md"
+                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        }`}
+                      >
+                        {format}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="mt-3">
                     <button
-                      key={format}
-                      onClick={() =>
-                        onUpdateSetting(
-                          "exportFormat",
-                          format as "png" | "jpg" | "webp" | "avif"
-                        )
-                      }
-                      className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 ${
-                        settings.exportFormat === format
-                          ? "bg-green-500 text-white shadow-md"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      onClick={() => {
+                        if (typeof window !== "undefined") {
+                          setIsExporting(true);
+                          window.dispatchEvent(
+                            new CustomEvent("flashot:export")
+                          );
+                          setTimeout(() => {
+                            setIsExporting(false);
+                          }, 2000);
+                        }
+                      }}
+                      disabled={isExporting}
+                      className={`w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-xs font-semibold shadow-sm hover:shadow-md ${
+                        isExporting ? "opacity-70 cursor-not-allowed" : ""
                       }`}
                     >
-                      {format.toUpperCase()}
+                      {isExporting ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        <Download className="w-3.5 h-3.5" />
+                      )}
+                      <span>{isExporting ? "Exporting..." : "Export"}</span>
                     </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* File Name Section */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
-                <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
-                  <FileText className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
-                  File Name
-                </h4>
-                <div className="flex items-center space-x-2">
-                  {isEditingFileName ? (
-                    <div className="flex-1 flex items-center space-x-1">
-                      <input
-                        ref={fileNameInputRef}
-                        type="text"
-                        value={tempFileName}
-                        onChange={(e) => handleFileNameChange(e.target.value)}
-                        onKeyDown={handleFileNameKeyDown}
-                        onBlur={handleFileNameBlur}
-                        className="flex-1 px-2.5 py-1.5 text-sm border border-gray-300/60 hover:border-gray-400/80 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/60 transition-all duration-200"
-                        placeholder="Enter filename"
-                      />
-                      <span className="text-sm text-gray-500">
-                        .{getFileExtension(settings.language)}
-                      </span>
-                    </div>
-                  ) : (
-                    <div
-                      className="flex-1 flex items-center space-x-2 group cursor-pointer px-2.5 py-1.5 rounded-md border border-gray-300/60 hover:border-gray-400/80"
-                      onClick={handleFileNameEdit}
-                    >
-                      <span className="flex-1 text-sm font-medium text-gray-700 truncate group-hover:text-blue-600 transition-colors">
-                        {fileName}.{getFileExtension(settings.language)}
-                      </span>
-                      <Edit2 className="w-3 h-3 text-blue-500 opacity-0 group-hover:opacity-100 transition-all" />
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Language Selector Component */}
-              <LanguageSelector
-                selectedLanguage={settings.language as SupportedLanguage}
-                onLanguageChange={handleLanguageChange}
-              />
-
-              {/* Background Theme Section */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
-                <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
-                  <Layers className="w-3.5 h-3.5 text-purple-600 mr-1.5" />
-                  Editor Theme
-                </h4>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => onUpdateSetting("theme", "light")}
-                    className={`flex-1 p-2 rounded-lg border transition-all duration-200 group ${
-                      settings.theme === "light"
-                        ? "border-blue-500 bg-blue-50/80 shadow-sm"
-                        : "border-gray-200/60 hover:border-gray-300/80 hover:bg-gray-50/50"
-                    }`}
-                  >
-                    <div className="flex items-center justify-center space-x-1 py-1 bg-white rounded-md border shadow-xs group-hover:shadow-sm transition-shadow">
-                      <Sun className="w-3 h-3 text-yellow-500" />
-                      <span className="text-xs font-medium">Light</span>
-                    </div>
-                  </button>
-                  <button
-                    onClick={() => onUpdateSetting("theme", "dark")}
-                    className={`flex-1 p-2 rounded-lg border transition-all duration-200 group ${
-                      settings.theme === "dark"
-                        ? "border-blue-500 bg-blue-50/80 shadow-sm"
-                        : "border-gray-200/60 hover:border-gray-300/80 hover:bg-gray-50/50"
-                    }`}
-                  >
-                    <div className="flex items-center justify-center space-x-1 py-1 bg-gray-800 rounded-md border shadow-xs group-hover:shadow-sm transition-shadow">
-                      <Moon className="w-3 h-3 text-blue-400" />
-                      <span className="text-xs text-white font-medium">
-                        Dark
-                      </span>
-                    </div>
-                  </button>
-                </div>
-              </div>
-
-              {/* Theme Selector Component */}
-              <ThemeSelector
-                selectedTheme={settings.theme as ThemeName}
-                onThemeChange={(theme) => onUpdateSetting("theme", theme)}
-              />
-
-              {/* Font Selector Component */}
-              <FontSelector
-                selectedFont={settings.fontFamily}
-                onFontChange={(fontFamily) =>
-                  onUpdateSetting("fontFamily", fontFamily)
-                }
-              />
-
-              {/* Font Size */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
-                <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
-                  <div className="flex items-center">
-                    <Type className="w-3.5 h-3.5 text-orange-600 mr-1.5" />
-                    Font Size
                   </div>
-                  <span className="text-xs bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent font-bold">
-                    {settings.fontSize}px
-                  </span>
-                </label>
-                <div className="relative">
-                  <input
-                    type="range"
-                    min="10"
-                    max="24"
-                    value={settings.fontSize}
-                    onChange={(e) =>
-                      onUpdateSetting("fontSize", parseInt(e.target.value))
-                    }
-                    className="w-full h-1.5 bg-gradient-to-r from-orange-200 to-red-200 rounded-lg appearance-none cursor-pointer
+                </div>
+              )}
+
+              {/* Editor Theme quick toggle (Select) */}
+              {(!activeMenu || activeMenu === "Select") && (
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                  <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
+                    <Layers className="w-3.5 h-3.5 text-purple-600 mr-1.5" />
+                    Editor Theme
+                  </h4>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => onUpdateSetting("theme", "light")}
+                      className={`flex-1 p-2 rounded-lg border transition-all duration-200 group ${
+                        settings.theme === "light"
+                          ? "border-blue-500 bg-blue-50/80 shadow-sm"
+                          : "border-gray-200/60 hover:border-gray-300/80 hover:bg-gray-50/50"
+                      }`}
+                    >
+                      <div className="flex items-center justify-center space-x-1 py-1 bg-white rounded-md border shadow-xs group-hover:shadow-sm transition-shadow">
+                        <Sun className="size-3 text-yellow-500" />
+                        <span className="text-xs font-medium">Light</span>
+                      </div>
+                    </button>
+                    <button
+                      onClick={() => onUpdateSetting("theme", "dark")}
+                      className={`flex-1 p-2 rounded-lg border transition-all duration-200 group ${
+                        settings.theme === "dark"
+                          ? "border-blue-500 bg-blue-50/80 shadow-sm"
+                          : "border-gray-200/60 hover:border-gray-300/80 hover:bg-gray-50/50"
+                      }`}
+                    >
+                      <div className="flex items-center justify-center space-x-1 py-1 bg-gray-800 rounded-md border shadow-xs group-hover:shadow-sm transition-shadow">
+                        <Moon className="size-3 text-blue-400" />
+                        <span className="text-xs text-white font-medium">
+                          Dark
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Theme Selector Component (Select) */}
+              {(!activeMenu || activeMenu === "Select") && (
+                <ThemeSelector
+                  selectedTheme={settings.theme as ThemeName}
+                  onThemeChange={(theme) => onUpdateSetting("theme", theme)}
+                />
+              )}
+
+              {/* Font Selector Component (Select) */}
+              {(!activeMenu || activeMenu === "Select") && (
+                <FontSelector
+                  selectedFont={settings.fontFamily}
+                  onFontChange={(fontFamily) =>
+                    onUpdateSetting("fontFamily", fontFamily)
+                  }
+                />
+              )}
+
+              {/* Font Size (Edit) */}
+              {(!activeMenu || activeMenu === "Edit") && (
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                  <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
+                    <div className="flex items-center">
+                      <Type className="w-3.5 h-3.5 text-orange-600 mr-1.5" />
+                      Font Size
+                    </div>
+                    <span className="text-xs bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent font-bold">
+                      {settings.fontSize}px
+                    </span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="range"
+                      min="10"
+                      max="24"
+                      value={settings.fontSize}
+                      onChange={(e) =>
+                        onUpdateSetting("fontSize", parseInt(e.target.value))
+                      }
+                      className="w-full h-1.5 bg-gradient-to-r from-orange-200 to-red-200 rounded-lg appearance-none cursor-pointer
                           [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
                           [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                           [&::-webkit-slider-thumb]:from-orange-500 [&::-webkit-slider-thumb]:to-red-500
                           [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
                           [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-                  />
-                </div>
-              </div>
-
-              {/* Padding */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
-                <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
-                  <div className="flex items-center">
-                    <Move className="w-3.5 h-3.5 text-pink-600 mr-1.5" />
-                    Padding
+                    />
                   </div>
-                  <span className="text-xs bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent font-bold">
-                    {settings.padding}px
-                  </span>
-                </label>
-                <div className="relative">
-                  <input
-                    type="range"
-                    min="0"
-                    max="64"
-                    value={settings.padding}
-                    onChange={(e) =>
-                      onUpdateSetting("padding", parseInt(e.target.value))
-                    }
-                    className="w-full h-1.5 bg-gradient-to-r from-pink-200 to-purple-200 rounded-lg appearance-none cursor-pointer
+                </div>
+              )}
+
+              {/* Padding (Edit) */}
+              {(!activeMenu || activeMenu === "Edit") && (
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                  <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
+                    <div className="flex items-center">
+                      <Move className="w-3.5 h-3.5 text-pink-600 mr-1.5" />
+                      Padding
+                    </div>
+                    <span className="text-xs bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent font-bold">
+                      {settings.padding}px
+                    </span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="range"
+                      min="0"
+                      max="64"
+                      value={settings.padding}
+                      onChange={(e) =>
+                        onUpdateSetting("padding", parseInt(e.target.value))
+                      }
+                      className="w-full h-1.5 bg-gradient-to-r from-pink-200 to-purple-200 rounded-lg appearance-none cursor-pointer
                           [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
                           [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                           [&::-webkit-slider-thumb]:from-pink-500 [&::-webkit-slider-thumb]:to-purple-500
                           [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
                           [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-                  />
-                </div>
-              </div>
-
-              {/* Border Radius */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
-                <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
-                  <div className="flex items-center">
-                    <CornerRightDown className="w-3.5 h-3.5 text-teal-600 mr-1.5" />
-                    Border Radius
+                    />
                   </div>
-                  <span className="text-xs bg-gradient-to-r from-teal-500 to-cyan-500 bg-clip-text text-transparent font-bold">
-                    {settings.borderRadius}px
-                  </span>
-                </label>
-                <div className="relative">
-                  <input
-                    type="range"
-                    min="0"
-                    max="32"
-                    value={settings.borderRadius}
-                    onChange={(e) =>
-                      onUpdateSetting("borderRadius", parseInt(e.target.value))
-                    }
-                    className="w-full h-1.5 bg-gradient-to-r from-teal-200 to-cyan-200 rounded-lg appearance-none cursor-pointer
+                </div>
+              )}
+
+              {/* Border Radius (Edit) */}
+              {(!activeMenu || activeMenu === "Edit") && (
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                  <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
+                    <div className="flex items-center">
+                      <CornerRightDown className="w-3.5 h-3.5 text-teal-600 mr-1.5" />
+                      Border Radius
+                    </div>
+                    <span className="text-xs bg-gradient-to-r from-teal-500 to-cyan-500 bg-clip-text text-transparent font-bold">
+                      {settings.borderRadius}px
+                    </span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="range"
+                      min="0"
+                      max="32"
+                      value={settings.borderRadius}
+                      onChange={(e) =>
+                        onUpdateSetting(
+                          "borderRadius",
+                          parseInt(e.target.value)
+                        )
+                      }
+                      className="w-full h-1.5 bg-gradient-to-r from-teal-200 to-cyan-200 rounded-lg appearance-none cursor-pointer
                           [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
                           [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                           [&::-webkit-slider-thumb]:from-teal-500 [&::-webkit-slider-thumb]:to-cyan-500
                           [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
                           [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-                  />
-                </div>
-              </div>
-
-              {/* Width */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
-                <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
-                  <div className="flex items-center">
-                    <Move className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
-                    Width
+                    />
                   </div>
-                  <span className="text-xs bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent font-bold">
-                    {settings.width ? `${settings.width}px` : "Auto"}
-                  </span>
-                </label>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      onUpdateSetting("width", undefined);
-                      setWidthInput("");
-                    }}
-                    className={`px-2 py-1 text-xs rounded-md transition-colors ${
-                      !settings.width
-                        ? "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                        : "bg-blue-500 text-white"
-                    }`}
-                  >
-                    Auto
-                  </button>
-                  <input
-                    type="number"
-                    min="0"
-                    max="1200"
-                    value={widthInput}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setWidthInput(value);
-
-                      if (value === "") {
-                        onUpdateSetting("width", undefined);
-                      } else {
-                        const numValue = parseInt(value);
-                        if (!isNaN(numValue) && numValue >= 0) {
-                          onUpdateSetting("width", numValue);
-                        }
-                      }
-                    }}
-                    onBlur={() => {
-                      // Ensure consistency on blur
-                      if (widthInput === "") {
-                        onUpdateSetting("width", undefined);
-                      } else {
-                        const numValue = parseInt(widthInput);
-                        if (!isNaN(numValue) && numValue >= 0) {
-                          onUpdateSetting("width", numValue);
-                        } else {
-                          setWidthInput(settings.width?.toString() || "");
-                        }
-                      }
-                    }}
-                    className="flex-1 px-2 py-1 text-xs rounded-md border border-gray-200"
-                    placeholder="600"
-                  />
                 </div>
-              </div>
+              )}
 
-              {/* Height */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
-                <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
-                  <div className="flex items-center">
-                    <BarChart3 className="w-3.5 h-3.5 text-green-600 mr-1.5" />
-                    Height
+              {/* Width (Edit) */}
+              {(!activeMenu || activeMenu === "Edit") && (
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                  <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
+                    <div className="flex items-center">
+                      <Move className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
+                      Width
+                    </div>
+                    <span className="text-xs bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent font-bold">
+                      {settings.width ? `${settings.width}px` : "Auto"}
+                    </span>
+                  </label>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => {
+                        onUpdateSetting("width", undefined);
+                        setWidthInput("");
+                      }}
+                      className={`px-3 py-1.5 text-xs rounded-lg transition-all ${
+                        !settings.width
+                          ? "text-gray-700 bg-gradient-to-b from-white to-gray-50 shadow-[inset_2px_2px_6px_rgba(0,0,0,0.05),inset_-2px_-2px_6px_rgba(255,255,255,0.95)]"
+                          : "text-white bg-gradient-to-r from-blue-500 to-indigo-500 shadow-md"
+                      }`}
+                    >
+                      Auto
+                    </button>
+                    <input
+                      type="number"
+                      min="0"
+                      max="1200"
+                      value={widthInput}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setWidthInput(value);
+
+                        if (value === "") {
+                          onUpdateSetting("width", undefined);
+                        } else {
+                          const numValue = parseInt(value);
+                          if (!isNaN(numValue) && numValue >= 0) {
+                            onUpdateSetting("width", numValue);
+                          }
+                        }
+                      }}
+                      onBlur={() => {
+                        // Ensure consistency on blur
+                        if (widthInput === "") {
+                          onUpdateSetting("width", undefined);
+                        } else {
+                          const numValue = parseInt(widthInput);
+                          if (!isNaN(numValue) && numValue >= 0) {
+                            onUpdateSetting("width", numValue);
+                          } else {
+                            setWidthInput(settings.width?.toString() || "");
+                          }
+                        }
+                      }}
+                      className="flex-1 px-2 py-1 text-xs rounded-md border border-gray-200"
+                      placeholder="600"
+                    />
                   </div>
-                  <span className="text-xs bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent font-bold">
-                    {settings.height ? `${settings.height}px` : "Auto"}
-                  </span>
-                </label>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      onUpdateSetting("height", undefined);
-                      setHeightInput("");
-                    }}
-                    className={`px-2 py-1 text-xs rounded-md transition-colors ${
-                      !settings.height
-                        ? "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                        : "bg-green-500 text-white"
-                    }`}
-                  >
-                    Auto
-                  </button>
-                  <input
-                    type="number"
-                    min="0"
-                    max="800"
-                    value={heightInput}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setHeightInput(value);
-
-                      if (value === "") {
-                        onUpdateSetting("height", undefined);
-                      } else {
-                        const numValue = parseInt(value);
-                        if (!isNaN(numValue) && numValue >= 0) {
-                          onUpdateSetting("height", numValue);
-                        }
-                      }
-                    }}
-                    onBlur={() => {
-                      // Ensure consistency on blur
-                      if (heightInput === "") {
-                        onUpdateSetting("height", undefined);
-                      } else {
-                        const numValue = parseInt(heightInput);
-                        if (!isNaN(numValue) && numValue >= 0) {
-                          onUpdateSetting("height", numValue);
-                        } else {
-                          setHeightInput(settings.height?.toString() || "");
-                        }
-                      }
-                    }}
-                    className="flex-1 px-2 py-1 text-xs rounded-md border border-gray-200"
-                    placeholder="400"
-                  />
                 </div>
-              </div>
+              )}
 
-              {/* Display Options */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+              {/* Height (Edit) */}
+              {(!activeMenu || activeMenu === "Edit") && (
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                  <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
+                    <div className="flex items-center">
+                      <BarChart3 className="w-3.5 h-3.5 text-green-600 mr-1.5" />
+                      Height
+                    </div>
+                    <span className="text-xs bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent font-bold">
+                      {settings.height ? `${settings.height}px` : "Auto"}
+                    </span>
+                  </label>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => {
+                        onUpdateSetting("height", undefined);
+                        setHeightInput("");
+                      }}
+                      className={`px-3 py-1.5 text-xs rounded-lg transition-all ${
+                        !settings.height
+                          ? "text-gray-700 bg-gradient-to-b from-white to-gray-50 shadow-[inset_2px_2px_6px_rgba(0,0,0,0.05),inset_-2px_-2px_6px_rgba(255,255,255,0.95)]"
+                          : "text-white bg-gradient-to-r from-emerald-500 to-green-500 shadow-md"
+                      }`}
+                    >
+                      Auto
+                    </button>
+                    <input
+                      type="number"
+                      min="0"
+                      max="800"
+                      value={heightInput}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setHeightInput(value);
+
+                        if (value === "") {
+                          onUpdateSetting("height", undefined);
+                        } else {
+                          const numValue = parseInt(value);
+                          if (!isNaN(numValue) && numValue >= 0) {
+                            onUpdateSetting("height", numValue);
+                          }
+                        }
+                      }}
+                      onBlur={() => {
+                        // Ensure consistency on blur
+                        if (heightInput === "") {
+                          onUpdateSetting("height", undefined);
+                        } else {
+                          const numValue = parseInt(heightInput);
+                          if (!isNaN(numValue) && numValue >= 0) {
+                            onUpdateSetting("height", numValue);
+                          } else {
+                            setHeightInput(settings.height?.toString() || "");
+                          }
+                        }
+                      }}
+                      className="flex-1 px-2 py-1 text-xs rounded-md border border-gray-200"
+                      placeholder="400"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Display Options (View) */}
+              {(!activeMenu || activeMenu === "View") && (
                 <div className="space-y-4">
-                  <label className="flex items-center justify-between group cursor-pointer">
-                    <div className="flex items-center space-x-2">
-                      <Paintbrush className="w-4 h-4 text-purple-600" />
-                      <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
+                  <label className="flex items-center justify-between cursor-pointer">
+                    <div className="flex items-center gap-2">
+                      <Paintbrush
+                        className={`size-4 transition-colors ${
+                          settings.showBackground
+                            ? "text-purple-600 group-hover:text-purple-700"
+                            : "text-gray-400 group-hover:text-gray-500"
+                        }`}
+                      />
+                      <span
+                        className={`text-sm font-medium ${
+                          settings.showBackground
+                            ? "text-purple-600 group-hover:text-purple-700"
+                            : "text-gray-500 group-hover:text-gray-700"
+                        }`}
+                      >
                         Show Background
                       </span>
                     </div>
@@ -576,7 +735,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         }`}
                       >
                         <svg
-                          className={`w-3 h-3 text-purple-700 font-bold transition-opacity duration-200 ${
+                          className={`size-3 text-purple-700 font-bold transition-opacity duration-200 ${
                             settings.showBackground
                               ? "opacity-100"
                               : "opacity-0"
@@ -592,10 +751,22 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                     </div>
                   </label>
 
-                  <label className="flex items-center justify-between group cursor-pointer">
-                    <div className="flex items-center space-x-2">
-                      <Monitor className="w-4 h-4 text-blue-600" />
-                      <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
+                  <label className="flex items-center justify-between cursor-pointer">
+                    <div className="flex items-center gap-2">
+                      <Monitor
+                        className={`size-4 transition-colors ${
+                          settings.showWindowControls
+                            ? "text-blue-600 group-hover:text-blue-700"
+                            : "text-gray-400 group-hover:text-gray-500"
+                        }`}
+                      />
+                      <span
+                        className={`text-sm font-medium ${
+                          settings.showWindowControls
+                            ? "text-blue-600 group-hover:text-blue-700"
+                            : "text-gray-500 group-hover:text-gray-700"
+                        }`}
+                      >
                         Window Controls
                       </span>
                     </div>
@@ -619,7 +790,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         }`}
                       >
                         <svg
-                          className={`w-3 h-3 text-blue-700 font-bold transition-opacity duration-200 ${
+                          className={`size-3 text-blue-700 font-bold transition-opacity duration-200 ${
                             settings.showWindowControls
                               ? "opacity-100"
                               : "opacity-0"
@@ -635,10 +806,22 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                     </div>
                   </label>
 
-                  <label className="flex items-center justify-between group cursor-pointer">
-                    <div className="flex items-center space-x-2">
-                      <Hash className="w-4 h-4 text-green-600" />
-                      <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
+                  <label className="flex items-center justify-between cursor-pointer">
+                    <div className="flex items-center gap-2">
+                      <Hash
+                        className={`size-4 transition-colors ${
+                          showLineNumbers
+                            ? "text-green-600 group-hover:text-green-700"
+                            : "text-gray-400 group-hover:text-gray-500"
+                        }`}
+                      />
+                      <span
+                        className={`text-sm font-medium ${
+                          showLineNumbers
+                            ? "text-green-600 group-hover:text-green-700"
+                            : "text-gray-500 group-hover:text-gray-700"
+                        }`}
+                      >
                         Line Numbers
                       </span>
                     </div>
@@ -657,7 +840,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         }`}
                       >
                         <svg
-                          className={`w-3 h-3 text-green-700 font-bold transition-opacity duration-200 ${
+                          className={`size-3 text-green-700 font-bold transition-opacity duration-200 ${
                             showLineNumbers ? "opacity-100" : "opacity-0"
                           }`}
                           fill="currentColor"
@@ -671,10 +854,22 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                     </div>
                   </label>
 
-                  <label className="flex items-center justify-between group cursor-pointer">
-                    <div className="flex items-center space-x-2">
-                      <BarChart3 className="w-4 h-4 text-orange-600" />
-                      <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
+                  <label className="flex items-center justify-between cursor-pointer">
+                    <div className="flex items-center gap-2">
+                      <BarChart3
+                        className={`size-4 transition-colors ${
+                          settings.showLineCount
+                            ? "text-orange-600 group-hover:text-orange-700"
+                            : "text-gray-400 group-hover:text-gray-500"
+                        }`}
+                      />
+                      <span
+                        className={`text-sm font-medium ${
+                          settings.showLineCount
+                            ? "text-orange-600 group-hover:text-orange-700"
+                            : "text-gray-500 group-hover:text-gray-700"
+                        }`}
+                      >
                         Line Count Display
                       </span>
                     </div>
@@ -695,7 +890,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         }`}
                       >
                         <svg
-                          className={`w-3 h-3 text-orange-700 font-bold transition-opacity duration-200 ${
+                          className={`size-3 text-orange-700 font-bold transition-opacity duration-200 ${
                             settings.showLineCount ? "opacity-100" : "opacity-0"
                           }`}
                           fill="currentColor"
@@ -709,10 +904,22 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                     </div>
                   </label>
 
-                  <label className="flex items-center justify-between group cursor-pointer">
-                    <div className="flex items-center space-x-2">
-                      <Folder className="w-4 h-4 text-yellow-600" />
-                      <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
+                  <label className="flex items-center justify-between cursor-pointer">
+                    <div className="flex items-center gap-2">
+                      <Folder
+                        className={`size-4 transition-colors ${
+                          settings.showFileName
+                            ? "text-yellow-600 group-hover:text-yellow-700"
+                            : "text-gray-400 group-hover:text-gray-500"
+                        }`}
+                      />
+                      <span
+                        className={`text-sm font-medium ${
+                          settings.showFileName
+                            ? "text-yellow-600 group-hover:text-yellow-700"
+                            : "text-gray-500 group-hover:text-gray-700"
+                        }`}
+                      >
                         File Name Display
                       </span>
                     </div>
@@ -733,7 +940,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         }`}
                       >
                         <svg
-                          className={`w-3 h-3 text-yellow-700 font-bold transition-opacity duration-200 ${
+                          className={`size-3 text-yellow-700 font-bold transition-opacity duration-200 ${
                             settings.showFileName ? "opacity-100" : "opacity-0"
                           }`}
                           fill="currentColor"
@@ -749,8 +956,14 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
 
                   <label className="flex items-center justify-between cursor-pointer">
                     <div className="flex items-center gap-2">
-                      <WrapText className="w-4 h-4 text-blue-600" />
-                      <span className="text-sm font-medium text-gray-700">
+                      <WrapText className="size-4 text-blue-600" />
+                      <span
+                        className={`text-sm font-medium ${
+                          settings.wordWrap
+                            ? "text-blue-600 group-hover:text-blue-700"
+                            : "text-gray-500 group-hover:text-gray-700"
+                        }`}
+                      >
                         Word Wrap
                       </span>
                     </div>
@@ -771,7 +984,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                         }`}
                       >
                         <svg
-                          className={`w-3 h-3 text-blue-700 font-bold transition-opacity duration-200 ${
+                          className={`size-3 text-blue-700 font-bold transition-opacity duration-200 ${
                             settings.wordWrap ? "opacity-100" : "opacity-0"
                           }`}
                           fill="currentColor"
@@ -785,182 +998,187 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                     </div>
                   </label>
                 </div>
-              </div>
+              )}
 
-              {/* Caption Configuration */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
-                <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
-                  <MessageSquare className="w-3.5 h-3.5 text-indigo-600 mr-1.5" />
-                  Figure Caption
-                </h4>
-                <div className="space-y-3">
-                  {/* Show Caption Toggle */}
-                  <label className="flex items-center justify-between group cursor-pointer">
-                    <div className="flex items-center space-x-2">
-                      <AlignCenter className="w-4 h-4 text-indigo-600" />
-                      <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
-                        Show Caption
-                      </span>
-                    </div>
-                    <div className="relative">
-                      <input
-                        type="checkbox"
-                        checked={settings.showCaption || false}
-                        onChange={(e) =>
-                          onUpdateSetting("showCaption", e.target.checked)
-                        }
-                        className="sr-only peer"
-                      />
-                      <div
-                        className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
-                          settings.showCaption
-                            ? "bg-gradient-to-br from-indigo-100 to-indigo-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                            : ""
-                        }`}
-                      >
-                        <svg
-                          className={`w-3 h-3 text-indigo-700 font-bold transition-opacity duration-200 ${
-                            settings.showCaption ? "opacity-100" : "opacity-0"
-                          }`}
-                          fill="currentColor"
-                          stroke="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="3"
-                        >
-                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                        </svg>
+              {/* Caption Configuration (Caption) */}
+              {(!activeMenu || activeMenu === "Caption") && (
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
+                  <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
+                    <MessageSquare className="w-3.5 h-3.5 text-indigo-600 mr-1.5" />
+                    Figure Caption
+                  </h4>
+                  <div className="space-y-3">
+                    {/* Show Caption Toggle */}
+                    <label className="flex items-center justify-between group cursor-pointer">
+                      <div className="flex items-center space-x-2">
+                        <AlignCenter className="size-4 text-indigo-600" />
+                        <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
+                          Show Caption
+                        </span>
                       </div>
-                    </div>
-                  </label>
-
-                  {/* Caption Text Input */}
-                  {settings.showCaption && (
-                    <>
-                      <div>
-                        <label className="text-xs font-medium text-gray-700 mb-1 block">
-                          Caption Text
-                        </label>
+                      <div className="relative">
                         <input
-                          type="text"
-                          value={settings.captionText || ""}
+                          type="checkbox"
+                          checked={settings.showCaption || false}
                           onChange={(e) =>
-                            onUpdateSetting("captionText", e.target.value)
+                            onUpdateSetting("showCaption", e.target.checked)
                           }
-                          className="w-full px-2.5 py-1.5 text-sm border border-gray-300/60 hover:border-gray-400/80 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/60 transition-all duration-200"
-                          placeholder="Enter figure caption..."
+                          className="sr-only peer"
                         />
-                      </div>
-
-                      {/* Caption Style */}
-                      <div>
-                        <label className="text-xs font-medium text-gray-700 mb-1 block">
-                          Caption Style
-                        </label>
-                        <div className="grid grid-cols-2 gap-2">
-                          <button
-                            onClick={() =>
-                              onUpdateSetting("captionStyle", "normal")
-                            }
-                            className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 ${
-                              (settings.captionStyle || "normal") === "normal"
-                                ? "bg-indigo-500 text-white shadow-md"
-                                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        <div
+                          className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                            settings.showCaption
+                              ? "bg-gradient-to-br from-indigo-100 to-indigo-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                              : ""
+                          }`}
+                        >
+                          <svg
+                            className={`size-3 text-indigo-700 font-bold transition-opacity duration-200 ${
+                              settings.showCaption ? "opacity-100" : "opacity-0"
                             }`}
+                            fill="currentColor"
+                            stroke="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="3"
                           >
-                            Normal
-                          </button>
-                          <button
-                            onClick={() =>
-                              onUpdateSetting("captionStyle", "italic")
-                            }
-                            className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 ${
-                              settings.captionStyle === "italic"
-                                ? "bg-indigo-500 text-white shadow-md"
-                                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                            }`}
-                          >
-                            <em>Italic</em>
-                          </button>
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                          </svg>
                         </div>
                       </div>
+                    </label>
 
-                      {/* Caption Opacity */}
-                      <div>
-                        <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
-                          <span>Caption Opacity</span>
-                          <span className="text-xs bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent font-bold">
-                            {Math.round((settings.captionOpacity || 1) * 100)}%
-                          </span>
-                        </label>
-                        <div className="relative">
+                    {/* Caption Text Input */}
+                    {settings.showCaption && (
+                      <>
+                        <div>
+                          <label className="text-xs font-medium text-gray-700 mb-1 block">
+                            Caption Text
+                          </label>
                           <input
-                            type="range"
-                            min="0.1"
-                            max="1"
-                            step="0.1"
-                            value={settings.captionOpacity || 1}
+                            type="text"
+                            value={settings.captionText || ""}
                             onChange={(e) =>
-                              onUpdateSetting(
-                                "captionOpacity",
-                                parseFloat(e.target.value)
-                              )
+                              onUpdateSetting("captionText", e.target.value)
                             }
-                            className="w-full h-1.5 bg-gradient-to-r from-indigo-200 to-purple-200 rounded-lg appearance-none cursor-pointer
+                            className="w-full px-2.5 py-1.5 text-sm border border-gray-300/60 hover:border-gray-400/80 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/60 transition-all duration-200"
+                            placeholder="Enter figure caption..."
+                          />
+                        </div>
+
+                        {/* Caption Style */}
+                        <div>
+                          <label className="text-xs font-medium text-gray-700 mb-1 block">
+                            Caption Style
+                          </label>
+                          <div className="grid grid-cols-2 gap-2">
+                            <button
+                              onClick={() =>
+                                onUpdateSetting("captionStyle", "normal")
+                              }
+                              className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 ${
+                                (settings.captionStyle || "normal") === "normal"
+                                  ? "bg-indigo-500 text-white shadow-md"
+                                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                              }`}
+                            >
+                              Normal
+                            </button>
+                            <button
+                              onClick={() =>
+                                onUpdateSetting("captionStyle", "italic")
+                              }
+                              className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 ${
+                                settings.captionStyle === "italic"
+                                  ? "bg-indigo-500 text-white shadow-md"
+                                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                              }`}
+                            >
+                              <em>Italic</em>
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Caption Opacity */}
+                        <div>
+                          <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
+                            <span>Caption Opacity</span>
+                            <span className="text-xs bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent font-bold">
+                              {Math.round((settings.captionOpacity || 1) * 100)}
+                              %
+                            </span>
+                          </label>
+                          <div className="relative">
+                            <input
+                              type="range"
+                              min="0.1"
+                              max="1"
+                              step="0.1"
+                              value={settings.captionOpacity || 1}
+                              onChange={(e) =>
+                                onUpdateSetting(
+                                  "captionOpacity",
+                                  parseFloat(e.target.value)
+                                )
+                              }
+                              className="w-full h-1.5 bg-gradient-to-r from-indigo-200 to-purple-200 rounded-lg appearance-none cursor-pointer
                                   [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
                                   [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                                   [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-purple-500
                                   [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
                                   [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-                          />
+                            />
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Caption Position */}
-                      <div>
-                        <label className="text-xs font-medium text-gray-700 mb-1 block">
-                          Caption Position
-                        </label>
-                        <div className="grid grid-cols-4 gap-2">
-                          {["top", "bottom", "left", "right"].map(
-                            (position) => (
-                              <button
-                                key={position}
-                                onClick={() =>
-                                  onUpdateSetting(
-                                    "captionPosition",
-                                    position as
-                                      | "top"
-                                      | "bottom"
-                                      | "left"
-                                      | "right"
-                                  )
-                                }
-                                className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 capitalize ${
-                                  (settings.captionPosition || "bottom") ===
-                                  position
-                                    ? "bg-indigo-500 text-white shadow-md"
-                                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                                }`}
-                              >
-                                {position}
-                              </button>
-                            )
-                          )}
+                        {/* Caption Position */}
+                        <div>
+                          <label className="text-xs font-medium text-gray-700 mb-1 block">
+                            Caption Position
+                          </label>
+                          <div className="grid grid-cols-4 gap-2">
+                            {["top", "bottom", "left", "right"].map(
+                              (position) => (
+                                <button
+                                  key={position}
+                                  onClick={() =>
+                                    onUpdateSetting(
+                                      "captionPosition",
+                                      position as
+                                        | "top"
+                                        | "bottom"
+                                        | "left"
+                                        | "right"
+                                    )
+                                  }
+                                  className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 capitalize ${
+                                    (settings.captionPosition || "bottom") ===
+                                    position
+                                      ? "bg-indigo-500 text-white shadow-md"
+                                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                                  }`}
+                                >
+                                  {position}
+                                </button>
+                              )
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </>
-                  )}
+                      </>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
 
-              {/* Background Selector Component */}
-              <BackgroundSelector
-                selectedBackground={settings.background}
-                onBackgroundChange={(background) =>
-                  onUpdateSetting("background", background)
-                }
-                isVisible={settings.showBackground}
-              />
+              {/* Background Selector Component (Background) */}
+              {(!activeMenu || activeMenu === "Background") && (
+                <BackgroundSelector
+                  selectedBackground={settings.background}
+                  onBackgroundChange={(background) =>
+                    onUpdateSetting("background", background)
+                  }
+                  isVisible={settings.showBackground}
+                />
+              )}
             </div>
           </div>
         </div>

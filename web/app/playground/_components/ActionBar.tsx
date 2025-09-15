@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import CustomSelect from "./CustomSelect";
 import {
   Download,
   Copy,
@@ -16,6 +17,7 @@ import {
   ChevronDown,
   Edit2,
   BookOpen,
+  MoreHorizontal,
 } from "lucide-react";
 
 interface ActionBarProps {
@@ -47,6 +49,57 @@ const ActionBar: React.FC<ActionBarProps> = ({
   showSettingsPanel = false,
   className = "",
 }) => {
+  const [moreValue, setMoreValue] = useState<string>("");
+  const moreOptions = [
+    {
+      value: "share",
+      label: (
+        <span className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500" />
+          Share
+        </span>
+      ),
+    },
+    {
+      value: "report",
+      label: (
+        <span className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-gradient-to-r from-rose-500 to-pink-500" />
+          Report issue
+        </span>
+      ),
+    },
+  ];
+
+  useEffect(() => {
+    if (moreValue === "share") {
+      (async () => {
+        let shared = false;
+        try {
+          if (navigator.share) {
+            await navigator.share({
+              title: "Flashot - Code Screenshot",
+              text: "Check out this beautiful code screenshot!",
+              url: window.location.href,
+            });
+            shared = true;
+          } else if (navigator.clipboard) {
+            await navigator.clipboard.writeText(window.location.href);
+            alert("Link copied to clipboard");
+            shared = true;
+          }
+        } catch {}
+        if (shared) setMoreValue("");
+      })();
+    } else if (moreValue === "report") {
+      window.open(
+        "https://github.com/thuongtruong109/flashot/issues/new",
+        "_blank"
+      );
+      setTimeout(() => setMoreValue(""), 100);
+    }
+  }, [moreValue]);
+
   const handleExportClick = () => {
     onDownload();
   };
@@ -103,27 +156,27 @@ const ActionBar: React.FC<ActionBarProps> = ({
     color: string,
     disabled: boolean
   ) => {
-    // Smaller, more refined buttons with Tailwind vibe
+    // Neumorphic-lite buttons
     const baseStyles =
-      "group relative flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-200 font-medium text-sm shadow-sm transform hover:scale-[1.02] active:scale-[0.98]";
+      "group relative flex items-center space-x-1 px-3 py-1.5 rounded-xl transition-all duration-200 bg-gradient-to-b from-white to-gray-50 border border-white/50 shadow-[inset_2px_2px_6px_rgba(0,0,0,0.04),inset_-2px_-2px_6px_rgba(255,255,255,0.9),6px_6px_14px_rgba(2,6,23,0.06),-6px_-6px_14px_rgba(255,255,255,0.9)] hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06),inset_-2px_-2px_6px_rgba(255,255,255,1),8px_8px_18px_rgba(2,6,23,0.08),-6px_-6px_14px_rgba(255,255,255,1)]";
 
     if (disabled) {
       return `${baseStyles} bg-gray-100 text-gray-400 cursor-not-allowed shadow-none transform-none hover:scale-100`;
     }
 
     // More refined color palette with better contrast
-    return `${baseStyles} bg-white hover:bg-gray-50 text-gray-700 hover:text-gray-900 border border-gray-200 shadow-sm`;
+    return `${baseStyles} text-gray-700 hover:text-gray-900`;
+  };
+
+  const colorMap = {
+    amber: "text-amber-500 group-hover:text-amber-600",
+    slate: "text-slate-500 group-hover:text-slate-600",
+    emerald: "text-emerald-500 group-hover:text-emerald-600",
+    blue: "text-blue-500 group-hover:text-blue-600",
   };
 
   const getIconStyles = (color: string, variant: "primary" | "secondary") => {
-    const colorMap = {
-      amber: "text-amber-500 group-hover:text-amber-600",
-      slate: "text-slate-500 group-hover:text-slate-600",
-      emerald: "text-emerald-500 group-hover:text-emerald-600",
-      blue: "text-blue-500 group-hover:text-blue-600",
-    };
-
-    return `w-4 h-4 transition-all duration-200 ${
+    return `size-3.5 transition-all duration-200 ${
       colorMap[color as keyof typeof colorMap] ||
       "text-gray-500 group-hover:text-gray-600"
     }`;
@@ -133,6 +186,16 @@ const ActionBar: React.FC<ActionBarProps> = ({
     <div className={`flex flex-wrap items-center gap-3 ${className}`}>
       {/* Desktop Layout */}
       <div className="hidden lg:flex items-center space-x-3">
+        {/* More dropdown using CustomSelect */}
+        <div style={{ maxWidth: 180 }}>
+          <CustomSelect
+            options={moreOptions}
+            value={moreValue}
+            onChange={setMoreValue}
+            placeholder="More"
+          />
+        </div>
+
         {buttons.map((button, index) => {
           const Icon = button.icon;
           return (
@@ -147,80 +210,49 @@ const ActionBar: React.FC<ActionBarProps> = ({
               )}
             >
               <Icon
-                className={`${getIconStyles(button.color, button.variant)} ${
-                  button.disabled && button.icon === Loader2
-                    ? "animate-spin"
-                    : ""
-                }`}
+                className={`${getIconStyles(button.color, button.variant)}`}
               />
-              <span className="font-medium">{button.label}</span>
+              <span
+                className={`text-[13px] ${
+                  colorMap[button.color as keyof typeof colorMap]
+                }`}
+              >
+                {button.label}
+              </span>
             </button>
           );
         })}
-
-        {/* Simple Export Button */}
-        <button
-          onClick={() => handleExportClick()}
-          disabled={isGenerating}
-          className="group relative flex items-center space-x-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-gray-400 disabled:to-gray-500 text-white transition-all duration-200 font-medium text-sm shadow-sm hover:shadow-md transform hover:scale-[1.02] active:scale-[0.98] disabled:transform-none disabled:hover:scale-100"
-        >
-          {isGenerating ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
-          ) : (
-            <Download className="w-4 h-4" />
-          )}
-          <span className="font-medium">
-            {isGenerating ? "Generating..." : "Export"}
-          </span>
-        </button>
       </div>
 
       {/* Mobile Layout */}
       <div className="flex lg:hidden items-center space-x-2 flex-shrink-0">
-        {/* Simple Export Button for mobile */}
-        <button
-          onClick={() => handleExportClick()}
-          disabled={isGenerating}
-          className="flex items-center justify-center min-h-max space-x-1.5 p-3 sm:py-2 bg-none sm:bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-gray-400 disabled:to-gray-500 text-blue-500 sm:text-white rounded-lg transition-all duration-200 text-sm shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300"
-        >
-          {isGenerating ? (
-            <Loader2 className="w-3.5 h-3.5 animate-spin" />
-          ) : (
-            <Download className="w-3.5 h-3.5" />
-          )}
-          <span className="hidden sm:block">
-            {isGenerating ? "Generating..." : "Export"}
-          </span>
-        </button>
-
-        {/* Secondary actions for mobile */}
         <div className="flex items-center space-x-1">
           <button
             onClick={onShowGuide}
             className="p-2.5 bg-white hover:bg-gray-50 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300 transition-all"
           >
-            <BookOpen className="w-4 h-4 text-emerald-500" />
+            <BookOpen className="w-3 h-3 text-emerald-500" />
           </button>
 
           <button
             onClick={onShowTips}
             className="p-2.5 bg-white hover:bg-gray-50 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300 transition-all"
           >
-            <Info className="w-4 h-4 text-amber-500" />
+            <Info className="w-3 h-3 text-amber-500" />
           </button>
 
           <button
             onClick={onShowJSON}
             className="p-2.5 bg-white hover:bg-gray-50 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300 transition-all"
           >
-            <FileText className="w-4 h-4 text-emerald-500" />
+            <FileText className="w-3 h-3 text-emerald-500" />
           </button>
 
           <button
             onClick={onShowSettings}
             className="p-2.5 bg-white hover:bg-gray-50 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300 transition-all"
           >
-            <Settings className="w-4 h-4 text-slate-500" />
+            <Settings className="w-3 h-3 text-slate-500" />
           </button>
         </div>
 

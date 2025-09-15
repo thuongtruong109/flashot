@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
-import { themes, copyToClipboard } from "@/utils";
+import { copyToClipboard } from "@/utils";
 import { generateAndDownloadImage } from "@/lib/imageGenerator";
 import SettingsPanel from "@/app/playground/_components/SettingsPanel";
 import JSONDataSection from "@/app/playground/_components/JSONDataSection";
@@ -10,7 +10,6 @@ import TipsModal from "@/app/playground/_components/TipsModal";
 import CodeEditor from "@/app/playground/_components/editor";
 import ActionBar from "@/app/playground/_components/ActionBar";
 import Brand from "@/app/playground/_components/Brand";
-import FloatingButtons from "@/app/playground/_components/FloatingButtons";
 import TourGuide from "@/app/playground/_components/TourGuide";
 import Image from "next/image";
 import HeaderNavigation from "@/app/playground/_components/header";
@@ -63,10 +62,8 @@ export default function Page() {
   // Handle client-side mounting
   useEffect(() => {
     setIsClient(true);
-    // Set initial settings panel state based on screen size
-    if (typeof window !== "undefined" && window.innerWidth >= 1024) {
-      setShowSettingsPanel(true);
-    }
+    // Always start with settings panel closed
+    setShowSettingsPanel(false);
   }, []);
 
   // Close settings panel when clicking outside (mobile only)
@@ -95,33 +92,8 @@ export default function Page() {
 
   // Set initial settings panel visibility based on screen size
   // and keep it always open on desktop
-  useEffect(() => {
-    const handleResize = () => {
-      // On desktop (lg screens), always show the panel
-      if (typeof window !== "undefined") {
-        if (window.innerWidth >= 1024) {
-          setShowSettingsPanel(true);
-        } else {
-          setShowSettingsPanel(false);
-        }
-      }
-    };
-
-    // Set initial state
-    handleResize();
-
-    // Add event listener for window resize
-    if (typeof window !== "undefined") {
-      window.addEventListener("resize", handleResize);
-    }
-
-    // Cleanup
-    return () => {
-      if (typeof window !== "undefined") {
-        window.removeEventListener("resize", handleResize);
-      }
-    };
-  }, []);
+  // Removed auto-open/close logic for desktop/mobile
+  // Panel will only open/close via user action
 
   const updateSetting = <K extends keyof CodeSettings>(
     key: K,
@@ -129,6 +101,17 @@ export default function Page() {
   ) => {
     setSettings((prev) => ({ ...prev, [key]: value }));
   };
+
+  // Track active header menu without opening any main panel
+  const [activeMenuLabel, setActiveMenuLabel] = useState<string | undefined>(
+    undefined
+  );
+
+  // When a tab is clicked in the header, open the settings panel
+  const handleOpenMainPanel = useCallback((menuLabel: string) => {
+    setActiveMenuLabel(menuLabel);
+    setShowSettingsPanel(true);
+  }, []);
 
   const handleCopyCode = async () => {
     const success = await copyToClipboard(code);
@@ -178,12 +161,27 @@ export default function Page() {
     [code, settings, fileName]
   );
 
+  // Bridge export event from SettingsPanel
+  useEffect(() => {
+    const onExport = () => {
+      handleDownloadImage();
+    };
+    if (typeof window !== "undefined") {
+      window.addEventListener("flashot:export", onExport as any);
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("flashot:export", onExport as any);
+      }
+    };
+  }, [handleDownloadImage]);
+
   // Handle code changes from the CodeEditor component
   const handleCodeChange = (newCode: string) => {
     setCode(newCode);
   };
 
-  const currentTheme = themes[settings.theme as ThemeName];
+  // no-op: removed right-side main panel
 
   return (
     <div className="h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 relative overflow-hidden flex flex-col">
@@ -192,7 +190,12 @@ export default function Page() {
           <Brand showVersion={true} />
         </div>
 
-        <HeaderNavigation />
+        <HeaderNavigation
+          settings={settings}
+          onUpdateSetting={updateSetting}
+          onOpenMainPanel={handleOpenMainPanel}
+          activePanelMenu={activeMenuLabel}
+        />
 
         <div data-tour="action-bar" className="flex-shrink-0">
           <ActionBar
@@ -233,12 +236,43 @@ export default function Page() {
             fill
           />
 
-          {/* Floating Action Buttons */}
-          <FloatingButtons
-            data-tour="floating-buttons"
-            onShowTips={() => setShowTipsModal(true)}
-            // onShowGuide={() => setShowTourGuide(true)}
-          />
+          {/* More tab floating actions */}
+          {activeMenuLabel === "More" && (
+            <div className="absolute right-6 top-4 z-30 flex gap-3">
+              <button
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    const url =
+                      "https://github.com/thuongtruong109/flashot/issues";
+                    window.open(url, "_blank");
+                  }
+                }}
+                className="px-3 py-2 rounded-full text-sm font-medium text-gray-700 bg-white/80 backdrop-blur border border-gray-200 hover:bg-white shadow-sm hover:shadow-md transition-all"
+              >
+                Report Issue
+              </button>
+              <button
+                onClick={async () => {
+                  try {
+                    if (navigator.share) {
+                      await navigator.share({
+                        title: document.title,
+                        url: window.location.href,
+                      });
+                    } else if (navigator.clipboard) {
+                      await navigator.clipboard.writeText(window.location.href);
+                      alert("Link copied");
+                    }
+                  } catch (e) {
+                    // ignore
+                  }
+                }}
+                className="px-3 py-2 rounded-full text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 shadow-sm hover:shadow-md transition-all"
+              >
+                Share This
+              </button>
+            </div>
+          )}
 
           <div
             data-tour="code-editor"
@@ -260,6 +294,7 @@ export default function Page() {
               onUpdateSetting={updateSetting}
             />
           </div>
+          {/* Removed Main Right Panel. Header nav now only filters SettingsPanel */}
         </div>
 
         {/* Fixed Settings Sidebar */}
@@ -269,6 +304,8 @@ export default function Page() {
           showLineNumbers={showLineNumbers}
           fileName={fileName}
           isVisible={showSettingsPanel}
+          activeMenu={activeMenuLabel}
+          onChangeActiveMenu={(m) => setActiveMenuLabel(m)}
           onUpdateSetting={updateSetting}
           onToggleLineNumbers={setShowLineNumbers}
           onFileNameChange={setFileName}
