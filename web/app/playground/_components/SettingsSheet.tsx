@@ -3,7 +3,6 @@
 import React from "react";
 import { Settings, X } from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
-import { cn } from "@/utils";
 import LanguageSelector from "./LanguageSelector";
 import ThemeSelector from "./ThemeSelector";
 import FontSelector from "./FontSelector";

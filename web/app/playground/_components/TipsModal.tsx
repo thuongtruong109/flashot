@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Info, Keyboard, Download, Code2 } from "lucide-react";
-import Modal from "./Modal";
+import Modal from "./base/Modal";
 
 interface TipsModalProps {
   isOpen: boolean;
@@ -19,7 +19,6 @@ const TipsModal: React.FC<TipsModalProps> = ({ isOpen, onClose }) => {
       maxWidth="2xl"
     >
       <div className="p-4 space-y-6">
-        {/* Quick Start Guide */}
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200/50">
           <div className="space-y-3">
             <div className="flex items-start space-x-3">
@@ -52,7 +51,6 @@ const TipsModal: React.FC<TipsModalProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        {/* Keyboard Shortcuts */}
         <div>
           <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
             <div className="w-7 h-7 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center mr-3">
@@ -112,7 +110,6 @@ const TipsModal: React.FC<TipsModalProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        {/* Export Formats */}
         <div>
           <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
             <div className="w-7 h-7 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center mr-3">
@@ -148,7 +145,6 @@ const TipsModal: React.FC<TipsModalProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        {/* Supported Languages */}
         <div>
           <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
             <div className="w-7 h-7 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center mr-3">
@@ -198,7 +194,6 @@ const TipsModal: React.FC<TipsModalProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        {/* Pro Tips */}
         <div>
           <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
             <div className="w-7 h-7 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center mr-3">

@@ -7,7 +7,7 @@ import { generateAndDownloadImage } from "@/lib/imageGenerator";
 import SettingsPanel from "app/playground/_components/SettingsPanel";
 import JSONDataSection from "app/playground/_components/JSONDataSection";
 import TipsModal from "app/playground/_components/TipsModal";
-import CodeEditor from "app/playground/_components/CodeEditor";
+import CodeEditor from "@/app/playground/_components/editor";
 import ActionBar from "app/playground/_components/ActionBar";
 import Brand from "app/playground/_components/Brand";
 import FloatingButtons from "app/playground/_components/FloatingButtons";
@@ -42,7 +42,7 @@ export default function Page() {
     showCaption: false, // Default caption disabled
     captionText: "Figure: Sample code snippet", // Default caption text
     captionStyle: "normal", // Default normal style
-    captionOpacity: 1, // Default full opacity
+    captionOpacity: 0.5, // Default half opacity
     captionPosition: "bottom", // Default bottom position
   });
 
@@ -186,35 +186,31 @@ export default function Page() {
 
   return (
     <div className="h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 relative overflow-hidden flex flex-col">
-      <div className="relative bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-sm px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between py-2 w-full gap-4">
-          {/* Brand Component */}
-          <div data-tour="brand" className="flex-shrink-0">
-            <Brand showVersion={true} />
-          </div>
+      <div className="relative bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-sm px-2 sm:px-4 lg:px-6 flex items-center justify-between py-2 w-full gap-4">
+        <div data-tour="brand" className="flex-shrink-0">
+          <Brand showVersion={true} />
+        </div>
 
-          {/* Enhanced Action Bar */}
-          <div data-tour="action-bar" className="flex-shrink-0">
-            <ActionBar
-              onCopy={handleCopyCode}
-              onDownload={handleDownloadImage}
-              onShowSettings={() => {
-                // Only toggle settings panel on mobile screens
-                if (typeof window !== "undefined" && window.innerWidth < 1024) {
-                  setShowSettingsPanel(!showSettingsPanel);
-                }
-              }}
-              onShowJSON={() => setShowJSONModal(true)}
-              onShowTips={() => setShowTipsModal(true)}
-              onShowGuide={() => setShowTourGuide(true)}
-              copySuccess={copySuccess}
-              isGenerating={isGenerating}
-              fileName={fileName}
-              onFileNameChange={setFileName}
-              showSettingsPanel={showSettingsPanel}
-              className="w-full lg:w-auto"
-            />
-          </div>
+        <div data-tour="action-bar" className="flex-shrink-0">
+          <ActionBar
+            onCopy={handleCopyCode}
+            onDownload={handleDownloadImage}
+            onShowSettings={() => {
+              // Only toggle settings panel on mobile screens
+              if (typeof window !== "undefined" && window.innerWidth < 1024) {
+                setShowSettingsPanel(!showSettingsPanel);
+              }
+            }}
+            onShowJSON={() => setShowJSONModal(true)}
+            onShowTips={() => setShowTipsModal(true)}
+            onShowGuide={() => setShowTourGuide(true)}
+            copySuccess={copySuccess}
+            isGenerating={isGenerating}
+            fileName={fileName}
+            onFileNameChange={setFileName}
+            showSettingsPanel={showSettingsPanel}
+            className="w-full lg:w-auto"
+          />
         </div>
       </div>
 

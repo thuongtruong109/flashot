@@ -24,8 +24,9 @@ import {
   getFileExtension,
   transparentGridPatterns,
 } from "@/utils";
+import Caption from "./Caption";
 
-interface CodeEditorProps {
+interface EditorProps {
   code: string;
   onChange: (code: string) => void;
   settings: CodeSettings;
@@ -38,7 +39,7 @@ interface CodeEditorProps {
   ) => void;
 }
 
-const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
+const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
   (
     {
       code,
@@ -276,50 +277,12 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
             : ""
         } ${className}`}
       >
-        {/* Caption - positioned outside the resizable container */}
-        {settings.showCaption && settings.captionText && !isFullscreen && (
-          <div
-            className={`absolute z-10 transition-all duration-300 pointer-events-none ${
-              settings.captionPosition === "top"
-                ? "-top-10 left-0 right-0 text-center"
-                : settings.captionPosition === "bottom"
-                ? "-bottom-10 left-0 right-0 text-center"
-                : settings.captionPosition === "left"
-                ? "top-0 bottom-0 -left-24 w-20 flex items-center justify-center"
-                : settings.captionPosition === "right"
-                ? "top-0 bottom-0 -right-24 w-20 flex items-center justify-center"
-                : "-bottom-10 left-0 right-0 text-center" // default to bottom
-            }`}
-            style={{
-              opacity: settings.captionOpacity || 1,
-              color: currentTheme.foreground,
-              fontStyle:
-                settings.captionStyle === "italic" ? "italic" : "normal",
-              fontSize: `${Math.max(11, settings.fontSize - 3)}px`,
-              fontFamily: settings.fontFamily,
-              writingMode:
-                settings.captionPosition === "left" ||
-                settings.captionPosition === "right"
-                  ? "vertical-rl"
-                  : "horizontal-tb",
-              textOrientation:
-                settings.captionPosition === "left" ||
-                settings.captionPosition === "right"
-                  ? "mixed"
-                  : "initial",
-              textShadow: "0 1px 3px rgba(0, 0, 0, 0.3)",
-              letterSpacing: "0.025em",
-            }}
-          >
-            {settings.captionText}
-          </div>
-        )}
-
         <div
           ref={setRefs}
           className={`relative transition-all duration-300 ${
             settings.showBackground ? "" : ""
-          } ${isResizing ? "select-none" : ""}`}
+          }
+        `}
           style={{
             background: isFullscreen
               ? "white"
@@ -357,7 +320,14 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
               ? `${settings.height}px`
               : "800px",
             display: "flex",
-            flexDirection: "column",
+            flexDirection:
+              settings.captionPosition === "top"
+                ? "column-reverse"
+                : settings.captionPosition === "left"
+                ? "row-reverse"
+                : settings.captionPosition === "right"
+                ? "row"
+                : "column",
             transform: !isFullscreen
               ? `translate(${position.x}px, ${position.y}px)`
               : undefined,
@@ -578,10 +548,12 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
                 )}
               </div>
             </div>
-          </div>{" "}
-          {/* End of shadow wrapper */}
-          {/* End of Snip Area Wrapper */}
-          {/* Resize Handles */}
+          </div>
+
+          {settings.showCaption && settings.captionText && !isFullscreen && (
+            <Caption settings={settings} currentTheme={currentTheme} />
+          )}
+
           {!isFullscreen && onUpdateSetting && (
             <>
               {/* Edge handles - positioned on outer frame */}
@@ -645,6 +617,6 @@ const CodeEditor = React.forwardRef<HTMLDivElement, CodeEditorProps>(
   }
 );
 
-CodeEditor.displayName = "CodeEditor";
+Editor.displayName = "Editor";
 
-export default CodeEditor;
+export default Editor;
