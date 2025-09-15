@@ -4,15 +4,16 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import { themes, copyToClipboard } from "@/utils";
 import { generateAndDownloadImage } from "@/lib/imageGenerator";
-import SettingsPanel from "app/playground/_components/SettingsPanel";
-import JSONDataSection from "app/playground/_components/JSONDataSection";
-import TipsModal from "app/playground/_components/TipsModal";
+import SettingsPanel from "@/app/playground/_components/SettingsPanel";
+import JSONDataSection from "@/app/playground/_components/JSONDataSection";
+import TipsModal from "@/app/playground/_components/TipsModal";
 import CodeEditor from "@/app/playground/_components/editor";
-import ActionBar from "app/playground/_components/ActionBar";
-import Brand from "app/playground/_components/Brand";
-import FloatingButtons from "app/playground/_components/FloatingButtons";
-import TourGuide from "app/playground/_components/TourGuide";
+import ActionBar from "@/app/playground/_components/ActionBar";
+import Brand from "@/app/playground/_components/Brand";
+import FloatingButtons from "@/app/playground/_components/FloatingButtons";
+import TourGuide from "@/app/playground/_components/TourGuide";
 import Image from "next/image";
+import HeaderNavigation from "@/app/playground/_components/header";
 
 const defaultCode = `function fibonacci(n) {
   if (n <= 1) return n;
@@ -190,6 +191,8 @@ export default function Page() {
         <div data-tour="brand" className="flex-shrink-0">
           <Brand showVersion={true} />
         </div>
+
+        <HeaderNavigation />
 
         <div data-tour="action-bar" className="flex-shrink-0">
           <ActionBar
