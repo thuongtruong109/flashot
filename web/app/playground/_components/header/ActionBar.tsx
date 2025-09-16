@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import CustomSelect from "./CustomSelect";
+import CustomSelect from "@/app/playground/_components/base/Select";
 import {
   Download,
   Copy,
@@ -183,7 +183,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   };
 
   return (
-    <div className={`flex flex-wrap items-center gap-3 ${className}`}>
+    <div className={`flex flex-wrap items-center space-x-2 ${className}`}>
       {/* Desktop Layout */}
       <div className="hidden lg:flex items-center space-x-3">
         {/* More dropdown using CustomSelect */}

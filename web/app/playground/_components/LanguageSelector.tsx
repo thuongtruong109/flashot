@@ -285,36 +285,30 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   };
 
   return (
-    <>
-      <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
-        <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
-          <Code className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
-          Programming Language
-        </label>
+    <div>
+      <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
+        <Code className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
+        Programming Language
+      </label>
 
-        <div className="relative">
-          <button
-            ref={buttonRef}
-            onClick={() => setIsOpen(!isOpen)}
-            className="w-full bg-gradient-to-r from-white/95 to-gray-50/95 hover:from-white hover:to-gray-50 border border-gray-200/60 hover:border-blue-300/60 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400/70 transition-all duration-300 font-medium text-gray-700 hover:text-gray-900 flex items-center justify-between shadow-lg hover:shadow-xl group backdrop-blur-sm"
-          >
-            <div className="flex items-center space-x-3">
-              <div className="flex-shrink-0">{selectedLang?.icon}</div>
-              <span className="text-sm font-semibold">
-                {selectedLang?.label}
-              </span>
-            </div>
-            <ChevronDown
-              className={`w-4 h-4 text-gray-400 transition-all duration-300 group-hover:text-blue-500 group-hover:scale-110 ${
-                isOpen ? "rotate-180 text-blue-500" : ""
-              }`}
-            />
-          </button>
+      <button
+        ref={buttonRef}
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full bg-gradient-to-r from-white/95 to-gray-50/95 hover:from-white hover:to-gray-50 border border-gray-200/60 rounded-lg px-3 py-2 transition-all duration-300 font-medium text-gray-700 hover:text-gray-900 flex items-center justify-between shadow-sm hover:shadow group backdrop-blur-sm"
+      >
+        <div className="flex items-center space-x-3">
+          <div className="flex-shrink-0">{selectedLang?.icon}</div>
+          <span className="text-sm font-semibold">{selectedLang?.label}</span>
         </div>
-      </div>
+        <ChevronDown
+          className={`w-4 h-4 text-gray-400 transition-all duration-300 group-hover:text-blue-500 group-hover:scale-110 ${
+            isOpen ? "rotate-180 text-blue-500" : ""
+          }`}
+        />
+      </button>
 
       <DropdownPortal />
-    </>
+    </div>
   );
 };
 

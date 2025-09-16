@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import MenuButton from "@/app/playground/_components/header/MenuButton";
+import { _PLAYGROUND_SETTINGS_TAB } from "@/shared";
 
 interface HeaderTopProps {
   settings: Partial<CodeSettings> & Record<string, any>;
@@ -46,37 +47,31 @@ export default function HeaderTop({
     activeColorValue: string;
   }[] = [
     {
-      label: "File",
+      label: _PLAYGROUND_SETTINGS_TAB.FILE,
       icon: <Folder className="w-4 h-4 text-yellow-600" />,
       activeColorClass: "text-yellow-600",
       activeColorValue: "#ca8a04",
     },
     {
-      label: "Edit",
-      icon: <Move className="w-4 h-4 text-blue-600" />,
-      activeColorClass: "text-blue-600",
-      activeColorValue: "#2563eb",
+      label: _PLAYGROUND_SETTINGS_TAB.SIZE,
+      icon: <Move className="w-4 h-4 text-green-600" />,
+      activeColorClass: "text-green-600",
+      activeColorValue: "#16a34",
     },
     {
-      label: "Select",
+      label: _PLAYGROUND_SETTINGS_TAB.THEME,
       icon: <Palette className="w-4 h-4 text-purple-600" />,
       activeColorClass: "text-purple-600",
       activeColorValue: "#7c3aed",
     },
     {
-      label: "View",
-      icon: <Monitor className="w-4 h-4 text-blue-600" />,
-      activeColorClass: "text-blue-600",
-      activeColorValue: "#2563eb",
-    },
-    {
-      label: "Background",
+      label: _PLAYGROUND_SETTINGS_TAB.VIEW,
       icon: <Layers className="w-4 h-4 text-cyan-600" />,
       activeColorClass: "text-cyan-600",
       activeColorValue: "#06b6d4",
     },
     {
-      label: "Caption",
+      label: _PLAYGROUND_SETTINGS_TAB.CAPTION,
       icon: <MessageSquare className="w-4 h-4 text-indigo-600" />,
       activeColorClass: "text-indigo-600",
       activeColorValue: "#4f46e5",

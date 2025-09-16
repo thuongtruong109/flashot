@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
-import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
+import { CodeSettings } from "@/types";
 import { copyToClipboard } from "@/utils";
 import { generateAndDownloadImage } from "@/lib/imageGenerator";
 import SettingsPanel from "@/app/playground/_components/SettingsPanel";
 import JSONDataSection from "@/app/playground/_components/JSONDataSection";
 import TipsModal from "@/app/playground/_components/TipsModal";
 import CodeEditor from "@/app/playground/_components/editor";
-import ActionBar from "@/app/playground/_components/ActionBar";
-import Brand from "@/app/playground/_components/Brand";
+import ActionBar from "@/app/playground/_components/header/ActionBar";
+import Brand from "@/app/playground/_components/header/Brand";
 import TourGuide from "@/app/playground/_components/TourGuide";
 import Image from "next/image";
 import HeaderNavigation from "@/app/playground/_components/header";
@@ -38,12 +38,12 @@ export default function Page() {
     exportFormat: "webp",
     width: undefined, // Auto-fit by default
     height: undefined, // Auto-fit by default
-    wordWrap: false, // Default word wrap disabled
-    showCaption: false, // Default caption disabled
-    captionText: "Figure: Sample code snippet", // Default caption text
-    captionStyle: "normal", // Default normal style
-    captionOpacity: 0.5, // Default half opacity
-    captionPosition: "bottom", // Default bottom position
+    wordWrap: false,
+    showCaption: false,
+    captionText: "Figure: Sample code snippet",
+    captionStyle: "normal",
+    captionOpacity: 0.5,
+    captionPosition: "bottom",
   });
 
   const [isGenerating, setIsGenerating] = useState(false);
@@ -59,10 +59,8 @@ export default function Page() {
   const codeRef = useRef<HTMLDivElement>(null);
   const settingsPanelRef = useRef<HTMLDivElement>(null);
 
-  // Handle client-side mounting
   useEffect(() => {
     setIsClient(true);
-    // Always start with settings panel closed
     setShowSettingsPanel(false);
   }, []);
 
@@ -102,7 +100,6 @@ export default function Page() {
     setSettings((prev) => ({ ...prev, [key]: value }));
   };
 
-  // Track active header menu without opening any main panel
   const [activeMenuLabel, setActiveMenuLabel] = useState<string | undefined>(
     undefined
   );
@@ -139,7 +136,7 @@ export default function Page() {
     async (format?: string) => {
       if (!codeRef.current) return;
 
-      const exportFormat = format || settings.exportFormat || "png";
+      const exportFormat = format || settings.exportFormat || "webp";
       setIsGenerating(true);
       try {
         const success = await generateAndDownloadImage(
@@ -176,12 +173,9 @@ export default function Page() {
     };
   }, [handleDownloadImage]);
 
-  // Handle code changes from the CodeEditor component
   const handleCodeChange = (newCode: string) => {
     setCode(newCode);
   };
-
-  // no-op: removed right-side main panel
 
   return (
     <div className="h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 relative overflow-hidden flex flex-col">
@@ -236,44 +230,6 @@ export default function Page() {
             fill
           />
 
-          {/* More tab floating actions */}
-          {activeMenuLabel === "More" && (
-            <div className="absolute right-6 top-4 z-30 flex gap-3">
-              <button
-                onClick={() => {
-                  if (typeof window !== "undefined") {
-                    const url =
-                      "https://github.com/thuongtruong109/flashot/issues";
-                    window.open(url, "_blank");
-                  }
-                }}
-                className="px-3 py-2 rounded-full text-sm font-medium text-gray-700 bg-white/80 backdrop-blur border border-gray-200 hover:bg-white shadow-sm hover:shadow-md transition-all"
-              >
-                Report Issue
-              </button>
-              <button
-                onClick={async () => {
-                  try {
-                    if (navigator.share) {
-                      await navigator.share({
-                        title: document.title,
-                        url: window.location.href,
-                      });
-                    } else if (navigator.clipboard) {
-                      await navigator.clipboard.writeText(window.location.href);
-                      alert("Link copied");
-                    }
-                  } catch (e) {
-                    // ignore
-                  }
-                }}
-                className="px-3 py-2 rounded-full text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 shadow-sm hover:shadow-md transition-all"
-              >
-                Share This
-              </button>
-            </div>
-          )}
-
           <div
             data-tour="code-editor"
             className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl z-10"
@@ -294,10 +250,8 @@ export default function Page() {
               onUpdateSetting={updateSetting}
             />
           </div>
-          {/* Removed Main Right Panel. Header nav now only filters SettingsPanel */}
         </div>
 
-        {/* Fixed Settings Sidebar */}
         <SettingsPanel
           data-tour="settings-panel"
           settings={settings}
@@ -313,7 +267,6 @@ export default function Page() {
         />
       </div>
 
-      {/* JSON Data Sheet Component */}
       <JSONDataSection
         code={code}
         settings={settings}
@@ -324,13 +277,11 @@ export default function Page() {
         onClose={() => setShowJSONModal(false)}
       />
 
-      {/* Tips Modal Component */}
       <TipsModal
         isOpen={showTipsModal}
         onClose={() => setShowTipsModal(false)}
       />
 
-      {/* Tour Guide Component */}
       <TourGuide
         isOpen={showTourGuide}
         onClose={() => setShowTourGuide(false)}

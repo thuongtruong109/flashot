@@ -218,40 +218,38 @@ const FontSelector: React.FC<FontSelectorProps> = ({
   };
 
   return (
-    <>
-      <div className="bg-white/60 backdrop-blur-sm rounded-xl p-2.5 border border-white/20 shadow-lg">
-        <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
-          <Type className="w-3.5 h-3.5 text-green-600 mr-1.5" />
-          Font Family
-        </label>
+    <div>
+      <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
+        <Type className="w-3.5 h-3.5 text-green-600 mr-1.5" />
+        Font Family
+      </label>
 
-        <div className="relative">
-          <button
-            ref={buttonRef}
-            onClick={() => setIsOpen(!isOpen)}
-            className="w-full bg-gradient-to-r from-white/80 via-white/70 to-white/80 backdrop-blur-sm hover:bg-gradient-to-r hover:from-white/90 hover:via-white/80 hover:to-white/90 border border-gray-200/60 hover:border-gray-300/80 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/60 transition-all duration-200 font-medium text-gray-700 hover:text-gray-900 flex items-center justify-between shadow-lg hover:shadow-xl hover:shadow-gray-200/40 group"
-          >
-            <div className="flex items-center space-x-3">
-              <div className="text-base group-hover:scale-110 transition-transform duration-200">
-                {selectedFontObj?.icon}
-              </div>
-              <span className="text-sm" style={{ fontFamily: selectedFont }}>
-                {selectedFontObj?.label}
-              </span>
+      <div className="relative">
+        <button
+          ref={buttonRef}
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-full bg-gradient-to-r from-white/80 via-white/70 to-white/80 backdrop-blur-sm hover:bg-gradient-to-r hover:from-white/90 hover:via-white/80 hover:to-white/90 border border-gray-200/60 hover:border-gray-300/80 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/60 transition-all duration-200 font-medium text-gray-700 hover:text-gray-900 flex items-center justify-between shadow-sm hover:shadow-md hover:shadow-gray-200/40 group"
+        >
+          <div className="flex items-center space-x-3">
+            <div className="text-base group-hover:scale-110 transition-transform duration-200">
+              {selectedFontObj?.icon}
             </div>
-            <ChevronDown
-              className={`w-4 h-4 transition-all duration-200 group-hover:scale-110 ${
-                isOpen
-                  ? "rotate-180 text-blue-500"
-                  : "text-gray-500 group-hover:text-gray-700"
-              }`}
-            />
-          </button>
-        </div>
+            <span className="text-sm" style={{ fontFamily: selectedFont }}>
+              {selectedFontObj?.label}
+            </span>
+          </div>
+          <ChevronDown
+            className={`w-4 h-4 transition-all duration-200 group-hover:scale-110 ${
+              isOpen
+                ? "rotate-180 text-blue-500"
+                : "text-gray-500 group-hover:text-gray-700"
+            }`}
+          />
+        </button>
       </div>
 
       <DropdownPortal />
-    </>
+    </div>
   );
 };
 

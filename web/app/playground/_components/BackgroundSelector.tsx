@@ -7,7 +7,6 @@ import { cn, transparentGridPatterns } from "@/utils";
 interface BackgroundSelectorProps {
   selectedBackground: string;
   onBackgroundChange: (background: string) => void;
-  isVisible: boolean;
 }
 
 const backgrounds = [
@@ -56,7 +55,6 @@ const backgrounds = [
 const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
   selectedBackground,
   onBackgroundChange,
-  isVisible,
 }) => {
   const [transparentGridDataUrl, setTransparentGridDataUrl] =
     useState<string>("");
@@ -68,8 +66,6 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
       setTransparentGridDataUrl(gridDataUrl);
     }
   }, []);
-
-  if (!isVisible) return null;
 
   const renderBackgroundButton = (
     bg: string,
@@ -163,11 +159,6 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
 
   return (
     <div>
-      <h4 className="text-xs font-semibold text-gray-700 mb-3 flex items-center">
-        <Palette className="w-3.5 h-3.5 text-indigo-600 mr-1.5" />
-        Frame Theme
-      </h4>
-
       <div className="space-y-4">
         {/* Gradients & Transparent */}
         <div className="grid grid-cols-5 gap-2">
