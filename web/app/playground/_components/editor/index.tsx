@@ -342,7 +342,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
               }}
             >
               {/* Window Controls */}
-              {settings.showWindowControls && (
+              {settings.showWindowHeader && (
                 <div
                   className="flex items-center justify-between px-4 py-3 border-b backdrop-blur-sm"
                   style={{
@@ -353,26 +353,114 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                     borderTopRightRadius: `${settings.borderRadius}px`,
                   }}
                 >
-                  <div className="flex items-center space-x-3">
-                    <div className="flex space-x-1.5">
-                      <div className="w-3 h-3 bg-gradient-to-br from-red-400 to-red-600 rounded-full shadow-sm"></div>
-                      <div className="w-3 h-3 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full shadow-sm"></div>
-                      <div className="w-3 h-3 bg-gradient-to-br from-green-400 to-green-600 rounded-full shadow-sm"></div>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      {settings.showFileName && fileName && fileName.trim() && (
-                        <span className="text-sm font-medium text-gray-600">
-                          {fileName}.{getFileExtension(settings.language)}
-                        </span>
-                      )}
-                    </div>
+                  <div className="flex items-center space-x-3 w-full">
+                    {/* Left align: traffic light left, right align: traffic light right */}
+                    {settings.windowHeaderAlign === "right" ? (
+                      <>
+                        <div className="flex items-center space-x-2 flex-1 min-w-0">
+                          {settings.showFileName &&
+                            fileName &&
+                            fileName.trim() && (
+                              <span className="text-sm font-medium text-gray-600 truncate">
+                                {fileName}.{getFileExtension(settings.language)}
+                              </span>
+                            )}
+                        </div>
+                        {settings.showLineCount && (
+                          <span className="flex items-center space-x-2 text-xs text-gray-500">
+                            {lineCount} lines
+                          </span>
+                        )}
+                        {settings.showTrafficLights !== false && (
+                          <div className="flex space-x-1.5 ml-4">
+                            {settings.showTrafficLightsColor !== false ? (
+                              <>
+                                <div
+                                  className="w-3 h-3 rounded-full shadow-sm"
+                                  style={{
+                                    background:
+                                      "linear-gradient(to bottom right, #ef4444, #dc2626)",
+                                  }}
+                                ></div>
+                                <div
+                                  className="w-3 h-3 rounded-full shadow-sm"
+                                  style={{
+                                    background:
+                                      "linear-gradient(to bottom right, #facc15, #ca8a04)",
+                                  }}
+                                ></div>
+                                <div
+                                  className="w-3 h-3 rounded-full shadow-sm"
+                                  style={{
+                                    background:
+                                      "linear-gradient(to bottom right, #22c55e, #15803d)",
+                                  }}
+                                ></div>
+                              </>
+                            ) : (
+                              <>
+                                <div className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"></div>
+                                <div className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"></div>
+                                <div className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"></div>
+                              </>
+                            )}
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {settings.showTrafficLights !== false && (
+                          <div className="flex space-x-1.5">
+                            {settings.showTrafficLightsColor !== false ? (
+                              <>
+                                <div
+                                  className="w-3 h-3 rounded-full shadow-sm"
+                                  style={{
+                                    background:
+                                      "linear-gradient(to bottom right, #ef4444, #dc2626)",
+                                  }}
+                                ></div>
+                                <div
+                                  className="w-3 h-3 rounded-full shadow-sm"
+                                  style={{
+                                    background:
+                                      "linear-gradient(to bottom right, #facc15, #ca8a04)",
+                                  }}
+                                ></div>
+                                <div
+                                  className="w-3 h-3 rounded-full shadow-sm"
+                                  style={{
+                                    background:
+                                      "linear-gradient(to bottom right, #22c55e, #15803d)",
+                                  }}
+                                ></div>
+                              </>
+                            ) : (
+                              <>
+                                <div className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"></div>
+                                <div className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"></div>
+                                <div className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"></div>
+                              </>
+                            )}
+                          </div>
+                        )}
+                        <div className="flex items-center space-x-2 flex-1 min-w-0">
+                          {settings.showFileName &&
+                            fileName &&
+                            fileName.trim() && (
+                              <span className="text-sm font-medium text-gray-600 truncate">
+                                {fileName}.{getFileExtension(settings.language)}
+                              </span>
+                            )}
+                        </div>
+                        {settings.showLineCount && (
+                          <span className="flex items-center space-x-2 text-xs text-gray-500">
+                            {lineCount} lines
+                          </span>
+                        )}
+                      </>
+                    )}
                   </div>
-
-                  {settings.showLineCount && (
-                    <span className="flex items-center space-x-2 text-xs text-gray-500">
-                      {lineCount} lines
-                    </span>
-                  )}
                 </div>
               )}
 
@@ -381,7 +469,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                 className="relative flex-1 flex flex-col"
                 style={{
                   backgroundColor: currentTheme.background,
-                  borderRadius: settings.showWindowControls
+                  borderRadius: settings.showWindowHeader
                     ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
                     : `${settings.borderRadius}px`,
                   minHeight: 0, // Allow flex item to shrink below content size
@@ -394,7 +482,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                     <div
                       className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-10"
                       style={{
-                        borderRadius: settings.showWindowControls
+                        borderRadius: settings.showWindowHeader
                           ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
                           : `${settings.borderRadius}px`,
                       }}
@@ -406,7 +494,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                       className="cursor-text flex-1 flex code-editor-scrollbar"
                       style={{
                         backgroundColor: currentTheme.background,
-                        borderRadius: settings.showWindowControls
+                        borderRadius: settings.showWindowHeader
                           ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
                           : `${settings.borderRadius}px`,
                         overflow: "auto",
@@ -481,7 +569,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                     className="relative flex-1 flex code-editor-scrollbar"
                     style={{
                       backgroundColor: currentTheme.background,
-                      borderRadius: settings.showWindowControls
+                      borderRadius: settings.showWindowHeader
                         ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
                         : `${settings.borderRadius}px`,
                       overflowY: "auto",

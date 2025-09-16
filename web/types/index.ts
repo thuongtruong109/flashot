@@ -16,7 +16,15 @@ export interface CodeSettings {
   showBackground: boolean;
   padding: number;
   borderRadius: number;
-  showWindowControls: boolean;
+  showWindowHeader: boolean;
+  windowHeaderAlign?: "left" | "right";
+  showTrafficLights?: boolean;
+  showTrafficLightsColor?: boolean;
+  trafficLightColors?: {
+    red?: string;
+    yellow?: string;
+    green?: string;
+  };
   fontFamily: string;
   fontSize: number;
   showLineCount?: boolean;

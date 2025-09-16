@@ -260,7 +260,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                       value: _PLAYGROUND_SETTINGS_TAB.CAPTION,
                       label: (
                         <span className="flex items-center gap-1.5 text-indigo-600">
-                          <MessageSquare className="size-3" />
+                          <MessageSquare className="size-3" />{" "}
                           {_PLAYGROUND_SETTINGS_TAB.CAPTION}
                         </span>
                       ),

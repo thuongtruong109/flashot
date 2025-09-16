@@ -239,9 +239,9 @@ const SettingsSheet: React.FC<SettingsSheetProps> = ({
                   </div>
                   <input
                     type="checkbox"
-                    checked={settings.showWindowControls}
+                    checked={settings.showWindowHeader}
                     onChange={(e) =>
-                      onUpdateSetting("showWindowControls", e.target.checked)
+                      onUpdateSetting("showWindowHeader", e.target.checked)
                     }
                     className="w-5 h-5 rounded text-blue-600 focus:ring-2 focus:ring-blue-500/50 transition-all"
                   />

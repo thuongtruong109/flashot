@@ -30,7 +30,7 @@ export default function Page() {
     showBackground: true,
     padding: 32,
     borderRadius: 10,
-    showWindowControls: true,
+    showWindowHeader: true,
     fontFamily: "Fira Code",
     fontSize: 14,
     showLineCount: true,
