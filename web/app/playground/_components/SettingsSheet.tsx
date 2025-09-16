@@ -264,13 +264,14 @@ const SettingsSheet: React.FC<SettingsSheetProps> = ({
             </div>
           </div>
           {/* Background Selector Component */}
-          <BackgroundSelector
-            selectedBackground={settings.background}
-            onBackgroundChange={(background) =>
-              onUpdateSetting("background", background)
-            }
-            isVisible={settings.showBackground}
-          />
+          {settings.showBackground && (
+            <BackgroundSelector
+              selectedBackground={settings.background}
+              onBackgroundChange={(background) =>
+                onUpdateSetting("background", background)
+              }
+            />
+          )}
         </div>
       </div>
     </>

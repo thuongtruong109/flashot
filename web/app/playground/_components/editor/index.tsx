@@ -344,35 +344,54 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
               {/* Window Controls */}
               {settings.showWindowHeader && (
                 <div
-                  className="flex items-center justify-between px-4 py-3 border-b backdrop-blur-sm"
+                  data-export-header
+                  data-window-header-align={settings.windowHeaderAlign}
+                  data-show-traffic-lights-color={
+                    settings.showTrafficLightsColor
+                  }
+                  className="flex items-center justify-between px-4 py-3 border-b space-x-2"
                   style={{
                     backgroundColor:
                       settings.theme === "light" ? "#f8f9fa" : "#2a2d3a",
-                    borderBottomColor: currentTheme.foreground + "20",
+                    borderBottomColor: `${currentTheme.foreground}20`,
                     borderTopLeftRadius: `${settings.borderRadius}px`,
                     borderTopRightRadius: `${settings.borderRadius}px`,
                   }}
                 >
-                  <div className="flex items-center space-x-3 w-full">
-                    {/* Left align: traffic light left, right align: traffic light right */}
-                    {settings.windowHeaderAlign === "right" ? (
-                      <>
-                        <div className="flex items-center space-x-2 flex-1 min-w-0">
-                          {settings.showFileName &&
-                            fileName &&
-                            fileName.trim() && (
-                              <span className="text-sm font-medium text-gray-600 truncate">
-                                {fileName}.{getFileExtension(settings.language)}
-                              </span>
-                            )}
-                        </div>
+                  {settings.windowHeaderAlign === "right" ? (
+                    <>
+                      {/* File name */}
+                      {settings.showFileName && fileName?.trim() && (
+                        <span
+                          data-export-filename
+                          className="text-sm font-medium text-gray-600 truncate min-w-0"
+                        >
+                          {fileName}.{getFileExtension(settings.language)}
+                        </span>
+                      )}
+
+                      {/* Line count and Traffic Lights grouped */}
+                      <div className="flex items-center order-last">
+                        {/* Line count */}
                         {settings.showLineCount && (
-                          <span className="flex items-center space-x-2 text-xs text-gray-500">
+                          <span
+                            data-export-linecount
+                            className="flex items-center space-x-2 text-xs text-gray-500"
+                          >
                             {lineCount} lines
                           </span>
                         )}
+
+                        {/* Traffic Lights Component */}
                         {settings.showTrafficLights !== false && (
-                          <div className="flex space-x-1.5 ml-4">
+                          <div
+                            data-export-traffic
+                            className="flex items-center space-x-1.5 ml-4"
+                            style={{
+                              height: "100%",
+                              marginRight: 0,
+                            }}
+                          >
                             {settings.showTrafficLightsColor !== false ? (
                               <>
                                 <div
@@ -381,36 +400,48 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                                     background:
                                       "linear-gradient(to bottom right, #ef4444, #dc2626)",
                                   }}
-                                ></div>
+                                />
                                 <div
                                   className="w-3 h-3 rounded-full shadow-sm"
                                   style={{
                                     background:
                                       "linear-gradient(to bottom right, #facc15, #ca8a04)",
                                   }}
-                                ></div>
+                                />
                                 <div
                                   className="w-3 h-3 rounded-full shadow-sm"
                                   style={{
                                     background:
                                       "linear-gradient(to bottom right, #22c55e, #15803d)",
                                   }}
-                                ></div>
+                                />
                               </>
                             ) : (
-                              <>
-                                <div className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"></div>
-                                <div className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"></div>
-                                <div className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"></div>
-                              </>
+                              Array.from({ length: 3 }).map((_, idx) => (
+                                <div
+                                  key={idx}
+                                  className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"
+                                />
+                              ))
                             )}
                           </div>
                         )}
-                      </>
-                    ) : (
-                      <>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* Traffic Lights and File name grouped */}
+                      <div className="flex items-center">
+                        {/* Traffic Lights Component */}
                         {settings.showTrafficLights !== false && (
-                          <div className="flex space-x-1.5">
+                          <div
+                            data-export-traffic
+                            className="flex items-center space-x-1.5"
+                            style={{
+                              height: "100%",
+                              marginRight: 12,
+                            }}
+                          >
                             {settings.showTrafficLightsColor !== false ? (
                               <>
                                 <div
@@ -419,48 +450,55 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                                     background:
                                       "linear-gradient(to bottom right, #ef4444, #dc2626)",
                                   }}
-                                ></div>
+                                />
                                 <div
                                   className="w-3 h-3 rounded-full shadow-sm"
                                   style={{
                                     background:
                                       "linear-gradient(to bottom right, #facc15, #ca8a04)",
                                   }}
-                                ></div>
+                                />
                                 <div
                                   className="w-3 h-3 rounded-full shadow-sm"
                                   style={{
                                     background:
                                       "linear-gradient(to bottom right, #22c55e, #15803d)",
                                   }}
-                                ></div>
+                                />
                               </>
                             ) : (
-                              <>
-                                <div className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"></div>
-                                <div className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"></div>
-                                <div className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"></div>
-                              </>
+                              Array.from({ length: 3 }).map((_, idx) => (
+                                <div
+                                  key={idx}
+                                  className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"
+                                />
+                              ))
                             )}
                           </div>
                         )}
-                        <div className="flex items-center space-x-2 flex-1 min-w-0">
-                          {settings.showFileName &&
-                            fileName &&
-                            fileName.trim() && (
-                              <span className="text-sm font-medium text-gray-600 truncate">
-                                {fileName}.{getFileExtension(settings.language)}
-                              </span>
-                            )}
-                        </div>
-                        {settings.showLineCount && (
-                          <span className="flex items-center space-x-2 text-xs text-gray-500">
-                            {lineCount} lines
+
+                        {/* File name */}
+                        {settings.showFileName && fileName?.trim() && (
+                          <span
+                            data-export-filename
+                            className="text-sm font-medium text-gray-600 truncate min-w-0"
+                          >
+                            {fileName}.{getFileExtension(settings.language)}
                           </span>
                         )}
-                      </>
-                    )}
-                  </div>
+                      </div>
+
+                      {/* Line count */}
+                      {settings.showLineCount && (
+                        <span
+                          data-export-linecount
+                          className="flex items-center space-x-2 text-xs text-gray-500"
+                        >
+                          {lineCount} lines
+                        </span>
+                      )}
+                    </>
+                  )}
                 </div>
               )}
 

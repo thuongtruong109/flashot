@@ -18,6 +18,8 @@ import {
   Edit2,
   BookOpen,
   MoreHorizontal,
+  CircleDotDashed,
+  Share2,
 } from "lucide-react";
 
 interface ActionBarProps {
@@ -54,8 +56,8 @@ const ActionBar: React.FC<ActionBarProps> = ({
     {
       value: "share",
       label: (
-        <span className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500" />
+        <span className="flex items-center text-[13px] text-green-500">
+          <Share2 className="size-3.5 mr-1" />
           Share
         </span>
       ),
@@ -63,8 +65,8 @@ const ActionBar: React.FC<ActionBarProps> = ({
     {
       value: "report",
       label: (
-        <span className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-gradient-to-r from-rose-500 to-pink-500" />
+        <span className="flex items-center text-[13px] text-indigo-500">
+          <CircleDotDashed className="size-3.5 mr-1" />
           Report issue
         </span>
       ),

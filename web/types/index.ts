@@ -20,11 +20,6 @@ export interface CodeSettings {
   windowHeaderAlign?: "left" | "right";
   showTrafficLights?: boolean;
   showTrafficLightsColor?: boolean;
-  trafficLightColors?: {
-    red?: string;
-    yellow?: string;
-    green?: string;
-  };
   fontFamily: string;
   fontSize: number;
   showLineCount?: boolean;

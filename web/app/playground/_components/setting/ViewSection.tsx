@@ -74,11 +74,11 @@ const ViewSection: React.FC<ViewSectionProps> = ({
       {/* Traffic Light Buttons Option (under Window Header) */}
       {settings.showWindowHeader && (
         <div className="space-y-2">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-1">
             <span className="inline-block size-2.5 rounded-full bg-gradient-to-br from-red-400 to-red-600 shadow" />
             <span className="inline-block size-2.5 rounded-full bg-gradient-to-br from-yellow-300 to-yellow-500 shadow" />
             <span className="inline-block size-2.5 rounded-full bg-gradient-to-br from-green-400 to-green-600 shadow" />
-            <span className="text-xs font-medium select-none text-gray-700">
+            <span className="text-xs font-medium select-none text-gray-700 ml-2">
               Traffic Light
             </span>
           </div>
@@ -164,6 +164,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                   <button
                     type="button"
                     className={`px-2 rounded-md text-xs font-medium transition-all duration-200 capitalize ${
+                      !settings.windowHeaderAlign ||
                       settings.windowHeaderAlign === "left"
                         ? "bg-green-500 text-white shadow-md py-1"
                         : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
