@@ -298,7 +298,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                     />
                   ) : (
                     <div
-                      className="flex-1 flex items-center space-x-2 group cursor-pointer px-2.5 py-1.5 rounded-md border border-gray-300/60 hover:border-gray-400/80"
+                      className="flex-1 flex items-center space-x-2 group cursor-pointer px-2.5 py-1.5 rounded-md border border-gray-200 hover:border-yellow-400"
                       onClick={handleFileNameEdit}
                     >
                       <span className="flex-1 text-xs font-medium text-gray-600 truncate group-hover:text-yellow-600 transition-colors">
@@ -308,40 +308,42 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                     </div>
                   )}
                 </div>
-                <div className="space-y-0">
-                  <label
-                    htmlFor="fileNameOpacity"
-                    className="text-xs flex items-center justify-between w-full"
-                  >
-                    <span className="text-xs text-gray-500">Opacity</span>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <label
+                      htmlFor="fileNameOpacity"
+                      className="text-xs flex items-center justify-between w-full"
+                    >
+                      <span className="text-xs text-gray-500">Opacity</span>
 
-                    <span className="text-xs bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent font-bold">
-                      {Math.round((settings.fileNameOpacity ?? 1) * 100)}%
-                    </span>
-                  </label>
-                  <input
-                    id="fileNameOpacity"
-                    type="range"
-                    min={0}
-                    max={1}
-                    step={0.01}
-                    value={settings.fileNameOpacity ?? 1}
-                    onChange={(e) =>
-                      onUpdateSetting(
-                        "fileNameOpacity",
-                        parseFloat(e.target.value)
-                      )
-                    }
-                    className="w-full h-1 bg-gradient-to-r from-yellow-200 to-orange-200 rounded-lg appearance-none cursor-pointer
+                      <span className="text-xs bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent font-bold">
+                        {Math.round((settings.fileNameOpacity ?? 1) * 100)}%
+                      </span>
+                    </label>
+                    <input
+                      id="fileNameOpacity"
+                      type="range"
+                      min={0}
+                      max={1}
+                      step={0.01}
+                      value={settings.fileNameOpacity ?? 1}
+                      onChange={(e) =>
+                        onUpdateSetting(
+                          "fileNameOpacity",
+                          parseFloat(e.target.value)
+                        )
+                      }
+                      className="w-full h-1 bg-gradient-to-r from-yellow-200 to-orange-200 rounded-lg appearance-none cursor-pointer
                     [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                     [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                     [&::-webkit-slider-thumb]:from-yellow-500 [&::-webkit-slider-thumb]:to-orange-500
                     [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
                     [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-                    style={{ verticalAlign: "middle" }}
-                  />
+                      style={{ verticalAlign: "middle" }}
+                    />
+                  </div>
                   {/* Font Weight slider */}
-                  <div>
+                  <div className="flex items-center space-x-2">
                     <label
                       htmlFor="fileNameFontWeight"
                       className="text-xs text-gray-700 flex items-center justify-between w-full"
@@ -374,7 +376,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                     />
                   </div>
                   {/* Font Size slider */}
-                  <div>
+                  <div className="flex items-center space-x-2">
                     <label
                       htmlFor="fileNameFontSize"
                       className="text-xs text-gray-700 flex items-center justify-between w-full"
@@ -458,38 +460,104 @@ const ViewSection: React.FC<ViewSectionProps> = ({
               </div>
             </label>
             {settings.showLineCount && (
-              <div className="space-y-2">
-                <label
-                  htmlFor="lineCountOpacity"
-                  className="text-xs text-gray-700 flex items-center justify-between w-full"
-                >
-                  <div className="flex items-center">
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <label
+                    htmlFor="lineCountOpacity"
+                    className="text-xs text-gray-700 flex items-center justify-between w-full"
+                  >
                     <span className="text-xs text-gray-500">Opacity</span>
-                  </div>
-                  <span className="text-xs bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-transparent font-bold">
-                    {Math.round((settings.lineCountOpacity ?? 1) * 100)}%
-                  </span>
-                </label>
-                <input
-                  id="lineCountOpacity"
-                  type="range"
-                  min={0}
-                  max={1}
-                  step={0.01}
-                  value={settings.lineCountOpacity ?? 1}
-                  onChange={(e) =>
-                    onUpdateSetting(
-                      "lineCountOpacity",
-                      parseFloat(e.target.value)
-                    )
-                  }
-                  className="w-full h-1 bg-gradient-to-r from-sky-200 to-blue-200 rounded-lg appearance-none cursor-pointer
+                    <span className="text-xs bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-transparent font-bold">
+                      {Math.round((settings.lineCountOpacity ?? 1) * 100)}%
+                    </span>
+                  </label>
+                  <input
+                    id="lineCountOpacity"
+                    type="range"
+                    min={0}
+                    max={1}
+                    step={0.01}
+                    value={settings.lineCountOpacity ?? 1}
+                    onChange={(e) =>
+                      onUpdateSetting(
+                        "lineCountOpacity",
+                        parseFloat(e.target.value)
+                      )
+                    }
+                    className="w-full h-1 bg-gradient-to-r from-sky-200 to-blue-200 rounded-lg appearance-none cursor-pointer
                     [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                     [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                     [&::-webkit-slider-thumb]:from-sky-500 [&::-webkit-slider-thumb]:to-blue-500
                     [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
                     [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-                />
+                  />
+                </div>
+                {/* Line Count Font Weight slider */}
+                <div className="flex items-center space-x-2">
+                  <label
+                    htmlFor="lineCountFontWeight"
+                    className="text-xs text-gray-700 flex items-center justify-between w-full"
+                  >
+                    <span className="text-xs text-gray-500">Font Weight</span>
+                    <span className="text-xs bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-transparent font-bold">
+                      {settings.lineCountFontWeight ?? 400}
+                    </span>
+                  </label>
+                  <input
+                    id="lineCountFontWeight"
+                    type="range"
+                    min={100}
+                    max={900}
+                    step={100}
+                    value={settings.lineCountFontWeight ?? 400}
+                    onChange={(e) =>
+                      onUpdateSetting(
+                        "lineCountFontWeight",
+                        parseInt(e.target.value)
+                      )
+                    }
+                    className="w-full h-1 bg-gradient-to-r from-sky-200 to-blue-200 rounded-lg appearance-none cursor-pointer
+                      [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                      [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                      [&::-webkit-slider-thumb]:from-sky-500 [&::-webkit-slider-thumb]:to-blue-500
+                      [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                      [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                    style={{ verticalAlign: "middle" }}
+                  />
+                </div>
+                {/* Line Count Font Size slider */}
+                <div className="flex items-center space-x-2">
+                  <label
+                    htmlFor="lineCountFontSize"
+                    className="text-xs text-gray-700 flex items-center justify-between w-full"
+                  >
+                    <span className="text-xs text-gray-500">Font Size</span>
+                    <span className="text-xs bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-transparent font-bold">
+                      {settings.lineCountFontSize ?? 13}px
+                    </span>
+                  </label>
+                  <input
+                    id="lineCountFontSize"
+                    type="range"
+                    min={10}
+                    max={20}
+                    step={1}
+                    value={settings.lineCountFontSize ?? 13}
+                    onChange={(e) =>
+                      onUpdateSetting(
+                        "lineCountFontSize",
+                        parseInt(e.target.value)
+                      )
+                    }
+                    className="w-full h-1 bg-gradient-to-r from-sky-200 to-blue-200 rounded-lg appearance-none cursor-pointer
+                      [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                      [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                      [&::-webkit-slider-thumb]:from-sky-500 [&::-webkit-slider-thumb]:to-blue-500
+                      [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                      [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                    style={{ verticalAlign: "middle" }}
+                  />
+                </div>
               </div>
             )}
           </div>

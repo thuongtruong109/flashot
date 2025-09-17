@@ -37,6 +37,8 @@ export interface CodeSettings {
   fileNameFontSize?: number;
   lineCountOpacity?: number;
   fileNameFontWeight?: number;
+  lineCountFontSize?: number;
+  lineCountFontWeight?: number;
 }
 
 export interface SyntaxMatch {

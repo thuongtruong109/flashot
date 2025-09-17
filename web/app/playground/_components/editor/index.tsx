@@ -382,7 +382,11 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                           <span
                             data-export-linecount
                             className="flex items-center space-x-2 text-xs text-gray-500"
-                            style={{ opacity: settings.lineCountOpacity ?? 1 }}
+                            style={{
+                              opacity: settings.lineCountOpacity ?? 1,
+                              fontWeight: settings.lineCountFontWeight ?? 400,
+                              fontSize: settings.lineCountFontSize ?? 12,
+                            }}
                           >
                             {lineCount} lines
                           </span>
@@ -504,7 +508,11 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                         <span
                           data-export-linecount
                           className="flex items-center space-x-2 text-[13px] text-white"
-                          style={{ opacity: settings.lineCountOpacity ?? 1 }}
+                          style={{
+                            opacity: settings.lineCountOpacity ?? 1,
+                            fontWeight: settings.lineCountFontWeight ?? 400,
+                            fontSize: settings.lineCountFontSize ?? 13,
+                          }}
                         >
                           {lineCount} lines
                         </span>

@@ -135,6 +135,8 @@ export const generateCodeImage = async (
               const lineCountOpacity =
                 parseFloat(linecountComputedStyle.opacity) || 1;
               const linecountColor = linecountComputedStyle.color;
+              const linecountFontWeight = linecountComputedStyle.fontWeight;
+              const linecountFontSize = linecountComputedStyle.fontSize;
               // Convert rgb/rgba to rgba with opacity
               let linecountFill = linecountColor;
               if (linecountColor.startsWith("rgb(")) {
@@ -162,7 +164,7 @@ export const generateCodeImage = async (
                   <!-- Filename -->
                   <text x="${filenameX}" y="24" font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="${fontWeight}" fill="${filenameFill}">${filenameText}</text>
                   <!-- Line count -->
-                  <text x="100%" y="24" dx="-16" text-anchor="end" font-family="Arial, sans-serif" font-size="14" fill="${linecountFill}">${linecountText}</text>
+                  <text x="100%" y="24" dx="-16" text-anchor="end" font-family="Arial, sans-serif" font-size="${linecountFontSize}" font-weight="${linecountFontWeight}" fill="${linecountFill}">${linecountText}</text>
                 </svg>
               `;
 
@@ -327,6 +329,8 @@ export const generateCodeImage = async (
             const lineCountOpacity =
               parseFloat(linecountComputedStyle.opacity) || 1;
             const linecountColor = linecountComputedStyle.color;
+            const linecountFontWeight = linecountComputedStyle.fontWeight;
+            const linecountFontSize = linecountComputedStyle.fontSize;
             // Convert rgb/rgba to rgba with opacity
             let linecountFill = linecountColor;
             if (linecountColor.startsWith("rgb(")) {
@@ -361,7 +365,7 @@ export const generateCodeImage = async (
                 <!-- Filename -->
                 <text x="${filenameX}" y="24" font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="${fontWeight}" fill="${filenameFill}">${filenameText}</text>
                 <!-- Line count -->
-                <text x="${linecountX}" y="24" dx="${linecountDx}" text-anchor="${linecountAnchor}" font-family="Arial, sans-serif" font-size="14" fill="${linecountFill}">${linecountText}</text>
+                <text x="${linecountX}" y="24" dx="${linecountDx}" text-anchor="${linecountAnchor}" font-family="Arial, sans-serif" font-size="${linecountFontSize}" font-weight="${linecountFontWeight}" fill="${linecountFill}">${linecountText}</text>
               </svg>
             `;
 
