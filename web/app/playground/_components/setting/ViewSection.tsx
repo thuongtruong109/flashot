@@ -4,7 +4,8 @@ import { Folder, Edit2 } from "lucide-react";
 import { getFileExtension } from "@/utils";
 import { _PLAYGROUND_SETTINGS_TAB } from "@/shared";
 import type { CodeSettings } from "@/types";
-import SubSectionTitle from "../base/SubSectionTitle";
+import SubTitle from "@/app/playground/_components/setting/sub/Title";
+import SubSeparate from "@/app/playground/_components/setting/sub/Separate";
 
 interface ViewSectionProps {
   settings: CodeSettings;
@@ -107,14 +108,23 @@ const ViewSection: React.FC<ViewSectionProps> = ({
         {/* Traffic Light Buttons Option (under Window Header) */}
         {settings.showWindowHeader && (
           <div className="space-y-2 pl-4">
-            <SubSectionTitle
-              icon={TrafficCone}
-              title="Traffic Light"
-              color="text-green-500"
-            />
-
             <label className="flex items-center justify-between cursor-pointer">
-              <span className="text-xs text-gray-500">Display</span>
+              <SubTitle
+                icon={TrafficCone}
+                title="Traffic Light"
+                color={
+                  settings.showTrafficLights
+                    ? "text-green-500"
+                    : "text-gray-500"
+                }
+              />
+              <SubSeparate
+                color={
+                  settings.showTrafficLights
+                    ? "border-green-600"
+                    : "border-gray-600"
+                }
+              />
               <div className="relative">
                 <input
                   type="checkbox"
@@ -226,128 +236,197 @@ const ViewSection: React.FC<ViewSectionProps> = ({
         )}
 
         {settings.showWindowHeader && (
-          <>
-            <div className="space-y-3 pl-4">
-              <SubSectionTitle
+          <div className="space-y-3 pl-4">
+            <label className="flex items-center justify-between cursor-pointer">
+              <SubTitle
                 icon={Folder}
                 title="File Name"
-                color="text-yellow-500"
+                color={
+                  settings.showFileName ? "text-yellow-500" : "text-gray-500"
+                }
               />
-              <label className="flex items-center justify-between cursor-pointer">
-                <span className="text-xs text-gray-500">Display</span>
-                <div className="relative">
-                  <input
-                    type="checkbox"
-                    checked={settings.showFileName || false}
-                    onChange={(e) =>
-                      onUpdateSetting("showFileName", e.target.checked)
-                    }
-                    className="sr-only peer"
-                  />
-                  <div
-                    className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
-                      settings.showFileName
-                        ? "bg-gradient-to-br from-yellow-100 to-yellow-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                        : ""
+              <SubSeparate
+                color={
+                  settings.showFileName
+                    ? "border-yellow-600"
+                    : "border-gray-600"
+                }
+              />
+              <div className="relative">
+                <input
+                  type="checkbox"
+                  checked={settings.showFileName || false}
+                  onChange={(e) =>
+                    onUpdateSetting("showFileName", e.target.checked)
+                  }
+                  className="sr-only peer"
+                />
+                <div
+                  className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                    settings.showFileName
+                      ? "bg-gradient-to-br from-yellow-100 to-yellow-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                      : ""
+                  }`}
+                >
+                  <svg
+                    className={`size-3 text-yellow-700 font-bold transition-opacity duration-200 ${
+                      settings.showFileName ? "opacity-100" : "opacity-0"
                     }`}
+                    fill="currentColor"
+                    stroke="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="3"
                   >
-                    <svg
-                      className={`size-3 text-yellow-700 font-bold transition-opacity duration-200 ${
-                        settings.showFileName ? "opacity-100" : "opacity-0"
-                      }`}
-                      fill="currentColor"
-                      stroke="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="3"
-                    >
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                    </svg>
-                  </div>
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                  </svg>
                 </div>
-              </label>
-              {settings.showFileName && (
-                <>
-                  <div className="flex items-center space-x-2">
-                    {isEditingFileName ? (
-                      <input
-                        ref={fileNameInputRef}
-                        type="text"
-                        value={tempFileName}
-                        onChange={(e) => handleFileNameChange(e.target.value)}
-                        onKeyDown={handleFileNameKeyDown}
-                        onBlur={handleFileNameBlur}
-                        className="flex-1 px-2.5 py-1.5 text-xs border border-gray-300/60 hover:border-gray-400/80 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/60 transition-all duration-200"
-                        placeholder="Enter filename"
-                      />
-                    ) : (
-                      <div
-                        className="flex-1 flex items-center space-x-2 group cursor-pointer px-2.5 py-1.5 rounded-md border border-gray-300/60 hover:border-gray-400/80"
-                        onClick={handleFileNameEdit}
-                      >
-                        <span className="flex-1 text-xs font-medium text-gray-600 truncate group-hover:text-yellow-600 transition-colors">
-                          {fileName}.{getFileExtension(settings.language)}
-                        </span>
-                        <Edit2 className="size-3 text-yellow-500 opacity-0 group-hover:opacity-100 transition-all" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex flex-col space-y-3">
-                    <label
-                      htmlFor="fileNameOpacity"
-                      className="text-xs flex items-center justify-between w-full"
-                    >
-                      <div className="flex items-center">
-                        <span className="text-xs text-gray-500">Opacity</span>
-                      </div>
-                      <span className="text-xs bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent font-bold">
-                        {Math.round((settings.fileNameOpacity ?? 1) * 100)}%
-                      </span>
-                    </label>
+              </div>
+            </label>
+            {settings.showFileName && (
+              <>
+                <div className="flex items-center space-x-2">
+                  {isEditingFileName ? (
                     <input
-                      id="fileNameOpacity"
-                      type="range"
-                      min={0}
-                      max={1}
-                      step={0.01}
-                      value={settings.fileNameOpacity ?? 1}
-                      onChange={(e) =>
-                        onUpdateSetting(
-                          "fileNameOpacity",
-                          parseFloat(e.target.value)
-                        )
-                      }
-                      className="w-full h-1.5 bg-gradient-to-r from-yellow-200 to-orange-200 rounded-lg appearance-none cursor-pointer
-                    [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
+                      ref={fileNameInputRef}
+                      type="text"
+                      value={tempFileName}
+                      onChange={(e) => handleFileNameChange(e.target.value)}
+                      onKeyDown={handleFileNameKeyDown}
+                      onBlur={handleFileNameBlur}
+                      className="flex-1 px-2.5 py-1.5 text-xs border border-gray-300/60 hover:border-gray-400/80 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/60 transition-all duration-200"
+                      placeholder="Enter filename"
+                    />
+                  ) : (
+                    <div
+                      className="flex-1 flex items-center space-x-2 group cursor-pointer px-2.5 py-1.5 rounded-md border border-gray-300/60 hover:border-gray-400/80"
+                      onClick={handleFileNameEdit}
+                    >
+                      <span className="flex-1 text-xs font-medium text-gray-600 truncate group-hover:text-yellow-600 transition-colors">
+                        {fileName}.{getFileExtension(settings.language)}
+                      </span>
+                      <Edit2 className="size-3 text-yellow-500 opacity-0 group-hover:opacity-100 transition-all" />
+                    </div>
+                  )}
+                </div>
+                <div className="space-y-0">
+                  <label
+                    htmlFor="fileNameOpacity"
+                    className="text-xs flex items-center justify-between w-full"
+                  >
+                    <span className="text-xs text-gray-500">Opacity</span>
+
+                    <span className="text-xs bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent font-bold">
+                      {Math.round((settings.fileNameOpacity ?? 1) * 100)}%
+                    </span>
+                  </label>
+                  <input
+                    id="fileNameOpacity"
+                    type="range"
+                    min={0}
+                    max={1}
+                    step={0.01}
+                    value={settings.fileNameOpacity ?? 1}
+                    onChange={(e) =>
+                      onUpdateSetting(
+                        "fileNameOpacity",
+                        parseFloat(e.target.value)
+                      )
+                    }
+                    className="w-full h-1 bg-gradient-to-r from-yellow-200 to-orange-200 rounded-lg appearance-none cursor-pointer
+                    [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                     [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                     [&::-webkit-slider-thumb]:from-yellow-500 [&::-webkit-slider-thumb]:to-orange-500
                     [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
                     [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                    style={{ verticalAlign: "middle" }}
+                  />
+                  {/* Font Weight slider */}
+                  <div>
+                    <label
+                      htmlFor="fileNameFontWeight"
+                      className="text-xs text-gray-700 flex items-center justify-between w-full"
+                    >
+                      <span className="text-xs text-gray-500">Font Weight</span>
+                      <span className="text-xs bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent font-bold">
+                        {settings.fileNameFontWeight ?? 400}
+                      </span>
+                    </label>
+                    <input
+                      id="fileNameFontWeight"
+                      type="range"
+                      min={100}
+                      max={900}
+                      step={100}
+                      value={settings.fileNameFontWeight ?? 400}
+                      onChange={(e) =>
+                        onUpdateSetting(
+                          "fileNameFontWeight",
+                          parseInt(e.target.value)
+                        )
+                      }
+                      className="w-full h-1 bg-gradient-to-r from-yellow-200 to-orange-200 rounded-lg appearance-none cursor-pointer
+                        [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                        [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                        [&::-webkit-slider-thumb]:from-yellow-500 [&::-webkit-slider-thumb]:to-orange-500
+                        [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                        [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
                       style={{ verticalAlign: "middle" }}
                     />
                   </div>
-                </>
-              )}
-            </div>
+                  {/* Font Size slider */}
+                  <div>
+                    <label
+                      htmlFor="fileNameFontSize"
+                      className="text-xs text-gray-700 flex items-center justify-between w-full"
+                    >
+                      <span className="text-xs text-gray-500">Font Size</span>
+                      <span className="text-xs bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent font-bold">
+                        {settings.fileNameFontSize ?? 14}px
+                      </span>
+                    </label>
+                    <input
+                      id="fileNameFontSize"
+                      type="range"
+                      min={10}
+                      max={20}
+                      step={1}
+                      value={settings.fileNameFontSize ?? 14}
+                      onChange={(e) =>
+                        onUpdateSetting(
+                          "fileNameFontSize",
+                          parseInt(e.target.value)
+                        )
+                      }
+                      className="w-full h-1 bg-gradient-to-r from-yellow-200 to-orange-200 rounded-lg appearance-none cursor-pointer
+                        [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                        [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                        [&::-webkit-slider-thumb]:from-yellow-500 [&::-webkit-slider-thumb]:to-orange-500
+                        [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                        [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                      style={{ verticalAlign: "middle" }}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        )}
 
+        {settings.showWindowHeader && (
+          <div className="space-y-3 pl-4">
             <label className="flex items-center justify-between cursor-pointer">
-              <div className="flex items-center space-x-1.5">
-                <BarChart3
-                  className={`size-4 transition-colors ${
-                    settings.showLineCount
-                      ? "text-orange-600 group-hover:text-orange-700"
-                      : "text-gray-400 group-hover:text-gray-500"
-                  }`}
-                />
-                <span
-                  className={`text-sm font-medium ${
-                    settings.showLineCount
-                      ? "text-orange-600 group-hover:text-orange-700"
-                      : "text-gray-500 group-hover:text-gray-700"
-                  }`}
-                >
-                  Line Count
-                </span>
-              </div>
+              <SubTitle
+                icon={BarChart3}
+                title="Line Count"
+                color={
+                  settings.showLineCount ? "text-sky-500" : "text-gray-500"
+                }
+              />
+              <SubSeparate
+                color={
+                  settings.showLineCount ? "border-sky-600" : "border-gray-600"
+                }
+              />
               <div className="relative">
                 <input
                   type="checkbox"
@@ -360,12 +439,12 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 <div
                   className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                     settings.showLineCount
-                      ? "bg-gradient-to-br from-orange-100 to-orange-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                      ? "bg-gradient-to-br from-sky-100 to-sky-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
                       : ""
                   }`}
                 >
                   <svg
-                    className={`size-3 text-orange-700 font-bold transition-opacity duration-200 ${
+                    className={`size-3 text-sky-700 font-bold transition-opacity duration-200 ${
                       settings.showLineCount ? "opacity-100" : "opacity-0"
                     }`}
                     fill="currentColor"
@@ -378,7 +457,42 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 </div>
               </div>
             </label>
-          </>
+            {settings.showLineCount && (
+              <div className="space-y-2">
+                <label
+                  htmlFor="lineCountOpacity"
+                  className="text-xs text-gray-700 flex items-center justify-between w-full"
+                >
+                  <div className="flex items-center">
+                    <span className="text-xs text-gray-500">Opacity</span>
+                  </div>
+                  <span className="text-xs bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-transparent font-bold">
+                    {Math.round((settings.lineCountOpacity ?? 1) * 100)}%
+                  </span>
+                </label>
+                <input
+                  id="lineCountOpacity"
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={settings.lineCountOpacity ?? 1}
+                  onChange={(e) =>
+                    onUpdateSetting(
+                      "lineCountOpacity",
+                      parseFloat(e.target.value)
+                    )
+                  }
+                  className="w-full h-1 bg-gradient-to-r from-sky-200 to-blue-200 rounded-lg appearance-none cursor-pointer
+                    [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                    [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                    [&::-webkit-slider-thumb]:from-sky-500 [&::-webkit-slider-thumb]:to-blue-500
+                    [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                    [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                />
+              </div>
+            )}
+          </div>
         )}
       </div>
 

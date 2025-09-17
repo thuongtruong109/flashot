@@ -107,10 +107,12 @@ export const generateCodeImage = async (
                 filenameX = 70; // Keep filename on left
               }
 
-              // Get file name opacity and color from the element's computed style
+              // Get file name opacity, color, font-weight, and font-size from the element's computed style
               const computedStyle = getComputedStyle(filenameEl);
               const fileNameOpacity = parseFloat(computedStyle.opacity) || 1;
               const color = computedStyle.color;
+              const fontWeight = computedStyle.fontWeight;
+              const fontSize = computedStyle.fontSize;
               // Convert rgb/rgba to rgba with opacity
               let filenameFill = color;
               if (color.startsWith("rgb(")) {
@@ -127,6 +129,30 @@ export const generateCodeImage = async (
                   filenameFill = `rgba(${rgbaMatch[1]}, ${rgbaMatch[2]}, ${rgbaMatch[3]}, ${fileNameOpacity})`;
                 }
               }
+
+              // Get line count opacity and color from the element's computed style
+              const linecountComputedStyle = getComputedStyle(linecountEl);
+              const lineCountOpacity =
+                parseFloat(linecountComputedStyle.opacity) || 1;
+              const linecountColor = linecountComputedStyle.color;
+              // Convert rgb/rgba to rgba with opacity
+              let linecountFill = linecountColor;
+              if (linecountColor.startsWith("rgb(")) {
+                const rgbMatch = linecountColor.match(
+                  /rgb\((\d+),\s*(\d+),\s*(\d+)\)/
+                );
+                if (rgbMatch) {
+                  linecountFill = `rgba(${rgbMatch[1]}, ${rgbMatch[2]}, ${rgbMatch[3]}, ${lineCountOpacity})`;
+                }
+              } else if (linecountColor.startsWith("rgba(")) {
+                // If already rgba, replace the alpha
+                const rgbaMatch = linecountColor.match(
+                  /rgba\((\d+),\s*(\d+),\s*(\d+),\s*[\d.]+\)/
+                );
+                if (rgbaMatch) {
+                  linecountFill = `rgba(${rgbaMatch[1]}, ${rgbaMatch[2]}, ${rgbaMatch[3]}, ${lineCountOpacity})`;
+                }
+              }
               const svg = `
                 <svg width="100%" height="40" xmlns="http://www.w3.org/2000/svg">
                   <!-- Traffic lights -->
@@ -134,9 +160,9 @@ export const generateCodeImage = async (
                   <circle cx="${trafficX[1]}" cy="20" r="6" fill="#facc15"/>
                   <circle cx="${trafficX[2]}" cy="20" r="6" fill="#22c55e"/>
                   <!-- Filename -->
-                  <text x="${filenameX}" y="24" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="${filenameFill}">${filenameText}</text>
+                  <text x="${filenameX}" y="24" font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="${fontWeight}" fill="${filenameFill}">${filenameText}</text>
                   <!-- Line count -->
-                  <text x="100%" y="24" dx="-16" text-anchor="end" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">${linecountText}</text>
+                  <text x="100%" y="24" dx="-16" text-anchor="end" font-family="Arial, sans-serif" font-size="14" fill="${linecountFill}">${linecountText}</text>
                 </svg>
               `;
 
@@ -273,10 +299,12 @@ export const generateCodeImage = async (
               }
             }
 
-            // Get file name opacity and color from the element's computed style
+            // Get file name opacity, color, font-weight, and font-size from the element's computed style
             const computedStyle = getComputedStyle(filenameEl);
             const fileNameOpacity = parseFloat(computedStyle.opacity) || 1;
             const color = computedStyle.color;
+            const fontWeight = computedStyle.fontWeight;
+            const fontSize = computedStyle.fontSize;
             // Convert rgb/rgba to rgba with opacity
             let filenameFill = color;
             if (color.startsWith("rgb(")) {
@@ -293,6 +321,30 @@ export const generateCodeImage = async (
                 filenameFill = `rgba(${rgbaMatch[1]}, ${rgbaMatch[2]}, ${rgbaMatch[3]}, ${fileNameOpacity})`;
               }
             }
+
+            // Get line count opacity and color from the element's computed style
+            const linecountComputedStyle = getComputedStyle(linecountEl);
+            const lineCountOpacity =
+              parseFloat(linecountComputedStyle.opacity) || 1;
+            const linecountColor = linecountComputedStyle.color;
+            // Convert rgb/rgba to rgba with opacity
+            let linecountFill = linecountColor;
+            if (linecountColor.startsWith("rgb(")) {
+              const rgbMatch = linecountColor.match(
+                /rgb\((\d+),\s*(\d+),\s*(\d+)\)/
+              );
+              if (rgbMatch) {
+                linecountFill = `rgba(${rgbMatch[1]}, ${rgbMatch[2]}, ${rgbMatch[3]}, ${lineCountOpacity})`;
+              }
+            } else if (linecountColor.startsWith("rgba(")) {
+              // If already rgba, replace the alpha
+              const rgbaMatch = linecountColor.match(
+                /rgba\((\d+),\s*(\d+),\s*(\d+),\s*[\d.]+\)/
+              );
+              if (rgbaMatch) {
+                linecountFill = `rgba(${rgbaMatch[1]}, ${rgbaMatch[2]}, ${rgbaMatch[3]}, ${lineCountOpacity})`;
+              }
+            }
             // Create SVG with exact positioning
             const svg = `
               <svg width="100%" height="40" xmlns="http://www.w3.org/2000/svg">
@@ -307,9 +359,9 @@ export const generateCodeImage = async (
               showColor ? "#22c55e" : "#4b5563"
             }"/>
                 <!-- Filename -->
-                <text x="${filenameX}" y="24" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="${filenameFill}">${filenameText}</text>
+                <text x="${filenameX}" y="24" font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="${fontWeight}" fill="${filenameFill}">${filenameText}</text>
                 <!-- Line count -->
-                <text x="${linecountX}" y="24" dx="${linecountDx}" text-anchor="${linecountAnchor}" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">${linecountText}</text>
+                <text x="${linecountX}" y="24" dx="${linecountDx}" text-anchor="${linecountAnchor}" font-family="Arial, sans-serif" font-size="14" fill="${linecountFill}">${linecountText}</text>
               </svg>
             `;
 

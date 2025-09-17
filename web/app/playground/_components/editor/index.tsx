@@ -365,7 +365,11 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                         <span
                           data-export-filename
                           className="text-sm font-medium text-white truncate min-w-0"
-                          style={{ opacity: settings.fileNameOpacity ?? 1 }}
+                          style={{
+                            opacity: settings.fileNameOpacity ?? 1,
+                            fontWeight: settings.fileNameFontWeight ?? 400,
+                            fontSize: settings.fileNameFontSize ?? 14,
+                          }}
                         >
                           {fileName}.{getFileExtension(settings.language)}
                         </span>
@@ -378,6 +382,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                           <span
                             data-export-linecount
                             className="flex items-center space-x-2 text-xs text-gray-500"
+                            style={{ opacity: settings.lineCountOpacity ?? 1 }}
                           >
                             {lineCount} lines
                           </span>
@@ -483,7 +488,11 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                           <span
                             data-export-filename
                             className="text-sm font-medium text-white truncate min-w-0"
-                            style={{ opacity: settings.fileNameOpacity ?? 1 }}
+                            style={{
+                              opacity: settings.fileNameOpacity ?? 1,
+                              fontWeight: settings.fileNameFontWeight ?? 400,
+                              fontSize: settings.fileNameFontSize ?? 14,
+                            }}
                           >
                             {fileName}.{getFileExtension(settings.language)}
                           </span>
@@ -494,7 +503,8 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                       {settings.showLineCount && (
                         <span
                           data-export-linecount
-                          className="flex items-center space-x-2 text-xs text-gray-500"
+                          className="flex items-center space-x-2 text-[13px] text-white"
+                          style={{ opacity: settings.lineCountOpacity ?? 1 }}
                         >
                           {lineCount} lines
                         </span>

@@ -33,9 +33,13 @@ export default function Page() {
     showWindowHeader: true,
     fontFamily: "Fira Code",
     fontSize: 14,
-    showLineCount: true,
+    showTrafficLights: true,
     showFileName: true,
     fileNameOpacity: 0.5,
+    fileNameFontWeight: 400,
+    fileNameFontSize: 14,
+    showLineCount: true,
+    lineCountOpacity: 0.5,
     exportFormat: "webp",
     width: undefined, // Auto-fit by default
     height: undefined, // Auto-fit by default
@@ -179,7 +183,7 @@ export default function Page() {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 relative overflow-hidden flex flex-col">
+    <div className="h-screen bg-white bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 relative overflow-hidden flex flex-col">
       <div className="relative bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-sm px-2 sm:px-4 lg:px-6 flex items-center justify-between py-2 w-full gap-4">
         <div data-tour="brand" className="flex-shrink-0">
           <Brand showVersion={true} />
