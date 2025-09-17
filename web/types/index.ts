@@ -33,6 +33,8 @@ export interface CodeSettings {
   captionStyle?: "italic" | "normal";
   captionOpacity?: number;
   captionPosition?: "top" | "bottom" | "left" | "right";
+  /** Opacity for file name display, 0-1 */
+  fileNameOpacity?: number;
 }
 
 export interface SyntaxMatch {

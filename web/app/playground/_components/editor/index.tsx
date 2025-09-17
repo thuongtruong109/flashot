@@ -364,7 +364,8 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                       {settings.showFileName && fileName?.trim() && (
                         <span
                           data-export-filename
-                          className="text-sm font-medium text-gray-600 truncate min-w-0"
+                          className="text-sm font-medium text-white truncate min-w-0"
+                          style={{ opacity: settings.fileNameOpacity ?? 1 }}
                         >
                           {fileName}.{getFileExtension(settings.language)}
                         </span>
@@ -481,7 +482,8 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                         {settings.showFileName && fileName?.trim() && (
                           <span
                             data-export-filename
-                            className="text-sm font-medium text-gray-600 truncate min-w-0"
+                            className="text-sm font-medium text-white truncate min-w-0"
+                            style={{ opacity: settings.fileNameOpacity ?? 1 }}
                           >
                             {fileName}.{getFileExtension(settings.language)}
                           </span>

@@ -302,9 +302,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
               {activeMenu === _PLAYGROUND_SETTINGS_TAB.FILE && (
                 <FileSection
                   settings={settings}
-                  fileName={fileName}
                   onUpdateSetting={onUpdateSetting}
-                  onFileNameChange={onFileNameChange}
                 />
               )}
               {activeMenu === _PLAYGROUND_SETTINGS_TAB.SIZE && (
@@ -323,9 +321,11 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
               {activeMenu === _PLAYGROUND_SETTINGS_TAB.VIEW && (
                 <ViewSection
                   settings={settings}
+                  fileName={fileName}
                   showLineNumbers={showLineNumbers}
                   onUpdateSetting={onUpdateSetting}
                   onToggleLineNumbers={onToggleLineNumbers}
+                  onFileNameChange={onFileNameChange}
                 />
               )}
               {activeMenu === _PLAYGROUND_SETTINGS_TAB.CAPTION && (

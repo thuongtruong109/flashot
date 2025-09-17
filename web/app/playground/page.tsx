@@ -35,6 +35,7 @@ export default function Page() {
     fontSize: 14,
     showLineCount: true,
     showFileName: true,
+    fileNameOpacity: 0.5,
     exportFormat: "webp",
     width: undefined, // Auto-fit by default
     height: undefined, // Auto-fit by default

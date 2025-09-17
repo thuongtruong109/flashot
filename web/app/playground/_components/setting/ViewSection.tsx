@@ -1,15 +1,21 @@
-import React from "react";
-import { Monitor, Hash, BarChart3, WrapText } from "lucide-react";
-import { CodeSettings } from "@/types";
+import { Monitor, Hash, BarChart3, WrapText, TrafficCone } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
+import { Folder, Edit2 } from "lucide-react";
+import { getFileExtension } from "@/utils";
+import { _PLAYGROUND_SETTINGS_TAB } from "@/shared";
+import type { CodeSettings } from "@/types";
+import SubSectionTitle from "../base/SubSectionTitle";
 
 interface ViewSectionProps {
   settings: CodeSettings;
   showLineNumbers: boolean;
+  fileName: string;
   onUpdateSetting: <K extends keyof CodeSettings>(
     key: K,
     value: CodeSettings[K]
   ) => void;
   onToggleLineNumbers: (value: boolean) => void;
+  onFileNameChange: (fileName: string) => void;
 }
 
 const ViewSection: React.FC<ViewSectionProps> = ({
@@ -17,135 +23,237 @@ const ViewSection: React.FC<ViewSectionProps> = ({
   showLineNumbers,
   onUpdateSetting,
   onToggleLineNumbers,
+  fileName,
+  onFileNameChange,
 }) => {
-  return (
-    <div className="space-y-4">
-      {/* Window Header Display Toggle */}
-      <label className="flex items-center justify-between cursor-pointer">
-        <div className="flex items-center space-x-1.5">
-          <Monitor
-            className={`size-4 transition-colors ${
-              settings.showWindowHeader
-                ? "text-blue-600 group-hover:text-blue-700"
-                : "text-gray-400 group-hover:text-gray-500"
-            }`}
-          />
-          <span
-            className={`text-sm font-medium ${
-              settings.showWindowHeader
-                ? "text-blue-600 group-hover:text-blue-700"
-                : "text-gray-500 group-hover:text-gray-700"
-            }`}
-          >
-            Window Header
-          </span>
-        </div>
-        <div className="relative">
-          <input
-            type="checkbox"
-            checked={settings.showWindowHeader}
-            onChange={(e) =>
-              onUpdateSetting("showWindowHeader", e.target.checked)
-            }
-            className="sr-only peer"
-          />
-          <div
-            className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
-              settings.showWindowHeader
-                ? "bg-gradient-to-br from-blue-100 to-blue-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                : ""
-            }`}
-          >
-            <svg
-              className={`size-3 text-blue-700 font-bold transition-opacity duration-200 ${
-                settings.showWindowHeader ? "opacity-100" : "opacity-0"
-              }`}
-              fill="currentColor"
-              stroke="none"
-              viewBox="0 0 24 24"
-              strokeWidth="3"
-            >
-              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-            </svg>
-          </div>
-        </div>
-      </label>
+  const [isEditingFileName, setIsEditingFileName] = useState(false);
+  const [tempFileName, setTempFileName] = useState(fileName);
+  const fileNameInputRef = useRef<HTMLInputElement>(null);
 
-      {/* Traffic Light Buttons Option (under Window Header) */}
-      {settings.showWindowHeader && (
-        <div className="space-y-2">
-          <div className="flex items-center gap-1">
-            <span className="inline-block size-2.5 rounded-full bg-gradient-to-br from-red-400 to-red-600 shadow" />
-            <span className="inline-block size-2.5 rounded-full bg-gradient-to-br from-yellow-300 to-yellow-500 shadow" />
-            <span className="inline-block size-2.5 rounded-full bg-gradient-to-br from-green-400 to-green-600 shadow" />
-            <span className="text-xs font-medium select-none text-gray-700 ml-2">
-              Traffic Light
+  useEffect(() => {
+    setTempFileName(fileName);
+  }, [fileName]);
+
+  useEffect(() => {
+    if (isEditingFileName && fileNameInputRef.current) {
+      fileNameInputRef.current.focus();
+    }
+  }, [isEditingFileName]);
+
+  const handleFileNameEdit = () => setIsEditingFileName(true);
+  const handleFileNameChange = (value: string) => {
+    setTempFileName(value);
+    onFileNameChange(value.trim());
+  };
+  const handleFileNameKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" || e.key === "Escape") setIsEditingFileName(false);
+  };
+  const handleFileNameBlur = () => setIsEditingFileName(false);
+
+  return (
+    <>
+      <div className="space-y-4">
+        {/* Window Header Display Toggle */}
+        <label className="flex items-center justify-between cursor-pointer">
+          <div className="flex items-center space-x-1.5">
+            <Monitor
+              className={`size-4 transition-colors ${
+                settings.showWindowHeader
+                  ? "text-blue-600 group-hover:text-blue-700"
+                  : "text-gray-400 group-hover:text-gray-500"
+              }`}
+            />
+            <span
+              className={`text-sm font-medium ${
+                settings.showWindowHeader
+                  ? "text-blue-600 group-hover:text-blue-700"
+                  : "text-gray-500 group-hover:text-gray-700"
+              }`}
+            >
+              Window Header
             </span>
           </div>
-
-          <label className="flex items-center justify-between cursor-pointer">
-            <span className="text-xs text-gray-500">Display:</span>
-            <div className="relative">
-              <input
-                type="checkbox"
-                checked={settings.showTrafficLights !== false}
-                onChange={(e) =>
-                  onUpdateSetting("showTrafficLights", e.target.checked)
-                }
-                className="sr-only peer"
-              />
-              <div
-                className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
-                  settings.showTrafficLights !== false
-                    ? "bg-gradient-to-br from-blue-100 to-blue-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                    : ""
+          <div className="relative">
+            <input
+              type="checkbox"
+              checked={settings.showWindowHeader}
+              onChange={(e) =>
+                onUpdateSetting("showWindowHeader", e.target.checked)
+              }
+              className="sr-only peer"
+            />
+            <div
+              className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                settings.showWindowHeader
+                  ? "bg-gradient-to-br from-blue-100 to-blue-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                  : ""
+              }`}
+            >
+              <svg
+                className={`size-3 text-blue-700 font-bold transition-opacity duration-200 ${
+                  settings.showWindowHeader ? "opacity-100" : "opacity-0"
                 }`}
+                fill="currentColor"
+                stroke="none"
+                viewBox="0 0 24 24"
+                strokeWidth="3"
               >
-                <svg
-                  className={`size-3 text-blue-700 font-bold transition-opacity duration-200 ${
-                    settings.showTrafficLights !== false
-                      ? "opacity-100"
-                      : "opacity-0"
-                  }`}
-                  fill="currentColor"
-                  stroke="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="3"
-                >
-                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                </svg>
-              </div>
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+              </svg>
             </div>
-          </label>
+          </div>
+        </label>
 
-          {settings.showTrafficLights !== false && (
-            <>
+        {/* Traffic Light Buttons Option (under Window Header) */}
+        {settings.showWindowHeader && (
+          <div className="space-y-2 pl-4">
+            <SubSectionTitle
+              icon={TrafficCone}
+              title="Traffic Light"
+              color="text-green-500"
+            />
+
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-xs text-gray-500">Display</span>
+              <div className="relative">
+                <input
+                  type="checkbox"
+                  checked={settings.showTrafficLights !== false}
+                  onChange={(e) =>
+                    onUpdateSetting("showTrafficLights", e.target.checked)
+                  }
+                  className="sr-only peer"
+                />
+                <div
+                  className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                    settings.showTrafficLights !== false
+                      ? "bg-gradient-to-br from-green-100 to-green-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                      : ""
+                  }`}
+                >
+                  <svg
+                    className={`size-3 text-green-700 font-bold transition-opacity duration-200 ${
+                      settings.showTrafficLights !== false
+                        ? "opacity-100"
+                        : "opacity-0"
+                    }`}
+                    fill="currentColor"
+                    stroke="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="3"
+                  >
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                  </svg>
+                </div>
+              </div>
+            </label>
+
+            {settings.showTrafficLights !== false && (
+              <>
+                <label className="flex items-center justify-between cursor-pointer">
+                  <span className="text-xs text-gray-500">Color</span>
+                  <div className="relative">
+                    <input
+                      type="checkbox"
+                      checked={settings.showTrafficLightsColor !== false}
+                      onChange={(e) =>
+                        onUpdateSetting(
+                          "showTrafficLightsColor",
+                          e.target.checked
+                        )
+                      }
+                      className="sr-only peer"
+                    />
+                    <div
+                      className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                        settings.showTrafficLightsColor !== false
+                          ? "bg-gradient-to-br from-green-100 to-green-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                          : ""
+                      }`}
+                    >
+                      <svg
+                        className={`size-3 text-green-700 font-bold transition-opacity duration-200 ${
+                          settings.showTrafficLightsColor !== false
+                            ? "opacity-100"
+                            : "opacity-0"
+                        }`}
+                        fill="currentColor"
+                        stroke="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="3"
+                      >
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                      </svg>
+                    </div>
+                  </div>
+                </label>
+
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-gray-500">Align</span>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      type="button"
+                      className={`px-2 rounded-md text-xs font-medium transition-all duration-200 capitalize ${
+                        !settings.windowHeaderAlign ||
+                        settings.windowHeaderAlign === "left"
+                          ? "bg-green-500 text-white shadow-md py-1"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                      }`}
+                      onClick={() =>
+                        onUpdateSetting("windowHeaderAlign", "left")
+                      }
+                    >
+                      Left
+                    </button>
+                    <button
+                      type="button"
+                      className={`px-2 rounded-md text-xs font-medium transition-all duration-200 capitalize ${
+                        settings.windowHeaderAlign === "right"
+                          ? "bg-green-500 text-white shadow-md py-1"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                      }`}
+                      onClick={() =>
+                        onUpdateSetting("windowHeaderAlign", "right")
+                      }
+                    >
+                      Right
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
+        {settings.showWindowHeader && (
+          <>
+            <div className="space-y-3 pl-4">
+              <SubSectionTitle
+                icon={Folder}
+                title="File Name"
+                color="text-yellow-500"
+              />
               <label className="flex items-center justify-between cursor-pointer">
-                <span className="text-xs text-gray-500">Color:</span>
+                <span className="text-xs text-gray-500">Display</span>
                 <div className="relative">
                   <input
                     type="checkbox"
-                    checked={settings.showTrafficLightsColor !== false}
+                    checked={settings.showFileName || false}
                     onChange={(e) =>
-                      onUpdateSetting(
-                        "showTrafficLightsColor",
-                        e.target.checked
-                      )
+                      onUpdateSetting("showFileName", e.target.checked)
                     }
                     className="sr-only peer"
                   />
                   <div
                     className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
-                      settings.showTrafficLightsColor !== false
-                        ? "bg-gradient-to-br from-blue-100 to-blue-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                      settings.showFileName
+                        ? "bg-gradient-to-br from-yellow-100 to-yellow-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
                         : ""
                     }`}
                   >
                     <svg
-                      className={`size-3 text-blue-700 font-bold transition-opacity duration-200 ${
-                        settings.showTrafficLightsColor !== false
-                          ? "opacity-100"
-                          : "opacity-0"
+                      className={`size-3 text-yellow-700 font-bold transition-opacity duration-200 ${
+                        settings.showFileName ? "opacity-100" : "opacity-0"
                       }`}
                       fill="currentColor"
                       stroke="none"
@@ -157,186 +265,223 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                   </div>
                 </div>
               </label>
+              {settings.showFileName && (
+                <>
+                  <div className="flex items-center space-x-2">
+                    {isEditingFileName ? (
+                      <input
+                        ref={fileNameInputRef}
+                        type="text"
+                        value={tempFileName}
+                        onChange={(e) => handleFileNameChange(e.target.value)}
+                        onKeyDown={handleFileNameKeyDown}
+                        onBlur={handleFileNameBlur}
+                        className="flex-1 px-2.5 py-1.5 text-xs border border-gray-300/60 hover:border-gray-400/80 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/60 transition-all duration-200"
+                        placeholder="Enter filename"
+                      />
+                    ) : (
+                      <div
+                        className="flex-1 flex items-center space-x-2 group cursor-pointer px-2.5 py-1.5 rounded-md border border-gray-300/60 hover:border-gray-400/80"
+                        onClick={handleFileNameEdit}
+                      >
+                        <span className="flex-1 text-xs font-medium text-gray-600 truncate group-hover:text-yellow-600 transition-colors">
+                          {fileName}.{getFileExtension(settings.language)}
+                        </span>
+                        <Edit2 className="size-3 text-yellow-500 opacity-0 group-hover:opacity-100 transition-all" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex flex-col space-y-3">
+                    <label
+                      htmlFor="fileNameOpacity"
+                      className="text-xs flex items-center justify-between w-full"
+                    >
+                      <div className="flex items-center">
+                        <span className="text-xs text-gray-500">Opacity</span>
+                      </div>
+                      <span className="text-xs bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent font-bold">
+                        {Math.round((settings.fileNameOpacity ?? 1) * 100)}%
+                      </span>
+                    </label>
+                    <input
+                      id="fileNameOpacity"
+                      type="range"
+                      min={0}
+                      max={1}
+                      step={0.01}
+                      value={settings.fileNameOpacity ?? 1}
+                      onChange={(e) =>
+                        onUpdateSetting(
+                          "fileNameOpacity",
+                          parseFloat(e.target.value)
+                        )
+                      }
+                      className="w-full h-1.5 bg-gradient-to-r from-yellow-200 to-orange-200 rounded-lg appearance-none cursor-pointer
+                    [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
+                    [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                    [&::-webkit-slider-thumb]:from-yellow-500 [&::-webkit-slider-thumb]:to-orange-500
+                    [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                    [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                      style={{ verticalAlign: "middle" }}
+                    />
+                  </div>
+                </>
+              )}
+            </div>
 
-              <div className="flex justify-between items-center">
-                <span className="text-xs text-gray-500">Align:</span>
-                <div className="flex items-center space-x-2">
-                  <button
-                    type="button"
-                    className={`px-2 rounded-md text-xs font-medium transition-all duration-200 capitalize ${
-                      !settings.windowHeaderAlign ||
-                      settings.windowHeaderAlign === "left"
-                        ? "bg-green-500 text-white shadow-md py-1"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+            <label className="flex items-center justify-between cursor-pointer">
+              <div className="flex items-center space-x-1.5">
+                <BarChart3
+                  className={`size-4 transition-colors ${
+                    settings.showLineCount
+                      ? "text-orange-600 group-hover:text-orange-700"
+                      : "text-gray-400 group-hover:text-gray-500"
+                  }`}
+                />
+                <span
+                  className={`text-sm font-medium ${
+                    settings.showLineCount
+                      ? "text-orange-600 group-hover:text-orange-700"
+                      : "text-gray-500 group-hover:text-gray-700"
+                  }`}
+                >
+                  Line Count
+                </span>
+              </div>
+              <div className="relative">
+                <input
+                  type="checkbox"
+                  checked={settings.showLineCount || false}
+                  onChange={(e) =>
+                    onUpdateSetting("showLineCount", e.target.checked)
+                  }
+                  className="sr-only peer"
+                />
+                <div
+                  className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                    settings.showLineCount
+                      ? "bg-gradient-to-br from-orange-100 to-orange-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                      : ""
+                  }`}
+                >
+                  <svg
+                    className={`size-3 text-orange-700 font-bold transition-opacity duration-200 ${
+                      settings.showLineCount ? "opacity-100" : "opacity-0"
                     }`}
-                    onClick={() => onUpdateSetting("windowHeaderAlign", "left")}
+                    fill="currentColor"
+                    stroke="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="3"
                   >
-                    Left
-                  </button>
-                  <button
-                    type="button"
-                    className={`px-2 rounded-md text-xs font-medium transition-all duration-200 capitalize ${
-                      settings.windowHeaderAlign === "right"
-                        ? "bg-green-500 text-white shadow-md py-1"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
-                    }`}
-                    onClick={() =>
-                      onUpdateSetting("windowHeaderAlign", "right")
-                    }
-                  >
-                    Right
-                  </button>
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                  </svg>
                 </div>
               </div>
-            </>
-          )}
-        </div>
-      )}
+            </label>
+          </>
+        )}
+      </div>
 
-      <label className="flex items-center justify-between cursor-pointer">
-        <div className="flex items-center space-x-1.5">
-          <Hash
-            className={`size-4 transition-colors ${
-              showLineNumbers
-                ? "text-green-600 group-hover:text-green-700"
-                : "text-gray-400 group-hover:text-gray-500"
-            }`}
-          />
-          <span
-            className={`text-sm font-medium ${
-              showLineNumbers
-                ? "text-green-600 group-hover:text-green-700"
-                : "text-gray-500 group-hover:text-gray-700"
-            }`}
-          >
-            Line Numbers
-          </span>
-        </div>
-        <div className="relative">
-          <input
-            type="checkbox"
-            checked={showLineNumbers}
-            onChange={(e) => onToggleLineNumbers(e.target.checked)}
-            className="sr-only peer"
-          />
-          <div
-            className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
-              showLineNumbers
-                ? "bg-gradient-to-br from-green-100 to-green-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                : ""
-            }`}
-          >
-            <svg
-              className={`size-3 text-green-700 font-bold transition-opacity duration-200 ${
-                showLineNumbers ? "opacity-100" : "opacity-0"
+      <div>
+        <label className="flex items-center justify-between cursor-pointer">
+          <div className="flex items-center space-x-1.5">
+            <Hash
+              className={`size-4 transition-colors ${
+                showLineNumbers
+                  ? "text-green-600 group-hover:text-green-700"
+                  : "text-gray-400 group-hover:text-gray-500"
               }`}
-              fill="currentColor"
-              stroke="none"
-              viewBox="0 0 24 24"
-              strokeWidth="3"
+            />
+            <span
+              className={`text-sm font-medium ${
+                showLineNumbers
+                  ? "text-green-600 group-hover:text-green-700"
+                  : "text-gray-500 group-hover:text-gray-700"
+              }`}
             >
-              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-            </svg>
+              Line Numbers
+            </span>
           </div>
-        </div>
-      </label>
+          <div className="relative">
+            <input
+              type="checkbox"
+              checked={showLineNumbers}
+              onChange={(e) => onToggleLineNumbers(e.target.checked)}
+              className="sr-only peer"
+            />
+            <div
+              className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                showLineNumbers
+                  ? "bg-gradient-to-br from-green-100 to-green-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                  : ""
+              }`}
+            >
+              <svg
+                className={`size-3 text-green-700 font-bold transition-opacity duration-200 ${
+                  showLineNumbers ? "opacity-100" : "opacity-0"
+                }`}
+                fill="currentColor"
+                stroke="none"
+                viewBox="0 0 24 24"
+                strokeWidth="3"
+              >
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+              </svg>
+            </div>
+          </div>
+        </label>
+      </div>
 
-      <label className="flex items-center justify-between cursor-pointer">
-        <div className="flex items-center space-x-1.5">
-          <BarChart3
-            className={`size-4 transition-colors ${
-              settings.showLineCount
-                ? "text-orange-600 group-hover:text-orange-700"
-                : "text-gray-400 group-hover:text-gray-500"
-            }`}
-          />
-          <span
-            className={`text-sm font-medium ${
-              settings.showLineCount
-                ? "text-orange-600 group-hover:text-orange-700"
-                : "text-gray-500 group-hover:text-gray-700"
-            }`}
-          >
-            Line Count
-          </span>
-        </div>
-        <div className="relative">
-          <input
-            type="checkbox"
-            checked={settings.showLineCount || false}
-            onChange={(e) => onUpdateSetting("showLineCount", e.target.checked)}
-            className="sr-only peer"
-          />
-          <div
-            className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
-              settings.showLineCount
-                ? "bg-gradient-to-br from-orange-100 to-orange-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                : ""
-            }`}
-          >
-            <svg
-              className={`size-3 text-orange-700 font-bold transition-opacity duration-200 ${
-                settings.showLineCount ? "opacity-100" : "opacity-0"
+      <div>
+        <label className="flex items-center justify-between cursor-pointer">
+          <div className="flex items-center space-x-1.5">
+            <WrapText
+              className={`size-4 transition-colors ${
+                settings.wordWrap
+                  ? "text-blue-600 group-hover:text-blue-700"
+                  : "text-gray-400 group-hover:text-gray-500"
               }`}
-              fill="currentColor"
-              stroke="none"
-              viewBox="0 0 24 24"
-              strokeWidth="3"
-            >
-              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-            </svg>
-          </div>
-        </div>
-      </label>
-
-      <label className="flex items-center justify-between cursor-pointer">
-        <div className="flex items-center space-x-1.5">
-          <WrapText
-            className={`size-4 transition-colors ${
-              settings.wordWrap
-                ? "text-blue-600 group-hover:text-blue-700"
-                : "text-gray-400 group-hover:text-gray-500"
-            }`}
-          />
-          <span
-            className={`text-sm font-medium ${
-              settings.wordWrap
-                ? "text-blue-600 group-hover:text-blue-700"
-                : "text-gray-500 group-hover:text-gray-700"
-            }`}
-          >
-            Word Wrap
-          </span>
-        </div>
-        <div className="relative">
-          <input
-            type="checkbox"
-            checked={settings.wordWrap || false}
-            onChange={(e) => onUpdateSetting("wordWrap", e.target.checked)}
-            className="sr-only peer"
-          />
-          <div
-            className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
-              settings.wordWrap
-                ? "bg-gradient-to-br from-blue-100 to-blue-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                : ""
-            }`}
-          >
-            <svg
-              className={`size-3 text-blue-700 font-bold transition-opacity duration-200 ${
-                settings.wordWrap ? "opacity-100" : "opacity-0"
+            />
+            <span
+              className={`text-sm font-medium ${
+                settings.wordWrap
+                  ? "text-blue-600 group-hover:text-blue-700"
+                  : "text-gray-500 group-hover:text-gray-700"
               }`}
-              fill="currentColor"
-              stroke="none"
-              viewBox="0 0 24 24"
-              strokeWidth="3"
             >
-              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-            </svg>
+              Word Wrap
+            </span>
           </div>
-        </div>
-      </label>
-    </div>
+          <div className="relative">
+            <input
+              type="checkbox"
+              checked={settings.wordWrap || false}
+              onChange={(e) => onUpdateSetting("wordWrap", e.target.checked)}
+              className="sr-only peer"
+            />
+            <div
+              className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                settings.wordWrap
+                  ? "bg-gradient-to-br from-blue-100 to-blue-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                  : ""
+              }`}
+            >
+              <svg
+                className={`size-3 text-blue-700 font-bold transition-opacity duration-200 ${
+                  settings.wordWrap ? "opacity-100" : "opacity-0"
+                }`}
+                fill="currentColor"
+                stroke="none"
+                viewBox="0 0 24 24"
+                strokeWidth="3"
+              >
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+              </svg>
+            </div>
+          </div>
+        </label>
+      </div>
+    </>
   );
 };
 

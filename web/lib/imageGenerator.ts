@@ -107,7 +107,26 @@ export const generateCodeImage = async (
                 filenameX = 70; // Keep filename on left
               }
 
-              // Create SVG with exact positioning
+              // Get file name opacity and color from the element's computed style
+              const computedStyle = getComputedStyle(filenameEl);
+              const fileNameOpacity = parseFloat(computedStyle.opacity) || 1;
+              const color = computedStyle.color;
+              // Convert rgb/rgba to rgba with opacity
+              let filenameFill = color;
+              if (color.startsWith("rgb(")) {
+                const rgbMatch = color.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+                if (rgbMatch) {
+                  filenameFill = `rgba(${rgbMatch[1]}, ${rgbMatch[2]}, ${rgbMatch[3]}, ${fileNameOpacity})`;
+                }
+              } else if (color.startsWith("rgba(")) {
+                // If already rgba, replace the alpha
+                const rgbaMatch = color.match(
+                  /rgba\((\d+),\s*(\d+),\s*(\d+),\s*[\d.]+\)/
+                );
+                if (rgbaMatch) {
+                  filenameFill = `rgba(${rgbaMatch[1]}, ${rgbaMatch[2]}, ${rgbaMatch[3]}, ${fileNameOpacity})`;
+                }
+              }
               const svg = `
                 <svg width="100%" height="40" xmlns="http://www.w3.org/2000/svg">
                   <!-- Traffic lights -->
@@ -115,7 +134,7 @@ export const generateCodeImage = async (
                   <circle cx="${trafficX[1]}" cy="20" r="6" fill="#facc15"/>
                   <circle cx="${trafficX[2]}" cy="20" r="6" fill="#22c55e"/>
                   <!-- Filename -->
-                  <text x="${filenameX}" y="24" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#52525b">${filenameText}</text>
+                  <text x="${filenameX}" y="24" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="${filenameFill}">${filenameText}</text>
                   <!-- Line count -->
                   <text x="100%" y="24" dx="-16" text-anchor="end" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">${linecountText}</text>
                 </svg>
@@ -254,6 +273,26 @@ export const generateCodeImage = async (
               }
             }
 
+            // Get file name opacity and color from the element's computed style
+            const computedStyle = getComputedStyle(filenameEl);
+            const fileNameOpacity = parseFloat(computedStyle.opacity) || 1;
+            const color = computedStyle.color;
+            // Convert rgb/rgba to rgba with opacity
+            let filenameFill = color;
+            if (color.startsWith("rgb(")) {
+              const rgbMatch = color.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+              if (rgbMatch) {
+                filenameFill = `rgba(${rgbMatch[1]}, ${rgbMatch[2]}, ${rgbMatch[3]}, ${fileNameOpacity})`;
+              }
+            } else if (color.startsWith("rgba(")) {
+              // If already rgba, replace the alpha
+              const rgbaMatch = color.match(
+                /rgba\((\d+),\s*(\d+),\s*(\d+),\s*[\d.]+\)/
+              );
+              if (rgbaMatch) {
+                filenameFill = `rgba(${rgbaMatch[1]}, ${rgbaMatch[2]}, ${rgbaMatch[3]}, ${fileNameOpacity})`;
+              }
+            }
             // Create SVG with exact positioning
             const svg = `
               <svg width="100%" height="40" xmlns="http://www.w3.org/2000/svg">
@@ -268,7 +307,7 @@ export const generateCodeImage = async (
               showColor ? "#22c55e" : "#4b5563"
             }"/>
                 <!-- Filename -->
-                <text x="${filenameX}" y="24" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#52525b">${filenameText}</text>
+                <text x="${filenameX}" y="24" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="${filenameFill}">${filenameText}</text>
                 <!-- Line count -->
                 <text x="${linecountX}" y="24" dx="${linecountDx}" text-anchor="${linecountAnchor}" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">${linecountText}</text>
               </svg>
