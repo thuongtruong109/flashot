@@ -31,18 +31,18 @@ const themes: {
   colors: { bg: string; fg: string; accent: string };
   icon: React.ReactNode;
 }[] = [
-  {
-    value: "dark",
-    label: "Dark",
-    icon: <Moon className="w-4 h-4 text-slate-600" />,
-    colors: { bg: "#1e1e1e", fg: "#d4d4d4", accent: "#569cd6" },
-  },
-  {
-    value: "light",
-    label: "Light",
-    icon: <Sun className="w-4 h-4 text-yellow-500" />,
-    colors: { bg: "#ffffff", fg: "#333333", accent: "#0000ff" },
-  },
+  // {
+  //   value: "dark",
+  //   label: "Dark",
+  //   icon: <Moon className="w-4 h-4 text-slate-600" />,
+  //   colors: { bg: "#1e1e1e", fg: "#d4d4d4", accent: "#569cd6" },
+  // },
+  // {
+  //   value: "light",
+  //   label: "Light",
+  //   icon: <Sun className="w-4 h-4 text-yellow-500" />,
+  //   colors: { bg: "#ffffff", fg: "#333333", accent: "#0000ff" },
+  // },
   {
     value: "monokai",
     label: "Monokai",

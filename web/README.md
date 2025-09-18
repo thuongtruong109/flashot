@@ -144,3 +144,5 @@ If you have any questions or need help, please open an issue on GitHub.
 ---
 
 Built with ❤️ by the Flashot Team
+
+<!-- https://ray.so/ -->

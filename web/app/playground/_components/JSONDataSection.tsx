@@ -7,7 +7,6 @@ import { CodeSettings } from "@/types";
 interface JSONDataSectionProps {
   code: string;
   settings: CodeSettings;
-  showLineNumbers: boolean;
   onCopyJSON: () => void;
   copySuccess: boolean;
   isOpen: boolean;
@@ -17,7 +16,6 @@ interface JSONDataSectionProps {
 const JSONDataSection: React.FC<JSONDataSectionProps> = ({
   code,
   settings,
-  showLineNumbers,
   onCopyJSON,
   copySuccess,
   isOpen,
@@ -26,7 +24,6 @@ const JSONDataSection: React.FC<JSONDataSectionProps> = ({
   const jsonData = {
     code,
     settings,
-    showLineNumbers,
     timestamp: new Date().toISOString(),
   };
 

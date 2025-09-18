@@ -41,6 +41,10 @@ export interface CodeSettings {
   fileNameFontWeight?: number;
   lineCountFontSize?: number;
   lineCountFontWeight?: number;
+  showLineNumbers?: boolean;
+  lineNumberOpacity?: number;
+  lineNumberBorder?: boolean;
+  lineNumberTextAlign?: "left" | "center" | "right";
 }
 
 export interface SyntaxMatch {

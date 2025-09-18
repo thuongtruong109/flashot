@@ -30,7 +30,7 @@ interface EditorProps {
   code: string;
   onChange: (code: string) => void;
   settings: CodeSettings;
-  showLineNumbers: boolean;
+  showLineNumbers?: boolean;
   fileName?: string;
   className?: string;
   onUpdateSetting?: <K extends keyof CodeSettings>(
@@ -562,16 +562,28 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                       }}
                     >
                       {/* Line Numbers */}
-                      {showLineNumbers && (
+                      {(showLineNumbers ??
+                        settings.showLineNumbers ??
+                        true) && (
                         <div
-                          className="select-none flex flex-col items-end py-4 pl-3 pr-2 flex-shrink-0"
+                          className={`select-none flex flex-col py-[15px] pl-3 pr-2 flex-shrink-0 ${
+                            settings.lineNumberTextAlign === "left"
+                              ? "items-start"
+                              : settings.lineNumberTextAlign === "center"
+                              ? "items-center"
+                              : "items-end"
+                          }`}
                           style={{
                             backgroundColor: currentTheme.background,
                             color: currentTheme.foreground + "60",
                             fontFamily: `${settings.fontFamily}, monospace`,
                             fontSize: `${settings.fontSize}px`,
                             lineHeight: 1.6,
-                            borderRight: `1px solid ${currentTheme.foreground}20`,
+                            opacity: settings.lineNumberOpacity,
+                            borderRight:
+                              settings.lineNumberBorder === true
+                                ? `1px solid ${currentTheme.foreground}20`
+                                : "1px solid transparent",
                             minWidth: "40px",
                           }}
                         >
@@ -586,7 +598,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                         </div>
                       )}
 
-                      {/* Code Display */}
+                      {/* Preview Mode Code Display */}
                       <div className="flex-1">
                         <pre
                           ref={previewRef}
@@ -638,17 +650,26 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                     }}
                   >
                     {/* Line Numbers for Edit Mode */}
-                    {showLineNumbers && (
+                    {(showLineNumbers ?? settings.showLineNumbers ?? true) && (
                       <div
-                        className="select-none flex flex-col items-end py-4 pl-3 pr-2 flex-shrink-0"
+                        className={`select-none flex flex-col py-[15px] pl-3 pr-2 flex-shrink-0 ${
+                          settings.lineNumberTextAlign === "left"
+                            ? "items-start"
+                            : settings.lineNumberTextAlign === "center"
+                            ? "items-center"
+                            : "items-end"
+                        }`}
                         style={{
                           color: currentTheme.foreground + "60",
                           fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
                           fontSize: `${settings.fontSize}px`,
                           lineHeight: 1.6,
-                          borderRight: `1px solid ${currentTheme.foreground}20`,
+                          opacity: settings.lineNumberOpacity ?? 1,
+                          borderRight: settings.lineNumberBorder
+                            ? `1px solid ${currentTheme.foreground}20`
+                            : "none",
                           minWidth: "40px",
-                          minHeight: "fit-content", // Let it size naturally
+                          minHeight: "fit-content",
                         }}
                       >
                         {code.split("\n").map((_, index) => (
@@ -670,7 +691,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                         onChange={(e) => onChange(e.target.value)}
                         onKeyDown={handleKeyDown}
                         onBlur={handleBlur}
-                        className="py-4 pl-4 pr-2 w-full resize-none border-none outline-none bg-transparent hover:bg-white/5 transition-colors duration-200"
+                        className="pt-4 pb-0 !mb-0 pl-4 pr-2 w-full resize-none border-none outline-none hover:bg-white/5 transition-colors duration-200"
                         style={{
                           color: currentTheme.foreground,
                           fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,

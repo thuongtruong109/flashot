@@ -298,7 +298,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       >
         <div className="flex items-center space-x-3">
           <div className="flex-shrink-0">{selectedLang?.icon}</div>
-          <span className="text-sm font-semibold">{selectedLang?.label}</span>
+          <span className="text-sm">{selectedLang?.label}</span>
         </div>
         <ChevronDown
           className={`w-4 h-4 text-gray-400 transition-all duration-300 group-hover:text-blue-500 group-hover:scale-110 ${

@@ -12,6 +12,7 @@ import ActionBar from "@/app/playground/_components/header/ActionBar";
 import Brand from "@/app/playground/_components/header/Brand";
 import TourGuide from "@/app/playground/_components/TourGuide";
 import Image from "next/image";
+import { DEFAULT_CODE_SETTINGS } from "@/shared";
 import HeaderNavigation from "@/app/playground/_components/header";
 
 const defaultCode = `function fibonacci(n) {
@@ -23,44 +24,11 @@ console.log(fibonacci(10)); // 55`;
 
 export default function Page() {
   const [code, setCode] = useState(defaultCode);
-  const [settings, setSettings] = useState<CodeSettings>({
-    language: "javascript",
-    theme: "dracula",
-    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    showBackground: true,
-    padding: 30,
-    borderRadius: 10,
-    showWindowHeader: true,
-    windowHeaderAlign: "left",
-    fontFamily: "Fira Code",
-    fontSize: 14,
-    showTrafficLights: true,
-    showTrafficLightsColor: true,
-    showFileName: true,
-    fileName: "index",
-    fileNameOpacity: 0.5,
-    fileNameFontWeight: 400,
-    fileNameFontSize: 13,
-    showLineCount: true,
-    lineCountOpacity: 0.5,
-    lineCountFontWeight: 400,
-    lineCountFontSize: 13,
-    exportType: "image",
-    exportFormat: "webp",
-    width: undefined, // Auto-fit by default
-    height: undefined, // Auto-fit by default
-    wordWrap: false,
-    showCaption: false,
-    captionText: "Figure: Sample code snippet",
-    captionStyle: "normal",
-    captionOpacity: 0.5,
-    captionPosition: "bottom",
-  });
+  const [settings, setSettings] = useState<CodeSettings>(DEFAULT_CODE_SETTINGS);
 
   const [isGenerating, setIsGenerating] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [jsonCopySuccess, setJsonCopySuccess] = useState(false);
-  const [showLineNumbers, setShowLineNumbers] = useState(true);
   const [showTipsModal, setShowTipsModal] = useState(false);
   const [showJSONModal, setShowJSONModal] = useState(false);
   const [showTourGuide, setShowTourGuide] = useState(false);
@@ -133,7 +101,6 @@ export default function Page() {
     const jsonData = {
       code,
       settings,
-      showLineNumbers,
       timestamp: new Date().toISOString(),
     };
     const success = await copyToClipboard(JSON.stringify(jsonData, null, 2));
@@ -306,7 +273,6 @@ export default function Page() {
               code={code}
               onChange={handleCodeChange}
               settings={settings}
-              showLineNumbers={showLineNumbers}
               fileName={fileName}
               className="w-full h-full"
               onUpdateSetting={updateSetting}
@@ -317,13 +283,11 @@ export default function Page() {
         <SettingsPanel
           data-tour="settings-panel"
           settings={settings}
-          showLineNumbers={showLineNumbers}
           fileName={fileName}
           isVisible={showSettingsPanel}
           activeMenu={activeMenuLabel}
           onChangeActiveMenu={(m) => setActiveMenuLabel(m)}
           onUpdateSetting={updateSetting}
-          onToggleLineNumbers={setShowLineNumbers}
           onFileNameChange={setFileName}
           onToggleVisibility={() => setShowSettingsPanel(!showSettingsPanel)}
         />
@@ -332,7 +296,6 @@ export default function Page() {
       <JSONDataSection
         code={code}
         settings={settings}
-        showLineNumbers={showLineNumbers}
         onCopyJSON={handleCopyJSON}
         copySuccess={jsonCopySuccess}
         isOpen={showJSONModal}

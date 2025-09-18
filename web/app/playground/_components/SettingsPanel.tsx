@@ -1,6 +1,5 @@
 interface SettingsPanelProps {
   settings: CodeSettings;
-  showLineNumbers: boolean;
   fileName: string;
   isVisible?: boolean;
   activeMenu?: string;
@@ -9,7 +8,6 @@ interface SettingsPanelProps {
     key: K,
     value: CodeSettings[K]
   ) => void;
-  onToggleLineNumbers: (value: boolean) => void;
   onFileNameChange: (fileName: string) => void;
   onToggleVisibility?: () => void;
 }
@@ -52,20 +50,18 @@ import {
   RotateCcw,
 } from "lucide-react";
 import CustomSelect from "./base/Select";
-import { _PLAYGROUND_SETTINGS_TAB } from "@/shared";
+import { _PLAYGROUND_SETTINGS_TAB, DEFAULT_CODE_SETTINGS } from "@/shared";
 import ViewSection from "./setting/ViewSection";
 
 const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
   (
     {
       settings,
-      showLineNumbers,
       fileName,
       isVisible = true,
       activeMenu = _PLAYGROUND_SETTINGS_TAB.VIEW,
       onChangeActiveMenu,
       onUpdateSetting,
-      onToggleLineNumbers,
       onFileNameChange,
       onToggleVisibility,
     },
@@ -174,39 +170,9 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
     }, []);
 
     const handleResetToDefaults = () => {
-      const defaultSettings = {
-        language: "javascript",
-        theme: "dracula",
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        showBackground: true,
-        padding: 32,
-        borderRadius: 10,
-        showWindowHeader: true,
-        fontFamily: "Fira Code",
-        fontSize: 14,
-        showTrafficLights: true,
-        showFileName: true,
-        fileNameOpacity: 0.5,
-        fileNameFontWeight: 400,
-        fileNameFontSize: 14,
-        showLineCount: true,
-        lineCountOpacity: 0.5,
-        exportFormat: "webp",
-        width: undefined,
-        height: undefined,
-        wordWrap: false,
-        showCaption: false,
-        captionText: "Figure: Sample code snippet",
-        captionStyle: "normal",
-        captionOpacity: 0.5,
-        captionPosition: "bottom",
-      };
-
-      Object.entries(defaultSettings).forEach(([key, value]) => {
+      Object.entries(DEFAULT_CODE_SETTINGS).forEach(([key, value]) => {
         onUpdateSetting(key as keyof CodeSettings, value);
       });
-
-      onToggleLineNumbers(true);
     };
 
     return (
@@ -335,9 +301,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                 <MakeupSection
                   settings={settings}
                   fileName={fileName}
-                  showLineNumbers={showLineNumbers}
                   onUpdateSetting={onUpdateSetting}
-                  onToggleLineNumbers={onToggleLineNumbers}
                   onFileNameChange={onFileNameChange}
                 />
               )}

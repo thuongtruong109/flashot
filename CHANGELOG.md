@@ -1,15 +1,37 @@
-## [v3.0.0 - 2025-09-13](https://github.com/thuongtruong109/flashot/releases/tag/v3.0.0)
+## [v2.2.0 - 2025-09-20](https://github.com/thuongtruong109/flashot/releases/tag/v2.2.0)
 
 ### 🚀 Features
 
 - **playground**:
+  - line count number style options - by @thuongtruong109 [<samp>()</samp>]()
+  - export file as original/plain-text format - by @thuongtruong109 [<samp>(35d54)</samp>](https://github.com/thuongtruong109/flashot/commit/35d54ed72271abb84996cfa13b6782e752ae7d5e)
+  - add reset to default settings button - by @thuongtruong109 [<samp>(807bc)</samp>](https://github.com/thuongtruong109/flashot/commit/807bc99729e7c83585604cf839f8e8b227bd2b29)
+  - adjust line count style options - by @thuongtruong109 [<samp>(97ed5)</samp>](https://github.com/thuongtruong109/flashot/commit/97ed5e380a9f8349df65c5b1f698e8ea501af109)
+  - adjust file name style options - by @thuongtruong109 [<samp>(d388e)</samp>](https://github.com/thuongtruong109/flashot/commit/d388e1c90bf734661a4921fe81e052c7863bf43c)
+  - traffic button adjust options - by @thuongtruong109 [<samp>(a7aee)</samp>](https://github.com/thuongtruong109/flashot/commit/e7aee67de019a58023bdc40a4a6d0040e8191026)
+  - dynamic select tab settings - by @thuongtruong109 [<samp>(aebca)</samp>](https://github.com/thuongtruong109/flashot/commit/aebca67279834bd255c6ec272e753dc9c22d6cd0)
+  - add header navigation list - by @thuongtruong109 [<samp>(ae49c)</samp>](https://github.com/thuongtruong109/flashot/commit/ae49c50c8fa7fd2c544a35c5538dfdb268fb8991)
   - add quick guide tour - by @thuongtruong109 [<samp>(156a1)</samp>](https://github.com/thuongtruong109/flashot/commit/156a14f904615f1eb27f395f362600325e4fc2f0)
   - resizable code editor with border drag controls - by @thuongtruong109 [<samp>(59e9a)</samp>](https://github.com/thuongtruong109/flashot/commit/59e9af620c24a9516cc9bc428112e3fafe14b72f)
   - add transparent background option - by @thuongtruong109 [<samp>(b66fa)</samp>](https://github.com/thuongtruong109/flashot/commit/b66fa2e26723e38d9261416e837350c8b2c0dbf4)
   - enable word wrap options - by @thuongtruong109 [<samp>(46a18)</samp>](https://github.com/thuongtruong109/flashot/commit/46a18bd436ab01bbd379793b19898ab8a2a65946)
   - adjust width & height - by @thuongtruong109 [<samp>(52d6b)</samp>](https://github.com/thuongtruong109/flashot/commit/52d6be981e1161311ddc88d496b24a0d38b40b07)
-- **landing**:
-  - framer animation for landing page - by @thuongtruong109 [<samp>(f4a2e)</samp>]()
+- **docs**: enhance docs page ui - by @thuongtruong109 [<samp>(3dfb6)</samp>](https://github.com/thuongtruong109/flashot/commit/3dfb666593ac20175e3dc898dc3d4cd48bebc284)
+- **landing**: framer animation for landing page - by @thuongtruong109 [<samp>(d47cd)</samp>](https://github.com/thuongtruong109/flashot/commit/d47cd39395930a839b4fac0e9ef9ed5a535b10ec)
+
+### 🐞 Bug Fixes
+
+- **playground**:
+  - resolve header shift down adter export - by @thuongtruong109 [<samp>(b934e)</samp>](https://github.com/thuongtruong109/flashot/commit/b934e486f65066877d211a50272ab46c5ed77d43)
+  - calculating caption position - by @thuongtruong109 [<samp>(33cca)</samp>](https://github.com/thuongtruong109/flashot/commit/33ccafcd7f97deeddd1b1a7241e8c81ff304e658)
+  - auto full size code content match with frame - by @thuongtruong109 [<samp>(a646c)</samp>](https://github.com/thuongtruong109/flashot/commit/a646c4a18c730ccb8a7e2c9976cf3f0e6153b04c)
+
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.1.0...v2.2.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.2.0)
+
+## [v2.1.0 - 2025-09-18](https://github.com/thuongtruong109/flashot/releases/tag/v2.1.0)
+
+### 🚀 Features
+
 - **docs**:
   - integrate raw content to web pages - by @thuongtruong109 [<samp>(6d3fa)</samp>](https://github.com/thuongtruong109/flashot/commit/6d3fa44e6a6900d0faa14404c540898488ae0dfb)
   - add usage docs raw content - by @thuongtruong109 [<samp>(350a4)</samp>](https://github.com/thuongtruong109/flashot/commit/350a44d0834dde1be1d376fdee7e49dd4ff6480c)
@@ -18,9 +40,9 @@
 
 ### 🐞 Bug Fixes
 
-- **playground**: fix export menu option & code editor background style matching setting - by @thuongtruong109 [<samp>(2f3e1)</samp>](1)
+- **playground**: fix export menu option & code editor background style matching setting - by @thuongtruong109 [<samp>(8d631)</samp>](https://github.com/thuongtruong109/flashot/commit/8d631a841e3d7606408e41ac3d5f11374f4d3aab)
 
-##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.0.0...v3.0.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v3.0.0)
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.0.0...v2.1.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.1.0)
 
 ## [v2.0 - 2025-09-11](https://github.com/thuongtruong109/flashot/releases/tag/v2.0.0)
 

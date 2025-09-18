@@ -16,21 +16,17 @@ import SubSeparate from "@/app/playground/_components/setting/sub/Separate";
 
 interface MakeupSectionProps {
   settings: CodeSettings;
-  showLineNumbers: boolean;
   fileName: string;
   onUpdateSetting: <K extends keyof CodeSettings>(
     key: K,
     value: CodeSettings[K]
   ) => void;
-  onToggleLineNumbers: (value: boolean) => void;
   onFileNameChange: (fileName: string) => void;
 }
 
 const MakeupSection: React.FC<MakeupSectionProps> = ({
   settings,
-  showLineNumbers,
   onUpdateSetting,
-  onToggleLineNumbers,
   fileName,
   onFileNameChange,
 }) => {
@@ -91,7 +87,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               className="sr-only peer"
             />
             <div
-              className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+              className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                 settings.showWindowHeader
                   ? "bg-gradient-to-br from-blue-100 to-blue-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
                   : ""
@@ -142,7 +138,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   className="sr-only peer"
                 />
                 <div
-                  className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                  className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                     settings.showTrafficLights !== false
                       ? "bg-gradient-to-br from-green-100 to-green-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
                       : ""
@@ -182,7 +178,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                       className="sr-only peer"
                     />
                     <div
-                      className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                      className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                         settings.showTrafficLightsColor !== false
                           ? "bg-gradient-to-br from-green-100 to-green-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
                           : ""
@@ -210,10 +206,10 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   <div className="flex items-center space-x-2">
                     <button
                       type="button"
-                      className={`px-2 rounded-md text-xs font-medium transition-all duration-200 capitalize ${
+                      className={`px-2 rounded-md text-xs transition-all duration-200 capitalize ${
                         !settings.windowHeaderAlign ||
                         settings.windowHeaderAlign === "left"
-                          ? "bg-green-500 text-white shadow-md py-1"
+                          ? "bg-green-500 text-white shadow-md py-1 font-medium"
                           : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
                       }`}
                       onClick={() =>
@@ -224,9 +220,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                     </button>
                     <button
                       type="button"
-                      className={`px-2 rounded-md text-xs font-medium transition-all duration-200 capitalize ${
+                      className={`px-2 rounded-md text-xs transition-all duration-200 capitalize ${
                         settings.windowHeaderAlign === "right"
-                          ? "bg-green-500 text-white shadow-md py-1"
+                          ? "bg-green-500 text-white shadow-md py-1 font-medium"
                           : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
                       }`}
                       onClick={() =>
@@ -269,7 +265,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   className="sr-only peer"
                 />
                 <div
-                  className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                  className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                     settings.showFileName
                       ? "bg-gradient-to-br from-yellow-100 to-yellow-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
                       : ""
@@ -446,7 +442,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   className="sr-only peer"
                 />
                 <div
-                  className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                  className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                     settings.showLineCount
                       ? "bg-gradient-to-br from-sky-100 to-sky-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
                       : ""
@@ -571,20 +567,20 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
         )}
       </div>
 
-      <div>
+      <div className="space-y-4">
         <label className="flex items-center justify-between cursor-pointer">
           <div className="flex items-center space-x-1.5">
             <Hash
               className={`size-4 transition-colors ${
-                showLineNumbers
-                  ? "text-green-600 group-hover:text-green-700"
+                settings.showLineNumbers
+                  ? "text-teal-600 group-hover:text-teal-700"
                   : "text-gray-400 group-hover:text-gray-500"
               }`}
             />
             <span
               className={`text-sm font-medium ${
-                showLineNumbers
-                  ? "text-green-600 group-hover:text-green-700"
+                settings.showLineNumbers
+                  ? "text-teal-600 group-hover:text-teal-700"
                   : "text-gray-500 group-hover:text-gray-700"
               }`}
             >
@@ -594,20 +590,22 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
           <div className="relative">
             <input
               type="checkbox"
-              checked={showLineNumbers}
-              onChange={(e) => onToggleLineNumbers(e.target.checked)}
+              checked={settings.showLineNumbers || false}
+              onChange={(e) =>
+                onUpdateSetting("showLineNumbers", e.target.checked)
+              }
               className="sr-only peer"
             />
             <div
-              className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
-                showLineNumbers
-                  ? "bg-gradient-to-br from-green-100 to-green-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+              className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                settings.showLineNumbers
+                  ? "bg-gradient-to-br from-teal-100 to-teal-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
                   : ""
               }`}
             >
               <svg
-                className={`size-3 text-green-700 font-bold transition-opacity duration-200 ${
-                  showLineNumbers ? "opacity-100" : "opacity-0"
+                className={`size-3 text-teal-700 font-bold transition-opacity duration-200 ${
+                  settings.showLineNumbers ? "opacity-100" : "opacity-0"
                 }`}
                 fill="currentColor"
                 stroke="none"
@@ -619,64 +617,129 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
             </div>
           </div>
         </label>
-      </div>
-
-      <div>
-        <label className="flex items-center justify-between cursor-pointer">
-          <div className="flex items-center space-x-1.5">
-            <WrapText
-              className={`size-4 transition-colors ${
-                settings.wordWrap
-                  ? "text-blue-600 group-hover:text-blue-700"
-                  : "text-gray-400 group-hover:text-gray-500"
-              }`}
-            />
-            <span
-              className={`text-sm font-medium ${
-                settings.wordWrap
-                  ? "text-blue-600 group-hover:text-blue-700"
-                  : "text-gray-500 group-hover:text-gray-700"
-              }`}
-            >
-              Word Wrap
-            </span>
-          </div>
-          <div className="relative">
-            <input
-              type="checkbox"
-              checked={settings.wordWrap || false}
-              onChange={(e) => onUpdateSetting("wordWrap", e.target.checked)}
-              className="sr-only peer"
-            />
-            <div
-              className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
-                settings.wordWrap
-                  ? "bg-gradient-to-br from-blue-100 to-blue-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                  : ""
-              }`}
-            >
-              <svg
-                className={`size-3 text-blue-700 font-bold transition-opacity duration-200 ${
-                  settings.wordWrap ? "opacity-100" : "opacity-0"
-                }`}
-                fill="currentColor"
-                stroke="none"
-                viewBox="0 0 24 24"
-                strokeWidth="3"
+        {settings.showLineNumbers && (
+          <div className="space-y-3">
+            <div className="flex items-center space-x-2">
+              <label
+                htmlFor="lineNumberOpacity"
+                className="text-xs flex items-center justify-between w-full"
               >
-                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-              </svg>
+                <span className="text-xs text-gray-500">Opacity</span>
+                <span className="text-xs bg-gradient-to-r from-teal-500 to-cyan-500 bg-clip-text text-transparent font-bold">
+                  {Math.round((settings.lineNumberOpacity ?? 0.5) * 100)}%
+                </span>
+              </label>
+              <input
+                id="lineNumberOpacity"
+                type="range"
+                min={0}
+                max={1}
+                step={0.1}
+                value={settings.lineNumberOpacity}
+                onChange={(e) =>
+                  onUpdateSetting(
+                    "lineNumberOpacity",
+                    parseFloat(e.target.value)
+                  )
+                }
+                className="w-full h-1 bg-gradient-to-r from-teal-200 to-cyan-200 rounded-lg appearance-none cursor-pointer
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                [&::-webkit-slider-thumb]:from-teal-500 [&::-webkit-slider-thumb]:to-cyan-500
+                [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                style={{ verticalAlign: "middle" }}
+              />
+            </div>
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-xs text-gray-500">Border</span>
+              <div className="relative">
+                <input
+                  type="checkbox"
+                  checked={settings.lineNumberBorder}
+                  onChange={(e) =>
+                    onUpdateSetting("lineNumberBorder", e.target.checked)
+                  }
+                  className="sr-only peer"
+                />
+                <div
+                  className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                    settings.lineNumberBorder
+                      ? "bg-gradient-to-br from-teal-100 to-teal-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                      : ""
+                  }`}
+                >
+                  <svg
+                    className={`size-3 text-teal-700 font-bold transition-opacity duration-200 ${
+                      settings.lineNumberBorder ? "opacity-100" : "opacity-0"
+                    }`}
+                    fill="currentColor"
+                    stroke="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="3"
+                  >
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                  </svg>
+                </div>
+              </div>
+            </label>
+            <div className="flex justify-between items-center">
+              <span className="text-xs text-gray-500">Text Align</span>
+              <div className="flex items-center space-x-1.5">
+                <button
+                  onClick={() => onUpdateSetting("lineNumberTextAlign", "left")}
+                  className={`px-2 rounded-md text-xs transition-all duration-200 capitalize ${
+                    (settings.lineNumberTextAlign || "right") === "left"
+                      ? "bg-teal-500 text-white shadow-md py-1 font-medium"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                  }`}
+                >
+                  Left
+                </button>
+                <button
+                  onClick={() =>
+                    onUpdateSetting("lineNumberTextAlign", "center")
+                  }
+                  className={`px-2 rounded-md text-xs transition-all duration-200 capitalize ${
+                    settings.lineNumberTextAlign === "center"
+                      ? "bg-teal-500 text-white shadow-md py-1 font-medium"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                  }`}
+                >
+                  Center
+                </button>
+                <button
+                  onClick={() =>
+                    onUpdateSetting("lineNumberTextAlign", "right")
+                  }
+                  className={`px-2 rounded-md text-xs transition-all duration-200 capitalize ${
+                    (settings.lineNumberTextAlign || "right") === "right"
+                      ? "bg-teal-500 text-white shadow-md py-1 font-medium"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                  }`}
+                >
+                  Right
+                </button>
+              </div>
             </div>
           </div>
-        </label>
+        )}
       </div>
 
       {/* Caption Section */}
-      <div className="space-y-6">
+      <div className="space-y-4">
         <label className="flex items-center justify-between group cursor-pointer">
           <div className="flex items-center space-x-2">
-            <MessageSquare className="size-4 text-indigo-600" />
-            <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
+            <MessageSquare
+              className={`size-4 ${
+                settings.showCaption ? "text-indigo-600" : "text-gray-500"
+              }`}
+            />
+            <span
+              className={`text-sm font-medium transition-colors ${
+                settings.showCaption ? "text-indigo-600" : "text-gray-500"
+              }`}
+            >
               Caption
             </span>
           </div>
@@ -688,7 +751,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               className="sr-only peer"
             />
             <div
-              className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+              className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                 settings.showCaption
                   ? "bg-gradient-to-br from-indigo-100 to-indigo-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
                   : ""
@@ -709,84 +772,97 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
           </div>
         </label>
 
-        <input
-          type="text"
-          value={settings.captionText || ""}
-          onChange={(e) => onUpdateSetting("captionText", e.target.value)}
-          className="w-full px-2.5 py-1.5 text-sm border border-gray-300/60 hover:border-gray-400/80 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/60 transition-all duration-200"
-          placeholder="Enter figure caption..."
-        />
-
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            onClick={() => onUpdateSetting("captionStyle", "normal")}
-            className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 ${
-              (settings.captionStyle || "normal") === "normal"
-                ? "bg-indigo-500 text-white shadow-md"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
-          >
-            Normal
-          </button>
-          <button
-            onClick={() => onUpdateSetting("captionStyle", "italic")}
-            className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 ${
-              settings.captionStyle === "italic"
-                ? "bg-indigo-500 text-white shadow-md"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
-          >
-            <em>Italic</em>
-          </button>
-        </div>
-
-        <div>
-          <label className="text-xs font-semibold text-gray-700 flex items-center justify-between">
-            <span>Opacity</span>
-            <span className="text-xs bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent font-bold">
-              {Math.round((settings.captionOpacity || 1) * 100)}%
-            </span>
-          </label>
-          <div className="relative">
+        {settings.showCaption && (
+          <div className="space-y-4">
             <input
-              type="range"
-              min="0.1"
-              max="1"
-              step="0.1"
-              value={settings.captionOpacity || 1}
-              onChange={(e) =>
-                onUpdateSetting("captionOpacity", parseFloat(e.target.value))
-              }
-              className="w-full h-1.5 bg-gradient-to-r from-indigo-200 to-purple-200 rounded-lg appearance-none cursor-pointer
-              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
-              [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
-              [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-purple-500
-              [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-              [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+              type="text"
+              value={settings.captionText || ""}
+              onChange={(e) => onUpdateSetting("captionText", e.target.value)}
+              className="w-full px-2.5 py-1.5 text-xs border border-gray-300/60 hover:border-gray-400/80 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/60 transition-all duration-200"
+              placeholder="Enter figure caption..."
             />
-          </div>
-        </div>
 
-        <div className="grid grid-cols-4 gap-2">
-          {["top", "bottom", "left", "right"].map((position) => (
-            <button
-              key={position}
-              onClick={() =>
-                onUpdateSetting(
-                  "captionPosition",
-                  position as "top" | "bottom" | "left" | "right"
-                )
-              }
-              className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 capitalize ${
-                (settings.captionPosition || "bottom") === position
-                  ? "bg-indigo-500 text-white shadow-md"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              {position}
-            </button>
-          ))}
-        </div>
+            <div className="flex justify-between items-center">
+              <span className="text-xs text-gray-500">Style</span>
+              <div className="flex items-center space-x-1.5">
+                <button
+                  onClick={() => onUpdateSetting("captionStyle", "normal")}
+                  className={`px-2 rounded-md text-xs transition-all duration-200 capitalize ${
+                    (settings.captionStyle || "normal") === "normal"
+                      ? "bg-indigo-500 text-white shadow-md py-1 font-medium"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                  }`}
+                >
+                  Normal
+                </button>
+                <button
+                  onClick={() => onUpdateSetting("captionStyle", "italic")}
+                  className={`px-2 rounded-md text-xs transition-all duration-200 capitalize ${
+                    settings.captionStyle === "italic"
+                      ? "bg-indigo-500 text-white shadow-md py-1 font-medium"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                  }`}
+                >
+                  <em>Italic</em>
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <label
+                htmlFor="captionOpacity"
+                className="text-xs flex items-center justify-between w-full"
+              >
+                <span className="text-xs text-gray-500">Opacity</span>
+
+                <span className="text-xs bg-gradient-to-r from-indigo-500 to-indigo-500 bg-clip-text text-transparent font-bold">
+                  {Math.round((settings.captionOpacity || 1) * 100)}%
+                </span>
+              </label>
+              <input
+                id="captionOpacity"
+                type="range"
+                min={0}
+                max={1}
+                step={0.01}
+                value={settings.captionOpacity || 1}
+                onChange={(e) =>
+                  onUpdateSetting("captionOpacity", parseFloat(e.target.value))
+                }
+                className="w-full h-1 bg-gradient-to-r from-indigo-200 to-indigo-200 rounded-lg appearance-none cursor-pointer
+          [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+          [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+          [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-indigo-500
+          [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+          [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                style={{ verticalAlign: "middle" }}
+              />
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-xs text-gray-500 mr-2">Position</span>
+              <div className="grid grid-cols-4 gap-1.5">
+                {["top", "bottom", "left", "right"].map((position) => (
+                  <button
+                    key={position}
+                    onClick={() =>
+                      onUpdateSetting(
+                        "captionPosition",
+                        position as "top" | "bottom" | "left" | "right"
+                      )
+                    }
+                    className={`px-1.5 rounded-md text-xs  transition-all duration-200 capitalize ${
+                      (settings.captionPosition || "bottom") === position
+                        ? "bg-indigo-500 text-white shadow-md py-1 font-medium"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                    }`}
+                  >
+                    {position}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
