@@ -45,6 +45,7 @@ export default function Page() {
     lineCountOpacity: 0.5,
     lineCountFontWeight: 400,
     lineCountFontSize: 13,
+    exportType: "image",
     exportFormat: "webp",
     width: undefined, // Auto-fit by default
     height: undefined, // Auto-fit by default
@@ -144,6 +145,57 @@ export default function Page() {
 
   const handleDownloadImage = useCallback(
     async (format?: string) => {
+      if (settings.exportType === "file") {
+        // Handle file export
+        const getExtension = (lang: string) => {
+          const extensions: Record<string, string> = {
+            javascript: "js",
+            typescript: "ts",
+            python: "py",
+            java: "java",
+            cpp: "cpp",
+            c: "c",
+            csharp: "cs",
+            php: "php",
+            ruby: "rb",
+            go: "go",
+            rust: "rs",
+            swift: "swift",
+            kotlin: "kt",
+            scala: "scala",
+            html: "html",
+            css: "css",
+            scss: "scss",
+            json: "json",
+            xml: "xml",
+            yaml: "yaml",
+            sql: "sql",
+            shell: "sh",
+            powershell: "ps1",
+            dockerfile: "dockerfile",
+            markdown: "md",
+          };
+          return extensions[lang] || "txt";
+        };
+
+        const extension =
+          settings.exportFormat === "original"
+            ? getExtension(settings.language)
+            : "txt";
+        const filename = `${fileName}.${extension}`;
+        const blob = new Blob([code], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        return;
+      }
+
+      // Handle image export
       if (!codeRef.current) return;
 
       const exportFormat = format || settings.exportFormat || "webp";

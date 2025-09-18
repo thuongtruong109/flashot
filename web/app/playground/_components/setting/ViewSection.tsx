@@ -8,6 +8,8 @@ import {
   Loader2,
 } from "lucide-react";
 import { CodeSettings } from "@/types";
+import SubSectionTitle from "@/app/playground/_components/setting/sub/Title";
+import SubSectionSeparator from "@/app/playground/_components/setting/sub/Separate";
 
 interface ViewSectionProps {
   settings: CodeSettings;
@@ -36,55 +38,116 @@ const ViewSection: React.FC<ViewSectionProps> = ({
   useEffect(() => {
     setHeightInput(settings.height?.toString() || "");
   }, [settings.height]);
-
   return (
     <>
       {/* Export Format */}
       <div>
         <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
           <Download className="w-3.5 h-3.5 text-green-600 mr-1.5" />
-          Export Format
+          Export
         </h4>
-        <div className="grid grid-cols-4 gap-2 my-4">
-          {["png", "jpg", "webp", "avif"].map((format) => (
-            <button
-              key={format}
-              onClick={() =>
-                onUpdateSetting(
-                  "exportFormat",
-                  format as "png" | "jpg" | "webp" | "avif"
-                )
-              }
-              className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 capitalize ${
-                settings.exportFormat === format
-                  ? "bg-green-500 text-white shadow-md"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              {format}
-            </button>
-          ))}
-        </div>
-        <button
-          onClick={() => {
-            if (typeof window !== "undefined") {
-              setIsExporting(true);
-              window.dispatchEvent(new CustomEvent("flashot:export"));
-              setTimeout(() => setIsExporting(false), 2000);
-            }
-          }}
-          disabled={isExporting}
-          className={`w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-xs font-semibold shadow-sm hover:shadow-md ${
-            isExporting ? "opacity-70 cursor-not-allowed" : ""
-          }`}
-        >
-          {isExporting ? (
-            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+        <div className="pl-4">
+          <div className="flex justify-between items-center gap-2 mb-2">
+            <span className="text-xs text-gray-500">Format</span>
+            <div className="flex border bg-slate-100 rounded-lg p-0.5">
+              <button
+                type="button"
+                onClick={() => {
+                  onUpdateSetting("exportType", "image");
+                  onUpdateSetting("exportFormat", "webp");
+                }}
+                className={`px-1.5 py-1 rounded-md text-xs transition-all duration-200 capitalize ${
+                  settings.exportType !== "file"
+                    ? "bg-green-500 text-white shadow-md"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                Image
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  onUpdateSetting("exportType", "file");
+                  onUpdateSetting("exportFormat", "original");
+                }}
+                className={`px-1.5 py-1 rounded-md text-xs transition-all duration-200 capitalize ${
+                  settings.exportType === "file"
+                    ? "bg-green-500 text-white shadow-md"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                File
+              </button>
+            </div>
+          </div>
+          {settings.exportType === "file" ? (
+            <div className="grid grid-cols-2 gap-2 my-3">
+              {["original", "plain"].map((format) => (
+                <button
+                  type="button"
+                  title={`${format}_format`}
+                  key={format}
+                  onClick={() =>
+                    onUpdateSetting(
+                      "exportFormat",
+                      format as "original" | "plain"
+                    )
+                  }
+                  className={`p-1.5 rounded-lg text-xs font-medium transition-all duration-200 capitalize ${
+                    settings.exportFormat === format
+                      ? "bg-green-500 text-white shadow-md"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  {format}
+                </button>
+              ))}
+            </div>
           ) : (
-            <Download className="w-3.5 h-3.5" />
+            <div className="grid grid-cols-4 gap-2 my-3">
+              {["png", "jpg", "webp", "avif"].map((format) => (
+                <button
+                  type="button"
+                  title={`${format}_format`}
+                  key={format}
+                  onClick={() =>
+                    onUpdateSetting(
+                      "exportFormat",
+                      format as "png" | "jpg" | "webp" | "avif"
+                    )
+                  }
+                  className={`p-1.5 rounded-lg text-xs font-medium transition-all duration-200 capitalize ${
+                    settings.exportFormat === format
+                      ? "bg-green-500 text-white shadow-md"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  {format}
+                </button>
+              ))}
+            </div>
           )}
-          <span>{isExporting ? "Exporting..." : "Export"}</span>
-        </button>
+          <button
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                setIsExporting(true);
+                window.dispatchEvent(new CustomEvent("flashot:export"));
+                setTimeout(() => setIsExporting(false), 2000);
+              }
+            }}
+            disabled={isExporting}
+            className={`w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-xs font-semibold shadow-sm hover:shadow-md ${
+              isExporting ? "opacity-70 cursor-not-allowed" : ""
+            }`}
+          >
+            {isExporting ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            ) : (
+              <Download className="w-3.5 h-3.5" />
+            )}
+            <span>{isExporting ? "Exporting..." : "Export"}</span>
+          </button>
+        </div>
       </div>
       {/* Font Size */}
       <div>
