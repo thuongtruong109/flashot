@@ -20,8 +20,7 @@ import ThemeSelector from "./ThemeSelector";
 import FontSelector from "./FontSelector";
 import BackgroundSelector from "./BackgroundSelector";
 import ThemeSection from "./setting/ThemeSection";
-import ViewSection from "./setting/ViewSection";
-import CaptionSection from "./setting/CaptionSection";
+import MakeupSection from "./setting/MakeupSection";
 import React, { useState, useRef, useEffect, forwardRef } from "react";
 import {
   Settings,
@@ -46,16 +45,15 @@ import {
   Sun,
   Moon,
   WrapText,
-  MessageSquare,
   AlignCenter,
   Loader2,
   PanelRightClose,
   PanelRightOpen,
+  RotateCcw,
 } from "lucide-react";
-import FileSection from "./setting/FileSection";
 import CustomSelect from "./base/Select";
 import { _PLAYGROUND_SETTINGS_TAB } from "@/shared";
-import SizeSection from "./setting/SizeSection";
+import ViewSection from "./setting/ViewSection";
 
 const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
   (
@@ -64,7 +62,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       showLineNumbers,
       fileName,
       isVisible = true,
-      activeMenu = _PLAYGROUND_SETTINGS_TAB.FILE,
+      activeMenu = _PLAYGROUND_SETTINGS_TAB.VIEW,
       onChangeActiveMenu,
       onUpdateSetting,
       onToggleLineNumbers,
@@ -85,12 +83,10 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
     const fileNameInputRef = useRef<HTMLInputElement>(null);
     const [isExporting, setIsExporting] = useState(false);
 
-    // Update temp filename when fileName prop changes
     useEffect(() => {
       setTempFileName(fileName);
     }, [fileName]);
 
-    // Update width/height inputs when settings change
     useEffect(() => {
       setWidthInput(settings.width?.toString() || "");
     }, [settings.width]);
@@ -99,11 +95,9 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       setHeightInput(settings.height?.toString() || "");
     }, [settings.height]);
 
-    // Handle language change and update filename extension
     const handleLanguageChange = (language: SupportedLanguage) => {
       onUpdateSetting("language", language);
 
-      // Auto-update filename extension if not currently editing
       if (!isEditingFileName) {
         const nameWithoutExt = fileName.split(".")[0] || fileName;
         const newExtension = getFileExtension(language);
@@ -112,7 +106,6 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       }
     };
 
-    // Auto-focus filename input when editing starts
     useEffect(() => {
       if (isEditingFileName && fileNameInputRef.current) {
         fileNameInputRef.current.focus();
@@ -124,10 +117,8 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       setIsEditingFileName(true);
     };
 
-    // Auto-save filename on change
     const handleFileNameChange = (value: string) => {
       setTempFileName(value);
-      // Always call onFileNameChange, even with empty string
       onFileNameChange(value.trim());
     };
 
@@ -166,17 +157,14 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
         setIsDropdownOpen(hasDropdowns);
       };
 
-      // Check immediately
       checkForDropdowns();
 
-      // Set up mutation observer to watch for DOM changes
       const observer = new MutationObserver(checkForDropdowns);
       observer.observe(document.body, {
         childList: true,
         subtree: true,
       });
 
-      // Also check on click events (for dropdown toggles)
       document.addEventListener("click", checkForDropdowns);
 
       return () => {
@@ -184,6 +172,42 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
         document.removeEventListener("click", checkForDropdowns);
       };
     }, []);
+
+    const handleResetToDefaults = () => {
+      const defaultSettings = {
+        language: "javascript",
+        theme: "dracula",
+        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        showBackground: true,
+        padding: 32,
+        borderRadius: 10,
+        showWindowHeader: true,
+        fontFamily: "Fira Code",
+        fontSize: 14,
+        showTrafficLights: true,
+        showFileName: true,
+        fileNameOpacity: 0.5,
+        fileNameFontWeight: 400,
+        fileNameFontSize: 14,
+        showLineCount: true,
+        lineCountOpacity: 0.5,
+        exportFormat: "webp",
+        width: undefined,
+        height: undefined,
+        wordWrap: false,
+        showCaption: false,
+        captionText: "Figure: Sample code snippet",
+        captionStyle: "normal",
+        captionOpacity: 0.5,
+        captionPosition: "bottom",
+      };
+
+      Object.entries(defaultSettings).forEach(([key, value]) => {
+        onUpdateSetting(key as keyof CodeSettings, value);
+      });
+
+      onToggleLineNumbers(true);
+    };
 
     return (
       <>
@@ -204,12 +228,12 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
         <div
           ref={ref}
           className={`
-        ${isVisible ? "translate-x-0" : "translate-x-full"}
-         w-80 lg:w-80 fixed lg:relative top-0 right-0 z-30
+        ${isVisible ? "translate-x-0 lg:w-80" : "translate-x-full lg:w-0"}
+         w-80 fixed lg:relative top-0 right-0 z-30
          h-[100vh] lg:max-h-[calc(100vh-60px)]
         bg-white/95 backdrop-blur-xl shadow-2xl
         border-l border-white/20
-        transition-transform duration-300 ease-in-out
+        transition-all duration-300 ease-in-out
         overflow-hidden
         flex flex-col
       `}
@@ -221,20 +245,11 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                 <CustomSelect
                   options={[
                     {
-                      value: _PLAYGROUND_SETTINGS_TAB.FILE,
-                      label: (
-                        <span className="flex items-center gap-1.5 text-yellow-600">
-                          <Folder className="size-3" />{" "}
-                          {_PLAYGROUND_SETTINGS_TAB.FILE}
-                        </span>
-                      ),
-                    },
-                    {
-                      value: _PLAYGROUND_SETTINGS_TAB.SIZE,
+                      value: _PLAYGROUND_SETTINGS_TAB.VIEW,
                       label: (
                         <span className="flex items-center gap-1.5 text-green-600">
-                          <Edit2 className="size-3" />{" "}
-                          {_PLAYGROUND_SETTINGS_TAB.SIZE}
+                          <Layers className="size-3" />{" "}
+                          {_PLAYGROUND_SETTINGS_TAB.VIEW}
                         </span>
                       ),
                     },
@@ -248,20 +263,11 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                       ),
                     },
                     {
-                      value: _PLAYGROUND_SETTINGS_TAB.VIEW,
+                      value: _PLAYGROUND_SETTINGS_TAB.MAKEUP,
                       label: (
                         <span className="flex items-center gap-1.5 text-cyan-600">
-                          <Layers className="size-3" />{" "}
-                          {_PLAYGROUND_SETTINGS_TAB.VIEW}
-                        </span>
-                      ),
-                    },
-                    {
-                      value: _PLAYGROUND_SETTINGS_TAB.CAPTION,
-                      label: (
-                        <span className="flex items-center gap-1.5 text-indigo-600">
-                          <MessageSquare className="size-3" />{" "}
-                          {_PLAYGROUND_SETTINGS_TAB.CAPTION}
+                          <Move className="size-3" />{" "}
+                          {_PLAYGROUND_SETTINGS_TAB.MAKEUP}
                         </span>
                       ),
                     },
@@ -271,6 +277,19 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                   className="ml-2 text-xs w-36"
                 />
               </div>
+              <button
+                type="button"
+                onClick={handleResetToDefaults}
+                title="Reset to defaults"
+                aria-label="Toggle settings panel"
+                className="text-slate-400 hover:text-red-500 font-light bg-gradient-to-b from-white to-gray-50
+      shadow-[inset_2px_2px_6px_rgba(0,0,0,0.04),inset_-2px_-2px_6px_rgba(255,255,255,0.9),6px_6px_14px_rgba(2,6,23,0.06),-6px_-6px_14px_rgba(255,255,255,0.9)]
+      hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06),inset_-2px_-2px_6px_rgba(255,255,255,1),8px_8px_18px_rgba(2,6,23,0.08),-6px_-6px_14px_rgba(255,255,255,1)]
+      transition-all duration-200 rounded-lg px-3 py-1.5 flex items-center space-x-1 text-sm"
+              >
+                <RotateCcw className="size-3" />
+                <span>Reset</span>
+              </button>
             </div>
             {/* Close button (mobile + desktop) */}
             <button
@@ -299,14 +318,8 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
             }}
           >
             <div className="p-3 space-y-4 divide-y [&>div]:py-2 divide-slate-200 divide-dashed">
-              {activeMenu === _PLAYGROUND_SETTINGS_TAB.FILE && (
-                <FileSection
-                  settings={settings}
-                  onUpdateSetting={onUpdateSetting}
-                />
-              )}
-              {activeMenu === _PLAYGROUND_SETTINGS_TAB.SIZE && (
-                <SizeSection
+              {activeMenu === _PLAYGROUND_SETTINGS_TAB.VIEW && (
+                <ViewSection
                   settings={settings}
                   onUpdateSetting={onUpdateSetting}
                 />
@@ -318,20 +331,14 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                   handleLanguageChange={handleLanguageChange}
                 />
               )}
-              {activeMenu === _PLAYGROUND_SETTINGS_TAB.VIEW && (
-                <ViewSection
+              {activeMenu === _PLAYGROUND_SETTINGS_TAB.MAKEUP && (
+                <MakeupSection
                   settings={settings}
                   fileName={fileName}
                   showLineNumbers={showLineNumbers}
                   onUpdateSetting={onUpdateSetting}
                   onToggleLineNumbers={onToggleLineNumbers}
                   onFileNameChange={onFileNameChange}
-                />
-              )}
-              {activeMenu === _PLAYGROUND_SETTINGS_TAB.CAPTION && (
-                <CaptionSection
-                  settings={settings}
-                  onUpdateSetting={onUpdateSetting}
                 />
               )}
             </div>

@@ -28,18 +28,23 @@ export default function Page() {
     theme: "dracula",
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     showBackground: true,
-    padding: 32,
+    padding: 30,
     borderRadius: 10,
     showWindowHeader: true,
+    windowHeaderAlign: "left",
     fontFamily: "Fira Code",
     fontSize: 14,
     showTrafficLights: true,
+    showTrafficLightsColor: true,
     showFileName: true,
+    fileName: "index",
     fileNameOpacity: 0.5,
     fileNameFontWeight: 400,
-    fileNameFontSize: 14,
+    fileNameFontSize: 13,
     showLineCount: true,
     lineCountOpacity: 0.5,
+    lineCountFontWeight: 400,
+    lineCountFontSize: 13,
     exportFormat: "webp",
     width: undefined, // Auto-fit by default
     height: undefined, // Auto-fit by default
@@ -58,7 +63,7 @@ export default function Page() {
   const [showTipsModal, setShowTipsModal] = useState(false);
   const [showJSONModal, setShowJSONModal] = useState(false);
   const [showTourGuide, setShowTourGuide] = useState(false);
-  const [fileName, setFileName] = useState("index");
+  const [fileName, setFileName] = useState(settings.fileName);
   const [showSettingsPanel, setShowSettingsPanel] = useState(false); // Start with false to prevent SSR issues
   const [isClient, setIsClient] = useState(false);
   const codeRef = useRef<HTMLDivElement>(null);
@@ -66,7 +71,7 @@ export default function Page() {
 
   useEffect(() => {
     setIsClient(true);
-    setShowSettingsPanel(false);
+    setShowSettingsPanel(true);
   }, []);
 
   // Close settings panel when clicking outside (mobile only)

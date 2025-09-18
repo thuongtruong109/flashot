@@ -38,7 +38,7 @@ export default function HeaderTop({
   settings,
   onUpdateSetting,
   onOpenMainPanel,
-  activePanelMenu,
+  activePanelMenu = _PLAYGROUND_SETTINGS_TAB.VIEW,
 }: HeaderTopProps) {
   const menuAssignments: {
     label: string;
@@ -47,14 +47,8 @@ export default function HeaderTop({
     activeColorValue: string;
   }[] = [
     {
-      label: _PLAYGROUND_SETTINGS_TAB.FILE,
-      icon: <Folder className="w-4 h-4 text-yellow-600" />,
-      activeColorClass: "text-yellow-600",
-      activeColorValue: "#ca8a04",
-    },
-    {
-      label: _PLAYGROUND_SETTINGS_TAB.SIZE,
-      icon: <Move className="w-4 h-4 text-green-600" />,
+      label: _PLAYGROUND_SETTINGS_TAB.VIEW,
+      icon: <Layers className="w-4 h-4 text-green-600" />,
       activeColorClass: "text-green-600",
       activeColorValue: "#16a34",
     },
@@ -65,16 +59,10 @@ export default function HeaderTop({
       activeColorValue: "#7c3aed",
     },
     {
-      label: _PLAYGROUND_SETTINGS_TAB.VIEW,
-      icon: <Layers className="w-4 h-4 text-cyan-600" />,
+      label: _PLAYGROUND_SETTINGS_TAB.MAKEUP,
+      icon: <Move className="w-4 h-4 text-cyan-600" />,
       activeColorClass: "text-cyan-600",
       activeColorValue: "#06b6d4",
-    },
-    {
-      label: _PLAYGROUND_SETTINGS_TAB.CAPTION,
-      icon: <MessageSquare className="w-4 h-4 text-indigo-600" />,
-      activeColorClass: "text-indigo-600",
-      activeColorValue: "#4f46e5",
     },
   ];
 
