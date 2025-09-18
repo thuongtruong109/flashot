@@ -37,6 +37,7 @@ interface EditorProps {
     key: K,
     value: CodeSettings[K]
   ) => void;
+  onPositionChange?: (position: { x: number; y: number }) => void;
 }
 
 const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
@@ -49,6 +50,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       fileName,
       className = "",
       onUpdateSetting,
+      onPositionChange,
     },
     ref
   ) => {
@@ -111,13 +113,35 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       return () => ro.disconnect();
     }, [code, settings.fontSize, settings.fontFamily, isEditing]);
 
-    // Generate transparent grid pattern on client side
+    const prevSettingsRef = useRef({
+      width: settings.width,
+      height: settings.height,
+    });
+    const positionRef = useRef({ x: 0, y: 0 });
+
+    // Maintain center when settings change by resetting position to center
     useEffect(() => {
-      if (typeof window !== "undefined") {
-        const gridDataUrl = transparentGridPatterns.editor();
-        setTransparentGridDataUrl(gridDataUrl);
+      // Always reset to center when settings change (including after resize)
+      const centerPos = { x: 0, y: 0 };
+      positionRef.current = centerPos;
+      setPosition(centerPos);
+    }, [settings.width, settings.height]);
+
+    // Reset position to center after resize completes
+    useEffect(() => {
+      if (!isResizing) {
+        const centerPos = { x: 0, y: 0 };
+        positionRef.current = centerPos;
+        setPosition(centerPos);
       }
-    }, []);
+    }, [isResizing]);
+
+    // Call onPositionChange when position changes
+    useEffect(() => {
+      if (onPositionChange) {
+        onPositionChange(position);
+      }
+    }, [position, onPositionChange]);
 
     // Handle click on preview to start editing
     const handlePreviewClick = useCallback(() => {
@@ -164,17 +188,23 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
 
         if (resizeDirection.includes("right")) {
           newWidth = Math.max(200, startSize.width + deltaX);
+          // Resize from center: move left by half the width increase
+          newX = startPosition.x - (newWidth - startSize.width) / 2;
         }
         if (resizeDirection.includes("left")) {
           newWidth = Math.max(200, startSize.width - deltaX);
-          newX = startPosition.x + (startSize.width - newWidth);
+          // Resize from center: move right by half the width increase
+          newX = startPosition.x + (startSize.width - newWidth) / 2;
         }
         if (resizeDirection.includes("bottom")) {
           newHeight = Math.max(100, startSize.height + deltaY);
+          // Resize from center: move up by half the height increase
+          newY = startPosition.y - (newHeight - startSize.height) / 2;
         }
         if (resizeDirection.includes("top")) {
           newHeight = Math.max(100, startSize.height - deltaY);
-          newY = startPosition.y + (startSize.height - newHeight);
+          // Resize from center: move down by half the height increase
+          newY = startPosition.y + (startSize.height - newHeight) / 2;
         }
 
         setPosition({ x: newX, y: newY });
@@ -194,6 +224,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
     const handleResizeEnd = useCallback(() => {
       setIsResizing(false);
       setResizeDirection("");
+      // Don't reset position here - let it be handled by the settings change effect
     }, []);
 
     // Add global mouse events for resizing
@@ -281,8 +312,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
           ref={setRefs}
           className={`relative transition-all duration-300 ${
             settings.showBackground ? "" : ""
-          }
-        `}
+          }`}
           style={{
             background: isFullscreen
               ? "white"
@@ -329,8 +359,13 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                 ? "row"
                 : "column",
             transform: !isFullscreen
-              ? `translate(${position.x}px, ${position.y}px)`
+              ? `translate(-50%, -50%) translate(${position.x}px, ${position.y}px)`
               : undefined,
+            // Center the editor when not fullscreen
+            position: !isFullscreen ? "absolute" : "relative",
+            left: !isFullscreen ? "50%" : "auto",
+            top: !isFullscreen ? "50%" : "auto",
+            transformOrigin: !isFullscreen ? "center" : "initial",
           }}
         >
           {/* Snip Area Wrapper - Window Controls + Code Content */}

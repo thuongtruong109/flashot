@@ -14,6 +14,7 @@ import TourGuide from "@/app/playground/_components/TourGuide";
 import Image from "next/image";
 import { DEFAULT_CODE_SETTINGS } from "@/shared";
 import HeaderNavigation from "@/app/playground/_components/header";
+import WidthRuler from "@/app/playground/_components/WidthRuler";
 
 const defaultCode = `function fibonacci(n) {
   if (n <= 1) return n;
@@ -37,10 +38,50 @@ export default function Page() {
   const [isClient, setIsClient] = useState(false);
   const codeRef = useRef<HTMLDivElement>(null);
   const settingsPanelRef = useRef<HTMLDivElement>(null);
+  const [editorWidth, setEditorWidth] = useState(0);
+  const codeEditorRef = useRef<HTMLDivElement>(null);
+  const [editorPosition, setEditorPosition] = useState({ x: 0, y: 0 });
+
+  // Handle position change from CodeEditor
+  const handleEditorPositionChange = useCallback(
+    (position: { x: number; y: number }) => {
+      setEditorPosition(position);
+    },
+    []
+  );
 
   useEffect(() => {
     setIsClient(true);
     setShowSettingsPanel(true);
+  }, []);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      // Initialize with default width, will be updated by ResizeObserver
+      setEditorWidth(600);
+    };
+
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, [settings.width]);
+
+  // Use ResizeObserver to track CodeEditor width changes
+  useEffect(() => {
+    if (!codeRef.current) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        setEditorWidth(entry.contentRect.width);
+        // Position is now handled by CodeEditor's onPositionChange callback
+      }
+    });
+
+    resizeObserver.observe(codeRef.current);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
   }, []);
 
   // Close settings panel when clicking outside (mobile only)
@@ -259,15 +300,8 @@ export default function Page() {
             fill
           />
 
-          <div
-            data-tour="code-editor"
-            className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl z-10"
-            style={{
-              height: "auto",
-              minHeight: "400px",
-              padding: "20px",
-            }}
-          >
+          {/* Code Editor and Ruler Container */}
+          <div data-tour="code-editor" className="absolute inset-0 z-10">
             <CodeEditor
               ref={codeRef}
               code={code}
@@ -276,6 +310,14 @@ export default function Page() {
               fileName={fileName}
               className="w-full h-full"
               onUpdateSetting={updateSetting}
+              onPositionChange={handleEditorPositionChange}
+            />
+
+            {/* Width Ruler - positioned below with fixed spacing */}
+            <WidthRuler
+              width={settings.width || 600}
+              height={settings.height || 400}
+              editorPosition={editorPosition}
             />
           </div>
         </div>
