@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 interface WidthRulerProps {
   width: number;
@@ -11,6 +11,8 @@ export default function WidthRuler({
   height,
   editorPosition,
 }: WidthRulerProps) {
+  const [currentWidth, setCurrentWidth] = useState(width);
+
   // Calculate position: center horizontally, below frame with 50px gap
   // Editor is positioned with transform: translate(-50%, -50%) + translate(position.x, position.y)
   // So editor center is at (50% + position.x, 50% + position.y) relative to container
@@ -22,6 +24,32 @@ export default function WidthRuler({
   const editorCenterY = containerCenterY + editorPosition.y;
   const editorBottom = editorCenterY + height / 2;
   const rulerTop = editorBottom;
+
+  // Update width when props change
+  useEffect(() => {
+    setCurrentWidth(width);
+  }, [width]);
+
+  // Use ResizeObserver to track actual editor width changes
+  useEffect(() => {
+    const editorElement = document.querySelector(
+      '[data-tour="code-editor"] .relative.group'
+    );
+    if (!editorElement) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const rect = entry.target.getBoundingClientRect();
+        setCurrentWidth(Math.round(rect.width));
+      }
+    });
+
+    resizeObserver.observe(editorElement);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
 
   return (
     <div
@@ -42,7 +70,7 @@ export default function WidthRuler({
 
       {/* Center width display */}
       <div className="absolute -top-1/2 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-500 bg-white px-3 py-1 rounded-full shadow-sm border">
-        {Math.round(width)}px
+        {currentWidth}px
       </div>
     </div>
   );

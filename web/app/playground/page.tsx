@@ -14,7 +14,8 @@ import TourGuide from "@/app/playground/_components/TourGuide";
 import Image from "next/image";
 import { DEFAULT_CODE_SETTINGS } from "@/shared";
 import HeaderNavigation from "@/app/playground/_components/header";
-import WidthRuler from "@/app/playground/_components/WidthRuler";
+import WidthRuler from "@/app/playground/_components/editor/WidthRuler";
+import HeightRuler from "@/app/playground/_components/editor/HeightRuler";
 
 const defaultCode = `function fibonacci(n) {
   if (n <= 1) return n;
@@ -325,6 +326,13 @@ export default function Page() {
 
             {/* Width Ruler - positioned below with fixed spacing */}
             <WidthRuler
+              width={editorSize.width}
+              height={editorSize.height}
+              editorPosition={editorPosition}
+            />
+
+            {/* Height Ruler - positioned left with fixed spacing */}
+            <HeightRuler
               width={editorSize.width}
               height={editorSize.height}
               editorPosition={editorPosition}

@@ -265,6 +265,14 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
 
         onUpdateSetting("width", clampedWidth);
         onUpdateSetting("height", clampedHeight);
+
+        // Notify parent component about size change for rulers
+        if (onSizeChange) {
+          onSizeChange({
+            width: clampedWidth,
+            height: clampedHeight,
+          });
+        }
       },
       [
         isResizing,
@@ -273,6 +281,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
         startSize,
         resizeDirection,
         startPosition,
+        onSizeChange,
       ]
     );
 
@@ -825,44 +834,44 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
               {/* Edge handles - positioned on outer frame */}
               <div
                 data-export-ignore
-                className="absolute top-[-6px] left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white rounded-full cursor-n-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
+                className="absolute top-[-4px] left-1/2 transform -translate-x-1/2 size-2 bg-white rounded-full cursor-n-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "top")}
               />
               <div
                 data-export-ignore
-                className="absolute bottom-[-6px] left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white rounded-full cursor-s-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
+                className="absolute bottom-[-4px] left-1/2 transform -translate-x-1/2 size-2 bg-white rounded-full cursor-s-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "bottom")}
               />
               <div
                 data-export-ignore
-                className="absolute top-1/2 left-[-6px] transform -translate-y-1/2 w-3 h-3 bg-white rounded-full cursor-w-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
+                className="absolute top-1/2 left-[-4px] transform -translate-y-1/2 size-2 bg-white rounded-full cursor-w-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "left")}
               />
               <div
                 data-export-ignore
-                className="absolute top-1/2 right-[-6px] transform -translate-y-1/2 w-3 h-3 bg-white rounded-full cursor-e-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
+                className="absolute top-1/2 right-[-4px] transform -translate-y-1/2 size-2 bg-white rounded-full cursor-e-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "right")}
               />
 
               {/* Corner handles - positioned at frame corners */}
               <div
                 data-export-ignore
-                className="absolute top-[-6px] left-[-6px] w-3 h-3 bg-white rounded-full cursor-nw-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
+                className="absolute top-[-4px] left-[-4px] size-2 bg-white rounded-full cursor-nw-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "top-left")}
               />
               <div
                 data-export-ignore
-                className="absolute top-[-6px] right-[-6px] w-3 h-3 bg-white rounded-full cursor-ne-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
+                className="absolute top-[-4px] right-[-4px] size-2 bg-white rounded-full cursor-ne-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "top-right")}
               />
               <div
                 data-export-ignore
-                className="absolute bottom-[-6px] left-[-6px] w-3 h-3 bg-white rounded-full cursor-sw-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
+                className="absolute bottom-[-4px] left-[-4px] size-2 bg-white rounded-full cursor-sw-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "bottom-left")}
               />
               <div
                 data-export-ignore
-                className="absolute bottom-[-6px] right-[-6px] w-3 h-3 bg-white rounded-full cursor-se-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
+                className="absolute bottom-[-4px] right-[-4px] size-2 bg-white rounded-full cursor-se-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "bottom-right")}
               />
             </>
