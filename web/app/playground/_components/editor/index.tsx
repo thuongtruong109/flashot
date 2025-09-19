@@ -38,6 +38,7 @@ interface EditorProps {
     value: CodeSettings[K]
   ) => void;
   onPositionChange?: (position: { x: number; y: number }) => void;
+  onSizeChange?: (size: { width: number; height: number }) => void;
 }
 
 const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
@@ -51,6 +52,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       className = "",
       onUpdateSetting,
       onPositionChange,
+      onSizeChange,
     },
     ref
   ) => {
@@ -62,12 +64,19 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
     const [startSize, setStartSize] = useState({ width: 0, height: 0 });
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
+    const [previewWidth, setPreviewWidth] = useState<number | null>(null);
     const [transparentGridDataUrl, setTransparentGridDataUrl] =
       useState<string>("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const previewRef = useRef<HTMLPreElement>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const currentTheme = themes[settings.theme as ThemeName];
+
+    const prevSettingsRef = useRef({
+      width: settings.width,
+      height: settings.height,
+    });
+    const positionRef = useRef({ x: 0, y: 0 });
 
     // Callback ref to handle both refs
     const setRefs = useCallback(
@@ -107,17 +116,42 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       resize();
 
       // Observe font-size or width changes that may affect scrollHeight
-      const ro = new ResizeObserver(resize);
-      ro.observe(ta);
-
-      return () => ro.disconnect();
+      // Only observe the parent container, not the textarea itself to avoid width changes
+      const container = ta.parentElement?.parentElement;
+      if (container) {
+        const ro = new ResizeObserver(resize);
+        ro.observe(container);
+        return () => ro.disconnect();
+      }
     }, [code, settings.fontSize, settings.fontFamily, isEditing]);
 
-    const prevSettingsRef = useRef({
-      width: settings.width,
-      height: settings.height,
-    });
-    const positionRef = useRef({ x: 0, y: 0 });
+    // Reset preview width when settings change or exiting edit mode
+    useEffect(() => {
+      if (!isEditing || settings.width) {
+        setPreviewWidth(null);
+      }
+    }, [isEditing, settings.width]);
+
+    // Capture initial width when component mounts or settings change (for auto width)
+    useEffect(() => {
+      if (!settings.width && containerRef.current && !isEditing) {
+        // Use setTimeout to ensure DOM is fully rendered
+        const timer = setTimeout(() => {
+          if (containerRef.current) {
+            const rect = containerRef.current.getBoundingClientRect();
+            setPreviewWidth(rect.width);
+          }
+        }, 0);
+        return () => clearTimeout(timer);
+      }
+    }, [
+      settings.width,
+      settings.height,
+      settings.padding,
+      settings.fontSize,
+      settings.fontFamily,
+      isEditing,
+    ]);
 
     // Maintain center when settings change by resetting position to center
     useEffect(() => {
@@ -136,21 +170,43 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       }
     }, [isResizing]);
 
-    // Call onPositionChange when position changes
+    // Use ResizeObserver for real-time size updates
     useEffect(() => {
-      if (onPositionChange) {
-        onPositionChange(position);
-      }
-    }, [position, onPositionChange]);
+      if (!onSizeChange || !containerRef.current || isFullscreen) return;
+
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          // Use getBoundingClientRect to get the full outer frame width including padding
+          const rect = entry.target.getBoundingClientRect();
+          onSizeChange({
+            width: Math.round(rect.width),
+            height: Math.round(rect.height),
+          });
+        }
+      });
+
+      resizeObserver.observe(containerRef.current);
+
+      return () => {
+        resizeObserver.disconnect();
+      };
+    }, [onSizeChange, isFullscreen]);
 
     // Handle click on preview to start editing
     const handlePreviewClick = useCallback(() => {
+      // Capture current width before switching to edit mode
+      if (containerRef.current && !settings.width) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setPreviewWidth(rect.width);
+      }
       setIsEditing(true);
-    }, []);
+    }, [settings.width]);
 
     // Handle blur to exit editing
     const handleBlur = useCallback(() => {
       setIsEditing(false);
+      // Reset preview width when exiting edit mode
+      setPreviewWidth(null);
     }, []);
 
     // Resize handlers
@@ -183,33 +239,32 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
 
         let newWidth = startSize.width;
         let newHeight = startSize.height;
-        let newX = startPosition.x;
-        let newY = startPosition.y;
 
         if (resizeDirection.includes("right")) {
           newWidth = Math.max(200, startSize.width + deltaX);
-          // Resize from center: move left by half the width increase
-          newX = startPosition.x - (newWidth - startSize.width) / 2;
         }
         if (resizeDirection.includes("left")) {
           newWidth = Math.max(200, startSize.width - deltaX);
-          // Resize from center: move right by half the width increase
-          newX = startPosition.x + (startSize.width - newWidth) / 2;
         }
         if (resizeDirection.includes("bottom")) {
           newHeight = Math.max(100, startSize.height + deltaY);
-          // Resize from center: move up by half the height increase
-          newY = startPosition.y - (newHeight - startSize.height) / 2;
         }
         if (resizeDirection.includes("top")) {
           newHeight = Math.max(100, startSize.height - deltaY);
-          // Resize from center: move down by half the height increase
-          newY = startPosition.y + (startSize.height - newHeight) / 2;
         }
 
-        setPosition({ x: newX, y: newY });
-        onUpdateSetting("width", Math.round(newWidth));
-        onUpdateSetting("height", Math.round(newHeight));
+        // Keep position fixed at center
+        setPosition({ x: startPosition.x, y: startPosition.y });
+
+        // Clamp width and height to min/max constraints before updating settings
+        const clampedWidth = Math.min(800, Math.max(360, Math.round(newWidth)));
+        const clampedHeight = Math.min(
+          800,
+          Math.max(100, Math.round(newHeight))
+        );
+
+        onUpdateSetting("width", clampedWidth);
+        onUpdateSetting("height", clampedHeight);
       },
       [
         isResizing,
@@ -224,7 +279,6 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
     const handleResizeEnd = useCallback(() => {
       setIsResizing(false);
       setResizeDirection("");
-      // Don't reset position here - let it be handled by the settings change effect
     }, []);
 
     // Add global mouse events for resizing
@@ -308,11 +362,13 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
             : ""
         } ${className}`}
       >
+        {/* Container outer frame */}
         <div
           ref={setRefs}
           className={`relative transition-all duration-300 ${
             settings.showBackground ? "" : ""
-          }`}
+          }
+        `}
           style={{
             background: isFullscreen
               ? "white"
@@ -338,12 +394,16 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
               ? "auto"
               : settings.width
               ? `${settings.width}px`
+              : isEditing && previewWidth
+              ? `${previewWidth}px`
               : "auto",
             height: isFullscreen
               ? "auto"
               : settings.height
               ? `${settings.height}px`
               : "auto",
+            minWidth: isFullscreen ? "auto" : "360px",
+            maxWidth: isFullscreen ? "none" : "800px",
             maxHeight: isFullscreen
               ? "none"
               : settings.height
@@ -719,7 +779,10 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                     )}
 
                     {/* Textarea - Exact same structure as preview */}
-                    <div className="flex-1" style={{ minWidth: "100%" }}>
+                    <div
+                      className="flex-1"
+                      style={{ minWidth: "100%", width: "100%" }}
+                    >
                       <textarea
                         ref={textareaRef}
                         value={code}
@@ -741,6 +804,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                           boxSizing: "border-box",
                           overflowY: "hidden",
                           overflowX: "hidden", // Hide X scrollbar on textarea
+                          width: "100%", // Ensure full width
                           minWidth: settings.wordWrap ? "100%" : "max-content", // Allow horizontal overflow
                         }}
                         placeholder="Start typing your code..."
@@ -760,37 +824,45 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
             <>
               {/* Edge handles - positioned on outer frame */}
               <div
-                className="absolute top-0 left-0 right-0 h-1 cursor-n-resize hover:bg-blue-500/20 transition-colors"
+                data-export-ignore
+                className="absolute top-[-6px] left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white rounded-full cursor-n-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "top")}
               />
               <div
-                className="absolute bottom-0 left-0 right-0 h-1 cursor-s-resize hover:bg-blue-500/20 transition-colors"
+                data-export-ignore
+                className="absolute bottom-[-6px] left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white rounded-full cursor-s-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "bottom")}
               />
               <div
-                className="absolute top-0 bottom-0 left-0 w-1 cursor-w-resize hover:bg-blue-500/20 transition-colors"
+                data-export-ignore
+                className="absolute top-1/2 left-[-6px] transform -translate-y-1/2 w-3 h-3 bg-white rounded-full cursor-w-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "left")}
               />
               <div
-                className="absolute top-0 bottom-0 right-0 w-1 cursor-e-resize hover:bg-blue-500/20 transition-colors"
+                data-export-ignore
+                className="absolute top-1/2 right-[-6px] transform -translate-y-1/2 w-3 h-3 bg-white rounded-full cursor-e-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "right")}
               />
 
               {/* Corner handles - positioned at frame corners */}
               <div
-                className="absolute top-0 left-0 w-3 h-3 cursor-nw-resize hover:bg-blue-500/30 transition-colors"
+                data-export-ignore
+                className="absolute top-[-6px] left-[-6px] w-3 h-3 bg-white rounded-full cursor-nw-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "top-left")}
               />
               <div
-                className="absolute top-0 right-0 w-3 h-3 cursor-ne-resize hover:bg-blue-500/30 transition-colors"
+                data-export-ignore
+                className="absolute top-[-6px] right-[-6px] w-3 h-3 bg-white rounded-full cursor-ne-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "top-right")}
               />
               <div
-                className="absolute bottom-0 left-0 w-3 h-3 cursor-sw-resize hover:bg-blue-500/30 transition-colors"
+                data-export-ignore
+                className="absolute bottom-[-6px] left-[-6px] w-3 h-3 bg-white rounded-full cursor-sw-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "bottom-left")}
               />
               <div
-                className="absolute bottom-0 right-0 w-3 h-3 cursor-se-resize hover:bg-blue-500/30 transition-colors"
+                data-export-ignore
+                className="absolute bottom-[-6px] right-[-6px] w-3 h-3 bg-white rounded-full cursor-se-resize hover:bg-blue-200 transition-colors border border-gray-300 shadow-sm"
                 onMouseDown={(e) => handleResizeStart(e, "bottom-right")}
               />
             </>

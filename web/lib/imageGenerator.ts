@@ -53,6 +53,14 @@ export const generateCodeImage = async (
         backgroundColor: null, // Set to null for transparent background per docs
         onclone: (clonedDoc: Document) => {
           try {
+            // Hide resize handles during export
+            const resizeHandles = clonedDoc.querySelectorAll(
+              "[data-export-ignore]"
+            );
+            resizeHandles.forEach((handle) => {
+              (handle as HTMLElement).style.display = "none";
+            });
+
             const header = clonedDoc.querySelector(
               "[data-export-header]"
             ) as HTMLElement | null;
@@ -162,9 +170,9 @@ export const generateCodeImage = async (
                   <circle cx="${trafficX[1]}" cy="20" r="6" fill="#facc15"/>
                   <circle cx="${trafficX[2]}" cy="20" r="6" fill="#22c55e"/>
                   <!-- Filename -->
-                  <text x="${filenameX}" y="24" font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="${fontWeight}" fill="${filenameFill}">${filenameText}</text>
+                  <text x="${filenameX}" y="22" font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="${fontWeight}" fill="${filenameFill}">${filenameText}</text>
                   <!-- Line count -->
-                  <text x="100%" y="24" dx="-16" text-anchor="end" font-family="Arial, sans-serif" font-size="${linecountFontSize}" font-weight="${linecountFontWeight}" fill="${linecountFill}">${linecountText}</text>
+                  <text x="100%" y="22" dx="-16" text-anchor="end" font-family="Arial, sans-serif" font-size="${linecountFontSize}" font-weight="${linecountFontWeight}" fill="${linecountFill}">${linecountText}</text>
                 </svg>
               `;
 
@@ -208,6 +216,14 @@ export const generateCodeImage = async (
       background: backgroundColor,
       onclone: (clonedDoc: Document) => {
         try {
+          // Hide resize handles during export
+          const resizeHandles = clonedDoc.querySelectorAll(
+            "[data-export-ignore]"
+          );
+          resizeHandles.forEach((handle) => {
+            (handle as HTMLElement).style.display = "none";
+          });
+
           const header = clonedDoc.querySelector(
             "[data-export-header]"
           ) as HTMLElement | null;

@@ -41,11 +41,20 @@ export default function Page() {
   const [editorWidth, setEditorWidth] = useState(0);
   const codeEditorRef = useRef<HTMLDivElement>(null);
   const [editorPosition, setEditorPosition] = useState({ x: 0, y: 0 });
+  const [editorSize, setEditorSize] = useState({ width: 600, height: 400 });
 
   // Handle position change from CodeEditor
   const handleEditorPositionChange = useCallback(
     (position: { x: number; y: number }) => {
       setEditorPosition(position);
+    },
+    []
+  );
+
+  // Handle size change from CodeEditor
+  const handleEditorSizeChange = useCallback(
+    (size: { width: number; height: number }) => {
+      setEditorSize(size);
     },
     []
   );
@@ -58,13 +67,13 @@ export default function Page() {
   useEffect(() => {
     const updateWidth = () => {
       // Initialize with default width, will be updated by ResizeObserver
-      setEditorWidth(600);
+      setEditorWidth(editorSize.width);
     };
 
     updateWidth();
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
-  }, [settings.width]);
+  }, [settings.width, editorSize.width]);
 
   // Use ResizeObserver to track CodeEditor width changes
   useEffect(() => {
@@ -311,12 +320,13 @@ export default function Page() {
               className="w-full h-full"
               onUpdateSetting={updateSetting}
               onPositionChange={handleEditorPositionChange}
+              onSizeChange={handleEditorSizeChange}
             />
 
             {/* Width Ruler - positioned below with fixed spacing */}
             <WidthRuler
-              width={settings.width || 600}
-              height={settings.height || 400}
+              width={editorSize.width}
+              height={editorSize.height}
               editorPosition={editorPosition}
             />
           </div>
