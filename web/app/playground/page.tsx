@@ -67,7 +67,6 @@ export default function Page() {
 
   useEffect(() => {
     const updateWidth = () => {
-      // Initialize with default width, will be updated by ResizeObserver
       setEditorWidth(editorSize.width);
     };
 
@@ -75,6 +74,22 @@ export default function Page() {
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
   }, [settings.width, editorSize.width]);
+
+  // Đảm bảo editorSize luôn đúng ngay khi mount
+  useEffect(() => {
+    if (codeRef.current) {
+      const rect = codeRef.current.getBoundingClientRect();
+      if (
+        rect.width !== editorSize.width ||
+        rect.height !== editorSize.height
+      ) {
+        setEditorSize({
+          width: Math.round(rect.width),
+          height: Math.round(rect.height),
+        });
+      }
+    }
+  }, [codeRef, editorSize.width, editorSize.height]);
 
   // Use ResizeObserver to track CodeEditor width changes
   useEffect(() => {

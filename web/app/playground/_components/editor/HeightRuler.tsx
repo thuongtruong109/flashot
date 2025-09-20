@@ -11,11 +11,9 @@ export default function HeightRuler({
   height,
   editorPosition,
 }: HeightRulerProps) {
-  const [currentHeight, setCurrentHeight] = useState(height);
   const rulerRef = useRef<HTMLDivElement>(null);
 
   // Calculate position similar to WidthRuler logic
-  // Use a larger offset to ensure ruler stays outside editor area
   const viewportWidth =
     typeof window !== "undefined" ? window.innerWidth : 1200;
   const viewportCenterX = viewportWidth / 2;
@@ -25,32 +23,6 @@ export default function HeightRuler({
 
   // Position ruler well outside the editor area
   const rulerX = editorLeft - 200; // Increased gap to ensure it's outside
-
-  // Update height when props change
-  useEffect(() => {
-    setCurrentHeight(height);
-  }, [height]);
-
-  // Use ResizeObserver to track actual editor height changes
-  useEffect(() => {
-    const editorElement = document.querySelector(
-      '[data-tour="code-editor"] .relative.group'
-    );
-    if (!editorElement) return;
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const rect = entry.target.getBoundingClientRect();
-        setCurrentHeight(Math.round(rect.height));
-      }
-    });
-
-    resizeObserver.observe(editorElement);
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, []);
 
   return (
     <div
@@ -72,7 +44,7 @@ export default function HeightRuler({
 
       {/* Center height display */}
       <div className="absolute -left-full -translate-x-3 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-500 bg-white px-3 py-1 rounded-full shadow-sm border -rotate-90 origin-center">
-        {currentHeight}px
+        {height}px
       </div>
     </div>
   );

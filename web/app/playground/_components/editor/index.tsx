@@ -87,8 +87,16 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
         } else if (ref) {
           ref.current = node;
         }
+        // Gọi onSizeChange ngay khi ref có giá trị (mount)
+        if (node && onSizeChange) {
+          const rect = node.getBoundingClientRect();
+          onSizeChange({
+            width: Math.round(rect.width),
+            height: Math.round(rect.height),
+          });
+        }
       },
-      [ref]
+      [ref, onSizeChange]
     );
 
     // Auto-focus when entering edit mode
@@ -171,8 +179,15 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
     }, [isResizing]);
 
     // Use ResizeObserver for real-time size updates
-    useEffect(() => {
+    useLayoutEffect(() => {
       if (!onSizeChange || !containerRef.current || isFullscreen) return;
+
+      // Immediately notify parent of initial size
+      const rect = containerRef.current.getBoundingClientRect();
+      onSizeChange({
+        width: Math.round(rect.width),
+        height: Math.round(rect.height),
+      });
 
       const resizeObserver = new ResizeObserver((entries) => {
         for (const entry of entries) {
