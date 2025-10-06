@@ -178,44 +178,59 @@ export default function Page() {
 
   const handleDownloadImage = useCallback(
     async (format?: string) => {
-      if (settings.exportType === "file") {
-        // Handle file export
-        const getExtension = (lang: string) => {
-          const extensions: Record<string, string> = {
-            javascript: "js",
-            typescript: "ts",
-            python: "py",
-            java: "java",
-            cpp: "cpp",
-            c: "c",
-            csharp: "cs",
-            php: "php",
-            ruby: "rb",
-            go: "go",
-            rust: "rs",
-            swift: "swift",
-            kotlin: "kt",
-            scala: "scala",
-            html: "html",
-            css: "css",
-            scss: "scss",
-            json: "json",
-            xml: "xml",
-            yaml: "yaml",
-            sql: "sql",
-            shell: "sh",
-            powershell: "ps1",
-            dockerfile: "dockerfile",
-            markdown: "md",
-          };
-          return extensions[lang] || "txt";
+      // Handle file export
+      const getExtension = (lang: string) => {
+        const extensions: Record<string, string> = {
+          javascript: "js",
+          typescript: "ts",
+          python: "py",
+          java: "java",
+          cpp: "cpp",
+          c: "c",
+          csharp: "cs",
+          php: "php",
+          ruby: "rb",
+          go: "go",
+          rust: "rs",
+          swift: "swift",
+          kotlin: "kt",
+          scala: "scala",
+          html: "html",
+          css: "css",
+          scss: "scss",
+          json: "json",
+          xml: "xml",
+          yaml: "yaml",
+          sql: "sql",
+          shell: "sh",
+          powershell: "ps1",
+          dockerfile: "dockerfile",
+          markdown: "md",
         };
+        return extensions[lang] || "txt";
+      };
 
-        const extension =
-          settings.exportFormat === "original"
-            ? getExtension(settings.language)
-            : "txt";
+      const exportFormat = format || settings.exportFormat || "webp";
+
+      if (settings.exportFormat === "original") {
+        // Only export the code file, do not export image
+        const extension = getExtension(settings.language);
         const filename = `${fileName}.${extension}`;
+        const blob = new Blob([code], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        return;
+      }
+
+      // Export plain text file if exportFormat is 'plain'
+      if (settings.exportFormat === "plain") {
+        const filename = `${fileName}.txt`;
         const blob = new Blob([code], { type: "text/plain" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
@@ -230,8 +245,6 @@ export default function Page() {
 
       // Handle image export
       if (!codeRef.current) return;
-
-      const exportFormat = format || settings.exportFormat || "webp";
       setIsGenerating(true);
       try {
         const success = await generateAndDownloadImage(

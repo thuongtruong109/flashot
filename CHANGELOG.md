@@ -3,6 +3,8 @@
 ### 🚀 Features
 
 - **playground**:
+  - add ruler size indicator - by @thuongtruong109 [<samp>(7b896)</samp>](https://github.com/thuongtruong109/flashot/commit/7b896ba1c889e69bd057dc9e44bbda22af8874ce)
+  - ...
   - line count number style options - by @thuongtruong109 [<samp>()</samp>]()
   - export file as original/plain-text format - by @thuongtruong109 [<samp>(35d54)</samp>](https://github.com/thuongtruong109/flashot/commit/35d54ed72271abb84996cfa13b6782e752ae7d5e)
   - add reset to default settings button - by @thuongtruong109 [<samp>(807bc)</samp>](https://github.com/thuongtruong109/flashot/commit/807bc99729e7c83585604cf839f8e8b227bd2b29)
@@ -22,7 +24,7 @@
 ### 🐞 Bug Fixes
 
 - **playground**:
-  - resolve header shift down adter export - by @thuongtruong109 [<samp>(b934e)</samp>](https://github.com/thuongtruong109/flashot/commit/b934e486f65066877d211a50272ab46c5ed77d43)
+  - resolve header shift down after export - by @thuongtruong109 [<samp>(b934e)</samp>](https://github.com/thuongtruong109/flashot/commit/b934e486f65066877d211a50272ab46c5ed77d43)
   - calculating caption position - by @thuongtruong109 [<samp>(33cca)</samp>](https://github.com/thuongtruong109/flashot/commit/33ccafcd7f97deeddd1b1a7241e8c81ff304e658)
   - auto full size code content match with frame - by @thuongtruong109 [<samp>(a646c)</samp>](https://github.com/thuongtruong109/flashot/commit/a646c4a18c730ccb8a7e2c9976cf3f0e6153b04c)
 

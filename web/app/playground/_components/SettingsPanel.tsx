@@ -77,7 +77,6 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       settings.height?.toString() || ""
     );
     const fileNameInputRef = useRef<HTMLInputElement>(null);
-    const [isExporting, setIsExporting] = useState(false);
 
     useEffect(() => {
       setTempFileName(fileName);
@@ -96,7 +95,6 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
 
       if (!isEditingFileName) {
         const nameWithoutExt = fileName.split(".")[0] || fileName;
-        const newExtension = getFileExtension(language);
         const newFileName = `${nameWithoutExt}`;
         onFileNameChange(newFileName);
       }
@@ -108,29 +106,6 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
         fileNameInputRef.current.select();
       }
     }, [isEditingFileName]);
-
-    const handleFileNameEdit = () => {
-      setIsEditingFileName(true);
-    };
-
-    const handleFileNameChange = (value: string) => {
-      setTempFileName(value);
-      onFileNameChange(value.trim());
-    };
-
-    const handleFileNameKeyDown = (
-      e: React.KeyboardEvent<HTMLInputElement>
-    ) => {
-      if (e.key === "Enter" || e.key === "Escape") {
-        setIsEditingFileName(false);
-      }
-    };
-
-    const handleFileNameBlur = () => {
-      setIsEditingFileName(false);
-      // Don't reset tempFileName - let it stay as user intended (even if empty)
-      // The fileName prop will be updated through onFileNameChange calls
-    };
 
     // Monitor for dropdown portals to disable scrolling
     useEffect(() => {

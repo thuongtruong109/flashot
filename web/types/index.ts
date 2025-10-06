@@ -25,7 +25,6 @@ export interface CodeSettings {
   fontSize: number;
   showLineCount?: boolean;
   showFileName?: boolean;
-  exportType?: "image" | "file";
   exportFormat?: "png" | "jpg" | "webp" | "avif" | "svg" | "original" | "plain";
   width?: number;
   height?: number;

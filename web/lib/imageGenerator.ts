@@ -61,24 +61,7 @@ export const generateCodeImage = async (
               (handle as HTMLElement).style.display = "none";
             });
 
-            const header = clonedDoc.querySelector(
-              "[data-export-header]"
-            ) as HTMLElement | null;
-            if (header) {
-              // Apply explicit export-safe styles to avoid rendering differences
-              header.style.height = "40px";
-              header.style.display = "flex";
-              header.style.alignItems = "center";
-              header.style.fontFamily =
-                "Arial, system-ui, -apple-system, sans-serif";
-              header.style.fontSize = "14px";
-              header.style.paddingLeft = "16px";
-              header.style.paddingRight = "16px";
-            }
-            // Target specific header children for pixel adjustments
-            const traffic = clonedDoc.querySelector(
-              "[data-export-traffic]"
-            ) as HTMLElement | null;
+            // Only fix vertical alignment - don't touch any other styles
             const filenameEl = clonedDoc.querySelector(
               "[data-export-filename]"
             ) as HTMLElement | null;
@@ -86,98 +69,16 @@ export const generateCodeImage = async (
               "[data-export-linecount]"
             ) as HTMLElement | null;
 
-            if (traffic) {
-              traffic.style.display = "flex";
-              traffic.style.alignItems = "center";
-            }
-
             if (filenameEl) {
-              // Nudge up more to match on-screen baseline
-              filenameEl.style.transform = "translateY(-3px)";
-              filenameEl.style.marginTop = "0px";
+              filenameEl.style.transform = "translateY(-7px)";
+              filenameEl.style.overflow = "visible";
+              filenameEl.style.lineHeight = "normal";
             }
 
             if (linecountEl) {
-              linecountEl.style.transform = "translateY(-3px)";
-              linecountEl.style.marginTop = "0px";
-            }
-
-            // Replace header content with SVG for pixel-perfect rendering
-            if (header && filenameEl && linecountEl && traffic) {
-              const filenameText = filenameEl.textContent || "";
-              const linecountText = linecountEl.textContent || "";
-              const align = header.dataset.windowHeaderAlign || "left";
-
-              let trafficX = [16, 32, 48];
-              let filenameX = 70;
-              if (align === "right") {
-                trafficX = [320, 336, 352]; // After line count on right
-                filenameX = 70; // Keep filename on left
-              }
-
-              // Get file name opacity, color, font-weight, and font-size from the element's computed style
-              const computedStyle = getComputedStyle(filenameEl);
-              const fileNameOpacity = parseFloat(computedStyle.opacity) || 1;
-              const color = computedStyle.color;
-              const fontWeight = computedStyle.fontWeight;
-              const fontSize = computedStyle.fontSize;
-              // Convert rgb/rgba to rgba with opacity
-              let filenameFill = color;
-              if (color.startsWith("rgb(")) {
-                const rgbMatch = color.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
-                if (rgbMatch) {
-                  filenameFill = `rgba(${rgbMatch[1]}, ${rgbMatch[2]}, ${rgbMatch[3]}, ${fileNameOpacity})`;
-                }
-              } else if (color.startsWith("rgba(")) {
-                // If already rgba, replace the alpha
-                const rgbaMatch = color.match(
-                  /rgba\((\d+),\s*(\d+),\s*(\d+),\s*[\d.]+\)/
-                );
-                if (rgbaMatch) {
-                  filenameFill = `rgba(${rgbaMatch[1]}, ${rgbaMatch[2]}, ${rgbaMatch[3]}, ${fileNameOpacity})`;
-                }
-              }
-
-              // Get line count opacity and color from the element's computed style
-              const linecountComputedStyle = getComputedStyle(linecountEl);
-              const lineCountOpacity =
-                parseFloat(linecountComputedStyle.opacity) || 1;
-              const linecountColor = linecountComputedStyle.color;
-              const linecountFontWeight = linecountComputedStyle.fontWeight;
-              const linecountFontSize = linecountComputedStyle.fontSize;
-              // Convert rgb/rgba to rgba with opacity
-              let linecountFill = linecountColor;
-              if (linecountColor.startsWith("rgb(")) {
-                const rgbMatch = linecountColor.match(
-                  /rgb\((\d+),\s*(\d+),\s*(\d+)\)/
-                );
-                if (rgbMatch) {
-                  linecountFill = `rgba(${rgbMatch[1]}, ${rgbMatch[2]}, ${rgbMatch[3]}, ${lineCountOpacity})`;
-                }
-              } else if (linecountColor.startsWith("rgba(")) {
-                // If already rgba, replace the alpha
-                const rgbaMatch = linecountColor.match(
-                  /rgba\((\d+),\s*(\d+),\s*(\d+),\s*[\d.]+\)/
-                );
-                if (rgbaMatch) {
-                  linecountFill = `rgba(${rgbaMatch[1]}, ${rgbaMatch[2]}, ${rgbaMatch[3]}, ${lineCountOpacity})`;
-                }
-              }
-              const svg = `
-                <svg width="100%" height="40" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Traffic lights -->
-                  <circle cx="${trafficX[0]}" cy="20" r="6" fill="#ef4444"/>
-                  <circle cx="${trafficX[1]}" cy="20" r="6" fill="#facc15"/>
-                  <circle cx="${trafficX[2]}" cy="20" r="6" fill="#22c55e"/>
-                  <!-- Filename -->
-                  <text x="${filenameX}" y="22" font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="${fontWeight}" fill="${filenameFill}">${filenameText}</text>
-                  <!-- Line count -->
-                  <text x="100%" y="22" dx="-16" text-anchor="end" font-family="Arial, sans-serif" font-size="${linecountFontSize}" font-weight="${linecountFontWeight}" fill="${linecountFill}">${linecountText}</text>
-                </svg>
-              `;
-
-              header.innerHTML = svg;
-              header.style.padding = "0";
+              linecountEl.style.transform = "translateY(-8px)";
+              linecountEl.style.overflow = "visible";
+              linecountEl.style.lineHeight = "normal";
             }
           } catch (e) {
             // Ignore clone styling errors
@@ -224,23 +125,7 @@ export const generateCodeImage = async (
             (handle as HTMLElement).style.display = "none";
           });
 
-          const header = clonedDoc.querySelector(
-            "[data-export-header]"
-          ) as HTMLElement | null;
-          if (header) {
-            header.style.height = "40px";
-            header.style.display = "flex";
-            header.style.alignItems = "center";
-            header.style.fontFamily =
-              "Arial, system-ui, -apple-system, sans-serif";
-            header.style.fontSize = "14px";
-            header.style.paddingLeft = "12px";
-            header.style.paddingRight = "12px";
-          }
-
-          const traffic = clonedDoc.querySelector(
-            "[data-export-traffic]"
-          ) as HTMLElement | null;
+          // Only fix vertical alignment - don't touch any other styles
           const filenameEl = clonedDoc.querySelector(
             "[data-export-filename]"
           ) as HTMLElement | null;
@@ -248,145 +133,16 @@ export const generateCodeImage = async (
             "[data-export-linecount]"
           ) as HTMLElement | null;
 
-          if (traffic) {
-            traffic.style.display = "flex";
-            traffic.style.alignItems = "center";
-          }
-
           if (filenameEl) {
-            filenameEl.style.transform = "translateY(-3px)";
-            filenameEl.style.marginTop = "0px";
+            filenameEl.style.transform = "translateY(-7px)";
+            filenameEl.style.overflow = "visible";
+            filenameEl.style.lineHeight = "normal";
           }
 
           if (linecountEl) {
-            linecountEl.style.transform = "translateY(-3px)";
-            linecountEl.style.marginTop = "0px";
-          }
-
-          // Replace header content with SVG for pixel-perfect rendering
-          if (header && filenameEl && linecountEl && traffic) {
-            const filenameText = filenameEl.textContent || "";
-            const linecountText = linecountEl.textContent || "";
-            const align = header.dataset.windowHeaderAlign || "left";
-            const showColor = header.dataset.showTrafficLightsColor !== "false";
-
-            // Measure text widths
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-            let trafficX: number[] = [16, 32, 48];
-            let filenameX = 70;
-            let linecountX: string | number = "100%";
-            let linecountAnchor = "end";
-            let linecountDx = "-16";
-
-            if (ctx) {
-              ctx.font = "14px Arial, sans-serif";
-              const filenameWidth = ctx.measureText(filenameText).width;
-              const linecountWidth = ctx.measureText(linecountText).width;
-              const trafficWidth = 44; // Approximate width of traffic lights
-              const margin = 16;
-              const headerWidth = header.clientWidth;
-
-              if (align === "left") {
-                trafficX = [16, 32, 48];
-                filenameX = 16 + trafficWidth + margin;
-                linecountX = "100%";
-                linecountAnchor = "end";
-                linecountDx = "-16";
-              } else {
-                filenameX = 16;
-                // Position line count and traffic on the far right
-                const groupWidth = linecountWidth + margin + trafficWidth;
-                linecountX = headerWidth - groupWidth + 24 - 40;
-                trafficX = [
-                  (linecountX as number) + linecountWidth + margin + 5,
-                  (linecountX as number) + linecountWidth + margin + 5 + 16,
-                  (linecountX as number) + linecountWidth + margin + 5 + 32,
-                ];
-                linecountAnchor = "start";
-                linecountDx = "0";
-              }
-            } else {
-              // Fallback to fixed positions
-              if (align === "right") {
-                filenameX = 16;
-                linecountX = 284; // Shifted left by 20 more
-                linecountAnchor = "start";
-                linecountDx = "0";
-                trafficX = [349, 365, 381]; // Keep position
-              }
-            }
-
-            // Get file name opacity, color, font-weight, and font-size from the element's computed style
-            const computedStyle = getComputedStyle(filenameEl);
-            const fileNameOpacity = parseFloat(computedStyle.opacity) || 1;
-            const color = computedStyle.color;
-            const fontWeight = computedStyle.fontWeight;
-            const fontSize = computedStyle.fontSize;
-            // Convert rgb/rgba to rgba with opacity
-            let filenameFill = color;
-            if (color.startsWith("rgb(")) {
-              const rgbMatch = color.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
-              if (rgbMatch) {
-                filenameFill = `rgba(${rgbMatch[1]}, ${rgbMatch[2]}, ${rgbMatch[3]}, ${fileNameOpacity})`;
-              }
-            } else if (color.startsWith("rgba(")) {
-              // If already rgba, replace the alpha
-              const rgbaMatch = color.match(
-                /rgba\((\d+),\s*(\d+),\s*(\d+),\s*[\d.]+\)/
-              );
-              if (rgbaMatch) {
-                filenameFill = `rgba(${rgbaMatch[1]}, ${rgbaMatch[2]}, ${rgbaMatch[3]}, ${fileNameOpacity})`;
-              }
-            }
-
-            // Get line count opacity and color from the element's computed style
-            const linecountComputedStyle = getComputedStyle(linecountEl);
-            const lineCountOpacity =
-              parseFloat(linecountComputedStyle.opacity) || 1;
-            const linecountColor = linecountComputedStyle.color;
-            const linecountFontWeight = linecountComputedStyle.fontWeight;
-            const linecountFontSize = linecountComputedStyle.fontSize;
-            // Convert rgb/rgba to rgba with opacity
-            let linecountFill = linecountColor;
-            if (linecountColor.startsWith("rgb(")) {
-              const rgbMatch = linecountColor.match(
-                /rgb\((\d+),\s*(\d+),\s*(\d+)\)/
-              );
-              if (rgbMatch) {
-                linecountFill = `rgba(${rgbMatch[1]}, ${rgbMatch[2]}, ${rgbMatch[3]}, ${lineCountOpacity})`;
-              }
-            } else if (linecountColor.startsWith("rgba(")) {
-              // If already rgba, replace the alpha
-              const rgbaMatch = linecountColor.match(
-                /rgba\((\d+),\s*(\d+),\s*(\d+),\s*[\d.]+\)/
-              );
-              if (rgbaMatch) {
-                linecountFill = `rgba(${rgbaMatch[1]}, ${rgbaMatch[2]}, ${rgbaMatch[3]}, ${lineCountOpacity})`;
-              }
-            }
-            // Create SVG with exact positioning
-            const svg = `
-              <svg width="100%" height="40" xmlns="http://www.w3.org/2000/svg">
-                <!-- Traffic lights -->
-                <circle cx="${trafficX[0]}" cy="20" r="6" fill="${
-              showColor ? "#ef4444" : "#4b5563"
-            }"/>
-                <circle cx="${trafficX[1]}" cy="20" r="6" fill="${
-              showColor ? "#facc15" : "#4b5563"
-            }"/>
-                <circle cx="${trafficX[2]}" cy="20" r="6" fill="${
-              showColor ? "#22c55e" : "#4b5563"
-            }"/>
-                <!-- Filename -->
-                <text x="${filenameX}" y="24" font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="${fontWeight}" fill="${filenameFill}">${filenameText}</text>
-                <!-- Line count -->
-                <text x="${linecountX}" y="24" dx="${linecountDx}" text-anchor="${linecountAnchor}" font-family="Arial, sans-serif" font-size="${linecountFontSize}" font-weight="${linecountFontWeight}" fill="${linecountFill}">${linecountText}</text>
-              </svg>
-            `;
-
-            header.innerHTML = svg;
-            header.style.padding = "0";
+            linecountEl.style.transform = "translateY(-8px)";
+            linecountEl.style.overflow = "visible";
+            linecountEl.style.lineHeight = "normal";
           }
         } catch (e) {
           // ignore

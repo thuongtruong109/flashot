@@ -30,7 +30,6 @@ export const DEFAULT_CODE_SETTINGS: CodeSettings = {
   lineCountOpacity: 0.5,
   lineCountFontWeight: 400,
   lineCountFontSize: 13,
-  exportType: "image",
   exportFormat: "webp",
   width: undefined,
   height: undefined,

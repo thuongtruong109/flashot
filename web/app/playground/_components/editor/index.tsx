@@ -500,7 +500,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                         {settings.showLineCount && (
                           <span
                             data-export-linecount
-                            className="flex items-center space-x-2 text-xs text-gray-500"
+                            className="flex items-center space-x-2 text-xs text-white"
                             style={{
                               opacity: settings.lineCountOpacity ?? 1,
                               fontWeight: settings.lineCountFontWeight ?? 400,
