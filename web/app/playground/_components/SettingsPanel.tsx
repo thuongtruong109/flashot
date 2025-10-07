@@ -181,72 +181,54 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
         >
           {/* Header with Close (mobile) */}
           <div className="flex items-center justify-between py-2 border-b border-white/30 bg-white/70 backdrop-blur-md">
-            <div className="flex items-center gap-2">
-              <div className="relative">
-                <CustomSelect
-                  options={[
-                    {
-                      value: _PLAYGROUND_SETTINGS_TAB.VIEW,
-                      label: (
-                        <span className="flex items-center gap-1.5 text-green-600">
-                          <Layers className="size-3" />{" "}
-                          {_PLAYGROUND_SETTINGS_TAB.VIEW}
-                        </span>
-                      ),
-                    },
-                    {
-                      value: _PLAYGROUND_SETTINGS_TAB.THEME,
-                      label: (
-                        <span className="flex items-center gap-1.5 text-purple-600">
-                          <Palette className="size-3" />{" "}
-                          {_PLAYGROUND_SETTINGS_TAB.THEME}
-                        </span>
-                      ),
-                    },
-                    {
-                      value: _PLAYGROUND_SETTINGS_TAB.MAKEUP,
-                      label: (
-                        <span className="flex items-center gap-1.5 text-cyan-600">
-                          <Move className="size-3" />{" "}
-                          {_PLAYGROUND_SETTINGS_TAB.MAKEUP}
-                        </span>
-                      ),
-                    },
-                  ]}
-                  value={activeMenu}
-                  onChange={(val) => onChangeActiveMenu?.(val)}
-                  className="ml-2 text-xs w-36"
-                />
-              </div>
-              <button
-                type="button"
-                onClick={handleResetToDefaults}
-                title="Reset to defaults"
-                aria-label="Toggle settings panel"
-                className="text-slate-400 hover:text-red-500 font-light bg-gradient-to-b from-white to-gray-50
-      shadow-[inset_2px_2px_6px_rgba(0,0,0,0.04),inset_-2px_-2px_6px_rgba(255,255,255,0.9),6px_6px_14px_rgba(2,6,23,0.06),-6px_-6px_14px_rgba(255,255,255,0.9)]
-      hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06),inset_-2px_-2px_6px_rgba(255,255,255,1),8px_8px_18px_rgba(2,6,23,0.08),-6px_-6px_14px_rgba(255,255,255,1)]
-      transition-all duration-200 rounded-lg px-3 py-1.5 flex items-center space-x-1 text-sm"
-              >
-                <RotateCcw className="size-3" />
-                <span>Reset</span>
-              </button>
+            <div className="relative">
+              <CustomSelect
+                options={[
+                  {
+                    value: _PLAYGROUND_SETTINGS_TAB.VIEW,
+                    label: (
+                      <span className="flex items-center gap-1.5 text-green-600">
+                        <Layers className="size-3" />{" "}
+                        {_PLAYGROUND_SETTINGS_TAB.VIEW}
+                      </span>
+                    ),
+                  },
+                  {
+                    value: _PLAYGROUND_SETTINGS_TAB.THEME,
+                    label: (
+                      <span className="flex items-center gap-1.5 text-purple-600">
+                        <Palette className="size-3" />{" "}
+                        {_PLAYGROUND_SETTINGS_TAB.THEME}
+                      </span>
+                    ),
+                  },
+                  {
+                    value: _PLAYGROUND_SETTINGS_TAB.MAKEUP,
+                    label: (
+                      <span className="flex items-center gap-1.5 text-cyan-600">
+                        <Move className="size-3" />{" "}
+                        {_PLAYGROUND_SETTINGS_TAB.MAKEUP}
+                      </span>
+                    ),
+                  },
+                ]}
+                value={activeMenu}
+                onChange={(val) => onChangeActiveMenu?.(val)}
+                className="ml-2 text-xs w-36"
+              />
             </div>
-            {/* Close button (mobile + desktop) */}
             <button
               type="button"
-              onClick={() => onToggleVisibility?.()}
+              onClick={handleResetToDefaults}
+              title="Reset to defaults"
               aria-label="Toggle settings panel"
-              className="text-slate-400 hover:text-gray-500 mr-2 bg-gradient-to-b from-white to-gray-50
+              className="text-slate-500 hover:text-red-500 font-light bg-gradient-to-b from-white to-gray-50
       shadow-[inset_2px_2px_6px_rgba(0,0,0,0.04),inset_-2px_-2px_6px_rgba(255,255,255,0.9),6px_6px_14px_rgba(2,6,23,0.06),-6px_-6px_14px_rgba(255,255,255,0.9)]
       hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06),inset_-2px_-2px_6px_rgba(255,255,255,1),8px_8px_18px_rgba(2,6,23,0.08),-6px_-6px_14px_rgba(255,255,255,1)]
-      transition-all duration-200 rounded-md p-1.5"
+      transition-all duration-200 rounded-lg px-3 py-2.5 mr-1 flex items-center space-x-1 text-sm"
             >
-              <PanelRightOpen
-                className={`size-[18px] transform ${
-                  isVisible ? "rotate-180" : ""
-                }`}
-              />
+              <RotateCcw className="size-3" />
+              {/* <span>Reset</span> */}
             </button>
           </div>
           {/* Scrollable Content */}

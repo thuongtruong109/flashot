@@ -13,7 +13,6 @@ import Brand from "@/app/playground/_components/header/Brand";
 import TourGuide from "@/app/playground/_components/TourGuide";
 import Image from "next/image";
 import { DEFAULT_CODE_SETTINGS } from "@/shared";
-import HeaderNavigation from "@/app/playground/_components/header";
 import WidthRuler from "@/app/playground/_components/editor/WidthRuler";
 import HeightRuler from "@/app/playground/_components/editor/HeightRuler";
 
@@ -148,12 +147,6 @@ export default function Page() {
   const [activeMenuLabel, setActiveMenuLabel] = useState<string | undefined>(
     undefined
   );
-
-  // When a tab is clicked in the header, open the settings panel
-  const handleOpenMainPanel = useCallback((menuLabel: string) => {
-    setActiveMenuLabel(menuLabel);
-    setShowSettingsPanel(true);
-  }, []);
 
   const handleCopyCode = async () => {
     const success = await copyToClipboard(code);
@@ -292,23 +285,11 @@ export default function Page() {
           <Brand showVersion={true} />
         </div>
 
-        <HeaderNavigation
-          settings={settings}
-          onUpdateSetting={updateSetting}
-          onOpenMainPanel={handleOpenMainPanel}
-          activePanelMenu={activeMenuLabel}
-        />
-
-        <div data-tour="action-bar" className="flex-shrink-0">
+        <div data-tour="action-bar" className="flex-shrink-0 ml-auto">
           <ActionBar
             onCopy={handleCopyCode}
             onDownload={handleDownloadImage}
-            onShowSettings={() => {
-              // Only toggle settings panel on mobile screens
-              if (typeof window !== "undefined" && window.innerWidth < 1024) {
-                setShowSettingsPanel(!showSettingsPanel);
-              }
-            }}
+            onShowSettings={() => setShowSettingsPanel(!showSettingsPanel)}
             onShowJSON={() => setShowJSONModal(true)}
             onShowTips={() => setShowTipsModal(true)}
             onShowGuide={() => setShowTourGuide(true)}
@@ -317,6 +298,8 @@ export default function Page() {
             fileName={fileName}
             onFileNameChange={setFileName}
             showSettingsPanel={showSettingsPanel}
+            settings={settings}
+            onUpdateSetting={updateSetting as any}
             className="w-full lg:w-auto"
           />
         </div>

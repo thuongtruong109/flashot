@@ -35,6 +35,8 @@ interface ActionBarProps {
   onFileNameChange: (fileName: string) => void;
   showSettingsPanel?: boolean;
   className?: string;
+  settings?: any;
+  onUpdateSetting?: <K extends keyof any>(key: K, value: any) => void;
 }
 
 const ActionBar: React.FC<ActionBarProps> = ({
@@ -50,9 +52,31 @@ const ActionBar: React.FC<ActionBarProps> = ({
   onFileNameChange,
   showSettingsPanel = false,
   className = "",
+  settings,
+  onUpdateSetting,
 }) => {
-  const [moreValue, setMoreValue] = useState<string>("");
+  const [moreValue, setMoreValue] = useState<string>("_placeholder_");
+  const [exportFormat, setExportFormat] = useState<string>(
+    settings?.exportFormat || "webp"
+  );
+
+  // Sync exportFormat with settings
+  useEffect(() => {
+    if (settings?.exportFormat) {
+      setExportFormat(settings.exportFormat);
+    }
+  }, [settings?.exportFormat]);
+
   const moreOptions = [
+    {
+      value: "info",
+      label: (
+        <span className="flex items-center text-[13px] text-amber-500">
+          <Info className="size-3.5 mr-1" />
+          Info & Tips
+        </span>
+      ),
+    },
     {
       value: "share",
       label: (
@@ -73,10 +97,51 @@ const ActionBar: React.FC<ActionBarProps> = ({
     },
   ];
 
+  const exportOptions = [
+    {
+      value: "png",
+      label: "PNG",
+      icon: Download,
+    },
+    {
+      value: "jpg",
+      label: "JPG",
+      icon: Download,
+    },
+    {
+      value: "webp",
+      label: "WEBP",
+      icon: Download,
+    },
+    {
+      value: "avif",
+      label: "AVIF",
+      icon: Download,
+    },
+    {
+      value: "original",
+      label: "Original",
+      icon: Code2,
+    },
+    {
+      value: "plain",
+      label: "Plain Text",
+      icon: FileText,
+    },
+  ];
+
+  // Sync exportFormat with settings
   useEffect(() => {
-    if (moreValue === "share") {
+    if (settings?.exportFormat) {
+      setExportFormat(settings.exportFormat);
+    }
+  }, [settings?.exportFormat]);
+
+  const handleMoreOptionSelect = (value: string) => {
+    if (value === "info") {
+      onShowTips();
+    } else if (value === "share") {
       (async () => {
-        let shared = false;
         try {
           if (navigator.share) {
             await navigator.share({
@@ -84,30 +149,32 @@ const ActionBar: React.FC<ActionBarProps> = ({
               text: "Check out this beautiful code screenshot!",
               url: window.location.href,
             });
-            shared = true;
           } else if (navigator.clipboard) {
             await navigator.clipboard.writeText(window.location.href);
             alert("Link copied to clipboard");
-            shared = true;
           }
         } catch {}
-        if (shared) setMoreValue("");
       })();
-    } else if (moreValue === "report") {
+    } else if (value === "report") {
       window.open(
         "https://github.com/thuongtruong109/flashot/issues/new",
         "_blank"
       );
-      setTimeout(() => setMoreValue(""), 100);
     }
-  }, [moreValue]);
-
-  const handleExportClick = () => {
-    onDownload();
   };
 
-  // Remove copy code button from header as requested
-  // Filter out settings button on wide screens when settings panel is open
+  const handleExportClick = () => {
+    onDownload(exportFormat);
+  };
+
+  const handleFormatSelect = (format: string) => {
+    setExportFormat(format);
+    if (onUpdateSetting) {
+      onUpdateSetting("exportFormat", format as any);
+    }
+  };
+
+  // Remove Info button from main buttons list
   const allButtons = [
     {
       icon: BookOpen,
@@ -118,14 +185,6 @@ const ActionBar: React.FC<ActionBarProps> = ({
       disabled: false,
     },
     {
-      icon: Info,
-      label: "Info",
-      onClick: onShowTips,
-      variant: "secondary" as const,
-      color: "amber",
-      disabled: false,
-    },
-    {
       icon: FileText,
       label: "Data",
       onClick: onShowJSON,
@@ -133,40 +192,24 @@ const ActionBar: React.FC<ActionBarProps> = ({
       color: "emerald",
       disabled: false,
     },
-    {
-      icon: Settings,
-      label: "Settings",
-      onClick: onShowSettings,
-      variant: "secondary" as const,
-      color: "slate",
-      disabled: false,
-    },
   ];
 
-  // Filter the settings button on desktop screens when appropriate
-  const buttons = allButtons.filter((button) => {
-    // Don't show settings button on desktop (lg screens) as it will always be open
-    const isSettingsButton = button.icon === Settings;
-    return (
-      !isSettingsButton ||
-      (typeof window !== "undefined" && window.innerWidth < 1024)
-    );
-  });
+  // Always show all buttons (settings button will be added separately at the end)
+  const buttons = allButtons;
 
   const getButtonStyles = (
     variant: "primary" | "secondary",
     color: string,
     disabled: boolean
   ) => {
-    // Neumorphic-lite buttons
+    // Modern glassmorphism style
     const baseStyles =
-      "group relative flex items-center space-x-1 px-3 py-1.5 rounded-xl transition-all duration-200 bg-gradient-to-b from-white to-gray-50 border border-white/50 shadow-[inset_2px_2px_6px_rgba(0,0,0,0.04),inset_-2px_-2px_6px_rgba(255,255,255,0.9),6px_6px_14px_rgba(2,6,23,0.06),-6px_-6px_14px_rgba(255,255,255,0.9)] hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06),inset_-2px_-2px_6px_rgba(255,255,255,1),8px_8px_18px_rgba(2,6,23,0.08),-6px_-6px_14px_rgba(255,255,255,1)]";
+      "group relative flex items-center space-x-1 px-3 py-1.5 rounded-xl transition-all duration-300 bg-white/40 backdrop-blur-md border border-white/60 shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] hover:bg-white/50 hover:border-white/80 hover:-translate-y-0.5";
 
     if (disabled) {
-      return `${baseStyles} bg-gray-100 text-gray-400 cursor-not-allowed shadow-none transform-none hover:scale-100`;
+      return `${baseStyles} opacity-50 cursor-not-allowed hover:translate-y-0`;
     }
 
-    // More refined color palette with better contrast
     return `${baseStyles} text-gray-700 hover:text-gray-900`;
   };
 
@@ -175,6 +218,8 @@ const ActionBar: React.FC<ActionBarProps> = ({
     slate: "text-slate-500 group-hover:text-slate-600",
     emerald: "text-emerald-500 group-hover:text-emerald-600",
     blue: "text-blue-500 group-hover:text-blue-600",
+    purple: "text-purple-500 group-hover:text-purple-600",
+    orange: "text-orange-500 group-hover:text-orange-600",
   };
 
   const getIconStyles = (color: string, variant: "primary" | "secondary") => {
@@ -188,15 +233,48 @@ const ActionBar: React.FC<ActionBarProps> = ({
     <div className={`flex flex-wrap items-center space-x-2 ${className}`}>
       {/* Desktop Layout */}
       <div className="hidden lg:flex items-center space-x-3">
-        {/* More dropdown using CustomSelect */}
-        <div style={{ maxWidth: 180 }}>
-          <CustomSelect
-            options={moreOptions}
-            value={moreValue}
-            onChange={setMoreValue}
-            placeholder="More"
-          />
+        {/* Export Button with Format Selector */}
+        <div className="flex items-stretch">
+          <button
+            onClick={handleExportClick}
+            disabled={isGenerating}
+            className="group relative flex items-center space-x-1 px-3 h-8 rounded-l-xl bg-gradient-to-r from-emerald-400/80 to-green-400/80 hover:from-emerald-500/90 hover:to-green-500/90 backdrop-blur-md border border-emerald-300/50 border-r-0 shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.35)] disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isGenerating ? (
+              <Loader2 className="size-3.5 text-white animate-spin" />
+            ) : (
+              <Download className="size-3.5 text-white drop-shadow-sm" />
+            )}
+            <span className="text-[13px] text-white font-medium drop-shadow-sm">
+              {isGenerating ? "Exporting..." : `Export`}
+            </span>
+          </button>
+
+          <div className="[&>div>button]:h-8 [&>div>button]:pl-0 [&_svg]:!text-white [&>div>button]:rounded-l-none [&>div>button]:rounded-r-xl [&>div>button]:border-l-0 [&>div>button]:bg-gradient-to-r [&>div>button]:from-green-400 [&>div>button]:to-emerald-400 [&>div>button]:hover:from-green-500 [&>div>button]:hover:to-emerald-500 [&>div>button]:backdrop-blur-md [&>div>button]:border-emerald-300 [&>div>button]:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] [&>div>button]:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.35)] [&>div>button]:min-w-0 [&>div>button]:px-2">
+            <CustomSelect
+              options={exportOptions.map((opt) => ({
+                value: opt.value,
+                label: <span className="">{opt.label}</span>,
+              }))}
+              value=""
+              onChange={handleFormatSelect}
+              placeholder={""}
+            />
+          </div>
         </div>
+
+        {/* More Dropdown Menu */}
+        <CustomSelect
+          options={moreOptions.map((opt) => ({
+            value: opt.value,
+            label: opt.label,
+          }))}
+          value=""
+          onChange={(value) => {
+            handleMoreOptionSelect(value);
+          }}
+          placeholder="More"
+        />
 
         {buttons.map((button, index) => {
           const Icon = button.icon;
@@ -224,41 +302,62 @@ const ActionBar: React.FC<ActionBarProps> = ({
             </button>
           );
         })}
+
+        {/* Settings Button at the end */}
+        <button
+          onClick={onShowSettings}
+          className={getButtonStyles("secondary", "slate", false)}
+          title="Toggle settings panel"
+        >
+          <Settings className={`${getIconStyles("slate", "secondary")}`} />
+          <span className={`text-[13px] ${colorMap.slate}`}>Settings</span>
+        </button>
       </div>
 
       {/* Mobile Layout */}
       <div className="flex lg:hidden items-center space-x-2 flex-shrink-0">
+        {/* Mobile Export Button */}
+        <button
+          onClick={handleExportClick}
+          disabled={isGenerating}
+          className="p-2.5 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] transition-all disabled:opacity-50 backdrop-blur-sm"
+        >
+          {isGenerating ? (
+            <Loader2 className="w-3 h-3 text-white animate-spin" />
+          ) : (
+            <Download className="w-3 h-3 text-white" />
+          )}
+        </button>
+
         <div className="flex items-center space-x-1">
           <button
             onClick={onShowGuide}
-            className="p-2.5 bg-white hover:bg-gray-50 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300 transition-all"
+            className="p-2.5 bg-white/40 backdrop-blur-md border border-white/60 rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] transition-all"
           >
             <BookOpen className="w-3 h-3 text-emerald-500" />
           </button>
 
           <button
             onClick={onShowTips}
-            className="p-2.5 bg-white hover:bg-gray-50 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300 transition-all"
+            className="p-2.5 bg-white/40 backdrop-blur-md border border-white/60 rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] transition-all"
           >
             <Info className="w-3 h-3 text-amber-500" />
           </button>
 
           <button
             onClick={onShowJSON}
-            className="p-2.5 bg-white hover:bg-gray-50 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300 transition-all"
+            className="p-2.5 bg-white/40 backdrop-blur-md border border-white/60 rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] transition-all"
           >
             <FileText className="w-3 h-3 text-emerald-500" />
           </button>
 
           <button
             onClick={onShowSettings}
-            className="p-2.5 bg-white hover:bg-gray-50 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300 transition-all"
+            className="p-2.5 bg-white/40 backdrop-blur-md border border-white/60 rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] transition-all"
           >
             <Settings className="w-3 h-3 text-slate-500" />
           </button>
         </div>
-
-        {/* Mobile Export Format Dropdown - REMOVED */}
       </div>
     </div>
   );

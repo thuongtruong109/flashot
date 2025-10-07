@@ -96,7 +96,7 @@ Vercel is the easiest way to deploy Next.js applications:
 - ✅ Twitter Cards
 - ✅ Sitemap generated
 - ✅ Robots.txt configured
-- ⚠️ Update domain in `layout.tsx`
+- ✅ Update domain in `layout.tsx`
 - ⚠️ Add Google Search Console verification
 - ⚠️ Create favicon files
 

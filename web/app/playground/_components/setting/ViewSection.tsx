@@ -208,32 +208,33 @@ const ViewSection: React.FC<ViewSectionProps> = ({
         </div>
       </div>
 
-      {/* Width */}
-      <div>
+      {/* Sizing */}
+      <div className="space-y-2">
         <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
           <div className="flex items-center">
             <Move className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
-            Width
+            Sizing
           </div>
-          <span className="text-xs bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent font-bold">
-            {settings.width ? `${settings.width}px` : "Auto"}
-          </span>
-        </label>
-        <div className="flex gap-2">
           <button
             onClick={() => {
               onUpdateSetting("width", undefined);
+              onUpdateSetting("height", undefined);
               setWidthInput("");
+              setHeightInput("");
             }}
-            disabled={!settings.width}
-            className={`px-3 py-1.5 text-xs rounded-lg transition-all ${
-              !settings.width
-                ? "text-gray-700 bg-gradient-to-b from-white to-gray-50 shadow-[inset_2px_2px_6px_rgba(0,0,0,0.05),inset_-2px_-2px_6px_rgba(255,255,255,0.95)]"
-                : "text-white bg-gradient-to-r from-blue-500 to-indigo-500 shadow-md"
+            disabled={!settings.width && !settings.height}
+            className={`px-3 py-1 text-xs rounded-lg transition-all ${
+              !settings.width && !settings.height
+                ? "text-gray-700 bg-gradient-to-b from-white to-gray-50 shadow-[inset_2px_2px_6px_rgba(0,0,0,0.05),inset_-2px_-2px_6px_rgba(255,255,255,0.95)] cursor-not-allowed"
+                : "text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 shadow-md cursor-pointer"
             }`}
           >
             Auto
           </button>
+        </label>
+
+        <div className="flex items-center space-x-2">
+          {/* Width Input */}
           <input
             type="number"
             min="0"
@@ -263,38 +264,13 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 }
               }
             }}
-            className="flex-1 px-2 py-1 text-xs rounded-md border border-gray-200"
+            className="w-full px-2 py-1 text-xs rounded-md border border-gray-200"
             placeholder="600"
           />
-        </div>
-      </div>
+          {/* Height Input */}
 
-      {/* Height */}
-      <div>
-        <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
-          <div className="flex items-center">
-            <BarChart3 className="w-3.5 h-3.5 text-green-600 mr-1.5" />
-            Height
-          </div>
-          <span className="text-xs bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent font-bold">
-            {settings.height ? `${settings.height}px` : "Auto"}
-          </span>
-        </label>
-        <div className="flex gap-2">
-          <button
-            onClick={() => {
-              onUpdateSetting("height", undefined);
-              setHeightInput("");
-            }}
-            disabled={!settings.height}
-            className={`px-3 py-1.5 text-xs rounded-lg transition-all ${
-              !settings.height
-                ? "text-gray-700 bg-gradient-to-b from-white to-gray-50 shadow-[inset_2px_2px_6px_rgba(0,0,0,0.05),inset_-2px_-2px_6px_rgba(255,255,255,0.95)]"
-                : "text-white bg-gradient-to-r from-emerald-500 to-green-500 shadow-md"
-            }`}
-          >
-            Auto
-          </button>
+          <span>x</span>
+
           <input
             type="number"
             min="0"
@@ -324,9 +300,151 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 }
               }
             }}
-            className="flex-1 px-2 py-1 text-xs rounded-md border border-gray-200"
+            className="w-full px-2 py-1 text-xs rounded-md border border-gray-200"
             placeholder="400"
           />
+        </div>
+
+        {/* Social Media Size Presets */}
+        <div className="mb-3 space-y-2">
+          <p className="text-[10px] text-gray-500 font-medium mb-1.5">
+            Social Media Size
+          </p>
+          <div className="grid grid-cols-4 gap-1.5">
+            <button
+              onClick={() => {
+                // Instagram Square: 1:1 ratio, max 800px
+                const size = Math.min(800, window.innerWidth - 400);
+                onUpdateSetting("width", size);
+                onUpdateSetting("height", size);
+                setWidthInput(size.toString());
+                setHeightInput(size.toString());
+              }}
+              className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-pink-500 to-rose-500 text-white hover:from-pink-600 hover:to-rose-600 shadow-sm transition-all"
+              title="Instagram Square Post (1:1)"
+            >
+              IG Square
+            </button>
+            <button
+              onClick={() => {
+                // Instagram Portrait: 4:5 ratio
+                const maxWidth = Math.min(800, window.innerWidth - 400);
+                const maxHeight = window.innerHeight - 200;
+                const width = Math.min(maxWidth, maxHeight * 0.8);
+                const height = width * 1.25;
+                onUpdateSetting("width", Math.round(width));
+                onUpdateSetting("height", Math.round(height));
+                setWidthInput(Math.round(width).toString());
+                setHeightInput(Math.round(height).toString());
+              }}
+              className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-sm transition-all"
+              title="Instagram Portrait Post (4:5)"
+            >
+              IG Portrait
+            </button>
+            <button
+              onClick={() => {
+                // Instagram Story: 9:16 ratio
+                const maxWidth = Math.min(800, window.innerWidth - 400);
+                const maxHeight = window.innerHeight - 200;
+                const width = Math.min(maxWidth, maxHeight * 0.5625);
+                const height = width * 1.778;
+                onUpdateSetting("width", Math.round(width));
+                onUpdateSetting("height", Math.round(height));
+                setWidthInput(Math.round(width).toString());
+                setHeightInput(Math.round(height).toString());
+              }}
+              className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-fuchsia-500 to-purple-500 text-white hover:from-fuchsia-600 hover:to-purple-600 shadow-sm transition-all"
+              title="Instagram Story (9:16)"
+            >
+              IG Story
+            </button>
+            <button
+              onClick={() => {
+                // Twitter/X: 16:9 ratio
+                const maxWidth = Math.min(800, window.innerWidth - 400);
+                const maxHeight = window.innerHeight - 200;
+                const width = Math.min(maxWidth, maxHeight * 1.778);
+                const height = width * 0.5625;
+                onUpdateSetting("width", Math.round(width));
+                onUpdateSetting("height", Math.round(height));
+                setWidthInput(Math.round(width).toString());
+                setHeightInput(Math.round(height).toString());
+              }}
+              className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 shadow-sm transition-all"
+              title="Twitter/X Post (16:9)"
+            >
+              Twitter/X
+            </button>
+            <button
+              onClick={() => {
+                // Facebook: 1.91:1 ratio
+                const maxWidth = Math.min(800, window.innerWidth - 400);
+                const maxHeight = window.innerHeight - 200;
+                const width = Math.min(maxWidth, maxHeight * 1.91);
+                const height = width * 0.524;
+                onUpdateSetting("width", Math.round(width));
+                onUpdateSetting("height", Math.round(height));
+                setWidthInput(Math.round(width).toString());
+                setHeightInput(Math.round(height).toString());
+              }}
+              className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-blue-600 to-blue-800 text-white hover:from-blue-700 hover:to-blue-900 shadow-sm transition-all"
+              title="Facebook Post (1.91:1)"
+            >
+              Facebook
+            </button>
+            <button
+              onClick={() => {
+                // LinkedIn: 1.91:1 ratio (similar to Facebook)
+                const maxWidth = Math.min(800, window.innerWidth - 400);
+                const maxHeight = window.innerHeight - 200;
+                const width = Math.min(maxWidth, maxHeight * 1.91);
+                const height = width * 0.522;
+                onUpdateSetting("width", Math.round(width));
+                onUpdateSetting("height", Math.round(height));
+                setWidthInput(Math.round(width).toString());
+                setHeightInput(Math.round(height).toString());
+              }}
+              className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-blue-700 to-indigo-700 text-white hover:from-blue-800 hover:to-indigo-800 shadow-sm transition-all"
+              title="LinkedIn Post (1.91:1)"
+            >
+              LinkedIn
+            </button>
+            <button
+              onClick={() => {
+                // YouTube: 16:9 ratio
+                const maxWidth = Math.min(800, window.innerWidth - 400);
+                const maxHeight = window.innerHeight - 200;
+                const width = Math.min(maxWidth, maxHeight * 1.778);
+                const height = width * 0.5625;
+                onUpdateSetting("width", Math.round(width));
+                onUpdateSetting("height", Math.round(height));
+                setWidthInput(Math.round(width).toString());
+                setHeightInput(Math.round(height).toString());
+              }}
+              className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 shadow-sm transition-all"
+              title="YouTube Thumbnail (16:9)"
+            >
+              YouTube
+            </button>
+            <button
+              onClick={() => {
+                // Blog Header: 1.91:1 ratio
+                const maxWidth = Math.min(800, window.innerWidth - 400);
+                const maxHeight = window.innerHeight - 200;
+                const width = Math.min(maxWidth, maxHeight * 1.91);
+                const height = width * 0.523;
+                onUpdateSetting("width", Math.round(width));
+                onUpdateSetting("height", Math.round(height));
+                setWidthInput(Math.round(width).toString());
+                setHeightInput(Math.round(height).toString());
+              }}
+              className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:from-orange-600 hover:to-amber-600 shadow-sm transition-all"
+              title="Blog Post Header (1.91:1)"
+            >
+              Blog
+            </button>
+          </div>
         </div>
       </div>
 

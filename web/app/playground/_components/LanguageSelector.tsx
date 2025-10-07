@@ -33,157 +33,131 @@ const supportedLanguages: {
   value: SupportedLanguage;
   label: string;
   icon: React.ReactNode;
-  category: string;
 }[] = [
   {
     value: "javascript",
     label: "JavaScript",
     icon: <Zap className="w-4 h-4 text-yellow-500" />,
-    category: "Popular",
   },
   {
     value: "typescript",
     label: "TypeScript",
     icon: <Sparkles className="w-4 h-4 text-blue-500" />,
-    category: "Popular",
   },
   {
     value: "python",
     label: "Python",
     icon: <Code className="w-4 h-4 text-green-500" />,
-    category: "Popular",
   },
   {
     value: "java",
     label: "Java",
     icon: <Coffee className="w-4 h-4 text-orange-600" />,
-    category: "Popular",
   },
   {
     value: "cpp",
     label: "C++",
     icon: <Cpu className="w-4 h-4 text-blue-600" />,
-    category: "Popular",
   },
   {
     value: "c",
     label: "C",
     icon: <Terminal className="w-4 h-4 text-gray-600" />,
-    category: "Popular",
   },
   {
     value: "csharp",
     label: "C#",
     icon: <Hash className="w-4 h-4 text-purple-600" />,
-    category: "Popular",
   },
   {
     value: "php",
     label: "PHP",
     icon: <Globe className="w-4 h-4 text-indigo-600" />,
-    category: "Popular",
   },
   {
     value: "ruby",
     label: "Ruby",
     icon: <Box className="w-4 h-4 text-red-500" />,
-    category: "System",
   },
   {
     value: "go",
     label: "Go",
     icon: <Zap className="w-4 h-4 text-cyan-600" />,
-    category: "System",
   },
   {
     value: "rust",
     label: "Rust",
     icon: <Shield className="w-4 h-4 text-orange-600" />,
-    category: "System",
   },
   {
     value: "swift",
     label: "Swift",
     icon: <Sparkles className="w-4 h-4 text-orange-500" />,
-    category: "System",
   },
   {
     value: "kotlin",
     label: "Kotlin",
     icon: <Layers className="w-4 h-4 text-purple-500" />,
-    category: "System",
   },
   {
     value: "scala",
     label: "Scala",
     icon: <Coffee className="w-4 h-4 text-red-600" />,
-    category: "System",
   },
   {
     value: "html",
     label: "HTML",
     icon: <Globe className="w-4 h-4 text-orange-600" />,
-    category: "Web",
   },
   {
     value: "css",
     label: "CSS",
     icon: <Palette className="w-4 h-4 text-blue-500" />,
-    category: "Web",
   },
   {
     value: "scss",
     label: "SCSS",
     icon: <Palette className="w-4 h-4 text-pink-500" />,
-    category: "Web",
   },
   {
     value: "json",
     label: "JSON",
     icon: <Braces className="w-4 h-4 text-yellow-600" />,
-    category: "Config",
   },
   {
     value: "xml",
     label: "XML",
     icon: <FileCode className="w-4 h-4 text-green-600" />,
-    category: "Config",
   },
   {
     value: "yaml",
     label: "YAML",
     icon: <Settings className="w-4 h-4 text-blue-600" />,
-    category: "Config",
   },
   {
     value: "sql",
     label: "SQL",
     icon: <Database className="w-4 h-4 text-blue-700" />,
-    category: "Config",
   },
   {
     value: "shell",
     label: "Shell",
     icon: <Terminal className="w-4 h-4 text-green-700" />,
-    category: "Config",
   },
   {
     value: "powershell",
     label: "PowerShell",
     icon: <Terminal className="w-4 h-4 text-blue-700" />,
-    category: "Config",
   },
   {
     value: "dockerfile",
     label: "Dockerfile",
     icon: <Settings className="w-4 h-4 text-blue-500" />,
-    category: "Config",
   },
   {
     value: "markdown",
     label: "Markdown",
     icon: <FileText className="w-4 h-4 text-gray-600" />,
-    category: "Config",
   },
 ];
 

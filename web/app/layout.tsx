@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Fira_Code } from "next/font/google";
 import "./globals.css";
-import Footer from "app/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 const firaCode = Fira_Code({
@@ -10,7 +9,7 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Flashot - Code to Image Converter",
+  title: "Flashot - Rapidly snapshot code snippets as images",
   description:
     "Transform your code snippets into beautiful, shareable images with syntax highlighting and customizable themes. Perfect for social media, documentation, and presentations.",
   keywords: [
@@ -36,7 +35,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Flashot - Code to Image Converter",
+    title: "Flashot - Rapidly snapshot code snippets as images",
     description:
       "Transform your code snippets into beautiful, shareable images with syntax highlighting and customizable themes.",
     url: "https://flashot.vercel.app",

@@ -1,10 +1,10 @@
 import js from "@eslint/js";
-import { globalIgnores } from "eslint/config";
+import { defineConfig, globalIgnores } from "eslint/config";
 import sonarjs from "eslint-plugin-sonarjs";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config([
+export default defineConfig([
   tseslint.configs.recommended,
   sonarjs.configs.recommended,
   {

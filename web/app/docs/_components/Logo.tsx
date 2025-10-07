@@ -15,15 +15,15 @@ export default function Logo({
 }: LogoProps) {
   const sizeConfig = {
     sm: {
-      imageSize: 24,
+      imageSize: 21,
       textSize: "text-sm font-bold",
     },
     md: {
-      imageSize: 32,
+      imageSize: 28,
       textSize: "text-lg sm:text-xl font-bold",
     },
     lg: {
-      imageSize: 40,
+      imageSize: 36,
       textSize: "text-xl sm:text-2xl font-bold",
     },
   };
@@ -31,7 +31,7 @@ export default function Logo({
   const config = sizeConfig[size];
 
   return (
-    <Link href="/" className={`flex items-end space-x-2 ${className}`}>
+    <Link href="/" className={`flex items-end ${className}`}>
       <Image
         src="/favicon.png"
         alt="Flashot Logo"

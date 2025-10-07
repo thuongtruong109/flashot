@@ -13,14 +13,13 @@ const Footer: React.FC = () => {
       <div className="w-full px-6 sm:px-8 lg:px-12 py-12">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Brand Section */}
             <div className="space-y-4">
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-1">
                 <Image
                   src="/favicon.png"
                   alt="Flashot"
-                  width={40}
-                  height={24}
+                  width={30}
+                  height={30}
                   className="filter brightness-110"
                 />
                 <h3 className="text-3xl font-black bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
@@ -30,36 +29,34 @@ const Footer: React.FC = () => {
               <p className="text-sm text-white/70 leading-relaxed max-w-md">
                 Rapidly snapshot code snippets as images
               </p>
-              <div className="space-y-4">
-                <div className="flex items-center flex-wrap gap-4">
-                  <a
-                    href="https://github.com/thuongtruong109/flashot"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center space-x-1.5 px-2.5 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/80 hover:text-white transition-all duration-200 rounded-md group backdrop-blur-sm"
-                  >
-                    <Github className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-                    <span className="text-xs font-medium">GitHub</span>
-                  </a>
-                  <a
-                    href="https://www.npmjs.com/package/flashot"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center space-x-1.5 px-2.5 py-1.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 hover:border-red-500/30 text-red-300 hover:text-red-200 transition-all duration-200 rounded-md group backdrop-blur-sm"
-                  >
-                    <Package className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-                    <span className="text-xs font-medium">NPM</span>
-                  </a>
-                  <a
-                    href="https://jsr.io/@thuongtruong/flashot"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center space-x-1.5 px-2.5 py-1.5 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/20 hover:border-yellow-500/30 text-yellow-300 hover:text-yellow-200 transition-all duration-200 rounded-md group backdrop-blur-sm"
-                  >
-                    <Code2 className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-                    <span className="text-xs font-medium">JSR</span>
-                  </a>
-                </div>
+              <div className="mt-4 flex items-center flex-wrap space-x-3">
+                <a
+                  href="https://github.com/thuongtruong109/flashot"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-1.5 px-2.5 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/80 hover:text-white transition-all duration-200 rounded-md group backdrop-blur-sm"
+                >
+                  <Github className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+                  <span className="text-xs font-medium">GitHub</span>
+                </a>
+                <a
+                  href="https://www.npmjs.com/package/flashot"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-1.5 px-2.5 py-1.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 hover:border-red-500/30 text-red-300 hover:text-red-200 transition-all duration-200 rounded-md group backdrop-blur-sm"
+                >
+                  <Package className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+                  <span className="text-xs font-medium">NPM</span>
+                </a>
+                <a
+                  href="https://jsr.io/@thuongtruong/flashot"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-1.5 px-2.5 py-1.5 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/20 hover:border-yellow-500/30 text-yellow-300 hover:text-yellow-200 transition-all duration-200 rounded-md group backdrop-blur-sm"
+                >
+                  <Code2 className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+                  <span className="text-xs font-medium">JSR</span>
+                </a>
               </div>
             </div>
             <div className="space-y-4 pt-2 flex flex-col items-start md:items-end">
@@ -75,16 +72,16 @@ const Footer: React.FC = () => {
                   href="https://github.com/sponsors/thuongtruong109"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center justify-center space-x-1.5 px-3 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-md transition-all duration-200 text-xs font-medium hover:scale-105"
+                  className="group inline-flex items-center justify-center space-x-1.5 px-2.5 py-1.5 bg-pink-600 hover:bg-pink-700 text-white rounded-md transition-all duration-200 text-xs font-medium hover:scale-105"
                 >
                   <Heart className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
                   <span>Sponsor</span>
                 </a>
                 <a
-                  href="https://ko-fi.com/thuongtruong109"
+                  href="https://buymeacoffee.com/thuongtruong"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center justify-center space-x-1.5 px-3 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-md transition-all duration-200 text-xs font-medium hover:scale-105"
+                  className="group inline-flex items-center justify-center space-x-1.5 px-2.5 py-1.5 bg-orange-600 hover:bg-orange-700 text-white rounded-md transition-all duration-200 text-xs font-medium hover:scale-105"
                 >
                   <Coffee className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
                   <span>Buy me a Coffee</span>
@@ -95,8 +92,8 @@ const Footer: React.FC = () => {
 
           {/* Bottom Section */}
           <div className="mt-12 pt-8 border-t border-white/10">
-            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <div className="flex items-center space-x-1 text-sm text-white/60">
+            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-xs">
+              <div className="flex items-center space-x-1 text-white/60">
                 <span>© {currentYear} Flashot.</span>
                 <span>Crafted with</span>
                 <Heart className="w-4 h-4 text-pink-400 animate-pulse" />
@@ -111,7 +108,10 @@ const Footer: React.FC = () => {
                 </a>
               </div>
 
-              <div className="text-white/50">{_VERSION}</div>
+              {/* <div className="text-white/50">{_VERSION}</div> */}
+              <span className="px-1.5 py-px text-slate-400 rounded-full border border-slate-600">
+                {_VERSION}
+              </span>
             </div>
           </div>
         </div>
