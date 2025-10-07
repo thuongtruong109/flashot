@@ -97,20 +97,20 @@ function CustomSelect<T extends string | number | boolean>({
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls="custom-select-list"
-        className="w-full flex items-center justify-between text-sm border border-slate-100 rounded-xl px-3 py-1.5 text-gray-700 font-medium transition-all duration-200 cursor-pointer bg-gradient-to-b from-white to-gray-50
-      shadow-[inset_2px_2px_6px_rgba(0,0,0,0.04),inset_-2px_-2px_6px_rgba(255,255,255,0.9),6px_6px_14px_rgba(2,6,23,0.06),-6px_-6px_14px_rgba(255,255,255,0.9)]
-      hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06),inset_-2px_-2px_6px_rgba(255,255,255,1),8px_8px_18px_rgba(2,6,23,0.08),-6px_-6px_14px_rgba(255,255,255,1)]"
+        className="group w-full flex items-center justify-between text-sm border border-white/80 rounded-xl px-3 py-1.5 font-medium transition-all duration-300 cursor-pointer bg-gradient-to-br from-white/60 via-white/40 to-white/20 backdrop-blur-lg
+      shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12),inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-2px_4px_rgba(0,0,0,0.05)]
+      hover:shadow-[0_12px_32px_-4px_rgba(0,0,0,0.18),inset_0_2px_6px_rgba(255,255,255,1),inset_0_-2px_6px_rgba(0,0,0,0.08)] hover:scale-[1.02] active:scale-[0.98]"
         onClick={() => setOpen((o) => !o)}
         onKeyDown={handleKeyDown}
       >
-        <span className="truncate">
+        <span className="truncate text-gray-700">
           {options.find((opt) => opt.value === value)?.label || (
             <span className="text-gray-400">{placeholder}</span>
           )}
         </span>
         <svg
-          className={`ml-2 w-3 h-3 transition-transform duration-200 ${
-            open ? "rotate-180 text-blue-500" : "text-gray-400"
+          className={`ml-2 w-3 h-3 transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)] group-hover:drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)] ${
+            open ? "rotate-180 text-blue-500" : "text-gray-500"
           }`}
           fill="none"
           stroke="currentColor"

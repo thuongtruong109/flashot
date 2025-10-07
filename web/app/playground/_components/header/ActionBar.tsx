@@ -184,14 +184,6 @@ const ActionBar: React.FC<ActionBarProps> = ({
       color: "emerald",
       disabled: false,
     },
-    {
-      icon: FileText,
-      label: "Data",
-      onClick: onShowJSON,
-      variant: "secondary" as const,
-      color: "emerald",
-      disabled: false,
-    },
   ];
 
   // Always show all buttons (settings button will be added separately at the end)
@@ -202,12 +194,12 @@ const ActionBar: React.FC<ActionBarProps> = ({
     color: string,
     disabled: boolean
   ) => {
-    // Modern glassmorphism style
+    // 3D Glassy vibe style
     const baseStyles =
-      "group relative flex items-center space-x-1 px-3 py-1.5 rounded-xl transition-all duration-300 bg-white/40 backdrop-blur-md border border-white/60 shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] hover:bg-white/50 hover:border-white/80 hover:-translate-y-0.5";
+      "group relative flex items-center space-x-1 px-3 py-1.5 rounded-xl transition-all duration-300 bg-gradient-to-br from-white/60 via-white/40 to-white/20 backdrop-blur-lg border border-white/80 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12),0_4px_8px_-2px_rgba(0,0,0,0.08),inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-2px_4px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_32px_-4px_rgba(0,0,0,0.16),0_6px_12px_-2px_rgba(0,0,0,0.12),inset_0_2px_6px_rgba(255,255,255,1),inset_0_-2px_6px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98]";
 
     if (disabled) {
-      return `${baseStyles} opacity-50 cursor-not-allowed hover:translate-y-0`;
+      return `${baseStyles} opacity-50 cursor-not-allowed hover:translate-y-0 hover:scale-100`;
     }
 
     return `${baseStyles} text-gray-700 hover:text-gray-900`;
@@ -223,7 +215,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   };
 
   const getIconStyles = (color: string, variant: "primary" | "secondary") => {
-    return `size-3.5 transition-all duration-200 ${
+    return `size-3.5 transition-all duration-300 drop-shadow-[0_3px_6px_rgba(0,0,0,0.2)] group-hover:drop-shadow-[0_6px_12px_rgba(0,0,0,0.3)] group-hover:scale-110 group-hover:rotate-3 ${
       colorMap[color as keyof typeof colorMap] ||
       "text-gray-500 group-hover:text-gray-600"
     }`;
@@ -252,10 +244,36 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
           <div className="[&>div>button]:h-8 [&>div>button]:pl-0 [&_svg]:!text-white [&>div>button]:rounded-l-none [&>div>button]:rounded-r-xl [&>div>button]:border-l-0 [&>div>button]:bg-gradient-to-r [&>div>button]:from-green-400 [&>div>button]:to-emerald-400 [&>div>button]:hover:from-green-500 [&>div>button]:hover:to-emerald-500 [&>div>button]:backdrop-blur-md [&>div>button]:border-emerald-300 [&>div>button]:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] [&>div>button]:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.35)] [&>div>button]:min-w-0 [&>div>button]:px-2">
             <CustomSelect
-              options={exportOptions.map((opt) => ({
-                value: opt.value,
-                label: <span className="">{opt.label}</span>,
-              }))}
+              options={exportOptions.map((opt, index) => {
+                const Icon = opt.icon;
+                const isSelected = exportFormat === opt.value;
+                const showDivider = opt.value === "original";
+                return {
+                  value: opt.value,
+                  label: (
+                    <div>
+                      {showDivider && (
+                        <div className="h-px bg-gray-200 my-1 -mx-2" />
+                      )}
+                      <span
+                        className={`flex items-center space-x-2 text-xs ${
+                          isSelected ? "text-emerald-700 font-medium" : ""
+                        }`}
+                      >
+                        <Icon
+                          className={`size-3 ${
+                            isSelected ? "text-emerald-600" : "text-gray-500"
+                          }`}
+                        />
+                        <span>{opt.label}</span>
+                        {isSelected && (
+                          <Check className="size-3 text-emerald-600 ml-auto" />
+                        )}
+                      </span>
+                    </div>
+                  ),
+                };
+              })}
               value=""
               onChange={handleFormatSelect}
               placeholder={""}
@@ -303,15 +321,29 @@ const ActionBar: React.FC<ActionBarProps> = ({
           );
         })}
 
-        {/* Settings Button at the end */}
-        <button
-          onClick={onShowSettings}
-          className={getButtonStyles("secondary", "slate", false)}
-          title="Toggle settings panel"
-        >
-          <Settings className={`${getIconStyles("slate", "secondary")}`} />
-          <span className={`text-[13px] ${colorMap.slate}`}>Settings</span>
-        </button>
+        {/* Data & Settings Tab */}
+        <div className="flex items-stretch rounded-xl bg-gradient-to-br from-white/60 via-white/40 to-white/20 backdrop-blur-lg border border-white/80 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12),0_4px_8px_-2px_rgba(0,0,0,0.08),inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-2px_4px_rgba(0,0,0,0.05)] overflow-hidden">
+          <button
+            onClick={onShowJSON}
+            className="group relative flex items-center space-x-1 px-3 py-1.5 transition-all duration-300 hover:bg-white/40 border-r border-white/60"
+            title="View JSON Data"
+          >
+            <FileText
+              className={`size-3.5 transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_4px_8px_rgba(0,0,0,0.2)] group-hover:scale-110 ${colorMap.emerald}`}
+            />
+            <span className={`text-[13px] ${colorMap.emerald}`}>Data</span>
+          </button>
+          <button
+            onClick={onShowSettings}
+            className="group relative flex items-center space-x-1 px-3 py-1.5 transition-all duration-300 hover:bg-white/40"
+            title="Toggle Settings Panel"
+          >
+            <Settings
+              className={`size-3.5 transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_4px_8px_rgba(0,0,0,0.2)] group-hover:scale-110 ${colorMap.slate}`}
+            />
+            <span className={`text-[13px] ${colorMap.slate}`}>Settings</span>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Layout */}
