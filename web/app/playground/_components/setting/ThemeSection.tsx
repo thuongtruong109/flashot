@@ -122,12 +122,14 @@ const ThemeSection: React.FC<ThemeSectionProps> = ({
             </div>
           </div>
         </label>
-        <BackgroundSelector
-          selectedBackground={settings.background}
-          onBackgroundChange={(background) =>
-            onUpdateSetting("background", background)
-          }
-        />
+        {settings.showBackground && (
+          <BackgroundSelector
+            selectedBackground={settings.background}
+            onBackgroundChange={(background) =>
+              onUpdateSetting("background", background)
+            }
+          />
+        )}
       </div>
     </>
   );

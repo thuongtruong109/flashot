@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Palette } from "lucide-react";
+import React, { useEffect, useState, useRef } from "react";
+import { Palette, Upload, X, Link as LinkIcon } from "lucide-react";
 import { cn, transparentGridPatterns } from "@/utils";
 
 interface BackgroundSelectorProps {
@@ -58,6 +58,9 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
 }) => {
   const [transparentGridDataUrl, setTransparentGridDataUrl] =
     useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [isImageUploaded, setIsImageUploaded] = useState<boolean>(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     // Generate transparent grid pattern on client side
@@ -66,6 +69,68 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
       setTransparentGridDataUrl(gridDataUrl);
     }
   }, []);
+
+  // Initialize imageUrl from selectedBackground if it's an image URL
+  useEffect(() => {
+    if (
+      selectedBackground &&
+      (selectedBackground.startsWith("url(") ||
+        selectedBackground.startsWith("http"))
+    ) {
+      const urlMatch = selectedBackground.match(/url\(['"]?(.*?)['"]?\)/);
+      if (urlMatch) {
+        setImageUrl(urlMatch[1]);
+        setIsImageUploaded(true);
+      } else if (selectedBackground.startsWith("http")) {
+        setImageUrl(selectedBackground);
+        setIsImageUploaded(false);
+      }
+    }
+  }, [selectedBackground]);
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const result = event.target?.result as string;
+        setImageUrl(result);
+        setIsImageUploaded(true);
+        onBackgroundChange(`url('${result}')`);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleUrlInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const url = e.target.value;
+    setImageUrl(url);
+    if (url && !isImageUploaded) {
+      // If URL is entered manually, apply it as background
+      if (url.startsWith("http")) {
+        onBackgroundChange(`url('${url}')`);
+      }
+    }
+  };
+
+  const handleUrlInputBlur = () => {
+    if (imageUrl && !isImageUploaded && imageUrl.startsWith("http")) {
+      onBackgroundChange(`url('${imageUrl}')`);
+    }
+  };
+
+  const handleResetImage = () => {
+    setImageUrl("");
+    setIsImageUploaded(false);
+    onBackgroundChange("transparent");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleUploadButtonClick = () => {
+    fileInputRef.current?.click();
+  };
 
   const renderBackgroundButton = (
     bg: string,
@@ -81,18 +146,24 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
     return (
       <button
         key={bg}
-        onClick={() => onBackgroundChange(bg)}
+        onClick={() => {
+          onBackgroundChange(bg);
+          // Clear image URL when selecting a preset background
+          if (!bg.startsWith("url(")) {
+            setImageUrl("");
+            setIsImageUploaded(false);
+          }
+        }}
         className={cn(
-          "group relative overflow-hidden transition-all duration-500 ease-out transform-gpu",
-          "w-full h-10 rounded-xl",
-          // 3D Morphism Base Styling
-          "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_2px_4px_rgba(0,0,0,0.1),0_4px_16px_rgba(0,0,0,0.05)] backdrop-blur-md border border-white/20",
+          "group relative overflow-hidden transition-all duration-300 ease-out transform-gpu",
+          "w-full h-12 rounded-xl",
+          // Enhanced 3D Morphism Base Styling
+          "shadow-[0_2px_8px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.4)]",
+          "border-2 backdrop-blur-sm cursor-pointer",
           // Interactive States
           isSelected
-            ? "scale-105 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2),0_4px_16px_rgba(99,102,241,0.3),0_8px_32px_rgba(99,102,241,0.1)] ring-2 ring-indigo-200/50 z-10"
-            : "hover:scale-102 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15),0_3px_12px_rgba(0,0,0,0.15),0_6px_24px_rgba(0,0,0,0.08)] hover:ring-1 hover:ring-white/30",
-          // Animation delays for staggered effect
-          `animate-in slide-in-from-bottom-4 fade-in duration-700`
+            ? "scale-[1.08] shadow-[0_8px_24px_rgba(99,102,241,0.3),0_4px_12px_rgba(99,102,241,0.2),inset_0_1px_0_rgba(255,255,255,0.6)] border-indigo-500/90 z-20"
+            : "border-white/40 hover:border-white/70 hover:scale-[1.04] hover:shadow-[0_4px_16px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.5)] active:scale-[1.02]"
         )}
         style={{
           background: isTransparent
@@ -102,7 +173,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
             : bg,
           backgroundRepeat: isTransparent ? "repeat" : "no-repeat",
           backgroundSize: isTransparent ? "auto" : "cover",
-          animationDelay: `${index * 50}ms`,
+          backgroundPosition: "center",
         }}
         title={
           isTransparent
@@ -116,66 +187,155 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
             : bg
         }
       >
-        {/* Glass Morphism Overlay */}
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 via-transparent to-black/5 backdrop-blur-sm" />
+        {/* Enhanced Glass Morphism Overlay */}
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 via-white/5 to-transparent" />
 
-        {/* Shimmer Effect */}
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out" />
+        {/* Enhanced Shimmer Effect */}
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[200%] group-hover:translate-x-[200%] transition-transform duration-700 ease-in-out" />
+
+        {/* Inner Border Highlight */}
+        <div className="absolute inset-[1px] rounded-[10px] bg-gradient-to-b from-white/20 via-transparent to-transparent pointer-events-none" />
 
         {/* Selection Indicator */}
         {isSelected && (
           <>
-            {/* Outer Glow */}
-            <div className="absolute inset-0 rounded-xl border-2 border-indigo-400 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10" />
-
-            {/* Inner Check */}
+            {/* Enhanced Check Icon */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
-              <svg
-                width={18}
-                height={18}
-                viewBox="0 0 18 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-indigo-600"
-              >
-                <circle cx="9" cy="9" r="9" fill="white" fillOpacity="0.85" />
-                <path
-                  d="M5 9.5l2.5 2.5 5-5"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <div className="relative">
+                {/* Outer glow effect */}
+                <div className="absolute inset-0 rounded-full bg-indigo-500/30 blur-xl scale-150" />
+
+                {/* Check icon */}
+                <svg
+                  width={28}
+                  height={28}
+                  viewBox="0 0 28 28"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="relative"
+                >
+                  {/* White background circle with border */}
+                  <circle
+                    cx="14"
+                    cy="14"
+                    r="13"
+                    fill="white"
+                    stroke="#4F46E5"
+                    strokeWidth="2"
+                  />
+                  {/* Checkmark */}
+                  <path
+                    d="M8 14l4 4 8-8"
+                    stroke="#4F46E5"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
             </div>
           </>
         )}
-
-        {/* 3D Highlight */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent rounded-t-xl" />
       </button>
     );
   };
 
   return (
     <div>
+      {/* Image Upload Section */}
+      <div className="space-y-3 mb-4">
+        {/* <label className="text-xs font-semibold text-gray-700 flex items-center">
+          <LinkIcon className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
+          Custom Background Image
+        </label> */}
+
+        <label className="text-[10px] font-medium text-gray-500 tracking-wider">
+          Custom Background Image
+        </label>
+
+        {/* URL Input and Buttons */}
+        <div className="flex gap-2">
+          <div className="flex-1 relative">
+            <input
+              type="text"
+              value={imageUrl}
+              onChange={handleUrlInputChange}
+              onBlur={handleUrlInputBlur}
+              readOnly={isImageUploaded}
+              placeholder="Enter image URL or upload from device"
+              className={cn(
+                "w-full px-3 py-2 text-xs rounded-lg border transition-all outline-none",
+                isImageUploaded
+                  ? "bg-gray-50 border-gray-300 cursor-not-allowed"
+                  : "bg-white border-gray-200 hover:border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              )}
+            />
+          </div>
+
+          {/* Upload Button */}
+          <button
+            type="button"
+            onClick={handleUploadButtonClick}
+            className="px-3 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white shadow-sm hover:shadow-md transition-all duration-200 flex items-center gap-1.5"
+            title="Upload image from device"
+          >
+            <Upload className="w-3.5 h-3.5" />
+            <span className="text-xs font-medium">Upload</span>
+          </button>
+
+          {/* Reset Button */}
+          {(imageUrl || isImageUploaded) && (
+            <button
+              type="button"
+              onClick={handleResetImage}
+              className="px-3 py-2 rounded-lg bg-gradient-to-r from-red-500 to-rose-500 hover:from-red-600 hover:to-rose-600 text-white shadow-sm hover:shadow-md transition-all duration-200 flex items-center gap-1.5"
+              title="Reset image"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+
+        {/* Hidden File Input */}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleFileUpload}
+          className="hidden"
+        />
+      </div>
+
       <div className="space-y-4">
         {/* Gradients & Transparent */}
-        <div className="grid grid-cols-5 gap-2">
-          {backgrounds
-            .filter(
-              (bg) => bg.startsWith("linear-gradient") || bg === "transparent"
-            )
-            .map((bg, index) => renderBackgroundButton(bg, index, true))}
+        <div>
+          <p className="text-[10px] font-medium text-gray-500 tracking-wider">
+            Gradients & Transparent
+          </p>
+          <div className="grid grid-cols-5 gap-2.5">
+            {backgrounds
+              .filter(
+                (bg) => bg.startsWith("linear-gradient") || bg === "transparent"
+              )
+              .map((bg, index) => renderBackgroundButton(bg, index, true))}
+          </div>
         </div>
 
         {/* Solid Colors */}
-        <div className="grid grid-cols-5 gap-2">
-          {backgrounds
-            .filter(
-              (bg) => !bg.startsWith("linear-gradient") && bg !== "transparent"
-            )
-            .map((bg, index) => renderBackgroundButton(bg, index + 20, false))}
+        <div>
+          <p className="text-[10px] font-medium text-gray-500 tracking-wider">
+            Solid Colors
+          </p>
+          <div className="grid grid-cols-5 gap-2.5">
+            {backgrounds
+              .filter(
+                (bg) =>
+                  !bg.startsWith("linear-gradient") && bg !== "transparent"
+              )
+              .map((bg, index) =>
+                renderBackgroundButton(bg, index + 20, false)
+              )}
+          </div>
         </div>
       </div>
     </div>

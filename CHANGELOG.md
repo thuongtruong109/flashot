@@ -1,11 +1,20 @@
-## [v2.2.0 - 2025-09-20](https://github.com/thuongtruong109/flashot/releases/tag/v2.2.0)
+## [v2.3.0 - 2025-10-07](https://github.com/thuongtruong109/flashot/releases/tag/v2.3.0)
 
 ### 🚀 Features
 
 - **playground**:
-  - add social size presets - by @thuongtruong109 [<samp>()</samp>]()
+  - custom background image with upload from device or external url - by @thuongtruong109 [<samp>(2f3e4)</samp>]()
+
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.2.0...v2.3.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.3.0)
+
+## [v2.2.0 - 2025-10-07](https://github.com/thuongtruong109/flashot/releases/tag/v2.2.0)
+
+### 🚀 Features
+
+- **playground**:
+  - add social size presets - by @thuongtruong109 [<samp>(120df)</samp>](https://github.com/thuongtruong109/flashot/commit/120df77d1058a0a64ea279b41ef0a480208f613a)
   - add ruler size indicator - by @thuongtruong109 [<samp>(7b896)</samp>](https://github.com/thuongtruong109/flashot/commit/7b896ba1c889e69bd057dc9e44bbda22af8874ce)
-  - line count number style options - by @thuongtruong109 [<samp>()</samp>]()
+  - line count number style options - by @thuongtruong109 [<samp>(575c2)</samp>](https://github.com/thuongtruong109/flashot/commit/575c281e5120edfac75af34030f047c9a66b1a10)
   - export file as original/plain-text format - by @thuongtruong109 [<samp>(35d54)</samp>](https://github.com/thuongtruong109/flashot/commit/35d54ed72271abb84996cfa13b6782e752ae7d5e)
   - add reset to default settings button - by @thuongtruong109 [<samp>(807bc)</samp>](https://github.com/thuongtruong109/flashot/commit/807bc99729e7c83585604cf839f8e8b227bd2b29)
   - adjust line count style options - by @thuongtruong109 [<samp>(97ed5)</samp>](https://github.com/thuongtruong109/flashot/commit/97ed5e380a9f8349df65c5b1f698e8ea501af109)

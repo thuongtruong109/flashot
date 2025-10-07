@@ -69,6 +69,15 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
   const moreOptions = [
     {
+      value: "guide",
+      label: (
+        <span className="flex items-center text-[13px] text-emerald-500">
+          <BookOpen className="size-3.5 mr-1" />
+          Guide
+        </span>
+      ),
+    },
+    {
       value: "info",
       label: (
         <span className="flex items-center text-[13px] text-amber-500">
@@ -102,31 +111,37 @@ const ActionBar: React.FC<ActionBarProps> = ({
       value: "png",
       label: "PNG",
       icon: Download,
+      color: "text-blue-500",
     },
     {
       value: "jpg",
       label: "JPG",
       icon: Download,
+      color: "text-orange-500",
     },
     {
       value: "webp",
       label: "WEBP",
       icon: Download,
+      color: "text-purple-500",
     },
     {
       value: "avif",
       label: "AVIF",
       icon: Download,
+      color: "text-pink-500",
     },
     {
       value: "original",
       label: "Original",
       icon: Code2,
+      color: "text-emerald-500",
     },
     {
       value: "plain",
       label: "Plain Text",
       icon: FileText,
+      color: "text-slate-500",
     },
   ];
 
@@ -138,7 +153,9 @@ const ActionBar: React.FC<ActionBarProps> = ({
   }, [settings?.exportFormat]);
 
   const handleMoreOptionSelect = (value: string) => {
-    if (value === "info") {
+    if (value === "guide") {
+      onShowGuide();
+    } else if (value === "info") {
       onShowTips();
     } else if (value === "share") {
       (async () => {
@@ -175,16 +192,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   };
 
   // Remove Info button from main buttons list
-  const allButtons = [
-    {
-      icon: BookOpen,
-      label: "Guide",
-      onClick: onShowGuide,
-      variant: "secondary" as const,
-      color: "emerald",
-      disabled: false,
-    },
-  ];
+  const allButtons: any[] = [];
 
   // Always show all buttons (settings button will be added separately at the end)
   const buttons = allButtons;
@@ -257,17 +265,17 @@ const ActionBar: React.FC<ActionBarProps> = ({
                       )}
                       <span
                         className={`flex items-center space-x-2 text-xs ${
-                          isSelected ? "text-emerald-700 font-medium" : ""
+                          isSelected ? "text-emerald-700 font-semibold" : ""
                         }`}
                       >
                         <Icon
-                          className={`size-3 ${
-                            isSelected ? "text-emerald-600" : "text-gray-500"
+                          className={`size-3.5 ${
+                            isSelected ? "text-emerald-600" : opt.color
                           }`}
                         />
-                        <span>{opt.label}</span>
+                        <span className="flex-1">{opt.label}</span>
                         {isSelected && (
-                          <Check className="size-3 text-emerald-600 ml-auto" />
+                          <Check className="size-3.5 text-emerald-600 ml-auto" />
                         )}
                       </span>
                     </div>
@@ -293,33 +301,6 @@ const ActionBar: React.FC<ActionBarProps> = ({
           }}
           placeholder="More"
         />
-
-        {buttons.map((button, index) => {
-          const Icon = button.icon;
-          return (
-            <button
-              key={index}
-              onClick={button.onClick}
-              disabled={button.disabled}
-              className={getButtonStyles(
-                button.variant,
-                button.color,
-                button.disabled
-              )}
-            >
-              <Icon
-                className={`${getIconStyles(button.color, button.variant)}`}
-              />
-              <span
-                className={`text-[13px] ${
-                  colorMap[button.color as keyof typeof colorMap]
-                }`}
-              >
-                {button.label}
-              </span>
-            </button>
-          );
-        })}
 
         {/* Data & Settings Tab */}
         <div className="flex items-stretch rounded-xl bg-gradient-to-br from-white/60 via-white/40 to-white/20 backdrop-blur-lg border border-white/80 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12),0_4px_8px_-2px_rgba(0,0,0,0.08),inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-2px_4px_rgba(0,0,0,0.05)] overflow-hidden">
@@ -363,20 +344,6 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
         <div className="flex items-center space-x-1">
           <button
-            onClick={onShowGuide}
-            className="p-2.5 bg-white/40 backdrop-blur-md border border-white/60 rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] transition-all"
-          >
-            <BookOpen className="w-3 h-3 text-emerald-500" />
-          </button>
-
-          <button
-            onClick={onShowTips}
-            className="p-2.5 bg-white/40 backdrop-blur-md border border-white/60 rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] transition-all"
-          >
-            <Info className="w-3 h-3 text-amber-500" />
-          </button>
-
-          <button
             onClick={onShowJSON}
             className="p-2.5 bg-white/40 backdrop-blur-md border border-white/60 rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] transition-all"
           >
@@ -389,6 +356,23 @@ const ActionBar: React.FC<ActionBarProps> = ({
           >
             <Settings className="w-3 h-3 text-slate-500" />
           </button>
+
+          {/* Mobile More Menu */}
+          <div className="relative">
+            <div className="[&>div>button]:p-2 [&>div>button]:bg-white/40 [&>div>button]:backdrop-blur-md [&>div>button]:border [&>div>button]:border-white/60 [&>div>button]:rounded-xl [&>div>button]:shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] [&>div>button]:hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] [&>div>button]:min-w-0 [&>div>button]:px-2 [&>div>button]:py-2.5">
+              <CustomSelect
+                options={moreOptions.map((opt) => ({
+                  value: opt.value,
+                  label: opt.label,
+                }))}
+                value=""
+                onChange={(value) => {
+                  handleMoreOptionSelect(value);
+                }}
+                placeholder="•••"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

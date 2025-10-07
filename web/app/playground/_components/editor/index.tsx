@@ -406,12 +406,18 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
             backgroundRepeat:
               settings.showBackground && settings.background === "transparent"
                 ? "repeat"
+                : settings.background.startsWith("url(")
+                ? "no-repeat"
                 : "no-repeat",
             backgroundSize:
               settings.showBackground && settings.background === "transparent"
                 ? "auto"
+                : settings.background.startsWith("url(")
+                ? "cover"
                 : "cover",
-            backgroundPosition: "center",
+            backgroundPosition: settings.background.startsWith("url(")
+              ? "center"
+              : "center",
             padding: `${settings.padding}px`,
             borderRadius: `${settings.borderRadius}px`,
             width: isFullscreen
