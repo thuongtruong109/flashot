@@ -44,4 +44,15 @@ export const DEFAULT_CODE_SETTINGS: CodeSettings = {
   lineNumberBorder: false,
   lineNumberTextAlign: "center",
   highlights: [],
+  watermark: {
+    enabled: false,
+    text: "Flashot",
+    opacity: 0.1,
+    color: "#000000",
+    x: 50,
+    y: 50,
+    rotation: -45,
+    fontSize: 48,
+    fontWeight: 700,
+  },
 };

@@ -17,6 +17,18 @@ export interface HighlightRange {
   type?: "add" | "remove" | "change" | "neutral";
 }
 
+export interface WatermarkSettings {
+  enabled: boolean;
+  text: string;
+  opacity: number;
+  color: string;
+  x: number; // Position in pixels from left
+  y: number; // Position in pixels from top
+  rotation: number; // Rotation in degrees
+  fontSize?: number;
+  fontWeight?: number;
+}
+
 export interface CodeSettings {
   language: string;
   theme: string;
@@ -53,6 +65,7 @@ export interface CodeSettings {
   lineNumberBorder?: boolean;
   lineNumberTextAlign?: "left" | "center" | "right";
   highlights?: HighlightRange[];
+  watermark?: WatermarkSettings;
 }
 
 export interface SyntaxMatch {

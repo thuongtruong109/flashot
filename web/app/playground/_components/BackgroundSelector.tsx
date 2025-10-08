@@ -156,14 +156,14 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
         }}
         className={cn(
           "group relative overflow-hidden transition-all duration-300 ease-out transform-gpu",
-          "w-full h-12 rounded-xl",
+          "w-full h-10 rounded-lg",
           // Enhanced 3D Morphism Base Styling
-          "shadow-[0_2px_8px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.4)]",
-          "border-2 backdrop-blur-sm cursor-pointer",
+          "shadow-[0_2px_6px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.3)]",
+          "border backdrop-blur-sm cursor-pointer",
           // Interactive States
           isSelected
-            ? "scale-[1.08] shadow-[0_8px_24px_rgba(99,102,241,0.3),0_4px_12px_rgba(99,102,241,0.2),inset_0_1px_0_rgba(255,255,255,0.6)] border-indigo-500/90 z-20"
-            : "border-white/40 hover:border-white/70 hover:scale-[1.04] hover:shadow-[0_4px_16px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.5)] active:scale-[1.02]"
+            ? "scale-[1.05] shadow-[0_6px_20px_rgba(99,102,241,0.25),0_3px_10px_rgba(99,102,241,0.15),inset_0_1px_0_rgba(255,255,255,0.5)] border-indigo-400/80 z-20"
+            : "border-white/30 hover:border-white/60 hover:scale-[1.02] hover:shadow-[0_3px_12px_rgba(0,0,0,0.1),0_2px_6px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.4)] active:scale-100"
         )}
         style={{
           background: isTransparent
@@ -202,35 +202,57 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
             {/* Enhanced Check Icon */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
               <div className="relative">
-                {/* Outer glow effect */}
-                <div className="absolute inset-0 rounded-full bg-indigo-500/30 blur-xl scale-150" />
+                {/* Soft glow effect */}
+                <div className="absolute inset-0 rounded-full bg-indigo-400/40 blur-lg scale-125 animate-pulse" />
 
-                {/* Check icon */}
+                {/* Check icon with better design */}
                 <svg
-                  width={28}
-                  height={28}
-                  viewBox="0 0 28 28"
+                  width={24}
+                  height={24}
+                  viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="relative"
+                  className="relative drop-shadow-lg"
                 >
-                  {/* White background circle with border */}
+                  {/* Outer circle with gradient */}
                   <circle
-                    cx="14"
-                    cy="14"
-                    r="13"
-                    fill="white"
-                    stroke="#4F46E5"
+                    cx="12"
+                    cy="12"
+                    r="11"
+                    fill="url(#checkGradient)"
+                    stroke="white"
+                    strokeWidth="1.5"
+                  />
+                  {/* Inner shadow circle */}
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="11"
+                    fill="none"
+                    stroke="rgba(79, 70, 229, 0.3)"
                     strokeWidth="2"
                   />
-                  {/* Checkmark */}
+                  {/* Checkmark with smoother path */}
                   <path
-                    d="M8 14l4 4 8-8"
-                    stroke="#4F46E5"
-                    strokeWidth="3"
+                    d="M7 12l3.5 3.5L17 9"
+                    stroke="white"
+                    strokeWidth="2.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
+                  {/* Gradient definition */}
+                  <defs>
+                    <linearGradient
+                      id="checkGradient"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop offset="0%" stopColor="#6366F1" />
+                      <stop offset="100%" stopColor="#4F46E5" />
+                    </linearGradient>
+                  </defs>
                 </svg>
               </div>
             </div>

@@ -1,10 +1,11 @@
-## [v2.3.0 - 2025-10-07](https://github.com/thuongtruong109/flashot/releases/tag/v2.3.0)
+## [v2.3.0 - 2025-10-10](https://github.com/thuongtruong109/flashot/releases/tag/v2.3.0)
 
 ### 🚀 Features
 
 - **playground**:
-  - custom background image with upload from device or external url - by @thuongtruong109 [<samp>(2f3e4)</samp>]()
-  - Highlight diff code changes - by @thuongtruong109 [<samp>(5c8f4)</samp>]()
+  - Custom watermark text - by @thuongtruong109 [<samp>(1a4b3)</samp>]()
+  - Custom highlight diff code changes - by @thuongtruong109 [<samp>(fdfe9)</samp>](https://github.com/thuongtruong109/flashot/commit/fdfe9a16d59ede975ef7ae8e4d18c51cafb9141b)
+  - Custom background image with upload from device or external URL - by @thuongtruong109 [<samp>(ă0b7)</samp>](https://github.com/thuongtruong109/flashot/commit/a80b728a08c4c41edb536f8d15ce01263891658a)
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.2.0...v2.3.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.3.0)
 
