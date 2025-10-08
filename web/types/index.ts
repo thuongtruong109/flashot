@@ -9,6 +9,14 @@ export interface SyntaxTheme {
   operator: string;
 }
 
+export interface HighlightRange {
+  id: string;
+  startLine: number;
+  endLine: number;
+  color: string;
+  type?: "add" | "remove" | "change" | "neutral";
+}
+
 export interface CodeSettings {
   language: string;
   theme: string;
@@ -44,6 +52,7 @@ export interface CodeSettings {
   lineNumberOpacity?: number;
   lineNumberBorder?: boolean;
   lineNumberTextAlign?: "left" | "center" | "right";
+  highlights?: HighlightRange[];
 }
 
 export interface SyntaxMatch {

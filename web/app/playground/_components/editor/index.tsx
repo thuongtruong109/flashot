@@ -724,10 +724,48 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                       )}
 
                       {/* Preview Mode Code Display */}
-                      <div className="flex-1">
+                      <div className="flex-1 relative">
+                        {/* Highlight backgrounds */}
+                        {settings.highlights &&
+                          settings.highlights.length > 0 && (
+                            <div className="absolute inset-0 pointer-events-none">
+                              <div
+                                className="py-4 pl-4 pr-2"
+                                style={{
+                                  fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
+                                  fontSize: `${settings.fontSize}px`,
+                                  lineHeight: 1.6,
+                                }}
+                              >
+                                {code.split("\n").map((line, lineIndex) => {
+                                  const highlight = settings.highlights?.find(
+                                    (h) =>
+                                      lineIndex + 1 >= h.startLine &&
+                                      lineIndex + 1 <= h.endLine
+                                  );
+                                  return (
+                                    <div
+                                      key={lineIndex}
+                                      className="leading-relaxed min-h-[1.6em]"
+                                      style={{
+                                        backgroundColor:
+                                          highlight?.color || "transparent",
+                                        marginLeft: "-1rem",
+                                        marginRight: "-0.5rem",
+                                        paddingLeft: "1rem",
+                                        paddingRight: "0.5rem",
+                                      }}
+                                    >
+                                      &nbsp;
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
                         <pre
                           ref={previewRef}
-                          className="py-4 pl-4 pr-2"
+                          className="py-4 pl-4 pr-2 relative z-10"
                           style={{
                             color: currentTheme.foreground,
                             fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
@@ -810,16 +848,54 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
 
                     {/* Textarea - Exact same structure as preview */}
                     <div
-                      className="flex-1"
+                      className="flex-1 relative"
                       style={{ minWidth: "100%", width: "100%" }}
                     >
+                      {/* Highlight backgrounds for edit mode */}
+                      {settings.highlights &&
+                        settings.highlights.length > 0 && (
+                          <div className="absolute inset-0 pointer-events-none">
+                            <div
+                              className="pt-4 pb-0 pl-4 pr-2"
+                              style={{
+                                fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,
+                                fontSize: `${settings.fontSize}px`,
+                                lineHeight: 1.6,
+                              }}
+                            >
+                              {code.split("\n").map((line, lineIndex) => {
+                                const highlight = settings.highlights?.find(
+                                  (h) =>
+                                    lineIndex + 1 >= h.startLine &&
+                                    lineIndex + 1 <= h.endLine
+                                );
+                                return (
+                                  <div
+                                    key={lineIndex}
+                                    className="leading-relaxed min-h-[1.6em]"
+                                    style={{
+                                      backgroundColor:
+                                        highlight?.color || "transparent",
+                                      marginLeft: "-1rem",
+                                      marginRight: "-0.5rem",
+                                      paddingLeft: "1rem",
+                                      paddingRight: "0.5rem",
+                                    }}
+                                  >
+                                    &nbsp;
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
                       <textarea
                         ref={textareaRef}
                         value={code}
                         onChange={(e) => onChange(e.target.value)}
                         onKeyDown={handleKeyDown}
                         onBlur={handleBlur}
-                        className="pt-4 pb-0 !mb-0 pl-4 pr-2 w-full resize-none border-none outline-none hover:bg-white/5 transition-colors duration-200"
+                        className="pt-4 pb-0 !mb-0 pl-4 pr-2 w-full resize-none border-none outline-none hover:bg-white/5 transition-colors duration-200 relative z-10"
                         style={{
                           color: currentTheme.foreground,
                           fontFamily: `"${settings.fontFamily}", "Fira Code", "Monaco", "Consolas", "Source Code Pro", monospace`,

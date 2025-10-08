@@ -4,6 +4,7 @@
 
 - **playground**:
   - custom background image with upload from device or external url - by @thuongtruong109 [<samp>(2f3e4)</samp>]()
+  - Highlight diff code changes - by @thuongtruong109 [<samp>(5c8f4)</samp>]()
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.2.0...v2.3.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.3.0)
 

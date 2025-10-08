@@ -43,4 +43,5 @@ export const DEFAULT_CODE_SETTINGS: CodeSettings = {
   lineNumberOpacity: 0.5,
   lineNumberBorder: false,
   lineNumberTextAlign: "center",
+  highlights: [],
 };

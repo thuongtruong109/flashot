@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Move, BarChart3, CornerRightDown, Type, WrapText } from "lucide-react";
-import { CodeSettings } from "@/types";
+import {
+  Move,
+  BarChart3,
+  CornerRightDown,
+  Type,
+  WrapText,
+  Highlighter,
+  Plus,
+  Trash2,
+  X,
+} from "lucide-react";
+import { CodeSettings, HighlightRange } from "@/types";
 
 interface ViewSectionProps {
   settings: CodeSettings;
@@ -33,8 +43,8 @@ const ViewSection: React.FC<ViewSectionProps> = ({
       {/* Font Size */}
       <div>
         <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
-          <div className="flex items-center">
-            <Type className="w-3.5 h-3.5 text-orange-600 mr-1.5" />
+          <div className="flex items-center text-orange-600">
+            <Type className="w-3.5 h-3.5 mr-1.5" />
             Font Size
           </div>
           <span className="text-xs bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent font-bold">
@@ -50,8 +60,8 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             onChange={(e) =>
               onUpdateSetting("fontSize", parseInt(e.target.value))
             }
-            className="w-full h-1.5 bg-gradient-to-r from-orange-200 to-red-200 rounded-lg appearance-none cursor-pointer
-              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
+            className="w-full h-1 bg-gradient-to-r from-orange-200 to-red-200 rounded-lg appearance-none cursor-pointer
+              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
               [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
               [&::-webkit-slider-thumb]:from-orange-500 [&::-webkit-slider-thumb]:to-red-500
               [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
@@ -63,8 +73,8 @@ const ViewSection: React.FC<ViewSectionProps> = ({
       {/* Padding */}
       <div>
         <label className="text-xs font-semibold text-gray-700 flex items-center justify-between">
-          <div className="flex items-center">
-            <Move className="w-3.5 h-3.5 text-pink-600 mr-1.5" />
+          <div className="flex items-center text-pink-600">
+            <Move className="w-3.5 h-3.5 mr-1.5" />
             Padding
           </div>
           <span className="text-xs bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent font-bold">
@@ -80,8 +90,8 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             onChange={(e) =>
               onUpdateSetting("padding", parseInt(e.target.value))
             }
-            className="w-full h-1.5 bg-gradient-to-r from-pink-200 to-purple-200 rounded-lg appearance-none cursor-pointer
-              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
+            className="w-full h-1 bg-gradient-to-r from-pink-200 to-purple-200 rounded-lg appearance-none cursor-pointer
+              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
               [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
               [&::-webkit-slider-thumb]:from-pink-500 [&::-webkit-slider-thumb]:to-purple-500
               [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
@@ -93,8 +103,8 @@ const ViewSection: React.FC<ViewSectionProps> = ({
       {/* Border Radius */}
       <div>
         <label className="text-xs font-semibold text-gray-700 flex items-center justify-between">
-          <div className="flex items-center">
-            <CornerRightDown className="w-3.5 h-3.5 text-teal-600 mr-1.5" />
+          <div className="flex items-center text-teal-600">
+            <CornerRightDown className="w-3.5 h-3.5 mr-1.5" />
             Border Radius
           </div>
           <span className="text-xs bg-gradient-to-r from-teal-500 to-cyan-500 bg-clip-text text-transparent font-bold">
@@ -110,8 +120,8 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             onChange={(e) =>
               onUpdateSetting("borderRadius", parseInt(e.target.value))
             }
-            className="w-full h-1.5 bg-gradient-to-r from-teal-200 to-cyan-200 rounded-lg appearance-none cursor-pointer
-              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
+            className="w-full h-1 bg-gradient-to-r from-teal-200 to-cyan-200 rounded-lg appearance-none cursor-pointer
+              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
               [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
               [&::-webkit-slider-thumb]:from-teal-500 [&::-webkit-slider-thumb]:to-cyan-500
               [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
@@ -123,8 +133,8 @@ const ViewSection: React.FC<ViewSectionProps> = ({
       {/* Sizing */}
       <div className="space-y-2">
         <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
-          <div className="flex items-center">
-            <Move className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
+          <div className="flex items-center text-blue-600">
+            <Move className="w-3.5 h-3.5 mr-1.5" />
             Sizing
           </div>
           <button
@@ -408,6 +418,237 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             </div>
           </div>
         </label>
+      </div>
+
+      {/* Line Highlights */}
+      <div>
+        <div className="text-xs font-semibold text-gray-700 mb-3 flex items-center justify-between">
+          <label className="flex items-center text-yellow-600">
+            <Highlighter className="w-3.5 h-3.5 mr-1.5" />
+            Line Highlights
+          </label>
+          <button
+            type="button"
+            onClick={() => {
+              const newHighlight: HighlightRange = {
+                id: Date.now().toString(),
+                startLine: 1,
+                endLine: 1,
+                color: "#22c55e20",
+                type: "add",
+              };
+              onUpdateSetting("highlights", [
+                ...(settings.highlights || []),
+                newHighlight,
+              ]);
+            }}
+            className="w-fit px-2 py-1 text-xs rounded-lg bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-white shadow-sm transition-all flex items-center space-x-1"
+          >
+            <Plus className="w-3 h-3" />
+            Add
+          </button>
+        </div>
+
+        {/* Highlight List */}
+        <div className="space-y-2 max-h-64 overflow-y-auto">
+          {settings.highlights && settings.highlights.length > 0 ? (
+            settings.highlights.map((highlight, index) => (
+              <div
+                key={highlight.id}
+                className="p-2 rounded-lg bg-green-600/10 border border-white/60 shadow-sm space-y-2"
+              >
+                {/* Preview */}
+                <div className="flex items-center justify-between space-x-2">
+                  <div
+                    className="w-full px-2 py-1 rounded text-[10px] font-mono border"
+                    style={{
+                      backgroundColor: highlight.color,
+                      borderColor: highlight.color.slice(0, 7) + "40",
+                    }}
+                  >
+                    Preview: Lines {highlight.startLine}-{highlight.endLine}
+                  </div>
+                  <button
+                    onClick={() => {
+                      const newHighlights = settings.highlights?.filter(
+                        (_, i) => i !== index
+                      );
+                      onUpdateSetting("highlights", newHighlights || []);
+                    }}
+                    className="p-1 rounded-md bg-red-50 hover:bg-red-100 text-red-600 border border-red-500/30 transition-all"
+                    title="Remove highlight"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Type Selector */}
+                <div className="flex items-center gap-2">
+                  <label className="text-[10px] text-gray-600 font-medium w-8">
+                    Type:
+                  </label>
+                  <div className="flex-1 flex gap-1">
+                    {[
+                      {
+                        value: "add",
+                        label: "+",
+                        color: "bg-green-100 text-green-700 border-green-300",
+                      },
+                      {
+                        value: "remove",
+                        label: "-",
+                        color: "bg-red-100 text-red-700 border-red-300",
+                      },
+                      {
+                        value: "change",
+                        label: "~",
+                        color: "bg-blue-100 text-blue-700 border-blue-300",
+                      },
+                      {
+                        value: "neutral",
+                        label: "•",
+                        color: "bg-gray-100 text-gray-700 border-gray-300",
+                      },
+                    ].map((type) => (
+                      <button
+                        key={type.value}
+                        onClick={() => {
+                          const newHighlights = [
+                            ...(settings.highlights || []),
+                          ];
+                          newHighlights[index] = {
+                            ...highlight,
+                            type: type.value as HighlightRange["type"],
+                            color:
+                              type.value === "add"
+                                ? "#22c55e20"
+                                : type.value === "remove"
+                                ? "#ef444420"
+                                : type.value === "change"
+                                ? "#3b82f620"
+                                : "#6b728020",
+                          };
+                          onUpdateSetting("highlights", newHighlights);
+                        }}
+                        className={`flex-1 px-2 py-1 text-xs rounded border transition-all ${
+                          highlight.type === type.value
+                            ? type.color + " font-bold shadow-sm"
+                            : "bg-white/40 text-gray-500 border-gray-200 hover:bg-white/60"
+                        }`}
+                      >
+                        {type.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Line Range */}
+                <div className="flex items-center space-x-2">
+                  <label className="text-[10px] text-gray-600 font-medium w-8">
+                    Lines:
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    value={highlight.startLine}
+                    onChange={(e) => {
+                      const newHighlights = [...(settings.highlights || [])];
+                      const newStart = parseInt(e.target.value) || 1;
+                      newHighlights[index] = {
+                        ...highlight,
+                        startLine: newStart,
+                        endLine: Math.max(newStart, highlight.endLine),
+                      };
+                      onUpdateSetting("highlights", newHighlights);
+                    }}
+                    className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none"
+                    placeholder="Start"
+                  />
+                  <span className="text-xs text-gray-500 w-12">to</span>
+                  <input
+                    type="number"
+                    min={highlight.startLine}
+                    value={highlight.endLine}
+                    onChange={(e) => {
+                      const newHighlights = [...(settings.highlights || [])];
+                      newHighlights[index] = {
+                        ...highlight,
+                        endLine: Math.max(
+                          highlight.startLine,
+                          parseInt(e.target.value) || highlight.startLine
+                        ),
+                      };
+                      onUpdateSetting("highlights", newHighlights);
+                    }}
+                    className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none"
+                    placeholder="End"
+                  />
+                </div>
+
+                {/* Color Picker */}
+                <div className="flex items-center justify-between space-x-2 w-full">
+                  <label className="text-[10px] text-gray-600 font-medium w-8">
+                    Color:
+                  </label>
+                  <input
+                    type="color"
+                    value={highlight.color.slice(0, 7)}
+                    onChange={(e) => {
+                      const newHighlights = [...(settings.highlights || [])];
+                      // Keep opacity from original color or default to 20%
+                      const opacity =
+                        highlight.color.length > 7
+                          ? highlight.color.slice(7)
+                          : "20";
+                      newHighlights[index] = {
+                        ...highlight,
+                        color: e.target.value + opacity,
+                      };
+                      onUpdateSetting("highlights", newHighlights);
+                    }}
+                    className="w-10 h-6 rounded cursor-pointer border border-gray-300"
+                  />
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={
+                      highlight.color.length > 7
+                        ? parseInt(highlight.color.slice(7), 16) / 2.55
+                        : 12
+                    }
+                    onChange={(e) => {
+                      const newHighlights = [...(settings.highlights || [])];
+                      const opacity = Math.round(
+                        parseInt(e.target.value) * 2.55
+                      )
+                        .toString(16)
+                        .padStart(2, "0");
+                      newHighlights[index] = {
+                        ...highlight,
+                        color: highlight.color.slice(0, 7) + opacity,
+                      };
+                      onUpdateSetting("highlights", newHighlights);
+                    }}
+                    className="flex-1 h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                  />
+                  <span className="text-[10px] text-gray-500">
+                    {highlight.color.length > 7
+                      ? Math.round(
+                          parseInt(highlight.color.slice(7), 16) / 2.55
+                        )
+                      : 12}
+                    %
+                  </span>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-xs text-gray-500 text-center py-4 bg-gray-50/50 rounded-lg border border-dashed border-gray-200">
+              No highlights added. Click &ldquo;Add&rdquo; to create one.
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
