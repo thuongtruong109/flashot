@@ -921,27 +921,48 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
               </div>
 
               {/* Watermark Overlay */}
-              {settings.watermark?.enabled &&
-                settings.watermark?.text &&
-                !isFullscreen && (
-                  <div
-                    className="absolute pointer-events-none select-none z-50"
-                    style={{
-                      left: `${settings.watermark.x}%`,
-                      top: `${settings.watermark.y}%`,
-                      transform: `translate(-50%, -50%) rotate(${settings.watermark.rotation}deg)`,
-                      opacity: settings.watermark.opacity,
-                      color: settings.watermark.color,
-                      fontSize: `${settings.watermark.fontSize}px`,
-                      fontWeight: settings.watermark.fontWeight || 700,
-                      whiteSpace: "nowrap",
-                      textShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                      fontFamily: `"${settings.fontFamily}", system-ui, -apple-system, sans-serif`,
-                    }}
-                  >
-                    {settings.watermark.text}
-                  </div>
-                )}
+              {settings.watermark?.enabled && !isFullscreen && (
+                <>
+                  {settings.watermark.type === "image" &&
+                  settings.watermark.imageUrl ? (
+                    <img
+                      src={settings.watermark.imageUrl}
+                      alt="Watermark"
+                      className="absolute pointer-events-none select-none z-50"
+                      style={{
+                        left: `${settings.watermark.x}%`,
+                        top: `${settings.watermark.y}%`,
+                        transform: `translate(-50%, -50%) rotate(${settings.watermark.rotation}deg)`,
+                        opacity: settings.watermark.opacity,
+                        width: `${settings.watermark.imageWidth}px`,
+                        height: `${settings.watermark.imageHeight}px`,
+                        objectFit: "contain",
+                        filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.1))",
+                      }}
+                    />
+                  ) : (
+                    settings.watermark.text && (
+                      <div
+                        className="absolute pointer-events-none select-none z-50"
+                        style={{
+                          left: `${settings.watermark.x}%`,
+                          top: `${settings.watermark.y}%`,
+                          transform: `translate(-50%, -50%) rotate(${settings.watermark.rotation}deg)`,
+                          opacity: settings.watermark.opacity,
+                          color: settings.watermark.color,
+                          fontSize: `${settings.watermark.fontSize}px`,
+                          fontWeight: settings.watermark.fontWeight || 700,
+                          whiteSpace: "nowrap",
+                          textShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                          fontFamily: `"${settings.fontFamily}", system-ui, -apple-system, sans-serif`,
+                        }}
+                      >
+                        {settings.watermark.text}
+                      </div>
+                    )
+                  )}
+                </>
+              )}
             </div>
           </div>
 

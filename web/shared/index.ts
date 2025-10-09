@@ -46,6 +46,7 @@ export const DEFAULT_CODE_SETTINGS: CodeSettings = {
   highlights: [],
   watermark: {
     enabled: false,
+    type: "text",
     text: "Flashot",
     opacity: 0.1,
     color: "#000000",
@@ -53,6 +54,9 @@ export const DEFAULT_CODE_SETTINGS: CodeSettings = {
     y: 50,
     rotation: -45,
     fontSize: 48,
-    fontWeight: 700,
+    fontWeight: 800,
+    imageUrl: "",
+    imageWidth: 100,
+    imageHeight: 100,
   },
 };

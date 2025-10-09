@@ -19,7 +19,9 @@ export interface HighlightRange {
 
 export interface WatermarkSettings {
   enabled: boolean;
+  type: "text" | "image"; // Type of watermark
   text: string;
+  imageUrl?: string; // URL or data URL for image
   opacity: number;
   color: string;
   x: number; // Position in pixels from left
@@ -27,6 +29,8 @@ export interface WatermarkSettings {
   rotation: number; // Rotation in degrees
   fontSize?: number;
   fontWeight?: number;
+  imageWidth?: number; // Width for image watermark in pixels
+  imageHeight?: number; // Height for image watermark in pixels
 }
 
 export interface CodeSettings {

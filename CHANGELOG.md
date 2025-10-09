@@ -3,7 +3,7 @@
 ### 🚀 Features
 
 - **playground**:
-  - Custom watermark text - by @thuongtruong109 [<samp>(1a4b3)</samp>]()
+  - Custom watermark with text/image - by @thuongtruong109 [<samp>(971b1)</samp>](https://github.com/thuongtruong109/flashot/commit/971b1330907686a5eb3606466cd9c991c7c24b31)
   - Custom highlight diff code changes - by @thuongtruong109 [<samp>(fdfe9)</samp>](https://github.com/thuongtruong109/flashot/commit/fdfe9a16d59ede975ef7ae8e4d18c51cafb9141b)
   - Custom background image with upload from device or external URL - by @thuongtruong109 [<samp>(ă0b7)</samp>](https://github.com/thuongtruong109/flashot/commit/a80b728a08c4c41edb536f8d15ce01263891658a)
 

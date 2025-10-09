@@ -6,6 +6,8 @@ import {
   TrafficCone,
   MessageSquare,
   Stamp,
+  Upload,
+  X,
 } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 import { Folder, Edit2 } from "lucide-react";
@@ -34,6 +36,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
   const [isEditingFileName, setIsEditingFileName] = useState(false);
   const [tempFileName, setTempFileName] = useState(fileName);
   const fileNameInputRef = useRef<HTMLInputElement>(null);
+  const watermarkImageInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setTempFileName(fileName);
@@ -54,6 +57,41 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
     if (e.key === "Enter" || e.key === "Escape") setIsEditingFileName(false);
   };
   const handleFileNameBlur = () => setIsEditingFileName(false);
+
+  // Watermark image upload handlers
+  const handleWatermarkImageUpload = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const dataUrl = e.target?.result as string;
+        onUpdateSetting("watermark", {
+          ...settings.watermark!,
+          imageUrl: dataUrl,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleWatermarkImageUrlChange = (url: string) => {
+    onUpdateSetting("watermark", {
+      ...settings.watermark!,
+      imageUrl: url,
+    });
+  };
+
+  const handleResetWatermarkImage = () => {
+    onUpdateSetting("watermark", {
+      ...settings.watermark!,
+      imageUrl: "",
+    });
+    if (watermarkImageInputRef.current) {
+      watermarkImageInputRef.current.value = "";
+    }
+  };
 
   return (
     <>
@@ -894,16 +932,19 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               checked={settings.watermark?.enabled || false}
               onChange={(e) =>
                 onUpdateSetting("watermark", {
-                  ...(settings.watermark || {
-                    text: "Flashot",
-                    opacity: 0.1,
-                    color: "#000000",
-                    x: 50,
-                    y: 50,
-                    rotation: -45,
-                    fontSize: 48,
-                    fontWeight: 700,
-                  }),
+                  type: "text",
+                  text: "Flashot",
+                  opacity: 0.1,
+                  color: "#000000",
+                  x: 50,
+                  y: 50,
+                  rotation: -45,
+                  fontSize: 48,
+                  fontWeight: 800,
+                  imageUrl: "",
+                  imageWidth: 100,
+                  imageHeight: 100,
+                  ...(settings.watermark || {}),
                   enabled: e.target.checked,
                 })
               }
@@ -932,93 +973,256 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
         </label>
 
         {settings.watermark?.enabled && (
-          <div className="space-y-3 pl-1">
-            {/* Watermark Text */}
-            <div>
-              <label className="text-xs text-gray-600 font-medium mb-1.5 block">
-                Text
-              </label>
-              <input
-                type="text"
-                value={settings.watermark?.text || ""}
-                onChange={(e) =>
-                  onUpdateSetting("watermark", {
-                    ...settings.watermark!,
-                    text: e.target.value,
-                  })
-                }
-                className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 outline-none"
-                placeholder="Enter watermark text"
-              />
-            </div>
-
-            {/* Opacity */}
-            <div>
-              <label className="text-xs text-gray-600 font-medium mb-1.5 flex items-center justify-between">
-                <span>Opacity</span>
-                <span className="text-xs bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
-                  {Math.round((settings.watermark?.opacity || 0.1) * 100)}%
-                </span>
-              </label>
-              <input
-                type="range"
-                min={0}
-                max={1}
-                step={0.01}
-                value={settings.watermark?.opacity || 0.1}
-                onChange={(e) =>
-                  onUpdateSetting("watermark", {
-                    ...settings.watermark!,
-                    opacity: parseFloat(e.target.value),
-                  })
-                }
-                className="w-full h-1.5 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
-                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
-                  [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
-                  [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
-                  [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-                  [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-              />
-            </div>
-
-            {/* Color */}
-            <div>
-              <label className="text-xs text-gray-600 font-medium mb-1.5 block">
-                Color
-              </label>
-              <div className="flex items-center gap-2">
-                <input
-                  type="color"
-                  value={settings.watermark?.color || "#000000"}
-                  onChange={(e) =>
+          <div className="space-y-3">
+            {/* Type Toggle */}
+            <div className="flex justify-between items-center">
+              <span className="text-xs text-gray-600">Type</span>
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() =>
                     onUpdateSetting("watermark", {
                       ...settings.watermark!,
-                      color: e.target.value,
+                      type: "text",
                     })
                   }
-                  className="w-12 h-10 rounded-lg cursor-pointer border border-gray-300"
-                />
-                <input
-                  type="text"
-                  value={settings.watermark?.color || "#000000"}
-                  onChange={(e) =>
+                  className={`px-3 py-1 rounded-md text-xs transition-all duration-200 ${
+                    (settings.watermark?.type || "text") === "text"
+                      ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-md font-medium"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  Text
+                </button>
+                <button
+                  onClick={() =>
                     onUpdateSetting("watermark", {
                       ...settings.watermark!,
-                      color: e.target.value,
+                      type: "image",
                     })
                   }
-                  className="flex-1 px-3 py-2 text-sm rounded-lg border border-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 outline-none font-mono"
-                  placeholder="#000000"
-                />
+                  className={`px-3 py-1 rounded-md text-xs transition-all duration-200 ${
+                    settings.watermark?.type === "image"
+                      ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-md font-medium"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  Image
+                </button>
               </div>
             </div>
 
-            {/* Position X & Y */}
+            {(settings.watermark?.type || "text") === "text" ? (
+              <>
+                {/* Watermark Text */}
+                <input
+                  type="text"
+                  value={settings.watermark?.text || ""}
+                  onChange={(e) =>
+                    onUpdateSetting("watermark", {
+                      ...settings.watermark!,
+                      text: e.target.value,
+                    })
+                  }
+                  className="w-full px-2 py-1.5 text-xs rounded-md border border-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 outline-none"
+                  placeholder="Enter watermark text"
+                />
+
+                {/* Color */}
+                <div className="flex justify-between items-center space-x-3">
+                  <label className="text-xs text-gray-600">Color</label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="color"
+                      value={settings.watermark?.color || "#000000"}
+                      onChange={(e) =>
+                        onUpdateSetting("watermark", {
+                          ...settings.watermark!,
+                          color: e.target.value,
+                        })
+                      }
+                      className="w-12 h-7 rounded cursor-pointer border border-gray-300"
+                    />
+                    <input
+                      type="text"
+                      value={settings.watermark?.color || "#000000"}
+                      onChange={(e) =>
+                        onUpdateSetting("watermark", {
+                          ...settings.watermark!,
+                          color: e.target.value,
+                        })
+                      }
+                      className="flex-1 px-2 py-1 text-sm rounded-lg border border-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 outline-none font-mono"
+                      placeholder="#000000"
+                    />
+                  </div>
+                </div>
+
+                {/* Font Size */}
+                <div className="flex justify-between items-center space-x-3">
+                  <label className="text-xs flex items-center justify-between">
+                    <span className="text-gray-600 w-24">Font Size</span>
+                    <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
+                      {settings.watermark?.fontSize || 48}px
+                    </span>
+                  </label>
+                  <input
+                    type="range"
+                    min={12}
+                    max={120}
+                    step={1}
+                    value={settings.watermark?.fontSize || 48}
+                    onChange={(e) =>
+                      onUpdateSetting("watermark", {
+                        ...settings.watermark!,
+                        fontSize: parseInt(e.target.value),
+                      })
+                    }
+                    className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                      [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                      [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                      [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
+                      [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                      [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                  />
+                </div>
+
+                {/* Font Weight */}
+                <div className="flex justify-between items-center">
+                  <label className="text-xs text-gray-600 w-24">
+                    Font Weight
+                  </label>
+                  <div className="flex items-center space-x-2">
+                    {[
+                      { value: 300, label: "Thin" },
+                      { value: 500, label: "Normal" },
+                      { value: 800, label: "Bold" },
+                    ].map((weight) => (
+                      <button
+                        key={weight.value}
+                        onClick={() =>
+                          onUpdateSetting("watermark", {
+                            ...settings.watermark!,
+                            fontWeight: weight.value,
+                          })
+                        }
+                        className={`px-2 py-1 rounded-md text-xs transition-all duration-200 ${
+                          (settings.watermark?.fontWeight || 800) ===
+                          weight.value
+                            ? "bg-gradient-to-r from-rose-500 to-pink-500 font-bold text-white shadow-md"
+                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        }`}
+                      >
+                        {weight.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Image Upload */}
+                <div className="flex items-center justify-between space-x-2">
+                  <div className="flex items-center gap-2">
+                    <input
+                      ref={watermarkImageInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleWatermarkImageUpload}
+                      className="hidden"
+                    />
+                    <button
+                      onClick={() => watermarkImageInputRef.current?.click()}
+                      className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-md hover:from-rose-600 hover:to-pink-600 transition-all shadow-sm"
+                    >
+                      <Upload className="size-3" />
+                      Upload
+                    </button>
+                    {settings.watermark?.imageUrl && (
+                      <button
+                        onClick={handleResetWatermarkImage}
+                        className="flex items-center gap-1 px-2 py-1.5 text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md transition-all"
+                      >
+                        <X className="size-3" />
+                        Reset
+                      </button>
+                    )}
+                  </div>
+                  <input
+                    type="text"
+                    value={settings.watermark?.imageUrl || ""}
+                    onChange={(e) =>
+                      handleWatermarkImageUrlChange(e.target.value)
+                    }
+                    placeholder="Or enter image URL..."
+                    className="w-full px-2 py-1.5 text-xs rounded-md border border-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 outline-none"
+                  />
+                </div>
+
+                {/* Image Size */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs flex items-center justify-between">
+                      <span className="text-gray-600">Width</span>
+                      <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
+                        {settings.watermark?.imageWidth || 100}px
+                      </span>
+                    </label>
+                    <input
+                      type="range"
+                      min={20}
+                      max={300}
+                      step={5}
+                      value={settings.watermark?.imageWidth || 100}
+                      onChange={(e) =>
+                        onUpdateSetting("watermark", {
+                          ...settings.watermark!,
+                          imageWidth: parseInt(e.target.value),
+                        })
+                      }
+                      className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                        [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                        [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                        [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
+                        [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                        [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs flex items-center justify-between">
+                      <span className="text-gray-600">Height</span>
+                      <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
+                        {settings.watermark?.imageHeight || 100}px
+                      </span>
+                    </label>
+                    <input
+                      type="range"
+                      min={20}
+                      max={300}
+                      step={5}
+                      value={settings.watermark?.imageHeight || 100}
+                      onChange={(e) =>
+                        onUpdateSetting("watermark", {
+                          ...settings.watermark!,
+                          imageHeight: parseInt(e.target.value),
+                        })
+                      }
+                      className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                        [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                        [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                        [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
+                        [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                        [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs text-gray-600 font-medium mb-1.5 flex items-center justify-between">
-                  <span>Position X</span>
-                  <span className="text-xs text-gray-500">
+                <label className="text-xs flex items-center justify-between">
+                  <span className="text-gray-600">Position X</span>
+                  <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
                     {settings.watermark?.x || 0}%
                   </span>
                 </label>
@@ -1034,8 +1238,8 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                       x: parseInt(e.target.value),
                     })
                   }
-                  className="w-full h-1.5 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
-                    [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5
+                  className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                    [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                     [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                     [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
                     [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
@@ -1043,9 +1247,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                 />
               </div>
               <div>
-                <label className="text-xs text-gray-600 font-medium mb-1.5 flex items-center justify-between">
-                  <span>Position Y</span>
-                  <span className="text-xs text-gray-500">
+                <label className="text-xs flex items-center justify-between">
+                  <span className="text-gray-600">Position Y</span>
+                  <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
                     {settings.watermark?.y || 0}%
                   </span>
                 </label>
@@ -1061,8 +1265,8 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                       y: parseInt(e.target.value),
                     })
                   }
-                  className="w-full h-1.5 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
-                    [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5
+                  className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                    [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                     [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                     [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
                     [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
@@ -1071,11 +1275,40 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               </div>
             </div>
 
+            {/* Opacity */}
+            <div className="flex items-center space-x-3">
+              <label className="text-xs flex items-center justify-between">
+                <span className="text-gray-600 w-24">Opacity</span>
+                <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
+                  {Math.round((settings.watermark?.opacity || 0.1) * 100)}%
+                </span>
+              </label>
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step={0.01}
+                value={settings.watermark?.opacity || 0.1}
+                onChange={(e) =>
+                  onUpdateSetting("watermark", {
+                    ...settings.watermark!,
+                    opacity: parseFloat(e.target.value),
+                  })
+                }
+                className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                  [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                  [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
+                  [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                  [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+              />
+            </div>
+
             {/* Rotation */}
-            <div>
-              <label className="text-xs text-gray-600 font-medium mb-1.5 flex items-center justify-between">
-                <span>Rotation</span>
-                <span className="text-xs text-gray-500">
+            <div className="flex justify-between items-center space-x-3">
+              <label className="text-xs flex items-center justify-between">
+                <span className="text-gray-600 w-24">Rotation</span>
+                <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
                   {settings.watermark?.rotation || 0}°
                 </span>
               </label>
@@ -1091,74 +1324,13 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                     rotation: parseInt(e.target.value),
                   })
                 }
-                className="w-full h-1.5 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
-                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
+                className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                   [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                   [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
                   [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
                   [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
               />
-            </div>
-
-            {/* Font Size */}
-            <div>
-              <label className="text-xs text-gray-600 font-medium mb-1.5 flex items-center justify-between">
-                <span>Font Size</span>
-                <span className="text-xs text-gray-500">
-                  {settings.watermark?.fontSize || 48}px
-                </span>
-              </label>
-              <input
-                type="range"
-                min={12}
-                max={120}
-                step={1}
-                value={settings.watermark?.fontSize || 48}
-                onChange={(e) =>
-                  onUpdateSetting("watermark", {
-                    ...settings.watermark!,
-                    fontSize: parseInt(e.target.value),
-                  })
-                }
-                className="w-full h-1.5 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
-                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5
-                  [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
-                  [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
-                  [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-                  [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-              />
-            </div>
-
-            {/* Font Weight */}
-            <div>
-              <label className="text-xs text-gray-600 font-medium mb-1.5 block">
-                Font Weight
-              </label>
-              <div className="grid grid-cols-4 gap-1.5">
-                {[
-                  { value: 300, label: "Light" },
-                  { value: 400, label: "Normal" },
-                  { value: 600, label: "Semi" },
-                  { value: 700, label: "Bold" },
-                ].map((weight) => (
-                  <button
-                    key={weight.value}
-                    onClick={() =>
-                      onUpdateSetting("watermark", {
-                        ...settings.watermark!,
-                        fontWeight: weight.value,
-                      })
-                    }
-                    className={`px-2 py-1.5 rounded-md text-xs transition-all duration-200 ${
-                      (settings.watermark?.fontWeight || 700) === weight.value
-                        ? "bg-rose-500 text-white shadow-md font-medium"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
-                  >
-                    {weight.label}
-                  </button>
-                ))}
-              </div>
             </div>
           </div>
         )}
