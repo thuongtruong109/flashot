@@ -235,15 +235,25 @@ const ActionBar: React.FC<ActionBarProps> = ({
     color: string,
     disabled: boolean
   ) => {
-    // 3D Glassy vibe style
+    // Premium glassy 3D morphism
     const baseStyles =
-      "group relative flex items-center space-x-1 px-3 py-1.5 rounded-xl transition-all duration-300 bg-gradient-to-br from-white/60 via-white/40 to-white/20 backdrop-blur-lg border border-white/80 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12),0_4px_8px_-2px_rgba(0,0,0,0.08),inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-2px_4px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_32px_-4px_rgba(0,0,0,0.16),0_6px_12px_-2px_rgba(0,0,0,0.12),inset_0_2px_6px_rgba(255,255,255,1),inset_0_-2px_6px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98]";
+      "group relative flex items-center space-x-1.5 px-4 py-2 rounded-xl transition-all duration-300 " +
+      "bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl " +
+      "border border-white/60 dark:border-gray-700/60 " +
+      "shadow-[0_8px_32px_-8px_rgba(0,0,0,0.3),0_1px_1px_rgba(255,255,255,0.5)_inset] " +
+      "dark:shadow-[0_8px_32px_-8px_rgba(0,0,0,0.6),0_1px_1px_rgba(255,255,255,0.1)_inset] " +
+      "hover:shadow-[0_12px_48px_-12px_rgba(0,0,0,0.4),0_2px_4px_rgba(255,255,255,0.6)_inset] " +
+      "dark:hover:shadow-[0_12px_48px_-12px_rgba(0,0,0,0.8),0_2px_4px_rgba(255,255,255,0.15)_inset] " +
+      "hover:bg-white/80 dark:hover:bg-gray-800/80 " +
+      "hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] active:translate-y-0 " +
+      "before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-b before:from-white/50 before:to-transparent before:opacity-60 dark:before:from-white/10 " +
+      "after:absolute after:inset-0 after:rounded-xl after:bg-gradient-to-t after:from-black/5 after:to-transparent after:opacity-0 hover:after:opacity-100 after:transition-opacity";
 
     if (disabled) {
       return `${baseStyles} opacity-50 cursor-not-allowed hover:translate-y-0 hover:scale-100`;
     }
 
-    return `${baseStyles} text-gray-700 hover:text-gray-900`;
+    return `${baseStyles} text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white`;
   };
 
   const colorMap = {
@@ -256,9 +266,9 @@ const ActionBar: React.FC<ActionBarProps> = ({
   };
 
   const getIconStyles = (color: string, variant: "primary" | "secondary") => {
-    return `size-3.5 transition-all duration-300 drop-shadow-[0_3px_6px_rgba(0,0,0,0.2)] group-hover:drop-shadow-[0_6px_12px_rgba(0,0,0,0.3)] group-hover:scale-110 group-hover:rotate-3 ${
+    return `size-4 transition-all duration-300 drop-shadow-sm group-hover:scale-110 group-hover:rotate-6 relative z-10 ${
       colorMap[color as keyof typeof colorMap] ||
-      "text-gray-500 group-hover:text-gray-600"
+      "text-gray-600 dark:text-gray-300"
     }`;
   };
 
@@ -345,21 +355,25 @@ const ActionBar: React.FC<ActionBarProps> = ({
                   label: (
                     <div>
                       {showDivider && (
-                        <div className="h-px bg-gray-200 my-1 -mx-2" />
+                        <div className="h-px bg-gray-200 dark:bg-gray-700 my-1 -mx-2" />
                       )}
                       <span
                         className={`flex items-center space-x-2 text-xs ${
-                          isSelected ? "text-emerald-700 font-semibold" : ""
+                          isSelected
+                            ? "text-emerald-700 dark:text-emerald-400 font-semibold"
+                            : ""
                         }`}
                       >
                         <Icon
                           className={`size-3.5 ${
-                            isSelected ? "text-emerald-600" : opt.color
+                            isSelected
+                              ? "text-emerald-600 dark:text-emerald-400"
+                              : opt.color
                           }`}
                         />
                         <span className="flex-1">{opt.label}</span>
                         {isSelected && (
-                          <Check className="size-3.5 text-emerald-600 ml-auto" />
+                          <Check className="size-3.5 text-emerald-600 dark:text-emerald-400 ml-auto" />
                         )}
                       </span>
                     </div>
@@ -392,9 +406,9 @@ const ActionBar: React.FC<ActionBarProps> = ({
         <div className="flex items-center space-x-1">
           <button
             onClick={onShowSettings}
-            className="p-2.5 bg-white/40 backdrop-blur-md border border-white/60 rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] transition-all"
+            className="p-2.5 bg-white/40 dark:bg-gray-800/40 backdrop-blur-md border border-white/60 dark:border-gray-700/60 rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] dark:hover:shadow-[0_8px_32px_0_rgba(0,0,0,0.6)] transition-all"
           >
-            <Settings className="w-3 h-3 text-slate-500" />
+            <Settings className="w-3 h-3 text-gray-700 dark:text-gray-300" />
           </button>
 
           {/* Mobile More Menu */}

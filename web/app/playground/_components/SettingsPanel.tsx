@@ -180,15 +180,15 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
         ${isVisible ? "translate-x-0 lg:w-80" : "translate-x-full lg:w-0"}
          w-80 fixed lg:relative top-0 right-0 z-30
          h-[100vh] lg:max-h-[calc(100vh-60px)]
-        bg-white/95 backdrop-blur-xl shadow-2xl
-        border-l border-white/20
+        bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-2xl
+        border-l border-white/20 dark:border-gray-700/30
         transition-all duration-300 ease-in-out
         overflow-hidden
         flex flex-col
       `}
         >
           {/* Header with Close (mobile) */}
-          <div className="flex items-center justify-between py-2 border-b border-white/30 bg-white/70 backdrop-blur-md">
+          <div className="flex items-center justify-between py-2 border-b border-white/30 dark:border-gray-700/30 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md">
             <div className="relative">
               <CustomSelect
                 options={[
@@ -239,10 +239,14 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
               onClick={handleResetToDefaults}
               title="Reset to defaults"
               aria-label="Toggle settings panel"
-              className="text-slate-500 hover:text-red-500 font-light bg-gradient-to-b from-white to-gray-50
-      shadow-[inset_2px_2px_6px_rgba(0,0,0,0.04),inset_-2px_-2px_6px_rgba(255,255,255,0.9),6px_6px_14px_rgba(2,6,23,0.06),-6px_-6px_14px_rgba(255,255,255,0.9)]
-      hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06),inset_-2px_-2px_6px_rgba(255,255,255,1),8px_8px_18px_rgba(2,6,23,0.08),-6px_-6px_14px_rgba(255,255,255,1)]
-      transition-all duration-200 rounded-lg px-3 py-2.5 mr-1 flex items-center space-x-1 text-sm"
+              className="text-slate-500 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-400 font-light
+      bg-white/70 dark:bg-gray-800/70 backdrop-blur-md
+      shadow-[0_4px_16px_-4px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset]
+      dark:shadow-[0_4px_16px_-4px_rgba(0,0,0,0.4),0_1px_1px_rgba(255,255,255,0.1)_inset]
+      hover:shadow-[0_6px_20px_-6px_rgba(0,0,0,0.2),0_2px_2px_rgba(255,255,255,0.6)_inset]
+      dark:hover:shadow-[0_6px_20px_-6px_rgba(0,0,0,0.5),0_2px_2px_rgba(255,255,255,0.15)_inset]
+      transition-all duration-200 rounded-lg px-3 py-2.5 mr-1 flex items-center space-x-1 text-sm
+      border border-white/60 dark:border-gray-700/60"
             >
               <RotateCcw className="size-3" />
               {/* <span>Reset</span> */}
@@ -257,7 +261,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
               marginRight: isDropdownOpen ? "12px" : "0px",
             }}
           >
-            <div className="p-3 space-y-4 divide-y [&>div]:py-2 divide-slate-200 divide-dashed">
+            <div className="p-3 space-y-4 divide-y [&>div]:py-2 divide-slate-200 dark:divide-slate-700 divide-dashed">
               {activeMenu === _PLAYGROUND_SETTINGS_TAB.VIEW && (
                 <ViewSection
                   settings={settings}

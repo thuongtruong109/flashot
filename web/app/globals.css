@@ -48,6 +48,20 @@ body {
     text-wrap: balance;
   }
 
+  /* Shimmer animation for creative effects */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
+  }
+
   /* Neumorphism utilities */
   .neumorphic-light {
     background: linear-gradient(145deg, #f8fafc, #e2e8f0);

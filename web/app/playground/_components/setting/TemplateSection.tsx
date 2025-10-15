@@ -26,50 +26,52 @@ interface TemplateSectionProps {
 // Predefined popular templates
 const POPULAR_TEMPLATES = [
   {
-    id: "modern-dark",
-    name: "Modern Dark",
-    description: "Sleek dark theme with vibrant gradients",
-    icon: "🌙",
+    id: "cyberpunk-neon",
+    name: "Cyberpunk Neon",
+    description: "High-contrast neon with futuristic vibes",
+    icon: "�",
     settings: {
-      theme: "dracula",
-      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-      padding: 40,
-      borderRadius: 12,
+      theme: "monokai",
+      background:
+        "linear-gradient(135deg, #ff0080 0%, #7928ca 50%, #0070f3 100%)",
+      padding: 50,
+      borderRadius: 20,
       fontFamily: "Fira Code",
-      fontSize: 14,
+      fontSize: 16,
       showWindowHeader: true,
       showLineNumbers: true,
       showBackground: true,
     },
   },
   {
-    id: "minimal-light",
-    name: "Minimal Light",
-    description: "Clean and simple light design",
-    icon: "☀️",
+    id: "minimal-zen",
+    name: "Minimal Zen",
+    description: "Ultra-clean white space design",
+    icon: "🎋",
     settings: {
       theme: "github",
-      background: "#ffffff",
-      padding: 30,
-      borderRadius: 8,
+      background: "#f8f9fa",
+      padding: 60,
+      borderRadius: 0,
       fontFamily: "JetBrains Mono",
-      fontSize: 13,
-      showWindowHeader: true,
-      showLineNumbers: true,
+      fontSize: 12,
+      showWindowHeader: false,
+      showLineNumbers: false,
       showBackground: false,
     },
   },
   {
-    id: "neon-cyber",
-    name: "Neon Cyber",
-    description: "Futuristic cyberpunk style",
-    icon: "⚡",
+    id: "retro-sunset",
+    name: "Retro Sunset",
+    description: "Warm 80s sunset vibes",
+    icon: "🌇",
     settings: {
-      theme: "monokai",
-      background: "linear-gradient(135deg, #ff0080 0%, #7928ca 100%)",
-      padding: 35,
-      borderRadius: 16,
-      fontFamily: "Fira Code",
+      theme: "one-dark",
+      background:
+        "linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ee5a6f 100%)",
+      padding: 45,
+      borderRadius: 25,
+      fontFamily: "Cascadia Code",
       fontSize: 15,
       showWindowHeader: true,
       showLineNumbers: true,
@@ -77,32 +79,69 @@ const POPULAR_TEMPLATES = [
     },
   },
   {
-    id: "ocean-blue",
-    name: "Ocean Blue",
-    description: "Calm ocean-inspired palette",
-    icon: "🌊",
+    id: "arctic-ice",
+    name: "Arctic Ice",
+    description: "Cool Nordic-inspired frost theme",
+    icon: "❄️",
     settings: {
       theme: "nord",
-      background: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-      padding: 32,
-      borderRadius: 10,
+      background:
+        "linear-gradient(135deg, #a8edea 0%, #fed6e3 50%, #b4e4ff 100%)",
+      padding: 40,
+      borderRadius: 15,
       fontFamily: "Source Code Pro",
-      fontSize: 14,
+      fontSize: 13,
       showWindowHeader: true,
       showLineNumbers: true,
       showBackground: true,
     },
   },
   {
-    id: "sunset-warm",
-    name: "Sunset Warm",
-    description: "Warm sunset colors",
-    icon: "🌅",
+    id: "dark-hacker",
+    name: "Dark Hacker",
+    description: "Matrix-style terminal look",
+    icon: "💻",
+    settings: {
+      theme: "dracula",
+      background: "#0d1117",
+      padding: 25,
+      borderRadius: 8,
+      fontFamily: "Fira Code",
+      fontSize: 13,
+      showWindowHeader: false,
+      showLineNumbers: true,
+      showBackground: false,
+    },
+  },
+  {
+    id: "pastel-dream",
+    name: "Pastel Dream",
+    description: "Soft dreamy pastel colors",
+    icon: "🍭",
+    settings: {
+      theme: "material",
+      background:
+        "linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ff9a9e 100%)",
+      padding: 55,
+      borderRadius: 30,
+      fontFamily: "JetBrains Mono",
+      fontSize: 14,
+      showWindowHeader: true,
+      showLineNumbers: false,
+      showBackground: true,
+    },
+  },
+  {
+    id: "forest-mystique",
+    name: "Forest Mystique",
+    description: "Deep forest with magical glow",
+    icon: "�",
     settings: {
       theme: "one-dark",
-      background: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
-      padding: 36,
-      borderRadius: 14,
+      background:
+        "linear-gradient(135deg, #134e4a 0%, #10b981 50%, #064e3b 100%)",
+      padding: 42,
+      borderRadius: 18,
       fontFamily: "Cascadia Code",
       fontSize: 14,
       showWindowHeader: true,
@@ -111,17 +150,18 @@ const POPULAR_TEMPLATES = [
     },
   },
   {
-    id: "forest-green",
-    name: "Forest Green",
-    description: "Nature-inspired green theme",
-    icon: "🌲",
+    id: "royal-purple",
+    name: "Royal Purple",
+    description: "Luxurious deep purple theme",
+    icon: "👑",
     settings: {
-      theme: "material",
-      background: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
-      padding: 34,
-      borderRadius: 12,
+      theme: "dracula",
+      background:
+        "linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5b21b6 100%)",
+      padding: 48,
+      borderRadius: 22,
       fontFamily: "Fira Code",
-      fontSize: 14,
+      fontSize: 15,
       showWindowHeader: true,
       showLineNumbers: true,
       showBackground: true,
@@ -197,7 +237,7 @@ const TemplateSection: React.FC<TemplateSectionProps> = ({
     <div className="space-y-4">
       {/* Section Header */}
       <div className="space-y-2">
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-gray-500 dark:text-gray-400">
           Save your current configuration as a template or load a previously
           saved one.
         </p>
@@ -205,18 +245,20 @@ const TemplateSection: React.FC<TemplateSectionProps> = ({
 
       {/* Status Messages */}
       {importSuccess && (
-        <div className="flex items-center space-x-2 p-3 rounded-lg bg-green-50 border border-green-200">
-          <Check className="w-4 h-4 text-green-600 flex-shrink-0" />
-          <p className="text-xs text-green-700 font-medium">
+        <div className="flex items-center space-x-2 p-3 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+          <Check className="w-4 h-4 text-green-600 dark:text-green-400 flex-shrink-0" />
+          <p className="text-xs text-green-700 dark:text-green-300 font-medium">
             Template imported successfully!
           </p>
         </div>
       )}
 
       {importError && (
-        <div className="flex items-center space-x-2 p-3 rounded-lg bg-red-50 border border-red-200">
-          <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
-          <p className="text-xs text-red-700 font-medium">{importError}</p>
+        <div className="flex items-center space-x-2 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
+          <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400 flex-shrink-0" />
+          <p className="text-xs text-red-700 dark:text-red-300 font-medium">
+            {importError}
+          </p>
         </div>
       )}
 
@@ -259,23 +301,23 @@ const TemplateSection: React.FC<TemplateSectionProps> = ({
             setIsExpanded(!isExpanded);
           }}
         >
-          <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 border border-gray-200 hover:bg-gray-100 transition-colors">
-            <p className="text-xs font-semibold text-gray-700 flex items-center">
-              <FileJson className="w-3.5 h-3.5 mr-1.5 text-indigo-600" />
+          <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800/70 transition-colors">
+            <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center">
+              <FileJson className="w-3.5 h-3.5 mr-1.5 text-indigo-600 dark:text-indigo-400" />
               Current Template
             </p>
             {isExpanded ? (
-              <ChevronUp className="w-4 h-4 text-gray-500" />
+              <ChevronUp className="w-4 h-4 text-gray-500 dark:text-gray-400" />
             ) : (
-              <ChevronDown className="w-4 h-4 text-gray-500" />
+              <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-400" />
             )}
           </div>
         </summary>
 
         {/* JSON Preview with scrollable area */}
-        <div className="mt-2 bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 rounded-lg overflow-hidden shadow-lg">
+        <div className="mt-2 bg-gray-900/95 dark:bg-gray-950/95 backdrop-blur-sm border border-gray-700/50 dark:border-gray-800/50 rounded-lg overflow-hidden shadow-lg">
           <div className="relative">
-            <pre className="text-xs text-gray-300 font-mono leading-relaxed overflow-y-auto max-h-64 p-3">
+            <pre className="text-xs text-gray-300 dark:text-gray-400 font-mono leading-relaxed overflow-y-auto max-h-64 p-3">
               <code className="language-json">
                 {formattedJSON.split("\n").map((line, index) => (
                   <div key={index} className="flex">
@@ -311,8 +353,8 @@ const TemplateSection: React.FC<TemplateSectionProps> = ({
       {/* Popular Templates */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-semibold text-gray-700 flex items-center">
-            <Sparkles className="w-3.5 h-3.5 mr-1.5 text-yellow-500" />
+          <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center">
+            <Sparkles className="w-3.5 h-3.5 mr-1.5 text-yellow-500 dark:text-yellow-400" />
             Popular Templates
           </p>
         </div>
@@ -321,26 +363,26 @@ const TemplateSection: React.FC<TemplateSectionProps> = ({
             <button
               key={template.id}
               onClick={() => handleApplyTemplate(template.settings)}
-              className="group relative flex items-start p-3 rounded-lg border border-gray-200 hover:border-indigo-300 bg-white hover:bg-indigo-50/50 transition-all duration-200 hover:shadow-md text-left"
+              className="group relative flex items-start p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-600 bg-white dark:bg-gray-800/50 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/20 transition-all duration-200 hover:shadow-md text-left"
             >
               <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">
                 {template.icon}
               </span>
               <div className="flex-1 min-w-0">
-                <h4 className="text-xs font-semibold text-gray-800 group-hover:text-indigo-700">
+                <h4 className="text-xs font-semibold text-gray-800 dark:text-gray-200 group-hover:text-indigo-700 dark:group-hover:text-indigo-400">
                   {template.name}
                 </h4>
-                <p className="text-[10px] text-gray-500 mt-0.5 line-clamp-1">
+                <p className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1">
                   {template.description}
                 </p>
                 <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 font-medium">
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-medium">
                     {template.settings.theme}
                   </span>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 font-medium">
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium">
                     {template.settings.fontFamily}
                   </span>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-green-100 text-green-700 font-medium">
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 font-medium">
                     {template.settings.fontSize}px
                   </span>
                 </div>

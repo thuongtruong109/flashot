@@ -316,8 +316,8 @@ export default function Page() {
   };
 
   return (
-    <div className="h-screen bg-white bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 relative overflow-hidden flex flex-col">
-      <div className="relative bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-sm px-2 sm:px-4 lg:px-6 flex items-center justify-between py-2 w-full gap-4">
+    <div className="h-screen bg-white dark:bg-gray-950 bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 relative overflow-hidden flex flex-col">
+      <div className="relative bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border-b border-white/20 dark:border-gray-700/20 shadow-sm px-2 sm:px-4 lg:px-6 flex items-center justify-between py-2 w-full gap-4">
         <div data-tour="brand" className="flex-shrink-0">
           <Brand showVersion={true} />
         </div>

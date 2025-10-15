@@ -155,15 +155,12 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
           }
         }}
         className={cn(
-          "group relative overflow-hidden transition-all duration-300 ease-out transform-gpu",
-          "w-full h-10 rounded-lg",
-          // Enhanced 3D Morphism Base Styling
-          "shadow-[0_2px_6px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.3)]",
-          "border backdrop-blur-sm cursor-pointer",
-          // Interactive States
+          "group relative overflow-hidden transition-all duration-200 ease-out",
+          "w-full h-10 rounded-lg cursor-pointer",
+          // Ultra minimal border - học từ Apple/Radix
           isSelected
-            ? "scale-[1.05] shadow-[0_6px_20px_rgba(99,102,241,0.25),0_3px_10px_rgba(99,102,241,0.15),inset_0_1px_0_rgba(255,255,255,0.5)] border-indigo-400/80 z-20"
-            : "border-white/30 hover:border-white/60 hover:scale-[1.02] hover:shadow-[0_3px_12px_rgba(0,0,0,0.1),0_2px_6px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.4)] active:scale-100"
+            ? "ring-[1.5px] ring-blue-500 dark:ring-blue-400 ring-offset-2 ring-offset-white dark:ring-offset-gray-950"
+            : "ring-1 ring-black/[0.06] dark:ring-white/[0.06] hover:ring-black/[0.12] dark:hover:ring-white/[0.12]"
         )}
         style={{
           background: isTransparent
@@ -187,76 +184,28 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
             : bg
         }
       >
-        {/* Enhanced Glass Morphism Overlay */}
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 via-white/5 to-transparent" />
-
-        {/* Enhanced Shimmer Effect */}
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[200%] group-hover:translate-x-[200%] transition-transform duration-700 ease-in-out" />
-
-        {/* Inner Border Highlight */}
-        <div className="absolute inset-[1px] rounded-[10px] bg-gradient-to-b from-white/20 via-transparent to-transparent pointer-events-none" />
-
-        {/* Selection Indicator */}
+        {/* Ultra simple checkmark - chỉ khi selected */}
         {isSelected && (
-          <>
-            {/* Enhanced Check Icon */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
-              <div className="relative">
-                {/* Soft glow effect */}
-                <div className="absolute inset-0 rounded-full bg-indigo-400/40 blur-lg scale-125 animate-pulse" />
-
-                {/* Check icon with better design */}
-                <svg
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="relative drop-shadow-lg"
-                >
-                  {/* Outer circle with gradient */}
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="11"
-                    fill="url(#checkGradient)"
-                    stroke="white"
-                    strokeWidth="1.5"
-                  />
-                  {/* Inner shadow circle */}
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="11"
-                    fill="none"
-                    stroke="rgba(79, 70, 229, 0.3)"
-                    strokeWidth="2"
-                  />
-                  {/* Checkmark with smoother path */}
-                  <path
-                    d="M7 12l3.5 3.5L17 9"
-                    stroke="white"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  {/* Gradient definition */}
-                  <defs>
-                    <linearGradient
-                      id="checkGradient"
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="100%"
-                    >
-                      <stop offset="0%" stopColor="#6366F1" />
-                      <stop offset="100%" stopColor="#4F46E5" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            {/* Simple solid circle với icon */}
+            <div className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-500 dark:bg-blue-400">
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M2 6l2.5 2.5L10 3"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </div>
-          </>
+          </div>
         )}
       </button>
     );
@@ -266,7 +215,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
     <div>
       {/* Image Upload Section */}
       <div className="space-y-1 mb-4">
-        <label className="text-[10px] font-medium text-gray-500 tracking-wider">
+        <label className="text-[10px] font-medium text-gray-500 dark:text-gray-400 tracking-wider">
           Custom Image
         </label>
 
@@ -283,8 +232,8 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
               className={cn(
                 "w-full px-2 py-1.5 text-xs rounded-md border transition-all outline-none",
                 isImageUploaded
-                  ? "bg-gray-50 border-gray-300 cursor-not-allowed"
-                  : "bg-white border-gray-200 hover:border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  ? "bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 cursor-not-allowed"
+                  : "bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400"
               )}
             />
           </div>
@@ -326,7 +275,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
       <div className="space-y-4">
         {/* Gradients & Transparent */}
         <div className="space-y-2">
-          <p className="text-[10px] font-medium text-gray-500 tracking-wider">
+          <p className="text-[10px] font-medium text-gray-500 dark:text-gray-400 tracking-wider">
             Gradients & Transparent
           </p>
           <div className="grid grid-cols-5 gap-2.5">
@@ -340,7 +289,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
 
         {/* Solid Colors */}
         <div className="space-y-2">
-          <p className="text-[10px] font-medium text-gray-500 tracking-wider">
+          <p className="text-[10px] font-medium text-gray-500 dark:text-gray-400 tracking-wider">
             Solid Colors
           </p>
           <div className="grid grid-cols-5 gap-2.5">

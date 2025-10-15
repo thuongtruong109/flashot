@@ -40,16 +40,16 @@ export default function HeightRuler({
       }}
     >
       {/* Top limit marker */}
-      <div className="absolute top-0 left-0 w-full h-0 border-t border-gray-400 border-dashed"></div>
+      <div className="absolute top-0 left-0 w-full h-0 border-t border-gray-400 dark:border-gray-500 border-dashed"></div>
 
       {/* Bottom limit marker */}
-      <div className="absolute bottom-0 left-0 w-full h-0 border-b border-gray-400 border-dashed"></div>
+      <div className="absolute bottom-0 left-0 w-full h-0 border-b border-gray-400 dark:border-gray-500 border-dashed"></div>
 
       {/* Main ruler line */}
-      <div className="absolute top-0 bottom-0 left-1/2 w-0 border-l border-gray-400 border-dashed"></div>
+      <div className="absolute top-0 bottom-0 left-1/2 w-0 border-l border-gray-400 dark:border-gray-500 border-dashed"></div>
 
       {/* Center height display */}
-      <div className="absolute -left-full -translate-x-3 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-500 bg-white px-3 py-1 rounded-full shadow-sm border -rotate-90 origin-center">
+      <div className="absolute -left-full -translate-x-3 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 px-3 py-1 rounded-full shadow-sm border border-gray-200 dark:border-gray-700 -rotate-90 origin-center">
         {height}px
       </div>
     </div>
