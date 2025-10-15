@@ -3,6 +3,7 @@
 ### 🚀 Features
 
 - **playground**:
+  - Apply dark mode theme - by @thuongtruong109 [<samp>()</samp>]()
   - Import/export/choice template settings as JSON - by @thuongtruong109 [<samp>()</samp>]()
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.3.0...v2.3.1) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.3.1)

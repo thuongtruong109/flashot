@@ -50,6 +50,14 @@ const backgrounds = [
   "linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%)",
   "linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%)",
   "linear-gradient(135deg, #e9d8fd 0%, #d6bcfa 100%)",
+
+  // Dark Mode Gradients
+  "linear-gradient(135deg, #434343 0%, #000000 100%)",
+  "linear-gradient(135deg, #0f2027 0%, #203a43 0%, #2c5364 100%)",
+  "linear-gradient(135deg, #141e30 0%, #243b55 100%)",
+  "linear-gradient(135deg, #1a1a2e 0%, #16213e 0%, #0f3460 100%)",
+  "linear-gradient(135deg, #2c3e50 0%, #34495e 100%)",
+  "linear-gradient(135deg, #232526 0%, #414345 100%)",
 ];
 
 const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({

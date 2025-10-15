@@ -335,12 +335,12 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                       onChange={(e) => handleFileNameChange(e.target.value)}
                       onKeyDown={handleFileNameKeyDown}
                       onBlur={handleFileNameBlur}
-                      className="flex-1 px-2.5 py-1.5 text-xs border border-gray-300/60 hover:border-gray-400/80 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/60 transition-all duration-200"
+                      className="flex-1 px-2.5 py-1.5 text-xs border border-gray-300/60 hover:border-gray-400/80 dark:border-gray-700/60 dark:hover:border-gray-600/80 dark:bg-gray-900 dark:text-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/60 transition-all duration-200"
                       placeholder="Enter filename"
                     />
                   ) : (
                     <div
-                      className="flex-1 flex items-center space-x-2 group cursor-pointer px-2.5 py-1.5 rounded-md border border-gray-200 hover:border-yellow-400"
+                      className="flex-1 flex items-center space-x-2 group cursor-pointer px-2.5 py-1.5 rounded-md border border-gray-200 hover:border-yellow-400 dark:border-gray-700 dark:hover:border-yellow-500 dark:bg-gray-900"
                       onClick={handleFileNameEdit}
                     >
                       <span className="flex-1 text-xs font-medium text-gray-600 truncate group-hover:text-yellow-600 transition-colors">
@@ -817,7 +817,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               type="text"
               value={settings.captionText || ""}
               onChange={(e) => onUpdateSetting("captionText", e.target.value)}
-              className="w-full px-2.5 py-1.5 text-xs border border-gray-300/60 hover:border-gray-400/80 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/60 transition-all duration-200"
+              className="w-full px-2.5 py-1.5 text-xs border border-gray-300/60 hover:border-gray-400/80 dark:border-gray-700/60 dark:hover:border-gray-600/80 dark:bg-gray-900 dark:text-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/60 transition-all duration-200"
               placeholder="Enter figure caption..."
             />
 
@@ -1023,7 +1023,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                       text: e.target.value,
                     })
                   }
-                  className="w-full px-2 py-1.5 text-xs rounded-md border border-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 outline-none"
+                  className="w-full px-2 py-1.5 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 outline-none"
                   placeholder="Enter watermark text"
                 />
 
@@ -1040,7 +1040,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                           color: e.target.value,
                         })
                       }
-                      className="w-12 h-7 rounded cursor-pointer border border-gray-300"
+                      className="w-12 h-7 rounded cursor-pointer border border-gray-300 dark:border-gray-600"
                     />
                     <input
                       type="text"
@@ -1051,7 +1051,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                           color: e.target.value,
                         })
                       }
-                      className="flex-1 px-2 py-1 text-sm rounded-lg border border-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 outline-none font-mono"
+                      className="flex-1 px-2 py-1 text-sm rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 outline-none font-mono"
                       placeholder="#000000"
                     />
                   </div>
@@ -1154,7 +1154,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                       handleWatermarkImageUrlChange(e.target.value)
                     }
                     placeholder="Or enter image URL..."
-                    className="w-full px-2 py-1.5 text-xs rounded-md border border-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 outline-none"
+                    className="w-full px-2 py-1.5 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 outline-none"
                   />
                 </div>
 

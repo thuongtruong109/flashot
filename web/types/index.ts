@@ -40,6 +40,8 @@ export interface CodeSettings {
   showBackground: boolean;
   padding: number;
   borderRadius: number;
+  frameBorderRadius?: number; // Border radius cho outer frame
+  codeBorderRadius?: number; // Border radius cho code snippet area
   showWindowHeader: boolean;
   windowHeaderAlign?: "left" | "right";
   showTrafficLights?: boolean;

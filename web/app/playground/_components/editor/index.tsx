@@ -419,7 +419,9 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
               ? "center"
               : "center",
             padding: `${settings.padding}px`,
-            borderRadius: `${settings.borderRadius}px`,
+            borderRadius: `${
+              settings.frameBorderRadius ?? settings.borderRadius
+            }px`,
             width: isFullscreen
               ? "auto"
               : settings.width
@@ -463,7 +465,9 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
             <div
               className="relative flex flex-col flex-1 min-h-0"
               style={{
-                borderRadius: `${settings.borderRadius}px`,
+                borderRadius: `${
+                  settings.codeBorderRadius ?? settings.borderRadius
+                }px`,
               }}
             >
               {/* Window Controls */}
@@ -479,8 +483,12 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                     backgroundColor:
                       settings.theme === "light" ? "#f8f9fa" : "#2a2d3a",
                     borderBottomColor: `${currentTheme.foreground}20`,
-                    borderTopLeftRadius: `${settings.borderRadius}px`,
-                    borderTopRightRadius: `${settings.borderRadius}px`,
+                    borderTopLeftRadius: `${
+                      settings.codeBorderRadius ?? settings.borderRadius
+                    }px`,
+                    borderTopRightRadius: `${
+                      settings.codeBorderRadius ?? settings.borderRadius
+                    }px`,
                   }}
                 >
                   {settings.windowHeaderAlign === "right" ? (
@@ -653,8 +661,12 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                 style={{
                   backgroundColor: currentTheme.background,
                   borderRadius: settings.showWindowHeader
-                    ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
-                    : `${settings.borderRadius}px`,
+                    ? `0 0 ${
+                        settings.codeBorderRadius ?? settings.borderRadius
+                      }px ${
+                        settings.codeBorderRadius ?? settings.borderRadius
+                      }px`
+                    : `${settings.codeBorderRadius ?? settings.borderRadius}px`,
                   minHeight: 0, // Allow flex item to shrink below content size
                 }}
               >
@@ -666,8 +678,14 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                       className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-10"
                       style={{
                         borderRadius: settings.showWindowHeader
-                          ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
-                          : `${settings.borderRadius}px`,
+                          ? `0 0 ${
+                              settings.codeBorderRadius ?? settings.borderRadius
+                            }px ${
+                              settings.codeBorderRadius ?? settings.borderRadius
+                            }px`
+                          : `${
+                              settings.codeBorderRadius ?? settings.borderRadius
+                            }px`,
                       }}
                     ></div>
 
@@ -678,8 +696,14 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                       style={{
                         backgroundColor: currentTheme.background,
                         borderRadius: settings.showWindowHeader
-                          ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
-                          : `${settings.borderRadius}px`,
+                          ? `0 0 ${
+                              settings.codeBorderRadius ?? settings.borderRadius
+                            }px ${
+                              settings.codeBorderRadius ?? settings.borderRadius
+                            }px`
+                          : `${
+                              settings.codeBorderRadius ?? settings.borderRadius
+                            }px`,
                         overflow: "auto",
                         maxWidth: "100%",
                         height: "100%",
@@ -803,8 +827,14 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                     style={{
                       backgroundColor: currentTheme.background,
                       borderRadius: settings.showWindowHeader
-                        ? `0 0 ${settings.borderRadius}px ${settings.borderRadius}px`
-                        : `${settings.borderRadius}px`,
+                        ? `0 0 ${
+                            settings.codeBorderRadius ?? settings.borderRadius
+                          }px ${
+                            settings.codeBorderRadius ?? settings.borderRadius
+                          }px`
+                        : `${
+                            settings.codeBorderRadius ?? settings.borderRadius
+                          }px`,
                       overflowY: "auto",
                       overflowX: "auto", // Show X scrollbar on outer
                       height: "100%",

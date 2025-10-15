@@ -156,7 +156,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
       <div
         ref={dropdownRef}
         data-dropdown-type="theme-selector"
-        className="bg-white/95 backdrop-blur-xl border border-gray-200/50 rounded-2xl shadow-2xl max-h-96 overflow-y-auto custom-scrollbar"
+        className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-2xl shadow-2xl dark:shadow-gray-900/50 max-h-96 overflow-y-auto custom-scrollbar"
         style={{
           position: "fixed",
           top: dropdownPosition.top,
@@ -175,8 +175,8 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
               }}
               className={`w-full flex items-center justify-between space-x-3 px-4 py-3 text-sm text-left rounded-xl transition-all duration-200 group mb-1 ${
                 selectedTheme === theme.value
-                  ? "bg-gradient-to-r from-blue-500/10 to-blue-600/10 border border-blue-200/50 shadow-sm"
-                  : "hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100/50 border border-transparent"
+                  ? "bg-gradient-to-r from-blue-500/10 to-blue-600/10 dark:from-blue-900/30 dark:to-blue-800/30 border border-blue-200/50 dark:border-blue-700/50 shadow-sm"
+                  : "hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100/50 dark:hover:from-gray-700/30 dark:hover:to-gray-700/20 border border-transparent"
               }`}
             >
               <div className="flex items-center space-x-3">
@@ -184,8 +184,8 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
                 <span
                   className={`font-medium transition-colors ${
                     selectedTheme === theme.value
-                      ? "text-blue-700"
-                      : "text-gray-700 group-hover:text-gray-900"
+                      ? "text-blue-700 dark:text-blue-400"
+                      : "text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100"
                   }`}
                 >
                   {theme.label}
@@ -194,16 +194,16 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
               <div className="flex items-center space-x-2">
                 <div className="flex space-x-1">
                   <div
-                    className="w-3 h-3 rounded-full border border-gray-200"
+                    className="w-3 h-3 rounded-full border border-gray-200 dark:border-gray-600"
                     style={{ backgroundColor: theme.colors.bg }}
                   />
                   <div
-                    className="w-3 h-3 rounded-full border border-gray-200"
+                    className="w-3 h-3 rounded-full border border-gray-200 dark:border-gray-600"
                     style={{ backgroundColor: theme.colors.accent }}
                   />
                 </div>
                 {selectedTheme === theme.value && (
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <div className="w-2 h-2 bg-blue-500 dark:bg-blue-400 rounded-full"></div>
                 )}
               </div>
             </button>
@@ -225,7 +225,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
         <button
           ref={buttonRef}
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full bg-gradient-to-r from-white/80 via-white/70 to-white/80 backdrop-blur-sm hover:bg-gradient-to-r hover:from-white/90 hover:via-white/80 hover:to-white/90 border border-gray-200/60 hover:border-gray-300/80 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/60 transition-all duration-200 font-medium text-gray-700 hover:text-gray-900 flex items-center justify-between shadow-sm hover:shadow-md hover:shadow-gray-200/40 group"
+          className="w-full bg-gradient-to-r from-white/80 via-white/70 to-white/80 dark:from-gray-800/60 dark:via-gray-800/40 dark:to-gray-800/60 backdrop-blur-sm hover:bg-gradient-to-r hover:from-white/90 hover:via-white/80 hover:to-white/90 dark:hover:from-gray-800/80 dark:hover:via-gray-800/60 dark:hover:to-gray-800/80 border border-gray-200/60 dark:border-gray-700/60 hover:border-gray-300/80 dark:hover:border-gray-600/80 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/60 transition-all duration-200 font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 flex items-center justify-between shadow-sm hover:shadow-md hover:shadow-gray-200/40 dark:hover:shadow-gray-900/40 group"
         >
           <div className="flex items-center space-x-3">
             <div className="text-base group-hover:scale-110 transition-transform duration-200">
@@ -236,19 +236,19 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
           <div className="flex items-center space-x-2">
             <div className="flex space-x-1">
               <div
-                className="w-3 h-3 rounded-full border border-gray-300/60 group-hover:border-gray-400/70 transition-colors"
+                className="w-3 h-3 rounded-full border border-gray-300/60 dark:border-gray-600/60 group-hover:border-gray-400/70 dark:group-hover:border-gray-500/70 transition-colors"
                 style={{ backgroundColor: selectedThemeObj?.colors.bg }}
               />
               <div
-                className="w-3 h-3 rounded-full border border-gray-300/60 group-hover:border-gray-400/70 transition-colors"
+                className="w-3 h-3 rounded-full border border-gray-300/60 dark:border-gray-600/60 group-hover:border-gray-400/70 dark:group-hover:border-gray-500/70 transition-colors"
                 style={{ backgroundColor: selectedThemeObj?.colors.accent }}
               />
             </div>
             <ChevronDown
               className={`w-4 h-4 transition-all duration-200 group-hover:scale-110 ${
                 isOpen
-                  ? "rotate-180 text-blue-500"
-                  : "text-gray-500 group-hover:text-gray-700"
+                  ? "rotate-180 text-blue-500 dark:text-blue-400"
+                  : "text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300"
               }`}
             />
           </div>

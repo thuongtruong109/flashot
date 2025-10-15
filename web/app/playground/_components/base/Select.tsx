@@ -97,20 +97,27 @@ function CustomSelect<T extends string | number | boolean>({
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls="custom-select-list"
-        className="group w-full flex items-center justify-between text-sm border border-white/80 rounded-xl px-3 py-1.5 font-medium transition-all duration-300 cursor-pointer bg-gradient-to-br from-white/60 via-white/40 to-white/20 backdrop-blur-lg
+        className="group w-full flex items-center justify-between text-sm border border-white/80 dark:border-gray-700/80 rounded-xl px-3 py-1.5 font-medium transition-all duration-300 cursor-pointer bg-gradient-to-br from-white/60 via-white/40 to-white/20 dark:from-gray-800/60 dark:via-gray-800/40 dark:to-gray-800/20 backdrop-blur-lg
       shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12),inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-2px_4px_rgba(0,0,0,0.05)]
-      hover:shadow-[0_12px_32px_-4px_rgba(0,0,0,0.18),inset_0_2px_6px_rgba(255,255,255,1),inset_0_-2px_6px_rgba(0,0,0,0.08)] hover:scale-[1.02] active:scale-[0.98]"
+      dark:shadow-[0_8px_24px_-4px_rgba(0,0,0,0.4),inset_0_2px_4px_rgba(255,255,255,0.1),inset_0_-2px_4px_rgba(0,0,0,0.2)]
+      hover:shadow-[0_12px_32px_-4px_rgba(0,0,0,0.18),inset_0_2px_6px_rgba(255,255,255,1),inset_0_-2px_6px_rgba(0,0,0,0.08)]
+      dark:hover:shadow-[0_12px_32px_-4px_rgba(0,0,0,0.5),inset_0_2px_6px_rgba(255,255,255,0.15),inset_0_-2px_6px_rgba(0,0,0,0.3)]
+      hover:scale-[1.02] active:scale-[0.98]"
         onClick={() => setOpen((o) => !o)}
         onKeyDown={handleKeyDown}
       >
-        <span className="truncate text-gray-700">
+        <span className="truncate text-gray-700 dark:text-gray-200">
           {options.find((opt) => opt.value === value)?.label || (
-            <span className="text-gray-400">{placeholder}</span>
+            <span className="text-gray-400 dark:text-gray-500">
+              {placeholder}
+            </span>
           )}
         </span>
         <svg
           className={`ml-2 w-3 h-3 transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)] group-hover:drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)] ${
-            open ? "rotate-180 text-blue-500" : "text-gray-500"
+            open
+              ? "rotate-180 text-blue-500 dark:text-blue-400"
+              : "text-gray-500 dark:text-gray-400"
           }`}
           fill="none"
           stroke="currentColor"
@@ -127,7 +134,7 @@ function CustomSelect<T extends string | number | boolean>({
             id="custom-select-list"
             role="listbox"
             tabIndex={-1}
-            className="min-w-fit rounded-xl bg-white border border-gray-200 shadow-lg z-[99999] custom-scrollbar max-h-60 overflow-y-auto sm:max-h-none sm:overflow-visible p-1"
+            className="min-w-fit rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg dark:shadow-gray-900/50 z-[99999] custom-scrollbar max-h-60 overflow-y-auto sm:max-h-none sm:overflow-visible p-1"
             style={{
               position: "absolute",
               top: dropdownPosition.top + 5,
@@ -142,10 +149,10 @@ function CustomSelect<T extends string | number | boolean>({
                 aria-selected={value === opt.value}
                 className={`flex items-center space-x-2 px-2 py-1.5 rounded-md transition-all duration-150 cursor-pointer text-sm ${
                   value === opt.value
-                    ? "bg-blue-50 text-blue-700"
+                    ? "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
                     : i === highlighted
-                    ? "bg-gray-100 text-gray-900"
-                    : "text-gray-700 hover:bg-gray-50"
+                    ? "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50"
                 }`}
                 onMouseEnter={() => setHighlighted(i)}
                 onMouseDown={() => {

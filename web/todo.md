@@ -3,7 +3,6 @@
 - Custom Headers/Footers - Add custom text above/below code
 - Auto-Format Code - Format code before generating image
 - Mobile-Optimized Frames - Phone/tablet mockup frames
-- Color Blind Friendly - Themes optimized for accessibility
 - Keyboard Shortcuts - Quick access to common actions
 - Multi-file Support - Show multiple files in tabs
 - Version History - Undo/redo for settings changes

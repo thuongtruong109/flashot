@@ -235,22 +235,22 @@ const ActionBar: React.FC<ActionBarProps> = ({
     color: string,
     disabled: boolean
   ) => {
-    // Premium glassy 3D morphism
+    // Refined clean style - giảm padding, shadow, translate
     const baseStyles =
-      "group relative flex items-center space-x-1.5 px-4 py-2 rounded-xl transition-all duration-300 " +
+      "group relative flex items-center space-x-1.5 px-3 py-1.5 rounded-lg transition-all duration-200 " +
       "bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl " +
       "border border-white/60 dark:border-gray-700/60 " +
-      "shadow-[0_8px_32px_-8px_rgba(0,0,0,0.3),0_1px_1px_rgba(255,255,255,0.5)_inset] " +
-      "dark:shadow-[0_8px_32px_-8px_rgba(0,0,0,0.6),0_1px_1px_rgba(255,255,255,0.1)_inset] " +
-      "hover:shadow-[0_12px_48px_-12px_rgba(0,0,0,0.4),0_2px_4px_rgba(255,255,255,0.6)_inset] " +
-      "dark:hover:shadow-[0_12px_48px_-12px_rgba(0,0,0,0.8),0_2px_4px_rgba(255,255,255,0.15)_inset] " +
+      "shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] " +
+      "dark:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.3),0_1px_1px_rgba(255,255,255,0.1)_inset] " +
+      "hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.15),0_1px_2px_rgba(255,255,255,0.6)_inset] " +
+      "dark:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.4),0_1px_2px_rgba(255,255,255,0.15)_inset] " +
       "hover:bg-white/80 dark:hover:bg-gray-800/80 " +
-      "hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] active:translate-y-0 " +
-      "before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-b before:from-white/50 before:to-transparent before:opacity-60 dark:before:from-white/10 " +
-      "after:absolute after:inset-0 after:rounded-xl after:bg-gradient-to-t after:from-black/5 after:to-transparent after:opacity-0 hover:after:opacity-100 after:transition-opacity";
+      "hover:-translate-y-0.5 active:translate-y-0 " +
+      "before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-b before:from-white/50 before:to-transparent before:opacity-60 dark:before:from-white/10 " +
+      "after:absolute after:inset-0 after:rounded-lg after:bg-gradient-to-t after:from-black/5 after:to-transparent after:opacity-0 hover:after:opacity-100 after:transition-opacity";
 
     if (disabled) {
-      return `${baseStyles} opacity-50 cursor-not-allowed hover:translate-y-0 hover:scale-100`;
+      return `${baseStyles} opacity-50 cursor-not-allowed hover:translate-y-0`;
     }
 
     return `${baseStyles} text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white`;
@@ -266,7 +266,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   };
 
   const getIconStyles = (color: string, variant: "primary" | "secondary") => {
-    return `size-4 transition-all duration-300 drop-shadow-sm group-hover:scale-110 group-hover:rotate-6 relative z-10 ${
+    return `size-3.5 transition-all duration-200 relative z-10 ${
       colorMap[color as keyof typeof colorMap] ||
       "text-gray-600 dark:text-gray-300"
     }`;

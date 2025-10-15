@@ -16,6 +16,8 @@ export const DEFAULT_CODE_SETTINGS: CodeSettings = {
   showBackground: true,
   padding: 30,
   borderRadius: 10,
+  frameBorderRadius: 10,
+  codeBorderRadius: 8,
   showWindowHeader: true,
   windowHeaderAlign: "left",
   fontFamily: "Fira Code",

@@ -102,10 +102,10 @@ const ViewSection: React.FC<ViewSectionProps> = ({
 
       {/* Border Radius */}
       <div>
-        <label className="text-xs font-semibold text-gray-700 flex items-center justify-between">
-          <div className="flex items-center text-teal-600">
+        <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center justify-between">
+          <div className="flex items-center text-teal-600 dark:text-teal-400">
             <CornerRightDown className="w-3.5 h-3.5 mr-1.5" />
-            Border Radius
+            Border Radius (All)
           </div>
           <span className="text-xs bg-gradient-to-r from-teal-500 to-cyan-500 bg-clip-text text-transparent font-bold">
             {settings.borderRadius}px
@@ -120,7 +120,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             onChange={(e) =>
               onUpdateSetting("borderRadius", parseInt(e.target.value))
             }
-            className="w-full h-1 bg-gradient-to-r from-teal-200 to-cyan-200 rounded-lg appearance-none cursor-pointer
+            className="w-full h-1 bg-gradient-to-r from-teal-200 to-cyan-200 dark:from-teal-900 dark:to-cyan-900 rounded-lg appearance-none cursor-pointer
               [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
               [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
               [&::-webkit-slider-thumb]:from-teal-500 [&::-webkit-slider-thumb]:to-cyan-500
@@ -130,9 +130,69 @@ const ViewSection: React.FC<ViewSectionProps> = ({
         </div>
       </div>
 
+      {/* Frame Border Radius */}
+      <div className="space-y-2">
+        <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center justify-between">
+          <div className="flex items-center text-purple-600 dark:text-purple-400">
+            <CornerRightDown className="w-3.5 h-3.5 mr-1.5" />
+            Frame Border
+          </div>
+          <span className="text-xs bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent font-bold">
+            {settings.frameBorderRadius ?? settings.borderRadius}px
+          </span>
+        </label>
+        <div className="relative">
+          <input
+            type="range"
+            min="0"
+            max="50"
+            value={settings.frameBorderRadius ?? settings.borderRadius}
+            onChange={(e) =>
+              onUpdateSetting("frameBorderRadius", parseInt(e.target.value))
+            }
+            className="w-full h-1 bg-gradient-to-r from-purple-200 to-pink-200 dark:from-purple-900 dark:to-pink-900 rounded-lg appearance-none cursor-pointer
+              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+              [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+              [&::-webkit-slider-thumb]:from-purple-500 [&::-webkit-slider-thumb]:to-pink-500
+              [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+              [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+          />
+        </div>
+      </div>
+
+      {/* Code Border Radius */}
+      <div className="space-y-2">
+        <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center justify-between">
+          <div className="flex items-center text-indigo-600 dark:text-indigo-400">
+            <CornerRightDown className="w-3.5 h-3.5 mr-1.5" />
+            Code Border
+          </div>
+          <span className="text-xs bg-gradient-to-r from-indigo-500 to-blue-500 bg-clip-text text-transparent font-bold">
+            {settings.codeBorderRadius ?? settings.borderRadius}px
+          </span>
+        </label>
+        <div className="relative">
+          <input
+            type="range"
+            min="0"
+            max="50"
+            value={settings.codeBorderRadius ?? settings.borderRadius}
+            onChange={(e) =>
+              onUpdateSetting("codeBorderRadius", parseInt(e.target.value))
+            }
+            className="w-full h-1 bg-gradient-to-r from-indigo-200 to-blue-200 dark:from-indigo-900 dark:to-blue-900 rounded-lg appearance-none cursor-pointer
+              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+              [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+              [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-blue-500
+              [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+              [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+          />
+        </div>
+      </div>
+
       {/* Sizing */}
       <div className="space-y-2">
-        <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
+        <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center justify-between">
           <div className="flex items-center text-blue-600">
             <Move className="w-3.5 h-3.5 mr-1.5" />
             Sizing
@@ -186,7 +246,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 }
               }
             }}
-            className="w-full px-2 py-1 text-xs rounded-md border border-gray-200"
+            className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
             placeholder="600"
           />
           {/* Height Input */}
@@ -222,7 +282,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 }
               }
             }}
-            className="w-full px-2 py-1 text-xs rounded-md border border-gray-200"
+            className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
             placeholder="400"
           />
         </div>
@@ -561,7 +621,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                       };
                       onUpdateSetting("highlights", newHighlights);
                     }}
-                    className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none"
+                    className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none"
                     placeholder="Start"
                   />
                   <span className="text-xs text-gray-500 w-12">to</span>
@@ -580,7 +640,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                       };
                       onUpdateSetting("highlights", newHighlights);
                     }}
-                    className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none"
+                    className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none"
                     placeholder="End"
                   />
                 </div>
@@ -606,7 +666,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                       };
                       onUpdateSetting("highlights", newHighlights);
                     }}
-                    className="w-10 h-6 rounded cursor-pointer border border-gray-300"
+                    className="w-10 h-6 rounded cursor-pointer border border-gray-300 dark:border-gray-600"
                   />
                   <input
                     type="range"
@@ -644,7 +704,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
               </div>
             ))
           ) : (
-            <div className="text-xs text-gray-500 text-center py-4 bg-gray-50/50 rounded-lg border border-dashed border-gray-200">
+            <div className="text-xs text-gray-500 dark:text-gray-400 text-center py-4 bg-gray-50/50 dark:bg-gray-900/50 rounded-lg border border-dashed border-gray-200 dark:border-gray-700">
               No highlights added. Click &ldquo;Add&rdquo; to create one.
             </div>
           )}

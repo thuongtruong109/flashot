@@ -212,7 +212,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       <div
         ref={dropdownRef}
         data-dropdown-type="language-selector"
-        className="bg-white/95 backdrop-blur-xl border border-gray-200/50 rounded-2xl shadow-2xl max-h-96 overflow-y-auto custom-scrollbar"
+        className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-2xl shadow-2xl dark:shadow-gray-900/50 max-h-96 overflow-y-auto custom-scrollbar"
         style={{
           position: "fixed",
           top: dropdownPosition.top,
@@ -231,8 +231,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
               }}
               className={`w-full flex items-center justify-between space-x-3 px-4 py-3 text-sm text-left rounded-xl transition-all duration-200 group mb-1 ${
                 selectedLanguage === lang.value
-                  ? "bg-gradient-to-r from-blue-500/10 to-blue-600/10 border border-blue-200/50 shadow-sm"
-                  : "hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100/50 border border-transparent"
+                  ? "bg-gradient-to-r from-blue-500/10 to-blue-600/10 dark:from-blue-900/30 dark:to-blue-800/30 border border-blue-200/50 dark:border-blue-700/50 shadow-sm"
+                  : "hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100/50 dark:hover:from-gray-700/30 dark:hover:to-gray-700/20 border border-transparent"
               }`}
             >
               <div className="flex items-center space-x-3">
@@ -240,15 +240,15 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                 <span
                   className={`font-medium transition-colors ${
                     selectedLanguage === lang.value
-                      ? "text-blue-700"
-                      : "text-gray-700 group-hover:text-gray-900"
+                      ? "text-blue-700 dark:text-blue-400"
+                      : "text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100"
                   }`}
                 >
                   {lang.label}
                 </span>
               </div>
               {selectedLanguage === lang.value && (
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <div className="w-2 h-2 bg-blue-500 dark:bg-blue-400 rounded-full"></div>
               )}
             </button>
           ))}
@@ -268,15 +268,15 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       <button
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full bg-gradient-to-r from-white/95 to-gray-50/95 hover:from-white hover:to-gray-50 border border-gray-200/60 rounded-lg px-3 py-2 transition-all duration-300 font-medium text-gray-700 hover:text-gray-900 flex items-center justify-between shadow-sm hover:shadow group backdrop-blur-sm"
+        className="w-full bg-gradient-to-r from-white/95 to-gray-50/95 dark:from-gray-800/60 dark:to-gray-900/60 hover:from-white hover:to-gray-50 dark:hover:from-gray-800/80 dark:hover:to-gray-900/80 border border-gray-200/60 dark:border-gray-700/60 rounded-lg px-3 py-2 transition-all duration-300 font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 flex items-center justify-between shadow-sm hover:shadow dark:hover:shadow-gray-900/40 group backdrop-blur-sm"
       >
         <div className="flex items-center space-x-3">
           <div className="flex-shrink-0">{selectedLang?.icon}</div>
           <span className="text-sm">{selectedLang?.label}</span>
         </div>
         <ChevronDown
-          className={`w-4 h-4 text-gray-400 transition-all duration-300 group-hover:text-blue-500 group-hover:scale-110 ${
-            isOpen ? "rotate-180 text-blue-500" : ""
+          className={`w-4 h-4 text-gray-400 dark:text-gray-500 transition-all duration-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 group-hover:scale-110 ${
+            isOpen ? "rotate-180 text-blue-500 dark:text-blue-400" : ""
           }`}
         />
       </button>
