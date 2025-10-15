@@ -5,7 +5,6 @@ import { CodeSettings } from "@/types";
 import { copyToClipboard } from "@/utils";
 import { generateAndDownloadImage } from "@/lib/imageGenerator";
 import SettingsPanel from "@/app/playground/_components/SettingsPanel";
-import JSONDataSection from "@/app/playground/_components/JSONDataSection";
 import TipsModal from "@/app/playground/_components/TipsModal";
 import CodeEditor from "@/app/playground/_components/editor";
 import ActionBar from "@/app/playground/_components/header/ActionBar";
@@ -29,9 +28,7 @@ export default function Page() {
 
   const [isGenerating, setIsGenerating] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
-  const [jsonCopySuccess, setJsonCopySuccess] = useState(false);
   const [showTipsModal, setShowTipsModal] = useState(false);
-  const [showJSONModal, setShowJSONModal] = useState(false);
   const [showTourGuide, setShowTourGuide] = useState(false);
   const [fileName, setFileName] = useState(settings.fileName);
   const [showSettingsPanel, setShowSettingsPanel] = useState(false); // Start with false to prevent SSR issues
@@ -61,7 +58,26 @@ export default function Page() {
 
   useEffect(() => {
     setIsClient(true);
-    setShowSettingsPanel(true);
+    // Always show settings panel on desktop (>= 1024px)
+    if (typeof window !== "undefined") {
+      const isDesktop = window.innerWidth >= 1024;
+      setShowSettingsPanel(isDesktop);
+    }
+  }, []);
+
+  // Keep settings panel always visible on desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (typeof window !== "undefined") {
+        const isDesktop = window.innerWidth >= 1024;
+        if (isDesktop) {
+          setShowSettingsPanel(true); // Always visible on desktop
+        }
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -156,17 +172,31 @@ export default function Page() {
     }
   };
 
-  const handleCopyJSON = async () => {
+  const handleImportJSON = (data: { code: string; settings: CodeSettings }) => {
+    setCode(data.code);
+    setSettings(data.settings);
+    if (data.settings.fileName) {
+      setFileName(data.settings.fileName);
+    }
+  };
+
+  const handleExportJSON = () => {
     const jsonData = {
       code,
       settings,
       timestamp: new Date().toISOString(),
     };
-    const success = await copyToClipboard(JSON.stringify(jsonData, null, 2));
-    if (success) {
-      setJsonCopySuccess(true);
-      setTimeout(() => setJsonCopySuccess(false), 2000);
-    }
+    const blob = new Blob([JSON.stringify(jsonData, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${fileName}-config.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const handleDownloadImage = useCallback(
@@ -278,6 +308,13 @@ export default function Page() {
     setCode(newCode);
   };
 
+  const handleToggleSettings = () => {
+    // Only allow toggle on mobile (< 1024px)
+    if (typeof window !== "undefined" && window.innerWidth < 1024) {
+      setShowSettingsPanel(!showSettingsPanel);
+    }
+  };
+
   return (
     <div className="h-screen bg-white bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 relative overflow-hidden flex flex-col">
       <div className="relative bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-sm px-2 sm:px-4 lg:px-6 flex items-center justify-between py-2 w-full gap-4">
@@ -289,8 +326,8 @@ export default function Page() {
           <ActionBar
             onCopy={handleCopyCode}
             onDownload={handleDownloadImage}
-            onShowSettings={() => setShowSettingsPanel(!showSettingsPanel)}
-            onShowJSON={() => setShowJSONModal(true)}
+            onShowSettings={handleToggleSettings}
+            onShowJSON={() => {}}
             onShowTips={() => setShowTipsModal(true)}
             onShowGuide={() => setShowTourGuide(true)}
             copySuccess={copySuccess}
@@ -298,6 +335,7 @@ export default function Page() {
             fileName={fileName}
             onFileNameChange={setFileName}
             showSettingsPanel={showSettingsPanel}
+            showJSONPanel={false}
             settings={settings}
             onUpdateSetting={updateSetting as any}
             className="w-full lg:w-auto"
@@ -340,6 +378,7 @@ export default function Page() {
               width={editorSize.width}
               height={editorSize.height}
               editorPosition={editorPosition}
+              showJSONPanel={false}
             />
 
             {/* Height Ruler - positioned left with fixed spacing */}
@@ -347,6 +386,7 @@ export default function Page() {
               width={editorSize.width}
               height={editorSize.height}
               editorPosition={editorPosition}
+              showJSONPanel={false}
             />
           </div>
         </div>
@@ -355,23 +395,17 @@ export default function Page() {
           data-tour="settings-panel"
           settings={settings}
           fileName={fileName}
+          code={code}
           isVisible={showSettingsPanel}
           activeMenu={activeMenuLabel}
           onChangeActiveMenu={(m) => setActiveMenuLabel(m)}
           onUpdateSetting={updateSetting}
           onFileNameChange={setFileName}
-          onToggleVisibility={() => setShowSettingsPanel(!showSettingsPanel)}
+          onToggleVisibility={handleToggleSettings}
+          onImportTemplate={handleImportJSON}
+          onExportTemplate={handleExportJSON}
         />
       </div>
-
-      <JSONDataSection
-        code={code}
-        settings={settings}
-        onCopyJSON={handleCopyJSON}
-        copySuccess={jsonCopySuccess}
-        isOpen={showJSONModal}
-        onClose={() => setShowJSONModal(false)}
-      />
 
       <TipsModal
         isOpen={showTipsModal}

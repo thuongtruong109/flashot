@@ -265,14 +265,9 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
   return (
     <div>
       {/* Image Upload Section */}
-      <div className="space-y-3 mb-4">
-        {/* <label className="text-xs font-semibold text-gray-700 flex items-center">
-          <LinkIcon className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
-          Custom Background Image
-        </label> */}
-
+      <div className="space-y-1 mb-4">
         <label className="text-[10px] font-medium text-gray-500 tracking-wider">
-          Custom Background Image
+          Custom Image
         </label>
 
         {/* URL Input and Buttons */}
@@ -286,7 +281,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
               readOnly={isImageUploaded}
               placeholder="Enter image URL or upload from device"
               className={cn(
-                "w-full px-3 py-2 text-xs rounded-lg border transition-all outline-none",
+                "w-full px-2 py-1.5 text-xs rounded-md border transition-all outline-none",
                 isImageUploaded
                   ? "bg-gray-50 border-gray-300 cursor-not-allowed"
                   : "bg-white border-gray-200 hover:border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
@@ -298,7 +293,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
           <button
             type="button"
             onClick={handleUploadButtonClick}
-            className="px-3 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white shadow-sm hover:shadow-md transition-all duration-200 flex items-center gap-1.5"
+            className="px-2 py-1.5 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white shadow-sm hover:shadow-md transition-all duration-200 flex items-center gap-1.5"
             title="Upload image from device"
           >
             <Upload className="w-3.5 h-3.5" />
@@ -330,7 +325,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
 
       <div className="space-y-4">
         {/* Gradients & Transparent */}
-        <div>
+        <div className="space-y-2">
           <p className="text-[10px] font-medium text-gray-500 tracking-wider">
             Gradients & Transparent
           </p>
@@ -344,7 +339,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
         </div>
 
         {/* Solid Colors */}
-        <div>
+        <div className="space-y-2">
           <p className="text-[10px] font-medium text-gray-500 tracking-wider">
             Solid Colors
           </p>

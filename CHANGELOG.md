@@ -1,9 +1,18 @@
-## [v2.3.0 - 2025-10-10](https://github.com/thuongtruong109/flashot/releases/tag/v2.3.0)
+## [v2.3.1 - 2025-10-20](https://github.com/thuongtruong109/flashot/releases/tag/v2.3.0)
 
 ### 🚀 Features
 
 - **playground**:
-  - Custom watermark with text/image - by @thuongtruong109 [<samp>(971b1)</samp>](https://github.com/thuongtruong109/flashot/commit/971b1330907686a5eb3606466cd9c991c7c24b31)
+  - Import/export/choice template settings as JSON - by @thuongtruong109 [<samp>()</samp>]()
+
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.3.0...v2.3.1) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.3.1)
+
+## [v2.3.0 - 2025-10-09](https://github.com/thuongtruong109/flashot/releases/tag/v2.3.0)
+
+### 🚀 Features
+
+- **playground**:
+  - Custom watermark with text/image - by @thuongtruong109 [<samp>(e8cde)</samp>](https://github.com/thuongtruong109/flashot/commit/e8cde1d35a0020825f97040ea8478b5cee9b109f)
   - Custom highlight diff code changes - by @thuongtruong109 [<samp>(fdfe9)</samp>](https://github.com/thuongtruong109/flashot/commit/fdfe9a16d59ede975ef7ae8e4d18c51cafb9141b)
   - Custom background image with upload from device or external URL - by @thuongtruong109 [<samp>(ă0b7)</samp>](https://github.com/thuongtruong109/flashot/commit/a80b728a08c4c41edb536f8d15ce01263891658a)
 

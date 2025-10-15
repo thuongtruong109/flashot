@@ -4,19 +4,25 @@ interface HeightRulerProps {
   width: number;
   height: number;
   editorPosition: { x: number; y: number };
+  showJSONPanel?: boolean;
 }
 
 export default function HeightRuler({
   width,
   height,
   editorPosition,
+  showJSONPanel = false,
 }: HeightRulerProps) {
   const rulerRef = useRef<HTMLDivElement>(null);
 
   // Calculate position similar to WidthRuler logic
   const viewportWidth =
     typeof window !== "undefined" ? window.innerWidth : 1200;
-  const viewportCenterX = viewportWidth / 2;
+
+  // Account for JSON panel width on desktop
+  const jsonPanelWidth = showJSONPanel && viewportWidth >= 1024 ? 320 : 0; // 320px = w-80
+  const availableWidth = viewportWidth - jsonPanelWidth;
+  const viewportCenterX = jsonPanelWidth + availableWidth / 2;
 
   // Editor left edge with position offset
   const editorLeft = viewportCenterX + editorPosition.x - width / 2;

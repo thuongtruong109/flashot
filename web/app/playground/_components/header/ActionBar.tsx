@@ -20,6 +20,8 @@ import {
   MoreHorizontal,
   CircleDotDashed,
   Share2,
+  Moon,
+  Sun,
 } from "lucide-react";
 
 interface ActionBarProps {
@@ -34,6 +36,7 @@ interface ActionBarProps {
   fileName: string;
   onFileNameChange: (fileName: string) => void;
   showSettingsPanel?: boolean;
+  showJSONPanel?: boolean;
   className?: string;
   settings?: any;
   onUpdateSetting?: <K extends keyof any>(key: K, value: any) => void;
@@ -51,6 +54,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   fileName,
   onFileNameChange,
   showSettingsPanel = false,
+  showJSONPanel = false,
   className = "",
   settings,
   onUpdateSetting,
@@ -59,6 +63,35 @@ const ActionBar: React.FC<ActionBarProps> = ({
   const [exportFormat, setExportFormat] = useState<string>(
     settings?.exportFormat || "webp"
   );
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Initialize dark mode from localStorage or system preference
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedMode = localStorage.getItem("darkMode");
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      const isDark = savedMode === "true" || (!savedMode && prefersDark);
+      setIsDarkMode(isDark);
+      if (isDark) {
+        document.documentElement.classList.add("dark");
+      }
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("darkMode", String(newMode));
+      if (newMode) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    }
+  };
 
   // Sync exportFormat with settings
   useEffect(() => {
@@ -174,7 +207,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
       })();
     } else if (value === "report") {
       window.open(
-        "https://github.com/thuongtruong109/flashot/issues/new",
+        "https://github.com/thuongtruong109/flashot/issues/new/choose",
         "_blank"
       );
     }
@@ -233,6 +266,57 @@ const ActionBar: React.FC<ActionBarProps> = ({
     <div className={`flex flex-wrap items-center space-x-2 ${className}`}>
       {/* Desktop Layout */}
       <div className="hidden lg:flex items-center space-x-3">
+        {/* Individual Menu Items on Desktop */}
+        <button
+          onClick={() => handleMoreOptionSelect("guide")}
+          className={getButtonStyles("secondary", "emerald", false)}
+          title="View Guide"
+        >
+          <BookOpen className={getIconStyles("emerald", "secondary")} />
+          <span className="text-[13px]">Guide</span>
+        </button>
+
+        <button
+          onClick={() => handleMoreOptionSelect("info")}
+          className={getButtonStyles("secondary", "amber", false)}
+          title="Info & Tips"
+        >
+          <Info className={getIconStyles("amber", "secondary")} />
+          <span className="text-[13px]">Tips</span>
+        </button>
+
+        <button
+          onClick={() => handleMoreOptionSelect("share")}
+          className={getButtonStyles("secondary", "emerald", false)}
+          title="Share"
+        >
+          <Share2 className={getIconStyles("emerald", "secondary")} />
+          <span className="text-[13px]">Share</span>
+        </button>
+
+        <button
+          onClick={() => handleMoreOptionSelect("report")}
+          className={getButtonStyles("secondary", "blue", false)}
+          title="Report Issue"
+        >
+          <CircleDotDashed className={getIconStyles("blue", "secondary")} />
+          <span className="text-[13px]">Report</span>
+        </button>
+
+        {/* Dark Mode Toggle */}
+        <button
+          onClick={toggleDarkMode}
+          className={getButtonStyles("secondary", "slate", false)}
+          title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        >
+          {isDarkMode ? (
+            <Sun className={getIconStyles("amber", "secondary")} />
+          ) : (
+            <Moon className={getIconStyles("slate", "secondary")} />
+          )}
+          <span className="text-[13px]">{isDarkMode ? "Light" : "Dark"}</span>
+        </button>
+
         {/* Export Button with Format Selector */}
         <div className="flex items-stretch">
           <button
@@ -288,43 +372,6 @@ const ActionBar: React.FC<ActionBarProps> = ({
             />
           </div>
         </div>
-
-        {/* More Dropdown Menu */}
-        <CustomSelect
-          options={moreOptions.map((opt) => ({
-            value: opt.value,
-            label: opt.label,
-          }))}
-          value=""
-          onChange={(value) => {
-            handleMoreOptionSelect(value);
-          }}
-          placeholder="More"
-        />
-
-        {/* Data & Settings Tab */}
-        <div className="flex items-stretch rounded-xl bg-gradient-to-br from-white/60 via-white/40 to-white/20 backdrop-blur-lg border border-white/80 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.12),0_4px_8px_-2px_rgba(0,0,0,0.08),inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-2px_4px_rgba(0,0,0,0.05)] overflow-hidden">
-          <button
-            onClick={onShowJSON}
-            className="group relative flex items-center space-x-1 px-3 py-1.5 transition-all duration-300 hover:bg-white/40 border-r border-white/60"
-            title="View JSON Data"
-          >
-            <FileText
-              className={`size-3.5 transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_4px_8px_rgba(0,0,0,0.2)] group-hover:scale-110 ${colorMap.emerald}`}
-            />
-            <span className={`text-[13px] ${colorMap.emerald}`}>Data</span>
-          </button>
-          <button
-            onClick={onShowSettings}
-            className="group relative flex items-center space-x-1 px-3 py-1.5 transition-all duration-300 hover:bg-white/40"
-            title="Toggle Settings Panel"
-          >
-            <Settings
-              className={`size-3.5 transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)] group-hover:drop-shadow-[0_4px_8px_rgba(0,0,0,0.2)] group-hover:scale-110 ${colorMap.slate}`}
-            />
-            <span className={`text-[13px] ${colorMap.slate}`}>Settings</span>
-          </button>
-        </div>
       </div>
 
       {/* Mobile Layout */}
@@ -343,13 +390,6 @@ const ActionBar: React.FC<ActionBarProps> = ({
         </button>
 
         <div className="flex items-center space-x-1">
-          <button
-            onClick={onShowJSON}
-            className="p-2.5 bg-white/40 backdrop-blur-md border border-white/60 rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] transition-all"
-          >
-            <FileText className="w-3 h-3 text-emerald-500" />
-          </button>
-
           <button
             onClick={onShowSettings}
             className="p-2.5 bg-white/40 backdrop-blur-md border border-white/60 rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] transition-all"

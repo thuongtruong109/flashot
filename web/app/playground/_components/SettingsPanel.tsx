@@ -1,6 +1,7 @@
 interface SettingsPanelProps {
   settings: CodeSettings;
   fileName: string;
+  code: string;
   isVisible?: boolean;
   activeMenu?: string;
   onChangeActiveMenu?: (menu: string | undefined) => void;
@@ -10,6 +11,8 @@ interface SettingsPanelProps {
   ) => void;
   onFileNameChange: (fileName: string) => void;
   onToggleVisibility?: () => void;
+  onImportTemplate?: (data: { code: string; settings: CodeSettings }) => void;
+  onExportTemplate?: () => void;
 }
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import { getFileExtension } from "@/utils";
@@ -19,6 +22,7 @@ import FontSelector from "./FontSelector";
 import BackgroundSelector from "./BackgroundSelector";
 import ThemeSection from "./setting/ThemeSection";
 import MakeupSection from "./setting/MakeupSection";
+import TemplateSection from "./setting/TemplateSection";
 import React, { useState, useRef, useEffect, forwardRef } from "react";
 import {
   Settings,
@@ -48,6 +52,7 @@ import {
   PanelRightClose,
   PanelRightOpen,
   RotateCcw,
+  FileJson,
 } from "lucide-react";
 import CustomSelect from "./base/Select";
 import { _PLAYGROUND_SETTINGS_TAB, DEFAULT_CODE_SETTINGS } from "@/shared";
@@ -58,12 +63,15 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
     {
       settings,
       fileName,
+      code,
       isVisible = true,
       activeMenu = _PLAYGROUND_SETTINGS_TAB.VIEW,
       onChangeActiveMenu,
       onUpdateSetting,
       onFileNameChange,
       onToggleVisibility,
+      onImportTemplate,
+      onExportTemplate,
     },
     ref
   ) => {
@@ -211,6 +219,15 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                       </span>
                     ),
                   },
+                  {
+                    value: _PLAYGROUND_SETTINGS_TAB.TEMPLATE,
+                    label: (
+                      <span className="flex items-center gap-1.5 text-indigo-600">
+                        <FileJson className="size-3" />{" "}
+                        {_PLAYGROUND_SETTINGS_TAB.TEMPLATE}
+                      </span>
+                    ),
+                  },
                 ]}
                 value={activeMenu}
                 onChange={(val) => onChangeActiveMenu?.(val)}
@@ -260,6 +277,16 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                   fileName={fileName}
                   onUpdateSetting={onUpdateSetting}
                   onFileNameChange={onFileNameChange}
+                />
+              )}
+              {activeMenu === _PLAYGROUND_SETTINGS_TAB.TEMPLATE && (
+                <TemplateSection
+                  code={code}
+                  settings={settings}
+                  fileName={fileName}
+                  onImportTemplate={onImportTemplate || (() => {})}
+                  onExportTemplate={onExportTemplate || (() => {})}
+                  onUpdateSetting={onUpdateSetting}
                 />
               )}
             </div>

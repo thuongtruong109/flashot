@@ -6,6 +6,7 @@ export const _PLAYGROUND_SETTINGS_TAB = {
   VIEW: "View",
   THEME: "Theme",
   MAKEUP: "Makeup",
+  TEMPLATE: "Template",
 } as const;
 
 export const DEFAULT_CODE_SETTINGS: CodeSettings = {

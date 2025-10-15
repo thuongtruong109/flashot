@@ -4,12 +4,14 @@ interface WidthRulerProps {
   width: number;
   height: number;
   editorPosition: { x: number; y: number };
+  showJSONPanel?: boolean;
 }
 
 export default function WidthRuler({
   width,
   height,
   editorPosition,
+  showJSONPanel = false,
 }: WidthRulerProps) {
   // Calculate position: center horizontally, below frame with 50px gap
   const containerHeight =
