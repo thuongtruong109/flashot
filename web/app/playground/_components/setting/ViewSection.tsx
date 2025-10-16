@@ -5,26 +5,20 @@ import {
   CornerRightDown,
   Type,
   WrapText,
-  Braces,
-  Wand2,
 } from "lucide-react";
 import { CodeSettings } from "@/types";
 
 interface ViewSectionProps {
   settings: CodeSettings;
-  code?: string;
   onUpdateSetting: <K extends keyof CodeSettings>(
     key: K,
     value: CodeSettings[K]
   ) => void;
-  onCodeChange?: (code: string) => void;
 }
 
 const ViewSection: React.FC<ViewSectionProps> = ({
   settings,
-  code,
   onUpdateSetting,
-  onCodeChange,
 }) => {
   const [widthInput, setWidthInput] = useState(
     settings.width?.toString() || ""
@@ -40,71 +34,6 @@ const ViewSection: React.FC<ViewSectionProps> = ({
   useEffect(() => {
     setHeightInput(settings.height?.toString() || "");
   }, [settings.height]);
-
-  // Format code function
-  const handleFormatCode = () => {
-    if (!code || !onCodeChange) return;
-
-    const tabSize = settings.tabSize || 2;
-    const indent = " ".repeat(tabSize);
-
-    // Simple formatting logic based on language
-    let formatted = code;
-
-    // Remove extra blank lines
-    formatted = formatted.replace(/\n{3,}/g, "\n\n");
-
-    // Basic indentation for common languages
-    const lines = formatted.split("\n");
-    let indentLevel = 0;
-    const formattedLines: string[] = [];
-
-    for (let i = 0; i < lines.length; i++) {
-      let line = lines[i].trim();
-
-      // Decrease indent for closing braces
-      if (
-        line.startsWith("}") ||
-        line.startsWith("]") ||
-        line.startsWith(")")
-      ) {
-        indentLevel = Math.max(0, indentLevel - 1);
-      }
-
-      // Add indentation
-      if (line) {
-        formattedLines.push(indent.repeat(indentLevel) + line);
-      } else {
-        formattedLines.push("");
-      }
-
-      // Increase indent after opening braces
-      if (
-        line.endsWith("{") ||
-        line.endsWith("[") ||
-        line.endsWith("(") ||
-        (line.includes("{") && !line.includes("}")) ||
-        (line.includes("[") && !line.includes("]"))
-      ) {
-        indentLevel++;
-      }
-
-      // Decrease indent immediately after closing on same line
-      if (line.includes("}") && !line.endsWith("{")) {
-        indentLevel = Math.max(0, indentLevel - 1);
-      }
-    }
-
-    formatted = formattedLines.join("\n");
-
-    // Trim trailing whitespace from each line
-    formatted = formatted
-      .split("\n")
-      .map((line) => line.trimEnd())
-      .join("\n");
-
-    onCodeChange(formatted);
-  };
 
   return (
     <>
@@ -550,62 +479,6 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             </div>
           </div>
         </label>
-      </div>
-
-      {/* Tab Size */}
-      <div>
-        <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center justify-between">
-          <div className="flex items-center text-indigo-600 dark:text-indigo-400">
-            <Braces className="w-3.5 h-3.5 mr-1.5" />
-            Tab Size
-          </div>
-          <span className="text-xs bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent font-bold">
-            {settings.tabSize || 2} spaces
-          </span>
-        </label>
-        <div className="relative">
-          <input
-            type="range"
-            min={2}
-            max={8}
-            step={1}
-            value={settings.tabSize || 2}
-            onChange={(e) =>
-              onUpdateSetting("tabSize", parseInt(e.target.value))
-            }
-            className="w-full h-1 bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-800 dark:to-purple-800 rounded-lg appearance-none cursor-pointer
-              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
-              [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
-              [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-purple-500
-              [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-              [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-          />
-          <div className="flex justify-between items-center mt-1 text-[10px] text-gray-400 dark:text-gray-500 px-1">
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-            <span>6</span>
-            <span>7</span>
-            <span>8</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Format Code Button */}
-      <div>
-        <button
-          onClick={handleFormatCode}
-          disabled={!code || !onCodeChange}
-          className={`w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs transition-all ${
-            !code || !onCodeChange
-              ? "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed"
-              : "bg-gradient-to-r from-violet-500 to-purple-500 dark:from-violet-600 dark:to-purple-600 hover:from-violet-600 hover:to-purple-600 dark:hover:from-violet-700 dark:hover:to-purple-700 text-white shadow-md hover:shadow-lg"
-          }`}
-        >
-          <Wand2 className="w-4 h-4" />
-          <span>Format Code</span>
-        </button>
       </div>
     </>
   );

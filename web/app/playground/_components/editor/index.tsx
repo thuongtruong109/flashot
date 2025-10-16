@@ -335,7 +335,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
           return;
         }
 
-        // Tab handling
+        // Tab handling - use actual tab character so CSS tabSize works
         if (e.key === "Tab") {
           e.preventDefault();
           const target = e.target as HTMLTextAreaElement;
@@ -343,32 +343,41 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
           const end = target.selectionEnd;
 
           if (e.shiftKey) {
-            // Shift+Tab: Remove indentation
+            // Shift+Tab: Remove indentation (one tab or spaces equivalent)
             const beforeCursor = code.substring(0, start);
             const afterCursor = code.substring(end);
             const lines = beforeCursor.split("\n");
             const currentLine = lines[lines.length - 1];
 
-            if (currentLine.startsWith("  ")) {
+            // Try to remove a tab first
+            let newLine = currentLine;
+            let removed = 0;
+            
+            if (currentLine.startsWith("\t")) {
+              newLine = currentLine.slice(1);
+              removed = 1;
+            }
+
+            if (removed > 0) {
               const newCode =
                 beforeCursor.slice(0, -currentLine.length) +
-                currentLine.slice(2) +
+                newLine +
                 afterCursor;
               onChange(newCode);
               setTimeout(() => {
                 target.setSelectionRange(
-                  Math.max(0, start - 2),
-                  Math.max(0, start - 2)
+                  Math.max(0, start - removed),
+                  Math.max(0, start - removed)
                 );
               }, 0);
             }
           } else {
-            // Tab: Add indentation
+            // Tab: Insert actual tab character (\t)
             const newCode =
-              code.substring(0, start) + "  " + code.substring(end);
+              code.substring(0, start) + "\t" + code.substring(end);
             onChange(newCode);
             setTimeout(() => {
-              target.setSelectionRange(start + 2, start + 2);
+              target.setSelectionRange(start + 1, start + 1);
             }, 0);
           }
         }
@@ -493,20 +502,26 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                 >
                   {settings.windowHeaderAlign === "right" ? (
                     <>
-                      {/* File name */}
-                      {settings.showFileName && fileName?.trim() && (
-                        <span
-                          data-export-filename
-                          className="text-sm font-medium text-white truncate min-w-0"
-                          style={{
-                            opacity: settings.fileNameOpacity ?? 1,
-                            fontWeight: settings.fileNameFontWeight ?? 400,
-                            fontSize: settings.fileNameFontSize ?? 14,
-                          }}
-                        >
-                          {fileName}.{getFileExtension(settings.language)}
-                        </span>
-                      )}
+                      {/* File name container with alignment */}
+                      <div className={`flex-1 flex ${
+                        settings.fileNameAlign === "center" 
+                          ? "justify-center" 
+                          : "justify-start"
+                      }`}>
+                        {settings.showFileName && fileName?.trim() && (
+                          <span
+                            data-export-filename
+                            className="text-sm font-medium text-white truncate min-w-0"
+                            style={{
+                              opacity: settings.fileNameOpacity ?? 1,
+                              fontWeight: settings.fileNameFontWeight ?? 400,
+                              fontSize: settings.fileNameFontSize ?? 14,
+                            }}
+                          >
+                            {fileName}.{getFileExtension(settings.language)}
+                          </span>
+                        )}
+                      </div>
 
                       {/* Line count and Traffic Lights grouped */}
                       <div className="flex items-center order-last">
@@ -573,54 +588,57 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                     </>
                   ) : (
                     <>
-                      {/* Traffic Lights and File name grouped */}
-                      <div className="flex items-center">
-                        {/* Traffic Lights Component */}
-                        {settings.showTrafficLights !== false && (
-                          <div
-                            data-export-traffic
-                            className="flex items-center space-x-1.5"
-                            style={{
-                              height: "100%",
-                              marginRight: 12,
-                            }}
-                          >
-                            {settings.showTrafficLightsColor !== false ? (
-                              <>
-                                <div
-                                  className="w-3 h-3 rounded-full shadow-sm"
-                                  style={{
-                                    background:
-                                      "linear-gradient(to bottom right, #ef4444, #dc2626)",
-                                  }}
-                                />
-                                <div
-                                  className="w-3 h-3 rounded-full shadow-sm"
-                                  style={{
-                                    background:
-                                      "linear-gradient(to bottom right, #facc15, #ca8a04)",
-                                  }}
-                                />
-                                <div
-                                  className="w-3 h-3 rounded-full shadow-sm"
-                                  style={{
-                                    background:
-                                      "linear-gradient(to bottom right, #22c55e, #15803d)",
-                                  }}
-                                />
-                              </>
-                            ) : (
-                              Array.from({ length: 3 }).map((_, idx) => (
-                                <div
-                                  key={idx}
-                                  className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"
-                                />
-                              ))
-                            )}
-                          </div>
-                        )}
+                      {/* Traffic Lights Component */}
+                      {settings.showTrafficLights !== false && (
+                        <div
+                          data-export-traffic
+                          className="flex items-center space-x-1.5"
+                          style={{
+                            height: "100%",
+                            marginRight: 12,
+                          }}
+                        >
+                          {settings.showTrafficLightsColor !== false ? (
+                            <>
+                              <div
+                                className="w-3 h-3 rounded-full shadow-sm"
+                                style={{
+                                  background:
+                                    "linear-gradient(to bottom right, #ef4444, #dc2626)",
+                                }}
+                              />
+                              <div
+                                className="w-3 h-3 rounded-full shadow-sm"
+                                style={{
+                                  background:
+                                    "linear-gradient(to bottom right, #facc15, #ca8a04)",
+                                }}
+                              />
+                              <div
+                                className="w-3 h-3 rounded-full shadow-sm"
+                                style={{
+                                  background:
+                                    "linear-gradient(to bottom right, #22c55e, #15803d)",
+                                }}
+                              />
+                            </>
+                          ) : (
+                            Array.from({ length: 3 }).map((_, idx) => (
+                              <div
+                                key={idx}
+                                className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"
+                              />
+                            ))
+                          )}
+                        </div>
+                      )}
 
-                        {/* File name */}
+                      {/* File name container with alignment */}
+                      <div className={`flex-1 flex ${
+                        settings.fileNameAlign === "center" 
+                          ? "justify-center" 
+                          : "justify-start"
+                      }`}>
                         {settings.showFileName && fileName?.trim() && (
                           <span
                             data-export-filename
@@ -803,8 +821,6 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                               : "normal",
                             width: settings.wordWrap ? "100%" : "max-content",
                             minWidth: "100%",
-                            tabSize: settings.tabSize || 2,
-                            MozTabSize: settings.tabSize || 2,
                           }}
                         >
                           <code
@@ -944,8 +960,6 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                           overflowX: "hidden", // Hide X scrollbar on textarea
                           width: "100%", // Ensure full width
                           minWidth: settings.wordWrap ? "100%" : "max-content", // Allow horizontal overflow
-                          tabSize: settings.tabSize || 2,
-                          MozTabSize: settings.tabSize || 2,
                         }}
                         placeholder="Start typing your code..."
                       />

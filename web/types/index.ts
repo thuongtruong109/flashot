@@ -55,7 +55,6 @@ export interface CodeSettings {
   width?: number;
   height?: number;
   wordWrap?: boolean;
-  tabSize?: number;
   showCaption?: boolean;
   captionText?: string;
   captionStyle?: "italic" | "normal";
@@ -63,6 +62,7 @@ export interface CodeSettings {
   captionPosition?: "top" | "bottom" | "left" | "right";
   fileNameOpacity?: number;
   fileNameFontSize?: number;
+  fileNameAlign?: "left" | "center";
   lineCountOpacity?: number;
   fileNameFontWeight?: number;
   lineCountFontSize?: number;

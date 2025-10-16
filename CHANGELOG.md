@@ -3,7 +3,7 @@
 ### 🚀 Features
 
 - **playground**:
-  - Custom spacing for indentation (tab size) - by @thuongtruong109 [<samp>()</samp>]()
+  - Format code snippets by programming language - by @thuongtruong109 [<samp>()</samp>]()
   - Seperate border radius for code editor snippet area inner and frame outer - by @thuongtruong109 [<samp>(1341b)</samp>](https://github.com/thuongtruong109/flashot/commit/1341b9a2b49a76c3666d0b878f7e1a94aa6154dd)
   - Apply dark mode theme - by @thuongtruong109 [<samp>(b8746)</samp>](https://github.com/thuongtruong109/flashot/commit/b8746e9b8a7e660b5015efc058ab2df823b38fc5)
   - Import/export/choice template settings as JSON - by @thuongtruong109 [<samp>(e2e29)</samp>](https://github.com/thuongtruong109/flashot/commit/e2e29b590dcd4bbcbbfc721026fbea610de692eb)

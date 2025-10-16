@@ -1,7 +1,5 @@
 - Frame Styles - Different frame styles (browser, terminal, phone, etc.)
-- Tab Size Control - Customize indentation width
 - Custom Headers/Footers - Add custom text above/below code
-- Auto-Format Code - Format code before generating image
 - Mobile-Optimized Frames - Phone/tablet mockup frames
 - Keyboard Shortcuts - Quick access to common actions
 - Multi-file Support - Show multiple files in tabs
