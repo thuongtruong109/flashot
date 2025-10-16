@@ -1,6 +1,5 @@
-- Frame Styles - Different frame styles (browser, terminal, phone, etc.)
+- Mockup Frame Styles - Different frame styles (browser, terminal, tablet, phone, etc.)
 - Custom Headers/Footers - Add custom text above/below code
-- Mobile-Optimized Frames - Phone/tablet mockup frames
 - Keyboard Shortcuts - Quick access to common actions
 - Multi-file Support - Show multiple files in tabs
 - Version History - Undo/redo for settings changes

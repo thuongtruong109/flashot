@@ -420,9 +420,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                     <label className="text-xs text-gray-500">Alignment</label>
                     <div className="flex items-center space-x-2">
                       <button
-                        onClick={() =>
-                          onUpdateSetting("fileNameAlign", "left")
-                        }
+                        onClick={() => onUpdateSetting("fileNameAlign", "left")}
                         className={`flex-1 px-2 py-1.5 rounded-md text-xs transition-all duration-200 ${
                           (settings.fileNameAlign || "left") === "left"
                             ? "bg-gradient-to-r from-yellow-500 to-orange-500 dark:from-yellow-600 dark:to-orange-600 text-white shadow-md font-medium"

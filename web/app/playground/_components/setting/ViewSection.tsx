@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Move,
-  BarChart3,
-  CornerRightDown,
-  Type,
-  WrapText,
-} from "lucide-react";
+import { Move, BarChart3, CornerRightDown, Type, WrapText } from "lucide-react";
 import { CodeSettings } from "@/types";
 
 interface ViewSectionProps {

@@ -352,7 +352,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
             // Try to remove a tab first
             let newLine = currentLine;
             let removed = 0;
-            
+
             if (currentLine.startsWith("\t")) {
               newLine = currentLine.slice(1);
               removed = 1;
@@ -503,11 +503,13 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                   {settings.windowHeaderAlign === "right" ? (
                     <>
                       {/* File name container with alignment */}
-                      <div className={`flex-1 flex ${
-                        settings.fileNameAlign === "center" 
-                          ? "justify-center" 
-                          : "justify-start"
-                      }`}>
+                      <div
+                        className={`flex-1 flex ${
+                          settings.fileNameAlign === "center"
+                            ? "justify-center"
+                            : "justify-start"
+                        }`}
+                      >
                         {settings.showFileName && fileName?.trim() && (
                           <span
                             data-export-filename
@@ -634,11 +636,13 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                       )}
 
                       {/* File name container with alignment */}
-                      <div className={`flex-1 flex ${
-                        settings.fileNameAlign === "center" 
-                          ? "justify-center" 
-                          : "justify-start"
-                      }`}>
+                      <div
+                        className={`flex-1 flex ${
+                          settings.fileNameAlign === "center"
+                            ? "justify-center"
+                            : "justify-start"
+                        }`}
+                      >
                         {settings.showFileName && fileName?.trim() && (
                           <span
                             data-export-filename

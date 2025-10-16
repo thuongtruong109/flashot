@@ -1,8 +1,9 @@
-## [v2.4.0 - 2025-10-20](https://github.com/thuongtruong109/flashot/releases/tag/v2.3.0)
+## [v2.4.0 - 2025-10-20](https://github.com/thuongtruong109/flashot/releases/tag/v2.4.0)
 
 ### 🚀 Features
 
-- **playground**:
+- ## **playground**:
+  - Align file name position - by @thuongtruong109 [<samp>()</samp>]()
   - Format code snippets by programming language - by @thuongtruong109 [<samp>()</samp>]()
   - Seperate border radius for code editor snippet area inner and frame outer - by @thuongtruong109 [<samp>(1341b)</samp>](https://github.com/thuongtruong109/flashot/commit/1341b9a2b49a76c3666d0b878f7e1a94aa6154dd)
   - Apply dark mode theme - by @thuongtruong109 [<samp>(b8746)</samp>](https://github.com/thuongtruong109/flashot/commit/b8746e9b8a7e660b5015efc058ab2df823b38fc5)
