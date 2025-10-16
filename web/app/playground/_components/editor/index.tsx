@@ -803,6 +803,8 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                               : "normal",
                             width: settings.wordWrap ? "100%" : "max-content",
                             minWidth: "100%",
+                            tabSize: settings.tabSize || 2,
+                            MozTabSize: settings.tabSize || 2,
                           }}
                         >
                           <code
@@ -942,6 +944,8 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                           overflowX: "hidden", // Hide X scrollbar on textarea
                           width: "100%", // Ensure full width
                           minWidth: settings.wordWrap ? "100%" : "max-content", // Allow horizontal overflow
+                          tabSize: settings.tabSize || 2,
+                          MozTabSize: settings.tabSize || 2,
                         }}
                         placeholder="Start typing your code..."
                       />

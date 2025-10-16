@@ -6,4 +6,3 @@
 - Keyboard Shortcuts - Quick access to common actions
 - Multi-file Support - Show multiple files in tabs
 - Version History - Undo/redo for settings changes
-- Corner Radius Fine Control - More precise styling

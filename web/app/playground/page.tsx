@@ -401,6 +401,7 @@ export default function Page() {
           onChangeActiveMenu={(m) => setActiveMenuLabel(m)}
           onUpdateSetting={updateSetting}
           onFileNameChange={setFileName}
+          onCodeChange={setCode}
           onToggleVisibility={handleToggleSettings}
           onImportTemplate={handleImportJSON}
           onExportTemplate={handleExportJSON}

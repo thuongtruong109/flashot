@@ -5,24 +5,26 @@ import {
   CornerRightDown,
   Type,
   WrapText,
-  Highlighter,
-  Plus,
-  Trash2,
-  X,
+  Braces,
+  Wand2,
 } from "lucide-react";
-import { CodeSettings, HighlightRange } from "@/types";
+import { CodeSettings } from "@/types";
 
 interface ViewSectionProps {
   settings: CodeSettings;
+  code?: string;
   onUpdateSetting: <K extends keyof CodeSettings>(
     key: K,
     value: CodeSettings[K]
   ) => void;
+  onCodeChange?: (code: string) => void;
 }
 
 const ViewSection: React.FC<ViewSectionProps> = ({
   settings,
+  code,
   onUpdateSetting,
+  onCodeChange,
 }) => {
   const [widthInput, setWidthInput] = useState(
     settings.width?.toString() || ""
@@ -38,6 +40,72 @@ const ViewSection: React.FC<ViewSectionProps> = ({
   useEffect(() => {
     setHeightInput(settings.height?.toString() || "");
   }, [settings.height]);
+
+  // Format code function
+  const handleFormatCode = () => {
+    if (!code || !onCodeChange) return;
+
+    const tabSize = settings.tabSize || 2;
+    const indent = " ".repeat(tabSize);
+
+    // Simple formatting logic based on language
+    let formatted = code;
+
+    // Remove extra blank lines
+    formatted = formatted.replace(/\n{3,}/g, "\n\n");
+
+    // Basic indentation for common languages
+    const lines = formatted.split("\n");
+    let indentLevel = 0;
+    const formattedLines: string[] = [];
+
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i].trim();
+
+      // Decrease indent for closing braces
+      if (
+        line.startsWith("}") ||
+        line.startsWith("]") ||
+        line.startsWith(")")
+      ) {
+        indentLevel = Math.max(0, indentLevel - 1);
+      }
+
+      // Add indentation
+      if (line) {
+        formattedLines.push(indent.repeat(indentLevel) + line);
+      } else {
+        formattedLines.push("");
+      }
+
+      // Increase indent after opening braces
+      if (
+        line.endsWith("{") ||
+        line.endsWith("[") ||
+        line.endsWith("(") ||
+        (line.includes("{") && !line.includes("}")) ||
+        (line.includes("[") && !line.includes("]"))
+      ) {
+        indentLevel++;
+      }
+
+      // Decrease indent immediately after closing on same line
+      if (line.includes("}") && !line.endsWith("{")) {
+        indentLevel = Math.max(0, indentLevel - 1);
+      }
+    }
+
+    formatted = formattedLines.join("\n");
+
+    // Trim trailing whitespace from each line
+    formatted = formatted
+      .split("\n")
+      .map((line) => line.trimEnd())
+      .join("\n");
+
+    onCodeChange(formatted);
+  };
+
   return (
     <>
       {/* Font Size */}
@@ -484,235 +552,60 @@ const ViewSection: React.FC<ViewSectionProps> = ({
         </label>
       </div>
 
-      {/* Line Highlights */}
+      {/* Tab Size */}
       <div>
-        <div className="text-xs font-semibold text-gray-700 mb-3 flex items-center justify-between">
-          <label className="flex items-center text-yellow-600">
-            <Highlighter className="w-3.5 h-3.5 mr-1.5" />
-            Line Highlights
-          </label>
-          <button
-            type="button"
-            onClick={() => {
-              const newHighlight: HighlightRange = {
-                id: Date.now().toString(),
-                startLine: 1,
-                endLine: 1,
-                color: "#22c55e20",
-                type: "add",
-              };
-              onUpdateSetting("highlights", [
-                ...(settings.highlights || []),
-                newHighlight,
-              ]);
-            }}
-            className="w-fit px-2 py-1 text-xs rounded-lg bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-white shadow-sm transition-all flex items-center space-x-1"
-          >
-            <Plus className="w-3 h-3" />
-            Add
-          </button>
+        <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center justify-between">
+          <div className="flex items-center text-indigo-600 dark:text-indigo-400">
+            <Braces className="w-3.5 h-3.5 mr-1.5" />
+            Tab Size
+          </div>
+          <span className="text-xs bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent font-bold">
+            {settings.tabSize || 2} spaces
+          </span>
+        </label>
+        <div className="relative">
+          <input
+            type="range"
+            min={2}
+            max={8}
+            step={1}
+            value={settings.tabSize || 2}
+            onChange={(e) =>
+              onUpdateSetting("tabSize", parseInt(e.target.value))
+            }
+            className="w-full h-1 bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-800 dark:to-purple-800 rounded-lg appearance-none cursor-pointer
+              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+              [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+              [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-purple-500
+              [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+              [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+          />
+          <div className="flex justify-between items-center mt-1 text-[10px] text-gray-400 dark:text-gray-500 px-1">
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+            <span>6</span>
+            <span>7</span>
+            <span>8</span>
+          </div>
         </div>
+      </div>
 
-        {/* Highlight List */}
-        <div className="space-y-2 max-h-64 overflow-y-auto">
-          {settings.highlights && settings.highlights.length > 0 ? (
-            settings.highlights.map((highlight, index) => (
-              <div
-                key={highlight.id}
-                className="p-2 rounded-lg bg-green-600/10 border border-white/60 shadow-sm space-y-2"
-              >
-                {/* Preview */}
-                <div className="flex items-center justify-between space-x-2">
-                  <div
-                    className="w-full px-2 py-1 rounded text-[10px] font-mono border"
-                    style={{
-                      backgroundColor: highlight.color,
-                      borderColor: highlight.color.slice(0, 7) + "40",
-                    }}
-                  >
-                    Preview: Lines {highlight.startLine}-{highlight.endLine}
-                  </div>
-                  <button
-                    onClick={() => {
-                      const newHighlights = settings.highlights?.filter(
-                        (_, i) => i !== index
-                      );
-                      onUpdateSetting("highlights", newHighlights || []);
-                    }}
-                    className="p-1 rounded-md bg-red-50 hover:bg-red-100 text-red-600 border border-red-500/30 transition-all"
-                    title="Remove highlight"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
-
-                {/* Type Selector */}
-                <div className="flex items-center gap-2">
-                  <label className="text-[10px] text-gray-600 font-medium w-8">
-                    Type:
-                  </label>
-                  <div className="flex-1 flex gap-1">
-                    {[
-                      {
-                        value: "add",
-                        label: "+",
-                        color: "bg-green-100 text-green-700 border-green-300",
-                      },
-                      {
-                        value: "remove",
-                        label: "-",
-                        color: "bg-red-100 text-red-700 border-red-300",
-                      },
-                      {
-                        value: "change",
-                        label: "~",
-                        color: "bg-blue-100 text-blue-700 border-blue-300",
-                      },
-                      {
-                        value: "neutral",
-                        label: "•",
-                        color: "bg-gray-100 text-gray-700 border-gray-300",
-                      },
-                    ].map((type) => (
-                      <button
-                        key={type.value}
-                        onClick={() => {
-                          const newHighlights = [
-                            ...(settings.highlights || []),
-                          ];
-                          newHighlights[index] = {
-                            ...highlight,
-                            type: type.value as HighlightRange["type"],
-                            color:
-                              type.value === "add"
-                                ? "#22c55e20"
-                                : type.value === "remove"
-                                ? "#ef444420"
-                                : type.value === "change"
-                                ? "#3b82f620"
-                                : "#6b728020",
-                          };
-                          onUpdateSetting("highlights", newHighlights);
-                        }}
-                        className={`flex-1 px-2 py-1 text-xs rounded border transition-all ${
-                          highlight.type === type.value
-                            ? type.color + " font-bold shadow-sm"
-                            : "bg-white/40 text-gray-500 border-gray-200 hover:bg-white/60"
-                        }`}
-                      >
-                        {type.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Line Range */}
-                <div className="flex items-center space-x-2">
-                  <label className="text-[10px] text-gray-600 font-medium w-8">
-                    Lines:
-                  </label>
-                  <input
-                    type="number"
-                    min="1"
-                    value={highlight.startLine}
-                    onChange={(e) => {
-                      const newHighlights = [...(settings.highlights || [])];
-                      const newStart = parseInt(e.target.value) || 1;
-                      newHighlights[index] = {
-                        ...highlight,
-                        startLine: newStart,
-                        endLine: Math.max(newStart, highlight.endLine),
-                      };
-                      onUpdateSetting("highlights", newHighlights);
-                    }}
-                    className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none"
-                    placeholder="Start"
-                  />
-                  <span className="text-xs text-gray-500 w-12">to</span>
-                  <input
-                    type="number"
-                    min={highlight.startLine}
-                    value={highlight.endLine}
-                    onChange={(e) => {
-                      const newHighlights = [...(settings.highlights || [])];
-                      newHighlights[index] = {
-                        ...highlight,
-                        endLine: Math.max(
-                          highlight.startLine,
-                          parseInt(e.target.value) || highlight.startLine
-                        ),
-                      };
-                      onUpdateSetting("highlights", newHighlights);
-                    }}
-                    className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none"
-                    placeholder="End"
-                  />
-                </div>
-
-                {/* Color Picker */}
-                <div className="flex items-center justify-between space-x-2 w-full">
-                  <label className="text-[10px] text-gray-600 font-medium w-8">
-                    Color:
-                  </label>
-                  <input
-                    type="color"
-                    value={highlight.color.slice(0, 7)}
-                    onChange={(e) => {
-                      const newHighlights = [...(settings.highlights || [])];
-                      // Keep opacity from original color or default to 20%
-                      const opacity =
-                        highlight.color.length > 7
-                          ? highlight.color.slice(7)
-                          : "20";
-                      newHighlights[index] = {
-                        ...highlight,
-                        color: e.target.value + opacity,
-                      };
-                      onUpdateSetting("highlights", newHighlights);
-                    }}
-                    className="w-10 h-6 rounded cursor-pointer border border-gray-300 dark:border-gray-600"
-                  />
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={
-                      highlight.color.length > 7
-                        ? parseInt(highlight.color.slice(7), 16) / 2.55
-                        : 12
-                    }
-                    onChange={(e) => {
-                      const newHighlights = [...(settings.highlights || [])];
-                      const opacity = Math.round(
-                        parseInt(e.target.value) * 2.55
-                      )
-                        .toString(16)
-                        .padStart(2, "0");
-                      newHighlights[index] = {
-                        ...highlight,
-                        color: highlight.color.slice(0, 7) + opacity,
-                      };
-                      onUpdateSetting("highlights", newHighlights);
-                    }}
-                    className="flex-1 h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                  />
-                  <span className="text-[10px] text-gray-500">
-                    {highlight.color.length > 7
-                      ? Math.round(
-                          parseInt(highlight.color.slice(7), 16) / 2.55
-                        )
-                      : 12}
-                    %
-                  </span>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="text-xs text-gray-500 dark:text-gray-400 text-center py-4 bg-gray-50/50 dark:bg-gray-900/50 rounded-lg border border-dashed border-gray-200 dark:border-gray-700">
-              No highlights added. Click &ldquo;Add&rdquo; to create one.
-            </div>
-          )}
-        </div>
+      {/* Format Code Button */}
+      <div>
+        <button
+          onClick={handleFormatCode}
+          disabled={!code || !onCodeChange}
+          className={`w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs transition-all ${
+            !code || !onCodeChange
+              ? "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+              : "bg-gradient-to-r from-violet-500 to-purple-500 dark:from-violet-600 dark:to-purple-600 hover:from-violet-600 hover:to-purple-600 dark:hover:from-violet-700 dark:hover:to-purple-700 text-white shadow-md hover:shadow-lg"
+          }`}
+        >
+          <Wand2 className="w-4 h-4" />
+          <span>Format Code</span>
+        </button>
       </div>
     </>
   );

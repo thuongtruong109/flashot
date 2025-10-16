@@ -6,6 +6,7 @@ export const _PLAYGROUND_SETTINGS_TAB = {
   VIEW: "View",
   THEME: "Theme",
   MAKEUP: "Makeup",
+  DECORATE: "Decorate",
   TEMPLATE: "Template",
 } as const;
 
@@ -37,6 +38,7 @@ export const DEFAULT_CODE_SETTINGS: CodeSettings = {
   width: undefined,
   height: undefined,
   wordWrap: false,
+  tabSize: 2,
   showCaption: false,
   captionText: "Figure: Sample code snippet",
   captionStyle: "normal",

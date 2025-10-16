@@ -55,6 +55,7 @@ export interface CodeSettings {
   width?: number;
   height?: number;
   wordWrap?: boolean;
+  tabSize?: number;
   showCaption?: boolean;
   captionText?: string;
   captionStyle?: "italic" | "normal";

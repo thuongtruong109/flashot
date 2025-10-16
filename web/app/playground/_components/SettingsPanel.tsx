@@ -10,6 +10,7 @@ interface SettingsPanelProps {
     value: CodeSettings[K]
   ) => void;
   onFileNameChange: (fileName: string) => void;
+  onCodeChange?: (code: string) => void;
   onToggleVisibility?: () => void;
   onImportTemplate?: (data: { code: string; settings: CodeSettings }) => void;
   onExportTemplate?: () => void;
@@ -22,6 +23,7 @@ import FontSelector from "./FontSelector";
 import BackgroundSelector from "./BackgroundSelector";
 import ThemeSection from "./setting/ThemeSection";
 import MakeupSection from "./setting/MakeupSection";
+import DecorateSection from "./setting/DecorateSection";
 import TemplateSection from "./setting/TemplateSection";
 import React, { useState, useRef, useEffect, forwardRef } from "react";
 import {
@@ -53,6 +55,7 @@ import {
   PanelRightOpen,
   RotateCcw,
   FileJson,
+  Stamp,
 } from "lucide-react";
 import CustomSelect from "./base/Select";
 import { _PLAYGROUND_SETTINGS_TAB, DEFAULT_CODE_SETTINGS } from "@/shared";
@@ -69,6 +72,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       onChangeActiveMenu,
       onUpdateSetting,
       onFileNameChange,
+      onCodeChange,
       onToggleVisibility,
       onImportTemplate,
       onExportTemplate,
@@ -220,6 +224,15 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                     ),
                   },
                   {
+                    value: _PLAYGROUND_SETTINGS_TAB.DECORATE,
+                    label: (
+                      <span className="flex items-center gap-1.5 text-rose-600">
+                        <Stamp className="size-3" />{" "}
+                        {_PLAYGROUND_SETTINGS_TAB.DECORATE}
+                      </span>
+                    ),
+                  },
+                  {
                     value: _PLAYGROUND_SETTINGS_TAB.TEMPLATE,
                     label: (
                       <span className="flex items-center gap-1.5 text-indigo-600">
@@ -265,7 +278,9 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
               {activeMenu === _PLAYGROUND_SETTINGS_TAB.VIEW && (
                 <ViewSection
                   settings={settings}
+                  code={code}
                   onUpdateSetting={onUpdateSetting}
+                  onCodeChange={onCodeChange}
                 />
               )}
               {activeMenu === _PLAYGROUND_SETTINGS_TAB.THEME && (
@@ -281,6 +296,12 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                   fileName={fileName}
                   onUpdateSetting={onUpdateSetting}
                   onFileNameChange={onFileNameChange}
+                />
+              )}
+              {activeMenu === _PLAYGROUND_SETTINGS_TAB.DECORATE && (
+                <DecorateSection
+                  settings={settings}
+                  onUpdateSetting={onUpdateSetting}
                 />
               )}
               {activeMenu === _PLAYGROUND_SETTINGS_TAB.TEMPLATE && (
