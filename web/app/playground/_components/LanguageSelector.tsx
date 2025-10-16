@@ -221,7 +221,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           zIndex: 99999,
         }}
       >
-        <div className="p-3">
+        <div className="p-2">
           {supportedLanguages.map((lang) => (
             <button
               key={lang.value}
@@ -229,16 +229,16 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                 onLanguageChange(lang.value);
                 setIsOpen(false);
               }}
-              className={`w-full flex items-center justify-between space-x-3 px-4 py-3 text-sm text-left rounded-xl transition-all duration-200 group mb-1 ${
+              className={`w-full flex items-center justify-between space-x-2 px-3 py-2 text-sm text-left rounded-xl transition-all duration-200 group mb-0.5 ${
                 selectedLanguage === lang.value
                   ? "bg-gradient-to-r from-blue-500/10 to-blue-600/10 dark:from-blue-900/30 dark:to-blue-800/30 border border-blue-200/50 dark:border-blue-700/50 shadow-sm"
                   : "hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100/50 dark:hover:from-gray-700/30 dark:hover:to-gray-700/20 border border-transparent"
               }`}
             >
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2">
                 <div className="flex-shrink-0">{lang.icon}</div>
                 <span
-                  className={`font-medium transition-colors ${
+                  className={`font-medium transition-colors text-xs ${
                     selectedLanguage === lang.value
                       ? "text-blue-700 dark:text-blue-400"
                       : "text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100"
@@ -248,7 +248,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                 </span>
               </div>
               {selectedLanguage === lang.value && (
-                <div className="w-2 h-2 bg-blue-500 dark:bg-blue-400 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-blue-500 dark:bg-blue-400 rounded-full"></div>
               )}
             </button>
           ))}

@@ -126,14 +126,14 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               className="sr-only peer"
             />
             <div
-              className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+              className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                 settings.showWindowHeader
-                  ? "bg-gradient-to-br from-blue-100 to-blue-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                  : ""
+                  ? "bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-800 dark:to-blue-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
+                  : "dark:from-gray-800 dark:to-gray-900"
               }`}
             >
               <svg
-                className={`size-3 text-blue-700 font-bold transition-opacity duration-200 ${
+                className={`size-3 text-blue-700 dark:text-blue-300 font-bold transition-opacity duration-200 ${
                   settings.showWindowHeader ? "opacity-100" : "opacity-0"
                 }`}
                 fill="currentColor"
@@ -177,14 +177,14 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   className="sr-only peer"
                 />
                 <div
-                  className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                  className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                     settings.showTrafficLights !== false
-                      ? "bg-gradient-to-br from-green-100 to-green-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                      : ""
+                      ? "bg-gradient-to-br from-green-100 to-green-200 dark:from-green-800 dark:to-green-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
+                      : "dark:from-gray-800 dark:to-gray-900"
                   }`}
                 >
                   <svg
-                    className={`size-3 text-green-700 font-bold transition-opacity duration-200 ${
+                    className={`size-3 text-green-700 dark:text-green-300 font-bold transition-opacity duration-200 ${
                       settings.showTrafficLights !== false
                         ? "opacity-100"
                         : "opacity-0"
@@ -217,14 +217,14 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                       className="sr-only peer"
                     />
                     <div
-                      className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                      className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                         settings.showTrafficLightsColor !== false
-                          ? "bg-gradient-to-br from-green-100 to-green-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                          : ""
+                          ? "bg-gradient-to-br from-green-100 to-green-200 dark:from-green-800 dark:to-green-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
+                          : "dark:from-gray-800 dark:to-gray-900"
                       }`}
                     >
                       <svg
-                        className={`size-3 text-green-700 font-bold transition-opacity duration-200 ${
+                        className={`size-3 text-green-700 dark:text-green-300 font-bold transition-opacity duration-200 ${
                           settings.showTrafficLightsColor !== false
                             ? "opacity-100"
                             : "opacity-0"
@@ -248,8 +248,8 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                       className={`px-2 rounded-md text-xs transition-all duration-200 capitalize ${
                         !settings.windowHeaderAlign ||
                         settings.windowHeaderAlign === "left"
-                          ? "bg-green-500 text-white shadow-md py-1 font-medium"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                          ? "bg-green-500 dark:bg-green-600 text-white shadow-md py-1 font-medium"
+                          : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 py-[5px]"
                       }`}
                       onClick={() =>
                         onUpdateSetting("windowHeaderAlign", "left")
@@ -261,8 +261,8 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                       type="button"
                       className={`px-2 rounded-md text-xs transition-all duration-200 capitalize ${
                         settings.windowHeaderAlign === "right"
-                          ? "bg-green-500 text-white shadow-md py-1 font-medium"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                          ? "bg-green-500 dark:bg-green-600 text-white shadow-md py-1 font-medium"
+                          : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 py-[5px]"
                       }`}
                       onClick={() =>
                         onUpdateSetting("windowHeaderAlign", "right")
@@ -304,14 +304,14 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   className="sr-only peer"
                 />
                 <div
-                  className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                  className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                     settings.showFileName
-                      ? "bg-gradient-to-br from-yellow-100 to-yellow-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                      : ""
+                      ? "bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-800 dark:to-yellow-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
+                      : "dark:from-gray-800 dark:to-gray-900"
                   }`}
                 >
                   <svg
-                    className={`size-3 text-yellow-700 font-bold transition-opacity duration-200 ${
+                    className={`size-3 text-yellow-700 dark:text-yellow-300 font-bold transition-opacity duration-200 ${
                       settings.showFileName ? "opacity-100" : "opacity-0"
                     }`}
                     fill="currentColor"
@@ -481,14 +481,14 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   className="sr-only peer"
                 />
                 <div
-                  className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                  className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                     settings.showLineCount
-                      ? "bg-gradient-to-br from-sky-100 to-sky-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                      : ""
+                      ? "bg-gradient-to-br from-sky-100 to-sky-200 dark:from-sky-800 dark:to-sky-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
+                      : "dark:from-gray-800 dark:to-gray-900"
                   }`}
                 >
                   <svg
-                    className={`size-3 text-sky-700 font-bold transition-opacity duration-200 ${
+                    className={`size-3 text-sky-700 dark:text-sky-300 font-bold transition-opacity duration-200 ${
                       settings.showLineCount ? "opacity-100" : "opacity-0"
                     }`}
                     fill="currentColor"
@@ -636,14 +636,14 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               className="sr-only peer"
             />
             <div
-              className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+              className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                 settings.showLineNumbers
-                  ? "bg-gradient-to-br from-teal-100 to-teal-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                  : ""
+                  ? "bg-gradient-to-br from-teal-100 to-teal-200 dark:from-teal-800 dark:to-teal-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
+                  : "dark:from-gray-800 dark:to-gray-900"
               }`}
             >
               <svg
-                className={`size-3 text-teal-700 font-bold transition-opacity duration-200 ${
+                className={`size-3 text-teal-700 dark:text-teal-300 font-bold transition-opacity duration-200 ${
                   settings.showLineNumbers ? "opacity-100" : "opacity-0"
                 }`}
                 fill="currentColor"
@@ -702,14 +702,14 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   className="sr-only peer"
                 />
                 <div
-                  className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                  className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                     settings.lineNumberBorder
-                      ? "bg-gradient-to-br from-teal-100 to-teal-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                      : ""
+                      ? "bg-gradient-to-br from-teal-100 to-teal-200 dark:from-teal-800 dark:to-teal-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
+                      : "dark:from-gray-800 dark:to-gray-900"
                   }`}
                 >
                   <svg
-                    className={`size-3 text-teal-700 font-bold transition-opacity duration-200 ${
+                    className={`size-3 text-teal-700 dark:text-teal-300 font-bold transition-opacity duration-200 ${
                       settings.lineNumberBorder ? "opacity-100" : "opacity-0"
                     }`}
                     fill="currentColor"
@@ -729,8 +729,8 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   onClick={() => onUpdateSetting("lineNumberTextAlign", "left")}
                   className={`px-2 rounded-md text-xs transition-all duration-200 capitalize ${
                     (settings.lineNumberTextAlign || "right") === "left"
-                      ? "bg-teal-500 text-white shadow-md py-1 font-medium"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                      ? "bg-teal-500 dark:bg-teal-600 text-white shadow-md py-1 font-medium"
+                      : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 py-[5px]"
                   }`}
                 >
                   Left
@@ -741,8 +741,8 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   }
                   className={`px-2 rounded-md text-xs transition-all duration-200 capitalize ${
                     settings.lineNumberTextAlign === "center"
-                      ? "bg-teal-500 text-white shadow-md py-1 font-medium"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                      ? "bg-teal-500 dark:bg-teal-600 text-white shadow-md py-1 font-medium"
+                      : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 py-[5px]"
                   }`}
                 >
                   Center
@@ -753,8 +753,8 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   }
                   className={`px-2 rounded-md text-xs transition-all duration-200 capitalize ${
                     (settings.lineNumberTextAlign || "right") === "right"
-                      ? "bg-teal-500 text-white shadow-md py-1 font-medium"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                      ? "bg-teal-500 dark:bg-teal-600 text-white shadow-md py-1 font-medium"
+                      : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 py-[5px]"
                   }`}
                 >
                   Right
@@ -790,14 +790,14 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               className="sr-only peer"
             />
             <div
-              className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+              className={`w-5 h-5 bg-gradient-to-br rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                 settings.showCaption
-                  ? "bg-gradient-to-br from-indigo-100 to-indigo-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-                  : ""
+                  ? "bg-gradient-to-br from-indigo-100 to-indigo-200 dark:from-indigo-800 dark:to-indigo-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
+                  : "dark:from-gray-800 dark:to-gray-900"
               }`}
             >
               <svg
-                className={`size-3 text-indigo-700 font-bold transition-opacity duration-200 ${
+                className={`size-3 text-indigo-700 dark:text-indigo-300 font-bold transition-opacity duration-200 ${
                   settings.showCaption ? "opacity-100" : "opacity-0"
                 }`}
                 fill="currentColor"
@@ -828,8 +828,8 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   onClick={() => onUpdateSetting("captionStyle", "normal")}
                   className={`px-2 rounded-md text-xs transition-all duration-200 capitalize ${
                     (settings.captionStyle || "normal") === "normal"
-                      ? "bg-indigo-500 text-white shadow-md py-1 font-medium"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                      ? "bg-indigo-500 dark:bg-indigo-600 text-white shadow-md py-1 font-medium"
+                      : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 py-[5px]"
                   }`}
                 >
                   Normal
@@ -838,8 +838,8 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   onClick={() => onUpdateSetting("captionStyle", "italic")}
                   className={`px-2 rounded-md text-xs transition-all duration-200 capitalize ${
                     settings.captionStyle === "italic"
-                      ? "bg-indigo-500 text-white shadow-md py-1 font-medium"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                      ? "bg-indigo-500 dark:bg-indigo-600 text-white shadow-md py-1 font-medium"
+                      : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 py-[5px]"
                   }`}
                 >
                   <em>Italic</em>
@@ -891,8 +891,8 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                     }
                     className={`px-1.5 rounded-md text-xs  transition-all duration-200 capitalize ${
                       (settings.captionPosition || "bottom") === position
-                        ? "bg-indigo-500 text-white shadow-md py-1 font-medium"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200 py-[5px]"
+                        ? "bg-indigo-500 dark:bg-indigo-600 text-white shadow-md py-1 font-medium"
+                        : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 py-[5px]"
                     }`}
                   >
                     {position}
@@ -906,7 +906,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
 
       {/* Watermark Section */}
       <div>
-        <SubSeparate />
+        {/* <SubSeparate /> */}
         <label className="flex items-center justify-between cursor-pointer mb-3">
           <div className="flex items-center gap-2">
             <Stamp
@@ -951,14 +951,14 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               className="sr-only peer"
             />
             <div
-              className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+              className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                 settings.watermark?.enabled
-                  ? "bg-gradient-to-br from-rose-100 to-rose-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                  ? "bg-gradient-to-br from-rose-100 to-rose-200 dark:from-rose-800 dark:to-rose-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
                   : ""
               }`}
             >
               <svg
-                className={`size-3 text-rose-700 font-bold transition-opacity duration-200 ${
+                className={`size-3 text-rose-700 dark:text-rose-300 font-bold transition-opacity duration-200 ${
                   settings.watermark?.enabled ? "opacity-100" : "opacity-0"
                 }`}
                 fill="currentColor"
@@ -987,8 +987,8 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   }
                   className={`px-3 py-1 rounded-md text-xs transition-all duration-200 ${
                     (settings.watermark?.type || "text") === "text"
-                      ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-md font-medium"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      ? "bg-gradient-to-r from-rose-500 to-pink-500 dark:from-rose-600 dark:to-pink-600 text-white shadow-md font-medium"
+                      : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                   }`}
                 >
                   Text
@@ -1002,8 +1002,8 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   }
                   className={`px-3 py-1 rounded-md text-xs transition-all duration-200 ${
                     settings.watermark?.type === "image"
-                      ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-md font-medium"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      ? "bg-gradient-to-r from-rose-500 to-pink-500 dark:from-rose-600 dark:to-pink-600 text-white shadow-md font-medium"
+                      : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                   }`}
                 >
                   Image
@@ -1108,8 +1108,8 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                         className={`px-2 py-1 rounded-md text-xs transition-all duration-200 ${
                           (settings.watermark?.fontWeight || 800) ===
                           weight.value
-                            ? "bg-gradient-to-r from-rose-500 to-pink-500 font-bold text-white shadow-md"
-                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                            ? "bg-gradient-to-r from-rose-500 to-pink-500 dark:from-rose-600 dark:to-pink-600 font-bold text-white shadow-md"
+                            : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                         }`}
                       >
                         {weight.label}

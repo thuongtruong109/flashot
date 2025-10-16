@@ -237,7 +237,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   ) => {
     // Refined clean style - giảm padding, shadow, translate
     const baseStyles =
-      "group relative flex items-center space-x-1.5 px-3 py-1.5 rounded-lg transition-all duration-200 " +
+      "group relative flex items-center space-x-1.5 px-2.5 py-1 rounded-lg transition-all duration-200 " +
       "bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl " +
       "border border-white/60 dark:border-gray-700/60 " +
       "shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] " +
@@ -316,13 +316,13 @@ const ActionBar: React.FC<ActionBarProps> = ({
         {/* Dark Mode Toggle */}
         <button
           onClick={toggleDarkMode}
-          className={getButtonStyles("secondary", "slate", false)}
+          className={getButtonStyles("secondary", "purple", false)}
           title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
         >
           {isDarkMode ? (
             <Sun className={getIconStyles("amber", "secondary")} />
           ) : (
-            <Moon className={getIconStyles("slate", "secondary")} />
+            <Moon className={getIconStyles("purple", "secondary")} />
           )}
           <span className="text-[13px]">{isDarkMode ? "Light" : "Dark"}</span>
         </button>

@@ -1,12 +1,13 @@
-## [v2.3.1 - 2025-10-20](https://github.com/thuongtruong109/flashot/releases/tag/v2.3.0)
+## [v2.4.0 - 2025-10-20](https://github.com/thuongtruong109/flashot/releases/tag/v2.3.0)
 
 ### 🚀 Features
 
 - **playground**:
-  - Apply dark mode theme - by @thuongtruong109 [<samp>()</samp>]()
-  - Import/export/choice template settings as JSON - by @thuongtruong109 [<samp>()</samp>]()
+  - Seperate border radius for code editor snippet area inner and frame outer - by @thuongtruong109 [<samp>()</samp>]()
+  - Apply dark mode theme - by @thuongtruong109 [<samp>(b8746)</samp>](https://github.com/thuongtruong109/flashot/commit/b8746e9b8a7e660b5015efc058ab2df823b38fc5)
+  - Import/export/choice template settings as JSON - by @thuongtruong109 [<samp>(e2e29)</samp>](https://github.com/thuongtruong109/flashot/commit/e2e29b590dcd4bbcbbfc721026fbea610de692eb)
 
-##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.3.0...v2.3.1) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.3.1)
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.3.0...v2.4.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.4.0)
 
 ## [v2.3.0 - 2025-10-09](https://github.com/thuongtruong109/flashot/releases/tag/v2.3.0)
 

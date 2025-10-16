@@ -100,7 +100,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
         </div>
       </div>
 
-      {/* Border Radius */}
+      {/* Border Radius (All) - Controls both frame and code area */}
       <div>
         <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center justify-between">
           <div className="flex items-center text-teal-600 dark:text-teal-400">
@@ -117,9 +117,13 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             min="0"
             max="32"
             value={settings.borderRadius}
-            onChange={(e) =>
-              onUpdateSetting("borderRadius", parseInt(e.target.value))
-            }
+            onChange={(e) => {
+              const value = parseInt(e.target.value);
+              onUpdateSetting("borderRadius", value);
+              // Also update frame and code border radius
+              onUpdateSetting("frameBorderRadius", value);
+              onUpdateSetting("codeBorderRadius", value);
+            }}
             className="w-full h-1 bg-gradient-to-r from-teal-200 to-cyan-200 dark:from-teal-900 dark:to-cyan-900 rounded-lg appearance-none cursor-pointer
               [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
               [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
@@ -130,12 +134,12 @@ const ViewSection: React.FC<ViewSectionProps> = ({
         </div>
       </div>
 
-      {/* Frame Border Radius */}
+      {/* Frame Border Radius - Individual control */}
       <div className="space-y-2">
         <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center justify-between">
           <div className="flex items-center text-purple-600 dark:text-purple-400">
             <CornerRightDown className="w-3.5 h-3.5 mr-1.5" />
-            Frame Border
+            Frame Border (Outer)
           </div>
           <span className="text-xs bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent font-bold">
             {settings.frameBorderRadius ?? settings.borderRadius}px
@@ -160,12 +164,12 @@ const ViewSection: React.FC<ViewSectionProps> = ({
         </div>
       </div>
 
-      {/* Code Border Radius */}
+      {/* Code Border Radius - Individual control */}
       <div className="space-y-2">
         <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center justify-between">
           <div className="flex items-center text-indigo-600 dark:text-indigo-400">
             <CornerRightDown className="w-3.5 h-3.5 mr-1.5" />
-            Code Border
+            Code Border (Snippet)
           </div>
           <span className="text-xs bg-gradient-to-r from-indigo-500 to-blue-500 bg-clip-text text-transparent font-bold">
             {settings.codeBorderRadius ?? settings.borderRadius}px
