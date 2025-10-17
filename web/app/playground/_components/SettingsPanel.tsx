@@ -182,8 +182,8 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
           ref={ref}
           className={`
         ${isVisible ? "translate-x-0 lg:w-80" : "translate-x-full lg:w-0"}
-         w-80 fixed lg:relative top-0 right-0 z-30
-         h-[100vh] lg:max-h-[calc(100vh-60px)]
+        w-80 fixed lg:relative top-0 right-0 z-30
+        h-[100vh] lg:max-h-[calc(100vh-60px)]
         bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-2xl
         border-l border-white/20 dark:border-gray-700/30
         transition-all duration-300 ease-in-out
@@ -278,9 +278,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
               {activeMenu === _PLAYGROUND_SETTINGS_TAB.VIEW && (
                 <ViewSection
                   settings={settings}
-                  code={code}
                   onUpdateSetting={onUpdateSetting}
-                  onCodeChange={onCodeChange}
                 />
               )}
               {activeMenu === _PLAYGROUND_SETTINGS_TAB.THEME && (

@@ -3,9 +3,10 @@
 ### 🚀 Features
 
 - ## **playground**:
-  - Align file name position - by @thuongtruong109 [<samp>()</samp>]()
-  - Format code snippets by programming language - by @thuongtruong109 [<samp>()</samp>]()
-  - Seperate border radius for code editor snippet area inner and frame outer - by @thuongtruong109 [<samp>(1341b)</samp>](https://github.com/thuongtruong109/flashot/commit/1341b9a2b49a76c3666d0b878f7e1a94aa6154dd)
+  - Add action buttons clear/copy/share - by @thuongtruong109 [<samp>()</samp>]()
+  - Align file name position - by @thuongtruong109 [<samp>(9bc87)</samp>](https://github.com/thuongtruong109/flashot/commit/9bc878e188bbd4a9aa1df566d9b3816288429e9a)
+  - Format code snippets by programming language - by @thuongtruong109 [<samp>(18c1e)</samp>](https://github.com/thuongtruong109/flashot/commit/18c1e56c3760b69f00cd8eb84bc7e92a1d542d75)
+  - Separate border radius for code editor snippet area inner and frame outer - by @thuongtruong109 [<samp>(1341b)</samp>](https://github.com/thuongtruong109/flashot/commit/1341b9a2b49a76c3666d0b878f7e1a94aa6154dd)
   - Apply dark mode theme - by @thuongtruong109 [<samp>(b8746)</samp>](https://github.com/thuongtruong109/flashot/commit/b8746e9b8a7e660b5015efc058ab2df823b38fc5)
   - Import/export/choice template settings as JSON - by @thuongtruong109 [<samp>(e2e29)</samp>](https://github.com/thuongtruong109/flashot/commit/e2e29b590dcd4bbcbbfc721026fbea610de692eb)
 

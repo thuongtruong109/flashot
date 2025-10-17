@@ -60,7 +60,7 @@ function CustomSelect<T extends string | number | boolean>({
     if (open && highlighted === -1 && options.length > 0) {
       setHighlighted(options.findIndex((opt) => opt.value === value));
     }
-  }, [open, value, options]);
+  }, [open, value, options, highlighted]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!open) {

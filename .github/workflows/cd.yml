@@ -10,12 +10,6 @@ on:
       - ".github/workflows/cd.yml"
       - "api/**"
   workflow_dispatch:
-    inputs:
-      force_deploy:
-        description: "Force deployment"
-        required: false
-        default: "false"
-        type: boolean
 
 env:
   REGISTRY_GHCR: ghcr.io

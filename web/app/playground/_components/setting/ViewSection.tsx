@@ -91,123 +91,89 @@ const ViewSection: React.FC<ViewSectionProps> = ({
         </div>
       </div>
 
-      {/* Border Radius (All) - Controls both frame and code area */}
+      {/* Border Radius - Controls both frame and code area */}
       <div>
-        <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center justify-between">
-          <div className="flex items-center text-teal-600 dark:text-teal-400">
-            <CornerRightDown className="w-3.5 h-3.5 mr-1.5" />
-            Border Radius (All)
-          </div>
-          <span className="text-xs bg-gradient-to-r from-teal-500 to-cyan-500 bg-clip-text text-transparent font-bold">
-            {settings.borderRadius}px
-          </span>
+        <label className="text-sm font-medium text-teal-600 dark:text-teal-400 flex items-center space-x-2 mb-4">
+          <CornerRightDown className="w-3.5 h-3.5 mr-1.5" />
+          Border Radius
         </label>
-        <div className="relative">
-          <input
-            type="range"
-            min="0"
-            max="32"
-            value={settings.borderRadius}
-            onChange={(e) => {
-              const value = parseInt(e.target.value);
-              onUpdateSetting("borderRadius", value);
-              // Also update frame and code border radius
-              onUpdateSetting("frameBorderRadius", value);
-              onUpdateSetting("codeBorderRadius", value);
-            }}
-            className="w-full h-1 bg-gradient-to-r from-teal-200 to-cyan-200 dark:from-teal-900 dark:to-cyan-900 rounded-lg appearance-none cursor-pointer
-              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
-              [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
-              [&::-webkit-slider-thumb]:from-teal-500 [&::-webkit-slider-thumb]:to-cyan-500
-              [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-              [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-          />
-        </div>
-      </div>
+        <div className="space-y-3">
+          <div className="flex items-center space-x-3">
+            <span className="text-xs text-gray-500 w-24">All</span>
+            <span className="text-xs bg-gradient-to-r from-teal-500 to-cyan-500 bg-clip-text text-transparent font-bold">
+              {settings.borderRadius}px
+            </span>
+            <input
+              type="range"
+              min="0"
+              max="32"
+              value={settings.borderRadius}
+              onChange={(e) => {
+                const value = parseInt(e.target.value);
+                onUpdateSetting("borderRadius", value);
+                onUpdateSetting("frameBorderRadius", value);
+                onUpdateSetting("codeBorderRadius", value);
+              }}
+              className="w-full h-1 bg-gradient-to-r from-teal-200 to-cyan-200 dark:from-teal-900 dark:to-cyan-900 rounded-lg appearance-none cursor-pointer
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                [&::-webkit-slider-thumb]:from-teal-500 [&::-webkit-slider-thumb]:to-cyan-500
+                [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+            />
+          </div>
 
-      {/* Frame Border Radius - Individual control */}
-      <div className="space-y-2">
-        <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center justify-between">
-          <div className="flex items-center text-purple-600 dark:text-purple-400">
-            <CornerRightDown className="w-3.5 h-3.5 mr-1.5" />
-            Frame Border (Outer)
-          </div>
-          <span className="text-xs bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent font-bold">
-            {settings.frameBorderRadius ?? settings.borderRadius}px
-          </span>
-        </label>
-        <div className="relative">
-          <input
-            type="range"
-            min="0"
-            max="50"
-            value={settings.frameBorderRadius ?? settings.borderRadius}
-            onChange={(e) =>
-              onUpdateSetting("frameBorderRadius", parseInt(e.target.value))
-            }
-            className="w-full h-1 bg-gradient-to-r from-purple-200 to-pink-200 dark:from-purple-900 dark:to-pink-900 rounded-lg appearance-none cursor-pointer
+          <div className="flex items-center space-x-3">
+            <span className="text-xs text-gray-500 w-24">Outer</span>
+            <span className="text-xs bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent font-bold">
+              {settings.frameBorderRadius ?? settings.borderRadius}px
+            </span>
+            <input
+              type="range"
+              min="0"
+              max="50"
+              value={settings.frameBorderRadius ?? settings.borderRadius}
+              onChange={(e) =>
+                onUpdateSetting("frameBorderRadius", parseInt(e.target.value))
+              }
+              className="w-full h-1 bg-gradient-to-r from-purple-200 to-pink-200 dark:from-purple-900 dark:to-pink-900 rounded-lg appearance-none cursor-pointer
               [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
               [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
               [&::-webkit-slider-thumb]:from-purple-500 [&::-webkit-slider-thumb]:to-pink-500
               [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
               [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-          />
-        </div>
-      </div>
-
-      {/* Code Border Radius - Individual control */}
-      <div className="space-y-2">
-        <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center justify-between">
-          <div className="flex items-center text-indigo-600 dark:text-indigo-400">
-            <CornerRightDown className="w-3.5 h-3.5 mr-1.5" />
-            Code Border (Snippet)
+            />
           </div>
-          <span className="text-xs bg-gradient-to-r from-indigo-500 to-blue-500 bg-clip-text text-transparent font-bold">
-            {settings.codeBorderRadius ?? settings.borderRadius}px
-          </span>
-        </label>
-        <div className="relative">
-          <input
-            type="range"
-            min="0"
-            max="50"
-            value={settings.codeBorderRadius ?? settings.borderRadius}
-            onChange={(e) =>
-              onUpdateSetting("codeBorderRadius", parseInt(e.target.value))
-            }
-            className="w-full h-1 bg-gradient-to-r from-indigo-200 to-blue-200 dark:from-indigo-900 dark:to-blue-900 rounded-lg appearance-none cursor-pointer
-              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
-              [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
-              [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-blue-500
-              [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-              [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-          />
+
+          <div className="flex items-center space-x-3">
+            <span className="text-xs text-gray-500 w-24">Inner</span>
+            <span className="text-xs bg-gradient-to-r from-indigo-500 to-blue-500 bg-clip-text text-transparent font-bold">
+              {settings.codeBorderRadius ?? settings.borderRadius}px
+            </span>
+            <input
+              type="range"
+              min="0"
+              max="50"
+              value={settings.codeBorderRadius ?? settings.borderRadius}
+              onChange={(e) =>
+                onUpdateSetting("codeBorderRadius", parseInt(e.target.value))
+              }
+              className="w-full h-1 bg-gradient-to-r from-indigo-200 to-blue-200 dark:from-indigo-900 dark:to-blue-900 rounded-lg appearance-none cursor-pointer
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-blue-500
+                [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+            />
+          </div>
         </div>
       </div>
 
       {/* Sizing */}
       <div className="space-y-2">
-        <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center justify-between">
-          <div className="flex items-center text-blue-600">
-            <Move className="w-3.5 h-3.5 mr-1.5" />
-            Sizing
-          </div>
-          <button
-            onClick={() => {
-              onUpdateSetting("width", undefined);
-              onUpdateSetting("height", undefined);
-              setWidthInput("");
-              setHeightInput("");
-            }}
-            disabled={!settings.width && !settings.height}
-            className={`px-3 py-1 text-xs rounded-lg transition-all ${
-              !settings.width && !settings.height
-                ? "text-gray-700 bg-gradient-to-b from-white to-gray-50 shadow-[inset_2px_2px_6px_rgba(0,0,0,0.05),inset_-2px_-2px_6px_rgba(255,255,255,0.95)] cursor-not-allowed"
-                : "text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 shadow-md cursor-pointer"
-            }`}
-          >
-            Auto
-          </button>
+        <label className="text-blue-600 text-sm font-medium mb-4 flex items-center">
+          <Move className="w-3.5 h-3.5 mr-1.5" />
+          Sizing
         </label>
 
         <div className="flex items-center space-x-2">
@@ -280,6 +246,25 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
             placeholder="400"
           />
+
+          <span className="w-8" />
+
+          <button
+            onClick={() => {
+              onUpdateSetting("width", undefined);
+              onUpdateSetting("height", undefined);
+              setWidthInput("");
+              setHeightInput("");
+            }}
+            disabled={!settings.width && !settings.height}
+            className={`px-3 py-1 text-xs rounded-md transition-all ${
+              !settings.width && !settings.height
+                ? "text-gray-700 bg-gradient-to-b from-white to-gray-50 shadow-[inset_2px_2px_6px_rgba(0,0,0,0.05),inset_-2px_-2px_6px_rgba(255,255,255,0.95)] cursor-not-allowed"
+                : "text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 shadow-md cursor-pointer"
+            }`}
+          >
+            Auto
+          </button>
         </div>
 
         {/* Social Media Size Presets */}
