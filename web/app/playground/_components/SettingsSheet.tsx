@@ -139,12 +139,13 @@ const SettingsSheet: React.FC<SettingsSheetProps> = ({
                   onChange={(e) =>
                     onUpdateSetting("fontSize", parseInt(e.target.value))
                   }
-                  className="w-full h-1.5 bg-gradient-to-r from-orange-200 to-red-200 rounded-lg appearance-none cursor-pointer
+                  className="w-full h-1.5 bg-gradient-to-r from-orange-200 to-red-200 dark:from-orange-900/50 dark:to-red-900/50 rounded-lg appearance-none cursor-pointer
                           [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
                           [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                           [&::-webkit-slider-thumb]:from-orange-500 [&::-webkit-slider-thumb]:to-red-500
                           [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-                          [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                          [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110
+                          dark:[&::-webkit-slider-thumb]:shadow-orange-500/30 dark:hover:[&::-webkit-slider-thumb]:shadow-orange-500/50"
                 />
               </div>
             </div>
@@ -169,12 +170,13 @@ const SettingsSheet: React.FC<SettingsSheetProps> = ({
                   onChange={(e) =>
                     onUpdateSetting("padding", parseInt(e.target.value))
                   }
-                  className="w-full h-1.5 bg-gradient-to-r from-pink-200 to-purple-200 rounded-lg appearance-none cursor-pointer
+                  className="w-full h-1.5 bg-gradient-to-r from-pink-200 to-purple-200 dark:from-pink-900/50 dark:to-purple-900/50 rounded-lg appearance-none cursor-pointer
                           [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
                           [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                           [&::-webkit-slider-thumb]:from-pink-500 [&::-webkit-slider-thumb]:to-purple-500
                           [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-                          [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                          [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110
+                          dark:[&::-webkit-slider-thumb]:shadow-purple-500/30 dark:hover:[&::-webkit-slider-thumb]:shadow-purple-500/50"
                 />
               </div>
             </div>

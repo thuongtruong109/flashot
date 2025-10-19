@@ -89,7 +89,7 @@ const ThemeSection: React.FC<ThemeSectionProps> = ({
                   : "text-gray-500 group-hover:text-gray-700"
               }`}
             >
-              Background display
+              Background
             </span>
           </div>
           <div className="relative">

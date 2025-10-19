@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Fira_Code } from "next/font/google";
 import "./globals.css";
+import JsonLd from "./components/JsonLd";
 
 const inter = Inter({ subsets: ["latin"] });
 const firaCode = Fira_Code({
@@ -9,7 +10,10 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Flashot - Rapidly snapshot code snippets as images",
+  title: {
+    default: "Flashot - Rapidly snapshot code snippets as images",
+    template: "%s | Flashot",
+  },
   description:
     "Transform your code snippets into beautiful, shareable images with syntax highlighting and customizable themes. Perfect for social media, documentation, and presentations.",
   keywords: [
@@ -21,8 +25,20 @@ export const metadata: Metadata = {
     "code sharing",
     "screenshot",
     "flashot",
+    "code screenshot",
+    "beautify code",
+    "code formatter",
+    "developer productivity",
+    "coding tools",
+    "github code",
+    "code presentation",
   ],
-  authors: [{ name: "Tran Nguyen Thuong Truong" }],
+  authors: [
+    {
+      name: "Tran Nguyen Thuong Truong",
+      url: "https://github.com/thuongtruong109",
+    },
+  ],
   creator: "Tran Nguyen Thuong Truong",
   publisher: "Tran Nguyen Thuong Truong",
   formatDetection: {
@@ -34,10 +50,17 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  applicationName: "Flashot",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Flashot",
+  },
+  manifest: "/site.webmanifest",
   openGraph: {
     title: "Flashot - Rapidly snapshot code snippets as images",
     description:
-      "Transform your code snippets into beautiful, shareable images with syntax highlighting and customizable themes.",
+      "Transform your code snippets into beautiful, shareable images with syntax highlighting and customizable themes. Perfect for social media, documentation, and presentations.",
     url: "https://flashot.vercel.app",
     siteName: "Flashot",
     type: "website",
@@ -48,6 +71,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: "Flashot - Code to Image Converter",
+        type: "image/png",
       },
     ],
   },
@@ -58,6 +82,7 @@ export const metadata: Metadata = {
       "Transform your code snippets into beautiful, shareable images with syntax highlighting and customizable themes.",
     images: ["/og-image.png"],
     creator: "@flashot_dev",
+    site: "@flashot_dev",
   },
   robots: {
     index: true,
@@ -72,7 +97,12 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "your-google-verification-code",
+    yandex: "your-yandex-verification-code",
+    other: {
+      "msvalidate.01": "your-bing-verification-code",
+    },
   },
+  category: "technology",
 };
 
 export default function RootLayout({
@@ -83,6 +113,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.className} ${firaCode.variable}`}>
       <head>
+        <JsonLd />
         <link rel="icon" href="/favicon.png" />
         <link
           rel="apple-touch-icon"
@@ -103,7 +134,14 @@ export default function RootLayout({
         />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#2563eb" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=5"
+        />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Flashot" />
       </head>
       <body className={inter.className}>{children}</body>
     </html>

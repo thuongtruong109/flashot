@@ -51,12 +51,13 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             onChange={(e) =>
               onUpdateSetting("fontSize", parseInt(e.target.value))
             }
-            className="w-full h-1 bg-gradient-to-r from-orange-200 to-red-200 rounded-lg appearance-none cursor-pointer
+            className="w-full h-1 bg-gradient-to-r from-orange-200 to-red-200 dark:from-orange-900/50 dark:to-red-900/50 rounded-lg appearance-none cursor-pointer
               [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
               [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
               [&::-webkit-slider-thumb]:from-orange-500 [&::-webkit-slider-thumb]:to-red-500
               [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-              [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+              [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110
+              dark:[&::-webkit-slider-thumb]:shadow-orange-500/30 dark:hover:[&::-webkit-slider-thumb]:shadow-orange-500/50"
           />
         </div>
       </div>
@@ -81,12 +82,13 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             onChange={(e) =>
               onUpdateSetting("padding", parseInt(e.target.value))
             }
-            className="w-full h-1 bg-gradient-to-r from-pink-200 to-purple-200 rounded-lg appearance-none cursor-pointer
+            className="w-full h-1 bg-gradient-to-r from-pink-200 to-purple-200 dark:from-pink-900/50 dark:to-purple-900/50 rounded-lg appearance-none cursor-pointer
               [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
               [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
               [&::-webkit-slider-thumb]:from-pink-500 [&::-webkit-slider-thumb]:to-purple-500
               [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-              [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+              [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110
+              dark:[&::-webkit-slider-thumb]:shadow-purple-500/30 dark:hover:[&::-webkit-slider-thumb]:shadow-purple-500/50"
           />
         </div>
       </div>
@@ -119,7 +121,8 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                 [&::-webkit-slider-thumb]:from-teal-500 [&::-webkit-slider-thumb]:to-cyan-500
                 [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-                [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110
+                dark:[&::-webkit-slider-thumb]:shadow-teal-500/30 dark:hover:[&::-webkit-slider-thumb]:shadow-teal-500/50"
             />
           </div>
 
@@ -141,7 +144,8 @@ const ViewSection: React.FC<ViewSectionProps> = ({
               [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
               [&::-webkit-slider-thumb]:from-purple-500 [&::-webkit-slider-thumb]:to-pink-500
               [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-              [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+              [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110
+              dark:[&::-webkit-slider-thumb]:shadow-purple-500/30 dark:hover:[&::-webkit-slider-thumb]:shadow-purple-500/50"
             />
           </div>
 
@@ -163,7 +167,8 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                 [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-blue-500
                 [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-                [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110
+                dark:[&::-webkit-slider-thumb]:shadow-blue-500/30 dark:hover:[&::-webkit-slider-thumb]:shadow-blue-500/50"
             />
           </div>
         </div>
@@ -207,7 +212,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 }
               }
             }}
-            className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
+            className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none transition-all"
             placeholder="600"
           />
           {/* Height Input */}
@@ -243,7 +248,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 }
               }
             }}
-            className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
+            className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 outline-none transition-all"
             placeholder="400"
           />
 

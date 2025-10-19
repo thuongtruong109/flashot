@@ -276,42 +276,31 @@ const ActionBar: React.FC<ActionBarProps> = ({
     <div className={`flex flex-wrap items-center space-x-2 ${className}`}>
       {/* Desktop Layout */}
       <div className="hidden lg:flex items-center space-x-3">
-        {/* Individual Menu Items on Desktop */}
-        <button
-          onClick={() => handleMoreOptionSelect("guide")}
-          className={getButtonStyles("secondary", "emerald", false)}
-          title="View Guide"
-        >
-          <BookOpen className={getIconStyles("emerald", "secondary")} />
-          <span className="text-[13px]">Guide</span>
-        </button>
-
-        <button
-          onClick={() => handleMoreOptionSelect("info")}
-          className={getButtonStyles("secondary", "amber", false)}
-          title="Info & Tips"
-        >
-          <Info className={getIconStyles("amber", "secondary")} />
-          <span className="text-[13px]">Tips</span>
-        </button>
-
-        <button
-          onClick={() => handleMoreOptionSelect("share")}
-          className={getButtonStyles("secondary", "emerald", false)}
-          title="Share"
-        >
-          <Share2 className={getIconStyles("emerald", "secondary")} />
-          <span className="text-[13px]">Share</span>
-        </button>
-
-        <button
-          onClick={() => handleMoreOptionSelect("report")}
-          className={getButtonStyles("secondary", "blue", false)}
-          title="Report Issue"
-        >
-          <CircleDotDashed className={getIconStyles("blue", "secondary")} />
-          <span className="text-[13px]">Report</span>
-        </button>
+        {/* More Menu Button */}
+        <div className="relative">
+          <div className="[&>div>button]:min-w-[110px] [&>div>button]:px-2.5 [&>div>button]:py-2 [&>div>button]:rounded-lg [&>div>button]:bg-white/70 [&>div>button]:dark:bg-gray-800/70 [&>div>button]:backdrop-blur-xl [&>div>button]:border [&>div>button]:border-white/60 [&>div>button]:dark:border-gray-700/60 [&>div>button]:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] [&>div>button]:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.15),0_1px_2px_rgba(255,255,255,0.6)_inset] [&>div>button]:hover:-translate-y-0.5 [&>div>button]:transition-all [&>div>button>span]:!flex [&>div>button>span]:!items-center [&>div>button>span]:!gap-1.5">
+            <CustomSelect
+              options={moreOptions.map((opt) => ({
+                value: opt.value,
+                label: opt.label,
+              }))}
+              value=""
+              onChange={handleMoreOptionSelect}
+              placeholder=""
+            />
+            {/* Custom placeholder overlay */}
+            <div className="absolute inset-0 pointer-events-none flex items-center px-3">
+              <div className="flex items-center gap-1.5 text-[13px] text-gray-700 dark:text-gray-200 relative z-10">
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+                  <circle cx="5" cy="12" r="2" className="fill-blue-500" />
+                  <circle cx="12" cy="12" r="2" className="fill-purple-500" />
+                  <circle cx="19" cy="12" r="2" className="fill-pink-500" />
+                </svg>
+                More
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Dark Mode Toggle */}
         <button

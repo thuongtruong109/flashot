@@ -20,10 +20,11 @@ const TourGuide: React.FC<TourGuideProps> = ({ isOpen, onClose }) => {
         doneBtnText: "Done ✓",
         progressText: "{{current}} of {{total}}",
         allowClose: true,
-        overlayColor: "rgba(0, 0, 0, 0.8)",
+        overlayColor: "rgba(0, 0, 0, 0.75)",
         smoothScroll: true,
         disableActiveInteraction: false,
         onDestroyed: onClose,
+        popoverClass: "driver-popover-dark",
         onDeselected: (element, step, options) => {
           // Custom logic when step is deselected
         },
