@@ -4,20 +4,13 @@ import React, { useState, useRef, useEffect } from "react";
 import CustomSelect from "@/app/playground/_components/base/Select";
 import {
   Download,
-  Copy,
   Settings,
   FileText,
   Info,
   Check,
   Loader2,
-  Palette,
   Code2,
-  Sparkles,
-  Zap,
-  ChevronDown,
-  Edit2,
   BookOpen,
-  MoreHorizontal,
   CircleDotDashed,
   Share2,
   Moon,
@@ -245,7 +238,6 @@ const ActionBar: React.FC<ActionBarProps> = ({
       "hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.15),0_1px_2px_rgba(255,255,255,0.6)_inset] " +
       "dark:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.4),0_1px_2px_rgba(255,255,255,0.15)_inset] " +
       "hover:bg-white/80 dark:hover:bg-gray-800/80 " +
-      "hover:-translate-y-0.5 active:translate-y-0 " +
       "before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-b before:from-white/50 before:to-transparent before:opacity-60 dark:before:from-white/10 " +
       "after:absolute after:inset-0 after:rounded-lg after:bg-gradient-to-t after:from-black/5 after:to-transparent after:opacity-0 hover:after:opacity-100 after:transition-opacity";
 
@@ -278,7 +270,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
       <div className="hidden lg:flex items-center space-x-3">
         {/* More Menu Button */}
         <div className="relative">
-          <div className="[&>div>button]:min-w-[110px] [&>div>button]:px-2.5 [&>div>button]:py-2 [&>div>button]:rounded-lg [&>div>button]:bg-white/70 [&>div>button]:dark:bg-gray-800/70 [&>div>button]:backdrop-blur-xl [&>div>button]:border [&>div>button]:border-white/60 [&>div>button]:dark:border-gray-700/60 [&>div>button]:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] [&>div>button]:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.15),0_1px_2px_rgba(255,255,255,0.6)_inset] [&>div>button]:hover:-translate-y-0.5 [&>div>button]:transition-all [&>div>button>span]:!flex [&>div>button>span]:!items-center [&>div>button>span]:!gap-1.5">
+          <div className="[&>div>button]:min-w-[100px] [&>div>button]:px-2.5 [&>div>button]:py-2 [&>div>button]:rounded-lg [&>div>button]:bg-white/70 [&>div>button]:dark:bg-gray-800/70 [&>div>button]:backdrop-blur-xl [&>div>button]:border [&>div>button]:border-white/60 [&>div>button]:dark:border-gray-700/60 [&>div>button]:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] [&>div>button]:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.15),0_1px_2px_rgba(255,255,255,0.6)_inset] [&>div>button]:transition-all [&>div>button>span]:!flex [&>div>button>span]:!items-center [&>div>button>span]:!gap-1.5">
             <CustomSelect
               options={moreOptions.map((opt) => ({
                 value: opt.value,
@@ -321,7 +313,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
           <button
             onClick={handleExportClick}
             disabled={isGenerating}
-            className="group relative flex items-center space-x-1 px-3 h-8 rounded-l-xl bg-gradient-to-r from-emerald-400/80 to-green-400/80 hover:from-emerald-500/90 hover:to-green-500/90 backdrop-blur-md border border-emerald-300/50 border-r-0 shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.35)] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="group relative flex items-center space-x-1 px-3 h-[1.95rem] rounded-l-lg bg-gradient-to-r from-emerald-400/80 to-green-400/80 hover:from-emerald-500/90 hover:to-green-500/90 dark:from-emerald-600/70 dark:to-green-600/70 dark:hover:from-emerald-700/80 dark:hover:to-green-700/80 backdrop-blur-md border border-emerald-300/50 dark:border-emerald-700/50 border-r-0 shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.35)] dark:shadow-[0_8px_32px_0_rgba(16,185,129,0.15)] dark:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isGenerating ? (
               <Loader2 className="size-3.5 text-white animate-spin" />
@@ -333,7 +325,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
             </span>
           </button>
 
-          <div className="[&>div>button]:h-8 [&>div>button]:pl-0 [&_svg]:!text-white [&>div>button]:rounded-l-none [&>div>button]:rounded-r-xl [&>div>button]:border-l-0 [&>div>button]:bg-gradient-to-r [&>div>button]:from-green-400 [&>div>button]:to-emerald-400 [&>div>button]:hover:from-green-500 [&>div>button]:hover:to-emerald-500 [&>div>button]:backdrop-blur-md [&>div>button]:border-emerald-300 [&>div>button]:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] [&>div>button]:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.35)] [&>div>button]:min-w-0 [&>div>button]:px-2">
+          <div className="[&>div>button]:h-[1.95rem] [&>div>button]:pl-0 [&_svg]:!text-white [&>div>button]:border-l [&>div>button]:rounded-l-none [&>div>button]:rounded-r-lg [&>div>button]:bg-gradient-to-r [&>div>button]:from-green-400 [&>div>button]:to-emerald-400 [&>div>button]:hover:from-green-500 [&>div>button]:hover:to-emerald-500 [&>div>button]:dark:from-green-600/70 [&>div>button]:dark:to-emerald-600/70 [&>div>button]:dark:hover:from-green-700/80 [&>div>button]:dark:hover:to-emerald-700/80 [&>div>button]:backdrop-blur-md [&>div>button]:border-emerald-300 [&>div>button]:dark:border-emerald-700 [&>div>button]:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] [&>div>button]:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.35)] [&>div>button]:dark:shadow-[0_8px_32px_0_rgba(16,185,129,0.15)] [&>div>button]:dark:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] [&>div>button]:min-w-0 [&>div>button]:px-2">
             <CustomSelect
               options={exportOptions.map((opt, index) => {
                 const Icon = opt.icon;
@@ -383,7 +375,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
         <button
           onClick={handleExportClick}
           disabled={isGenerating}
-          className="p-2.5 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] transition-all disabled:opacity-50 backdrop-blur-sm"
+          className="p-2.5 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 dark:from-green-600/70 dark:to-emerald-600/70 dark:hover:from-green-700/80 dark:hover:to-emerald-700/80 rounded-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.25)] dark:shadow-[0_8px_32px_0_rgba(16,185,129,0.15)] dark:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] transition-all disabled:opacity-50 backdrop-blur-sm"
         >
           {isGenerating ? (
             <Loader2 className="w-3 h-3 text-white animate-spin" />

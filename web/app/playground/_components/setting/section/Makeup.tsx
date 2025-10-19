@@ -206,7 +206,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                 </label>
 
                 <div className="flex justify-between items-center">
-                  <span className="text-xs text-gray-500">Align</span>
+                  <span className="text-xs text-gray-500">Alignment</span>
                   <div className="flex items-center space-x-2">
                     <button
                       type="button"
@@ -416,32 +416,30 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                     />
                   </div>
                   {/* Filename Alignment */}
-                  <div className="space-y-2">
-                    <label className="text-xs text-gray-500">Alignment</label>
-                    <div className="flex items-center space-x-2">
-                      <button
-                        onClick={() => onUpdateSetting("fileNameAlign", "left")}
-                        className={`flex-1 px-2 py-1.5 rounded-md text-xs transition-all duration-200 ${
-                          (settings.fileNameAlign || "left") === "left"
-                            ? "bg-gradient-to-r from-yellow-500 to-orange-500 dark:from-yellow-600 dark:to-orange-600 text-white shadow-md font-medium"
-                            : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
-                        }`}
-                      >
-                        Default
-                      </button>
-                      <button
-                        onClick={() =>
-                          onUpdateSetting("fileNameAlign", "center")
-                        }
-                        className={`flex-1 px-2 py-1.5 rounded-md text-xs transition-all duration-200 ${
-                          settings.fileNameAlign === "center"
-                            ? "bg-gradient-to-r from-yellow-500 to-orange-500 dark:from-yellow-600 dark:to-orange-600 text-white shadow-md font-medium"
-                            : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
-                        }`}
-                      >
-                        Center
-                      </button>
-                    </div>
+                  <div className="flex items-center justify-between space-x-3">
+                    <label className="text-xs text-gray-500 flex-1">
+                      Alignment
+                    </label>
+                    <button
+                      onClick={() => onUpdateSetting("fileNameAlign", "left")}
+                      className={`px-2.5 py-1 rounded-md text-xs transition-all duration-200 ${
+                        (settings.fileNameAlign || "left") === "left"
+                          ? "bg-gradient-to-r from-yellow-500 to-orange-500 dark:from-yellow-600 dark:to-orange-600 text-white shadow-md font-medium"
+                          : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                      }`}
+                    >
+                      Default
+                    </button>
+                    <button
+                      onClick={() => onUpdateSetting("fileNameAlign", "center")}
+                      className={` px-2.5 py-1 rounded-md text-xs transition-all duration-200 ${
+                        settings.fileNameAlign === "center"
+                          ? "bg-gradient-to-r from-yellow-500 to-orange-500 dark:from-yellow-600 dark:to-orange-600 text-white shadow-md font-medium"
+                          : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                      }`}
+                    >
+                      Center
+                    </button>
                   </div>
                 </div>
               </>

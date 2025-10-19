@@ -3,10 +3,10 @@
 import React from "react";
 import { Settings, X } from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
-import LanguageSelector from "./LanguageSelector";
-import ThemeSelector from "./ThemeSelector";
-import FontSelector from "./FontSelector";
-import BackgroundSelector from "./BackgroundSelector";
+import LanguageSelector from "@/app/playground/_components/LanguageSelector";
+import ThemeSelector from "@/app/playground/_components/ThemeSelector";
+import FontSelector from "@/app/playground/_components/FontSelector";
+import BackgroundSelector from "@/app/playground/_components/BackgroundSelector";
 
 interface SettingsSheetProps {
   isOpen: boolean;

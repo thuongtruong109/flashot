@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 
 export interface Option<T> {
@@ -22,26 +22,44 @@ function CustomSelect<T extends string | number | boolean>({
   className = "",
 }: CustomSelectProps<T>) {
   const [open, setOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [highlighted, setHighlighted] = useState<number>(-1);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const [dropdownPosition, setDropdownPosition] = useState<{
     top: number;
-    right: number;
+    left: number;
     width: number;
-  }>({ top: 0, right: 0, width: 0 });
+  } | null>(null);
 
-  useEffect(() => {
-    if (!open) return;
-    // Position dropdown below button
+  // Set position IMMEDIATELY when opening using useLayoutEffect
+  useLayoutEffect(() => {
+    if (!open) {
+      setDropdownPosition(null);
+      setMounted(false);
+      return;
+    }
+
+    // Calculate position synchronously before paint
     if (buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
       setDropdownPosition({
-        top: rect.bottom + window.scrollY,
-        right: window.innerWidth - rect.right + window.scrollX,
+        top: rect.bottom,
+        left: rect.left,
         width: rect.width,
       });
+      // Trigger animation after position is set
+      setTimeout(() => setMounted(true), 10);
     }
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) {
+      setIsClosing(false);
+      return;
+    }
+
     const handleClickOutside = (e: MouseEvent) => {
       if (
         listRef.current &&
@@ -49,12 +67,21 @@ function CustomSelect<T extends string | number | boolean>({
         buttonRef.current &&
         !buttonRef.current.contains(e.target as Node)
       ) {
-        setOpen(false);
+        handleClose();
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
+
+  const handleClose = () => {
+    setMounted(false);
+    setIsClosing(true);
+    setTimeout(() => {
+      setOpen(false);
+      setIsClosing(false);
+    }, 200);
+  };
 
   useEffect(() => {
     if (open && highlighted === -1 && options.length > 0) {
@@ -71,7 +98,7 @@ function CustomSelect<T extends string | number | boolean>({
       return;
     }
     if (e.key === "Escape") {
-      setOpen(false);
+      handleClose();
       return;
     }
     if (e.key === "ArrowDown") {
@@ -84,7 +111,7 @@ function CustomSelect<T extends string | number | boolean>({
     }
     if (e.key === "Enter" && highlighted >= 0) {
       onChange(options[highlighted].value);
-      setOpen(false);
+      handleClose();
       e.preventDefault();
     }
   };
@@ -128,18 +155,24 @@ function CustomSelect<T extends string | number | boolean>({
         </svg>
       </button>
       {open &&
+        dropdownPosition &&
         createPortal(
           <div
             ref={listRef}
             id="custom-select-list"
             role="listbox"
             tabIndex={-1}
-            className="min-w-fit rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg dark:shadow-gray-900/50 z-[99999] custom-scrollbar max-h-60 overflow-y-auto sm:max-h-none sm:overflow-visible p-1"
+            className={`min-w-fit rounded-xl bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 shadow-2xl dark:shadow-gray-900/50 z-[99999] custom-scrollbar max-h-60 overflow-y-auto sm:max-h-none sm:overflow-visible p-1 transition-all duration-200 ease-out ${
+              mounted && !isClosing
+                ? "opacity-100 scale-100"
+                : "opacity-0 scale-95"
+            }`}
             style={{
-              position: "absolute",
-              top: dropdownPosition.top + 5,
-              right: dropdownPosition.right,
-              width: dropdownPosition.width,
+              position: "fixed",
+              top: `${dropdownPosition.top + 5}px`,
+              left: `${dropdownPosition.left}px`,
+              width: `${dropdownPosition.width}px`,
+              transformOrigin: "top center",
             }}
           >
             {options.map((opt, i) => (
@@ -157,7 +190,7 @@ function CustomSelect<T extends string | number | boolean>({
                 onMouseEnter={() => setHighlighted(i)}
                 onMouseDown={() => {
                   onChange(opt.value);
-                  setOpen(false);
+                  handleClose();
                 }}
               >
                 {opt.label}

@@ -7,16 +7,7 @@ import React, {
   useCallback,
   useLayoutEffect,
 } from "react";
-import {
-  Eye,
-  Edit3,
-  Maximize2,
-  Minimize2,
-  Code,
-  Sparkles,
-  Check,
-  X,
-} from "lucide-react";
+import { Edit3 } from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import {
   themes,
@@ -24,8 +15,8 @@ import {
   getFileExtension,
   transparentGridPatterns,
 } from "@/utils";
-import Caption from "./Caption";
-import EditorActionButtons from "./EditorActionButtons";
+import Caption from "@/app/playground/_components/editor/Caption";
+import ActionButtons from "@/app/playground/_components/editor/ActionButtons";
 
 interface EditorProps {
   code: string;
@@ -40,6 +31,7 @@ interface EditorProps {
   ) => void;
   onPositionChange?: (position: { x: number; y: number }) => void;
   onSizeChange?: (size: { width: number; height: number }) => void;
+  onHoverChange?: (isHovered: boolean) => void;
 }
 
 const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
@@ -54,12 +46,14 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       onUpdateSetting,
       onPositionChange,
       onSizeChange,
+      onHoverChange,
     },
     ref
   ) => {
     const [isEditing, setIsEditing] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
     const [resizeDirection, setResizeDirection] = useState<string>("");
     const [startPos, setStartPos] = useState({ x: 0, y: 0 });
     const [startSize, setStartSize] = useState({ width: 0, height: 0 });
@@ -395,6 +389,14 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
             ? "fixed inset-0 z-50 bg-black/95 backdrop-blur-xl p-8 flex items-center justify-center"
             : ""
         } ${className}`}
+        onMouseEnter={() => {
+          setIsHovered(true);
+          onHoverChange?.(true);
+        }}
+        onMouseLeave={() => {
+          setIsHovered(false);
+          onHoverChange?.(false);
+        }}
       >
         {/* Container outer frame */}
         <div
@@ -482,7 +484,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                   zIndex: 50,
                 }}
               >
-                <EditorActionButtons
+                <ActionButtons
                   code={code}
                   onClear={() => onChange("")}
                   settings={settings}
@@ -600,7 +602,10 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                               Array.from({ length: 3 }).map((_, idx) => (
                                 <div
                                   key={idx}
-                                  className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"
+                                  className="w-3 h-3 rounded-full shadow-sm"
+                                  style={{
+                                    background: "#575165",
+                                  }}
                                 />
                               ))
                             )}
@@ -648,7 +653,10 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                             Array.from({ length: 3 }).map((_, idx) => (
                               <div
                                 key={idx}
-                                className="w-3 h-3 rounded-full shadow-sm bg-gradient-to-br from-gray-400 to-gray-600"
+                                className="w-3 h-3 rounded-full shadow-sm"
+                                style={{
+                                  background: "#575165",
+                                }}
                               />
                             ))
                           )}
@@ -734,7 +742,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                     {/* Scroll container */}
                     <div
                       onClick={handlePreviewClick}
-                      className="cursor-text flex-1 flex code-editor-scrollbar"
+                      className="cursor-text flex-1 flex code-editor-scrollbar transition-all duration-300 ease-in-out"
                       style={{
                         backgroundColor: currentTheme.background,
                         borderRadius: settings.showWindowHeader
@@ -757,7 +765,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                         settings.showLineNumbers ??
                         true) && (
                         <div
-                          className={`select-none flex flex-col py-[15px] pl-3 pr-2 flex-shrink-0 ${
+                          className={`select-none flex flex-col py-[15px] pl-3 pr-2 flex-shrink-0 transition-all duration-300 ease-in-out ${
                             settings.lineNumberTextAlign === "left"
                               ? "items-start"
                               : settings.lineNumberTextAlign === "center"
@@ -790,7 +798,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                       )}
 
                       {/* Preview Mode Code Display */}
-                      <div className="flex-1 relative">
+                      <div className="flex-1 relative transition-all duration-300 ease-in-out">
                         {/* Highlight backgrounds */}
                         {settings.highlights &&
                           settings.highlights.length > 0 && (
@@ -887,7 +895,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                     {/* Line Numbers for Edit Mode */}
                     {(showLineNumbers ?? settings.showLineNumbers ?? true) && (
                       <div
-                        className={`select-none flex flex-col py-[15px] pl-3 pr-2 flex-shrink-0 ${
+                        className={`select-none flex flex-col py-[15px] pl-3 pr-2 flex-shrink-0 transition-all duration-300 ease-in-out ${
                           settings.lineNumberTextAlign === "left"
                             ? "items-start"
                             : settings.lineNumberTextAlign === "center"
@@ -920,7 +928,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
 
                     {/* Textarea - Exact same structure as preview */}
                     <div
-                      className="flex-1 relative"
+                      className="flex-1 relative transition-all duration-300 ease-in-out"
                       style={{ minWidth: "100%", width: "100%" }}
                     >
                       {/* Highlight backgrounds for edit mode */}
@@ -1047,44 +1055,60 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
               {/* Edge handles - positioned on outer frame */}
               <div
                 data-export-ignore
-                className="absolute top-[-4px] left-1/2 transform -translate-x-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-n-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-colors border border-gray-300 dark:border-gray-600 shadow-sm"
+                className={`absolute top-[-4px] left-1/2 transform -translate-x-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-n-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                  isHovered ? "opacity-100" : "opacity-0"
+                }`}
                 onMouseDown={(e) => handleResizeStart(e, "top")}
               />
               <div
                 data-export-ignore
-                className="absolute bottom-[-4px] left-1/2 transform -translate-x-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-s-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-colors border border-gray-300 dark:border-gray-600 shadow-sm"
+                className={`absolute bottom-[-4px] left-1/2 transform -translate-x-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-s-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                  isHovered ? "opacity-100" : "opacity-0"
+                }`}
                 onMouseDown={(e) => handleResizeStart(e, "bottom")}
               />
               <div
                 data-export-ignore
-                className="absolute top-1/2 left-[-4px] transform -translate-y-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-w-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-colors border border-gray-300 dark:border-gray-600 shadow-sm"
+                className={`absolute top-1/2 left-[-4px] transform -translate-y-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-w-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                  isHovered ? "opacity-100" : "opacity-0"
+                }`}
                 onMouseDown={(e) => handleResizeStart(e, "left")}
               />
               <div
                 data-export-ignore
-                className="absolute top-1/2 right-[-4px] transform -translate-y-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-e-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-colors border border-gray-300 dark:border-gray-600 shadow-sm"
+                className={`absolute top-1/2 right-[-4px] transform -translate-y-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-e-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                  isHovered ? "opacity-100" : "opacity-0"
+                }`}
                 onMouseDown={(e) => handleResizeStart(e, "right")}
               />
 
               {/* Corner handles - positioned at frame corners */}
               <div
                 data-export-ignore
-                className="absolute top-[-4px] left-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-nw-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-colors border border-gray-300 dark:border-gray-600 shadow-sm"
+                className={`absolute top-[-4px] left-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-nw-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                  isHovered ? "opacity-100" : "opacity-0"
+                }`}
                 onMouseDown={(e) => handleResizeStart(e, "top-left")}
               />
               <div
                 data-export-ignore
-                className="absolute top-[-4px] right-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-ne-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-colors border border-gray-300 dark:border-gray-600 shadow-sm"
+                className={`absolute top-[-4px] right-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-ne-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                  isHovered ? "opacity-100" : "opacity-0"
+                }`}
                 onMouseDown={(e) => handleResizeStart(e, "top-right")}
               />
               <div
                 data-export-ignore
-                className="absolute bottom-[-4px] left-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-sw-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-colors border border-gray-300 dark:border-gray-600 shadow-sm"
+                className={`absolute bottom-[-4px] left-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-sw-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                  isHovered ? "opacity-100" : "opacity-0"
+                }`}
                 onMouseDown={(e) => handleResizeStart(e, "bottom-left")}
               />
               <div
                 data-export-ignore
-                className="absolute bottom-[-4px] right-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-se-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-colors border border-gray-300 dark:border-gray-600 shadow-sm"
+                className={`absolute bottom-[-4px] right-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-se-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                  isHovered ? "opacity-100" : "opacity-0"
+                }`}
                 onMouseDown={(e) => handleResizeStart(e, "bottom-right")}
               />
             </>

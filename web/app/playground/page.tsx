@@ -5,22 +5,29 @@ import { CodeSettings } from "@/types";
 import { copyToClipboard } from "@/utils";
 import { generateAndDownloadImage } from "@/lib/imageGenerator";
 import SettingsPanel from "@/app/playground/_components/SettingsPanel";
-import TipsModal from "@/app/playground/_components/TipsModal";
+import TipsModal from "@/app/playground/_components/header/TipsModal";
 import CodeEditor from "@/app/playground/_components/editor";
-import ActionBar from "@/app/playground/_components/header/ActionBar";
-import Brand from "@/app/playground/_components/header/Brand";
-import TourGuide from "@/app/playground/_components/TourGuide";
+import Header from "@/app/playground/_components/header";
+import TourGuide from "@/app/playground/_components/header/TourGuide";
 import Image from "next/image";
 import { DEFAULT_CODE_SETTINGS } from "@/shared";
 import WidthRuler from "@/app/playground/_components/editor/WidthRuler";
 import HeightRuler from "@/app/playground/_components/editor/HeightRuler";
+import GradientBg from "@/app/playground/_components/GradientBg";
 
-const defaultCode = `function fibonacci(n) {
-  if (n <= 1) return n;
-  return fibonacci(n - 1) + fibonacci(n - 2);
-}
+const defaultCode = `function mergeAndUniqueArrays(arrays) {
+  if (!Array.isArray(arrays) || arrays.length === 0) return [];
 
-console.log(fibonacci(10)); // 55`;
+  // Reduce to flatten all arrays into a single list
+  const combinedArray = arrays.reduce((accumulator, currentArray) => {
+    return accumulator.concat(currentArray);
+  }, []);
+
+  // Automatically remove duplicate values
+  const uniqueSet = new Set(combinedArray);
+
+  return [...uniqueSet];
+}`;
 
 export default function Page() {
   const [code, setCode] = useState(defaultCode);
@@ -39,6 +46,7 @@ export default function Page() {
   const codeEditorRef = useRef<HTMLDivElement>(null);
   const [editorPosition, setEditorPosition] = useState({ x: 0, y: 0 });
   const [editorSize, setEditorSize] = useState({ width: 600, height: 400 });
+  const [isEditorHovered, setIsEditorHovered] = useState(false);
 
   // Handle position change from CodeEditor
   const handleEditorPositionChange = useCallback(
@@ -147,11 +155,6 @@ export default function Page() {
       }
     };
   }, [showSettingsPanel]);
-
-  // Set initial settings panel visibility based on screen size
-  // and keep it always open on desktop
-  // Removed auto-open/close logic for desktop/mobile
-  // Panel will only open/close via user action
 
   const updateSetting = <K extends keyof CodeSettings>(
     key: K,
@@ -317,31 +320,24 @@ export default function Page() {
 
   return (
     <div className="h-screen bg-white dark:bg-gray-950 bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 relative overflow-hidden flex flex-col">
-      <div className="relative bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border-b border-white/20 dark:border-gray-700/20 shadow-sm px-2 sm:px-4 lg:px-6 flex items-center justify-between py-2 w-full gap-4">
-        <div data-tour="brand" className="flex-shrink-0">
-          <Brand showVersion={true} />
-        </div>
+      <GradientBg />
 
-        <div data-tour="action-bar" className="flex-shrink-0 ml-auto">
-          <ActionBar
-            onCopy={handleCopyCode}
-            onDownload={handleDownloadImage}
-            onShowSettings={handleToggleSettings}
-            onShowJSON={() => {}}
-            onShowTips={() => setShowTipsModal(true)}
-            onShowGuide={() => setShowTourGuide(true)}
-            copySuccess={copySuccess}
-            isGenerating={isGenerating}
-            fileName={fileName}
-            onFileNameChange={setFileName}
-            showSettingsPanel={showSettingsPanel}
-            showJSONPanel={false}
-            settings={settings}
-            onUpdateSetting={updateSetting as any}
-            className="w-full lg:w-auto"
-          />
-        </div>
-      </div>
+      <Header
+        onCopy={handleCopyCode}
+        onDownload={handleDownloadImage}
+        onShowSettings={handleToggleSettings}
+        onShowJSON={() => {}}
+        onShowTips={() => setShowTipsModal(true)}
+        onShowGuide={() => setShowTourGuide(true)}
+        copySuccess={copySuccess}
+        isGenerating={isGenerating}
+        fileName={fileName}
+        onFileNameChange={setFileName}
+        showSettingsPanel={showSettingsPanel}
+        showJSONPanel={false}
+        settings={settings}
+        onUpdateSetting={updateSetting}
+      />
 
       {/* Main Container with Sidebar Layout */}
       <div className="flex-1 flex h-[calc(100vh-3rem)] lg:h-[calc(100vh-4rem)] transition-all duration-300 w-full">
@@ -371,6 +367,7 @@ export default function Page() {
               onUpdateSetting={updateSetting}
               onPositionChange={handleEditorPositionChange}
               onSizeChange={handleEditorSizeChange}
+              onHoverChange={setIsEditorHovered}
             />
 
             {/* Width Ruler - positioned below with fixed spacing */}
@@ -379,6 +376,7 @@ export default function Page() {
               height={editorSize.height}
               editorPosition={editorPosition}
               showJSONPanel={false}
+              isHovered={isEditorHovered}
             />
 
             {/* Height Ruler - positioned left with fixed spacing */}
@@ -387,6 +385,7 @@ export default function Page() {
               height={editorSize.height}
               editorPosition={editorPosition}
               showJSONPanel={false}
+              isHovered={isEditorHovered}
             />
           </div>
         </div>

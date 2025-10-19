@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 import {
   Code,
@@ -166,6 +166,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   onLanguageChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({
     top: 0,
     left: 0,
@@ -178,7 +180,30 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
     (lang) => lang.value === selectedLanguage
   );
 
+  // Set position using useLayoutEffect
+  useLayoutEffect(() => {
+    if (!isOpen) {
+      setMounted(false);
+      return;
+    }
+    
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + 8,
+        left: rect.left,
+        width: rect.width,
+      });
+      setTimeout(() => setMounted(true), 10);
+    }
+  }, [isOpen]);
+
   useEffect(() => {
+    if (!isOpen) {
+      setIsClosing(false);
+      return;
+    }
+    
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
@@ -186,24 +211,22 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
         buttonRef.current &&
         !buttonRef.current.contains(event.target as Node)
       ) {
-        setIsOpen(false);
+        handleClose();
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  useEffect(() => {
-    if (isOpen && buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      setDropdownPosition({
-        top: rect.bottom + window.scrollY + 8,
-        left: rect.left + window.scrollX,
-        width: rect.width,
-      });
-    }
   }, [isOpen]);
+
+  const handleClose = () => {
+    setMounted(false);
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+    }, 200);
+  };
 
   const DropdownPortal = () => {
     if (typeof window === "undefined" || !isOpen) return null;
@@ -212,13 +235,16 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       <div
         ref={dropdownRef}
         data-dropdown-type="language-selector"
-        className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-2xl shadow-2xl dark:shadow-gray-900/50 max-h-96 overflow-y-auto custom-scrollbar"
+        className={`bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-2xl shadow-2xl dark:shadow-gray-900/50 max-h-96 overflow-y-auto custom-scrollbar transition-all duration-200 ease-out ${
+          mounted && !isClosing ? "opacity-100 scale-100" : "opacity-0 scale-95"
+        }`}
         style={{
           position: "fixed",
           top: dropdownPosition.top,
           left: dropdownPosition.left,
           width: Math.min(dropdownPosition.width, 260),
           zIndex: 99999,
+          transformOrigin: "top center",
         }}
       >
         <div className="p-2">
@@ -227,7 +253,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
               key={lang.value}
               onClick={() => {
                 onLanguageChange(lang.value);
-                setIsOpen(false);
+                handleClose();
               }}
               className={`w-full flex items-center justify-between space-x-2 px-3 py-2 text-sm text-left rounded-xl transition-all duration-200 group mb-0.5 ${
                 selectedLanguage === lang.value

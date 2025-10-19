@@ -260,7 +260,7 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
     const baseStyles =
       "group relative flex items-center space-x-1.5 px-2.5 py-1 rounded-lg transition-all duration-200 " +
       "bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl " +
-      "border border-white/60 dark:border-gray-700/60 " +
+      "border border-white dark:border-gray-700/60 " +
       "shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] " +
       "dark:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.3),0_1px_1px_rgba(255,255,255,0.1)_inset] " +
       "hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.15),0_1px_2px_rgba(255,255,255,0.6)_inset] " +

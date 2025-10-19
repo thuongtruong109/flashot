@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Info, Keyboard, Download, Code2 } from "lucide-react";
-import Modal from "./base/Modal";
+import Modal from "@/app/playground/_components/base/Modal";
 
 interface TipsModalProps {
   isOpen: boolean;

@@ -5,6 +5,7 @@ interface HeightRulerProps {
   height: number;
   editorPosition: { x: number; y: number };
   showJSONPanel?: boolean;
+  isHovered?: boolean;
 }
 
 export default function HeightRuler({
@@ -12,6 +13,7 @@ export default function HeightRuler({
   height,
   editorPosition,
   showJSONPanel = false,
+  isHovered = false,
 }: HeightRulerProps) {
   const rulerRef = useRef<HTMLDivElement>(null);
 
@@ -33,7 +35,9 @@ export default function HeightRuler({
   return (
     <div
       ref={rulerRef}
-      className="absolute top-1/2 transform -translate-y-1/2 w-3 bg-transparent"
+      className={`absolute top-1/2 transform -translate-y-1/2 w-3 bg-transparent transition-opacity duration-200 ${
+        isHovered ? "opacity-100" : "opacity-0"
+      }`}
       style={{
         left: `${rulerX}px`,
         height: `${height}px`,

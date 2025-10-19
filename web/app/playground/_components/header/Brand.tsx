@@ -5,14 +5,10 @@ import Image from "next/image";
 import { _VERSION } from "@/shared";
 
 interface BrandProps {
-  showVersion?: boolean;
   className?: string;
 }
 
-const Brand: React.FC<BrandProps> = ({
-  showVersion = true,
-  className = "",
-}) => {
+const Brand: React.FC<BrandProps> = ({ className = "" }) => {
   return (
     <div className={`flex items-center ${className}`}>
       <Image

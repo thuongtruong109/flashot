@@ -1,10 +1,10 @@
 import React from "react";
 import { Layers, Sun, Moon, Palette } from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
-import LanguageSelector from "../LanguageSelector";
-import FontSelector from "../FontSelector";
-import ThemeSelector from "../ThemeSelector";
-import BackgroundSelector from "../BackgroundSelector";
+import LanguageSelector from "@/app/playground/_components/LanguageSelector";
+import FontSelector from "@/app/playground/_components/FontSelector";
+import ThemeSelector from "@/app/playground/_components/ThemeSelector";
+import BackgroundSelector from "@/app/playground/_components/BackgroundSelector";
 
 interface ThemeSectionProps {
   settings: CodeSettings;

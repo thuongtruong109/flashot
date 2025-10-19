@@ -15,51 +15,23 @@ interface SettingsPanelProps {
   onImportTemplate?: (data: { code: string; settings: CodeSettings }) => void;
   onExportTemplate?: () => void;
 }
-import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
-import { getFileExtension } from "@/utils";
-import LanguageSelector from "./LanguageSelector";
-import ThemeSelector from "./ThemeSelector";
-import FontSelector from "./FontSelector";
-import BackgroundSelector from "./BackgroundSelector";
-import ThemeSection from "./setting/ThemeSection";
-import MakeupSection from "./setting/MakeupSection";
-import DecorateSection from "./setting/DecorateSection";
-import TemplateSection from "./setting/TemplateSection";
+import { CodeSettings, SupportedLanguage } from "@/types";
+import ThemeSection from "@/app/playground/_components/setting/section/Theme";
+import MakeupSection from "@/app/playground/_components/setting/section/Makeup";
+import DecorateSection from "@/app/playground/_components/setting/section/Decorate";
+import TemplateSection from "@/app/playground/_components/setting/section/Template";
 import React, { useState, useRef, useEffect, forwardRef } from "react";
 import {
-  Settings,
-  Edit2,
-  Check,
-  X,
-  ChevronRight,
-  FileText,
   Palette,
-  Type,
   Move,
-  CornerRightDown,
-  Eye,
-  Monitor,
-  Hash,
-  BarChart3,
-  Folder,
-  Paintbrush,
-  Download,
-  Image,
   Layers,
-  Sun,
-  Moon,
-  WrapText,
-  AlignCenter,
-  Loader2,
-  PanelRightClose,
-  PanelRightOpen,
   RotateCcw,
   FileJson,
   Stamp,
 } from "lucide-react";
 import CustomSelect from "./base/Select";
 import { _PLAYGROUND_SETTINGS_TAB, DEFAULT_CODE_SETTINGS } from "@/shared";
-import ViewSection from "./setting/ViewSection";
+import ViewSection from "./setting/section/View";
 
 const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
   (
@@ -184,7 +156,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
         ${isVisible ? "translate-x-0 lg:w-80" : "translate-x-full lg:w-0"}
         w-80 fixed lg:relative top-0 right-0 z-30
         h-[100vh] lg:max-h-[calc(100vh-60px)]
-        bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-2xl
+        bg-white/60 dark:bg-gray-900/40 backdrop-blur-xl shadow-2xl
         border-l border-white/20 dark:border-gray-700/30
         transition-all duration-300 ease-in-out
         overflow-hidden
@@ -192,7 +164,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       `}
         >
           {/* Header with Close (mobile) */}
-          <div className="flex items-center justify-between py-2 border-b border-white/30 dark:border-gray-700/30 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md">
+          <div className="flex items-center justify-between py-2 border-b border-white/20 dark:border-gray-700/20 bg-white/60 dark:bg-gray-900/40 backdrop-blur-xl">
             <div className="relative">
               <CustomSelect
                 options={[
@@ -267,11 +239,11 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
           </div>
           {/* Scrollable Content */}
           <div
-            className={`flex-1 overflow-x-hidden scroll-smooth settings-scrollbar transition-all duration-200 ${
+            className={`flex-1 overflow-x-hidden scroll-smooth settings-scrollbar ${
               isDropdownOpen ? "overflow-y-hidden" : "overflow-y-auto"
             }`}
             style={{
-              marginRight: isDropdownOpen ? "12px" : "0px",
+              scrollbarGutter: "stable",
             }}
           >
             <div className="p-3 space-y-4 divide-y [&>div]:py-2 divide-slate-200 dark:divide-slate-700 divide-dashed">

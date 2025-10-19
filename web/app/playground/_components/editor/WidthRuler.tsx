@@ -5,6 +5,7 @@ interface WidthRulerProps {
   height: number;
   editorPosition: { x: number; y: number };
   showJSONPanel?: boolean;
+  isHovered?: boolean;
 }
 
 export default function WidthRuler({
@@ -12,6 +13,7 @@ export default function WidthRuler({
   height,
   editorPosition,
   showJSONPanel = false,
+  isHovered = false,
 }: WidthRulerProps) {
   // Calculate position: center horizontally, below frame with 50px gap
   const containerHeight =
@@ -23,7 +25,9 @@ export default function WidthRuler({
 
   return (
     <div
-      className="absolute left-1/2 transform -translate-x-1/2 h-3 bg-transparent"
+      className={`absolute left-1/2 transform -translate-x-1/2 h-3 bg-transparent transition-opacity duration-200 ${
+        isHovered ? "opacity-100" : "opacity-0"
+      }`}
       style={{
         top: `${rulerTop}px`,
         width: `${width}px`,
