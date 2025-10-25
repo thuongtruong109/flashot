@@ -186,7 +186,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       setMounted(false);
       return;
     }
-    
+
     if (buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
       setDropdownPosition({
@@ -203,7 +203,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       setIsClosing(false);
       return;
     }
-    
+
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&

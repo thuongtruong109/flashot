@@ -108,7 +108,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
       label: (
         <span className="flex items-center text-[13px] text-amber-500">
           <Info className="size-3.5 mr-1" />
-          Info & Tips
+          Info
         </span>
       ),
     },
@@ -117,7 +117,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
       label: (
         <span className="flex items-center text-[13px] text-green-500">
           <Share2 className="size-3.5 mr-1" />
-          Share
+          Share page
         </span>
       ),
     },
@@ -230,7 +230,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   ) => {
     // Refined clean style - giảm padding, shadow, translate
     const baseStyles =
-      "group relative flex items-center space-x-1.5 px-2.5 py-1 rounded-lg transition-all duration-200 " +
+      "group relative flex items-center space-x-1.5 px-2.5 rounded-lg transition-all duration-200 " +
       "bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl " +
       "border border-white/60 dark:border-gray-700/60 " +
       "shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] " +
@@ -268,46 +268,6 @@ const ActionBar: React.FC<ActionBarProps> = ({
     <div className={`flex flex-wrap items-center space-x-2 ${className}`}>
       {/* Desktop Layout */}
       <div className="hidden lg:flex items-center space-x-3">
-        {/* More Menu Button */}
-        <div className="relative">
-          <div className="[&>div>button]:min-w-[100px] [&>div>button]:px-2.5 [&>div>button]:py-2 [&>div>button]:rounded-lg [&>div>button]:bg-white/70 [&>div>button]:dark:bg-gray-800/70 [&>div>button]:backdrop-blur-xl [&>div>button]:border [&>div>button]:border-white/60 [&>div>button]:dark:border-gray-700/60 [&>div>button]:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] [&>div>button]:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.15),0_1px_2px_rgba(255,255,255,0.6)_inset] [&>div>button]:transition-all [&>div>button>span]:!flex [&>div>button>span]:!items-center [&>div>button>span]:!gap-1.5">
-            <CustomSelect
-              options={moreOptions.map((opt) => ({
-                value: opt.value,
-                label: opt.label,
-              }))}
-              value=""
-              onChange={handleMoreOptionSelect}
-              placeholder=""
-            />
-            {/* Custom placeholder overlay */}
-            <div className="absolute inset-0 pointer-events-none flex items-center px-3">
-              <div className="flex items-center gap-1.5 text-[13px] text-gray-700 dark:text-gray-200 relative z-10">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
-                  <circle cx="5" cy="12" r="2" className="fill-blue-500" />
-                  <circle cx="12" cy="12" r="2" className="fill-purple-500" />
-                  <circle cx="19" cy="12" r="2" className="fill-pink-500" />
-                </svg>
-                More
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Dark Mode Toggle */}
-        <button
-          onClick={toggleDarkMode}
-          className={getButtonStyles("secondary", "purple", false)}
-          title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-        >
-          {isDarkMode ? (
-            <Sun className={getIconStyles("amber", "secondary")} />
-          ) : (
-            <Moon className={getIconStyles("purple", "secondary")} />
-          )}
-          <span className="text-[13px]">{isDarkMode ? "Light" : "Dark"}</span>
-        </button>
-
         {/* Export Button with Format Selector */}
         <div className="flex items-stretch">
           <button
@@ -327,6 +287,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
           <div className="[&>div>button]:h-[1.95rem] [&>div>button]:pl-0 [&_svg]:!text-white [&>div>button]:border-l [&>div>button]:rounded-l-none [&>div>button]:rounded-r-lg [&>div>button]:bg-gradient-to-r [&>div>button]:from-green-400 [&>div>button]:to-emerald-400 [&>div>button]:hover:from-green-500 [&>div>button]:hover:to-emerald-500 [&>div>button]:dark:from-green-600/70 [&>div>button]:dark:to-emerald-600/70 [&>div>button]:dark:hover:from-green-700/80 [&>div>button]:dark:hover:to-emerald-700/80 [&>div>button]:backdrop-blur-md [&>div>button]:border-emerald-300 [&>div>button]:dark:border-emerald-700 [&>div>button]:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] [&>div>button]:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.35)] [&>div>button]:dark:shadow-[0_8px_32px_0_rgba(16,185,129,0.15)] [&>div>button]:dark:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] [&>div>button]:min-w-0 [&>div>button]:px-2">
             <CustomSelect
+              align="right"
               options={exportOptions.map((opt, index) => {
                 const Icon = opt.icon;
                 const isSelected = exportFormat === opt.value;
@@ -367,6 +328,49 @@ const ActionBar: React.FC<ActionBarProps> = ({
             />
           </div>
         </div>
+
+        {/* More Menu Button */}
+        <div className="relative">
+          <div className="[&>div>button]:min-w-[100px] [&>div>button]:px-2.5 [&>div>button]:py-2 [&>div>button]:rounded-lg [&>div>button]:bg-white/70 [&>div>button]:dark:bg-gray-800/70 [&>div>button]:backdrop-blur-xl [&>div>button]:border [&>div>button]:border-white/60 [&>div>button]:dark:border-gray-700/60 [&>div>button]:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] [&>div>button]:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.15),0_1px_2px_rgba(255,255,255,0.6)_inset] [&>div>button]:transition-all [&>div>button>span]:!flex [&>div>button>span]:!items-center [&>div>button>span]:!gap-1.5">
+            <CustomSelect
+              options={moreOptions.map((opt) => ({
+                value: opt.value,
+                label: opt.label,
+              }))}
+              value=""
+              onChange={handleMoreOptionSelect}
+              placeholder=""
+            />
+            {/* Custom placeholder overlay */}
+            <div className="absolute inset-0 pointer-events-none flex items-center px-3">
+              <div className="flex items-center gap-1.5 text-[13px] text-gray-700 dark:text-gray-200 relative z-10">
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+                  <circle cx="5" cy="12" r="2" className="fill-blue-500" />
+                  <circle cx="12" cy="12" r="2" className="fill-purple-500" />
+                  <circle cx="19" cy="12" r="2" className="fill-pink-500" />
+                </svg>
+                More
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Dark Mode Toggle */}
+        <button
+          onClick={toggleDarkMode}
+          className={`${getButtonStyles(
+            "secondary",
+            "purple",
+            false
+          )} h-[1.85rem]`}
+          title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        >
+          {isDarkMode ? (
+            <Sun className={getIconStyles("amber", "secondary")} />
+          ) : (
+            <Moon className={getIconStyles("purple", "secondary")} />
+          )}
+        </button>
       </div>
 
       {/* Mobile Layout */}

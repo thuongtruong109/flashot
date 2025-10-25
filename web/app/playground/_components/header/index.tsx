@@ -40,7 +40,7 @@ export default function Header({
   onUpdateSetting,
 }: HeaderProps) {
   return (
-    <div className="relative bg-white/60 dark:bg-gray-900/40 backdrop-blur-xl border-b border-white/20 dark:border-gray-700/20 shadow-sm px-2 sm:px-4 lg:px-6 flex items-center justify-between py-2 w-full gap-4">
+    <div className="relative bg-white/60 dark:bg-gray-900/40 backdrop-blur-xl border-b border-white/20 dark:border-gray-700/20 shadow-sm px-2 sm:px-4 flex items-center justify-between py-2 w-full gap-4">
       <div data-tour="brand" className="flex-shrink-0">
         <Brand />
       </div>

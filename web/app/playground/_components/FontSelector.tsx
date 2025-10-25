@@ -144,7 +144,7 @@ const FontSelector: React.FC<FontSelectorProps> = ({
       setMounted(false);
       return;
     }
-    
+
     if (buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
       setDropdownPosition({
@@ -161,7 +161,7 @@ const FontSelector: React.FC<FontSelectorProps> = ({
       setIsClosing(false);
       return;
     }
-    
+
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
@@ -193,7 +193,7 @@ const FontSelector: React.FC<FontSelectorProps> = ({
       <div
         ref={dropdownRef}
         data-dropdown-type="font-selector"
-        className={`bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-2xl shadow-2xl dark:shadow-gray-900/50 max-h-96 overflow-y-auto custom-scrollbar transition-all duration-200 ease-out ${
+        className={`bg-white/60 dark:bg-gray-900/40 backdrop-blur-xl border border-white/20 dark:border-gray-700/20 rounded-2xl shadow-2xl dark:shadow-gray-900/50 max-h-96 overflow-y-auto custom-scrollbar transition-all duration-200 ease-out ${
           mounted && !isClosing ? "opacity-100 scale-100" : "opacity-0 scale-95"
         }`}
         style={{

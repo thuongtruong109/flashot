@@ -3,7 +3,8 @@
 ### 🚀 Features
 
 - ## **playground**:
-  - Hide editor ruler when mouse out & enhance background UI - by @thuongtruong109 [<samp>()</samp>]()
+  - stable gutter for setting scroll bar when dropdown open - by @thuongtruong109 [<samp>()</samp>]()
+  - Hide editor ruler when mouse out & enhance background UI - by @thuongtruong109 [<samp>(d0749)</samp>](https://github.com/thuongtruong109/flashot/commit/d07498bb5ff1e1df02a729d9c8b5b7ecddbc335e)
   - Improved manifest and social sharing support - by @thuongtruong109 [<samp>(1c382)</samp>](https://github.com/thuongtruong109/flashot/commit/1c382af38480049e77b6fee978d8e07dff1d6aea)
   - Add action buttons (clear/copy/share) - by @thuongtruong109 [<samp>(e73fd)</samp>](https://github.com/thuongtruong109/flashot/commit/e73fdb389971fae9ab7cdd8a3306a897411a1b1c)
   - Align file name position - by @thuongtruong109 [<samp>(9bc87)</samp>](https://github.com/thuongtruong109/flashot/commit/9bc878e188bbd4a9aa1df566d9b3816288429e9a)

@@ -12,6 +12,7 @@ interface CustomSelectProps<T> {
   onChange: (value: T) => void;
   placeholder?: string;
   className?: string;
+  align?: "left" | "right";
 }
 
 function CustomSelect<T extends string | number | boolean>({
@@ -20,6 +21,7 @@ function CustomSelect<T extends string | number | boolean>({
   onChange,
   placeholder = "Select...",
   className = "",
+  align = "left",
 }: CustomSelectProps<T>) {
   const [open, setOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -46,13 +48,13 @@ function CustomSelect<T extends string | number | boolean>({
       const rect = buttonRef.current.getBoundingClientRect();
       setDropdownPosition({
         top: rect.bottom,
-        left: rect.left,
+        left: align === "right" ? rect.right : rect.left,
         width: rect.width,
       });
       // Trigger animation after position is set
       setTimeout(() => setMounted(true), 10);
     }
-  }, [open]);
+  }, [open, align]);
 
   useEffect(() => {
     if (!open) {
@@ -162,7 +164,7 @@ function CustomSelect<T extends string | number | boolean>({
             id="custom-select-list"
             role="listbox"
             tabIndex={-1}
-            className={`min-w-fit rounded-xl bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 shadow-2xl dark:shadow-gray-900/50 z-[99999] custom-scrollbar max-h-60 overflow-y-auto sm:max-h-none sm:overflow-visible p-1 transition-all duration-200 ease-out ${
+            className={`min-w-fit rounded-xl bg-white/60 dark:bg-gray-900/40 backdrop-blur-xl border border-white/20 dark:border-gray-700/20 shadow-2xl dark:shadow-gray-900/50 z-[99999] custom-scrollbar max-h-60 overflow-y-auto sm:max-h-none sm:overflow-visible p-1 transition-all duration-200 ease-out ${
               mounted && !isClosing
                 ? "opacity-100 scale-100"
                 : "opacity-0 scale-95"
@@ -170,9 +172,13 @@ function CustomSelect<T extends string | number | boolean>({
             style={{
               position: "fixed",
               top: `${dropdownPosition.top + 5}px`,
-              left: `${dropdownPosition.left}px`,
+              left: align === "right" ? "auto" : `${dropdownPosition.left}px`,
+              right:
+                align === "right"
+                  ? `${window.innerWidth - dropdownPosition.left}px`
+                  : "auto",
               width: `${dropdownPosition.width}px`,
-              transformOrigin: "top center",
+              transformOrigin: align === "right" ? "top right" : "top center",
             }}
           >
             {options.map((opt, i) => (

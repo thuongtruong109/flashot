@@ -18,12 +18,10 @@ import GradientBg from "@/app/playground/_components/GradientBg";
 const defaultCode = `function mergeAndUniqueArrays(arrays) {
   if (!Array.isArray(arrays) || arrays.length === 0) return [];
 
-  // Reduce to flatten all arrays into a single list
   const combinedArray = arrays.reduce((accumulator, currentArray) => {
     return accumulator.concat(currentArray);
   }, []);
 
-  // Automatically remove duplicate values
   const uniqueSet = new Set(combinedArray);
 
   return [...uniqueSet];

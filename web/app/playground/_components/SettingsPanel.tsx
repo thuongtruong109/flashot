@@ -224,7 +224,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
               onClick={handleResetToDefaults}
               title="Reset to defaults"
               aria-label="Toggle settings panel"
-              className="text-slate-500 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-400 font-light
+              className="text-red-500 dark:text-red-400 font-light
       bg-white/70 dark:bg-gray-800/70 backdrop-blur-md
       shadow-[0_4px_16px_-4px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset]
       dark:shadow-[0_4px_16px_-4px_rgba(0,0,0,0.4),0_1px_1px_rgba(255,255,255,0.1)_inset]
