@@ -15,6 +15,7 @@ import {
   Share2,
   Moon,
   Sun,
+  Image as ImageIcon,
 } from "lucide-react";
 
 interface ActionBarProps {
@@ -136,25 +137,25 @@ const ActionBar: React.FC<ActionBarProps> = ({
     {
       value: "png",
       label: "PNG",
-      icon: Download,
+      icon: ImageIcon,
       color: "text-blue-500",
     },
     {
       value: "jpg",
       label: "JPG",
-      icon: Download,
+      icon: ImageIcon,
       color: "text-orange-500",
     },
     {
       value: "webp",
       label: "WEBP",
-      icon: Download,
+      icon: ImageIcon,
       color: "text-purple-500",
     },
     {
       value: "avif",
       label: "AVIF",
-      icon: Download,
+      icon: ImageIcon,
       color: "text-pink-500",
     },
     {
@@ -277,8 +278,12 @@ const ActionBar: React.FC<ActionBarProps> = ({
           >
             {isGenerating ? (
               <Loader2 className="size-3.5 text-white animate-spin" />
+            ) : exportFormat === "original" ? (
+              <Code2 className="size-3.5 text-white drop-shadow-sm" />
+            ) : exportFormat === "plain" ? (
+              <FileText className="size-3.5 text-white drop-shadow-sm" />
             ) : (
-              <Download className="size-3.5 text-white drop-shadow-sm" />
+              <ImageIcon className="size-3.5 text-white drop-shadow-sm" />
             )}
             <span className="text-[13px] text-white font-medium drop-shadow-sm">
               {isGenerating ? "Exporting..." : `Export`}
@@ -297,7 +302,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
                   label: (
                     <div>
                       {showDivider && (
-                        <div className="h-px bg-gray-200 dark:bg-gray-700 my-1 -mx-2" />
+                        <div className="h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent my-1.5 -mx-2" />
                       )}
                       <span
                         className={`flex items-center space-x-2 text-xs ${
@@ -383,8 +388,12 @@ const ActionBar: React.FC<ActionBarProps> = ({
         >
           {isGenerating ? (
             <Loader2 className="w-3 h-3 text-white animate-spin" />
+          ) : exportFormat === "original" ? (
+            <Code2 className="w-3 h-3 text-white" />
+          ) : exportFormat === "plain" ? (
+            <FileText className="w-3 h-3 text-white" />
           ) : (
-            <Download className="w-3 h-3 text-white" />
+            <ImageIcon className="w-3 h-3 text-white" />
           )}
         </button>
 

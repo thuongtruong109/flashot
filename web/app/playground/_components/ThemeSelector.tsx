@@ -17,6 +17,16 @@ import {
   Eye,
   Coffee,
   Stars,
+  Lightbulb,
+  Mountain,
+  TreePine,
+  Waves,
+  Flame,
+  CloudMoon,
+  CloudSun,
+  Wind,
+  Leaf,
+  Feather,
 } from "lucide-react";
 import { ThemeName } from "@/types";
 
@@ -31,18 +41,18 @@ const themes: {
   colors: { bg: string; fg: string; accent: string };
   icon: React.ReactNode;
 }[] = [
-  // {
-  //   value: "dark",
-  //   label: "Dark",
-  //   icon: <Moon className="w-4 h-4 text-slate-600" />,
-  //   colors: { bg: "#1e1e1e", fg: "#d4d4d4", accent: "#569cd6" },
-  // },
-  // {
-  //   value: "light",
-  //   label: "Light",
-  //   icon: <Sun className="w-4 h-4 text-yellow-500" />,
-  //   colors: { bg: "#ffffff", fg: "#333333", accent: "#0000ff" },
-  // },
+  {
+    value: "dark",
+    label: "Dark",
+    icon: <Moon className="w-4 h-4 text-slate-600" />,
+    colors: { bg: "#1e1e1e", fg: "#d4d4d4", accent: "#569cd6" },
+  },
+  {
+    value: "light",
+    label: "Light",
+    icon: <Sun className="w-4 h-4 text-yellow-500" />,
+    colors: { bg: "#ffffff", fg: "#333333", accent: "#0000ff" },
+  },
   {
     value: "monokai",
     label: "Monokai",
@@ -51,9 +61,15 @@ const themes: {
   },
   {
     value: "github",
-    label: "GitHub",
+    label: "GitHub Dark",
     icon: <Github className="w-4 h-4 text-gray-700" />,
     colors: { bg: "#f6f8fa", fg: "#24292e", accent: "#d73a49" },
+  },
+  {
+    value: "github-light",
+    label: "GitHub Light",
+    icon: <Github className="w-4 h-4 text-gray-400" />,
+    colors: { bg: "#ffffff", fg: "#24292f", accent: "#cf222e" },
   },
   {
     value: "dracula",
@@ -101,7 +117,97 @@ const themes: {
     value: "atom-dark",
     label: "Atom Dark",
     icon: <Coffee className="w-4 h-4 text-green-400" />,
-    colors: { bg: "#1e1e1e", fg: "#ffffff", accent: "#61dafb" },
+    colors: { bg: "#1e1e1e", fg: "#c5c8c6", accent: "#61afef" },
+  },
+  {
+    value: "cobalt",
+    label: "Cobalt",
+    icon: <Waves className="w-4 h-4 text-blue-500" />,
+    colors: { bg: "#002240", fg: "#ffffff", accent: "#ff9d00" },
+  },
+  {
+    value: "night-owl",
+    label: "Night Owl",
+    icon: <Moon className="w-4 h-4 text-indigo-400" />,
+    colors: { bg: "#011627", fg: "#d6deeb", accent: "#c792ea" },
+  },
+  {
+    value: "palenight",
+    label: "Palenight",
+    icon: <CloudMoon className="w-4 h-4 text-purple-400" />,
+    colors: { bg: "#292d3e", fg: "#a6accd", accent: "#c792ea" },
+  },
+  {
+    value: "shades-of-purple",
+    label: "Shades of Purple",
+    icon: <Sparkles className="w-4 h-4 text-fuchsia-500" />,
+    colors: { bg: "#2d2b55", fg: "#e3dfff", accent: "#ff7edb" },
+  },
+  {
+    value: "ayu-dark",
+    label: "Ayu Dark",
+    icon: <Mountain className="w-4 h-4 text-orange-500" />,
+    colors: { bg: "#0a0e14", fg: "#b3b1ad", accent: "#ff8f40" },
+  },
+  {
+    value: "ayu-light",
+    label: "Ayu Light",
+    icon: <Mountain className="w-4 h-4 text-orange-300" />,
+    colors: { bg: "#fafafa", fg: "#575f66", accent: "#fa8d3e" },
+  },
+  {
+    value: "gruvbox-dark",
+    label: "Gruvbox Dark",
+    icon: <TreePine className="w-4 h-4 text-amber-600" />,
+    colors: { bg: "#282828", fg: "#ebdbb2", accent: "#fb4934" },
+  },
+  {
+    value: "gruvbox-light",
+    label: "Gruvbox Light",
+    icon: <TreePine className="w-4 h-4 text-amber-400" />,
+    colors: { bg: "#fbf1c7", fg: "#3c3836", accent: "#9d0006" },
+  },
+  {
+    value: "tokyo-night",
+    label: "Tokyo Night",
+    icon: <CloudMoon className="w-4 h-4 text-indigo-500" />,
+    colors: { bg: "#1a1b26", fg: "#c0caf5", accent: "#bb9af7" },
+  },
+  {
+    value: "tokyo-night-storm",
+    label: "Tokyo Night Storm",
+    icon: <CloudMoon className="w-4 h-4 text-blue-500" />,
+    colors: { bg: "#24283b", fg: "#c0caf5", accent: "#bb9af7" },
+  },
+  {
+    value: "tokyo-night-light",
+    label: "Tokyo Night Light",
+    icon: <CloudSun className="w-4 h-4 text-blue-400" />,
+    colors: { bg: "#d5d6db", fg: "#343b58", accent: "#5a4a78" },
+  },
+  {
+    value: "catppuccin-mocha",
+    label: "Catppuccin Mocha",
+    icon: <Coffee className="w-4 h-4 text-purple-400" />,
+    colors: { bg: "#1e1e2e", fg: "#cdd6f4", accent: "#cba6f7" },
+  },
+  {
+    value: "catppuccin-latte",
+    label: "Catppuccin Latte",
+    icon: <Coffee className="w-4 h-4 text-purple-300" />,
+    colors: { bg: "#eff1f5", fg: "#4c4f69", accent: "#8839ef" },
+  },
+  {
+    value: "synthwave-84",
+    label: "Synthwave '84",
+    icon: <Flame className="w-4 h-4 text-pink-500" />,
+    colors: { bg: "#262335", fg: "#f8f8f2", accent: "#ff7edb" },
+  },
+  {
+    value: "panda-syntax",
+    label: "Panda",
+    icon: <Feather className="w-4 h-4 text-cyan-400" />,
+    colors: { bg: "#292a2b", fg: "#e6e6e6", accent: "#ff75b5" },
   },
 ];
 

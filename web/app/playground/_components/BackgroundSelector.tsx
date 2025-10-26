@@ -14,6 +14,7 @@ const backgrounds = [
   "transparent",
 
   // Premium Gradient Backgrounds
+  "linear-gradient(140deg, rgb(207, 47, 152), rgb(106, 61, 236))",
   "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
   "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
   "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",

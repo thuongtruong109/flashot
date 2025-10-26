@@ -13,9 +13,9 @@ export const _PLAYGROUND_SETTINGS_TAB = {
 export const DEFAULT_CODE_SETTINGS: CodeSettings = {
   language: "javascript",
   theme: "dracula",
-  // background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
   background: "linear-gradient(140deg, rgb(207, 47, 152), rgb(106, 61, 236))",
   showBackground: true,
+  gradientAngle: 135,
   padding: 30,
   borderRadius: 10,
   frameBorderRadius: 10,
@@ -71,4 +71,19 @@ export const DEFAULT_CODE_SETTINGS: CodeSettings = {
   borderWidth: 2,
   borderOpacity: 1,
   borderColor: "#615465",
+
+  headerGap: 0,
+  showHeaderBorder: true,
+  headerBorderColor: "#3f3f46",
+
+  imageFilters: {
+    grayscale: 0,
+    sepia: 0,
+    blur: 0,
+    brightness: 100,
+    contrast: 100,
+    saturate: 100,
+    hueRotate: 0,
+    invert: 0,
+  },
 };

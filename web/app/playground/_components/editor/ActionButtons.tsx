@@ -259,16 +259,14 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
   const getButtonStyles = (color: string, disabled: boolean = false) => {
     const baseStyles =
       "group relative flex items-center space-x-1.5 px-2.5 py-1 rounded-lg transition-all duration-200 " +
-      "bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl " +
-      "border border-white dark:border-gray-700/60 " +
-      "shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] " +
-      "dark:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.3),0_1px_1px_rgba(255,255,255,0.1)_inset] " +
-      "hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.15),0_1px_2px_rgba(255,255,255,0.6)_inset] " +
-      "dark:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.4),0_1px_2px_rgba(255,255,255,0.15)_inset] " +
-      "hover:bg-white/80 dark:hover:bg-gray-800/80 " +
-      "hover:-translate-y-0.5 active:translate-y-0 " +
-      "before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-b before:from-white/50 before:to-transparent before:opacity-60 dark:before:from-white/10 " +
-      "after:absolute after:inset-0 after:rounded-lg after:bg-gradient-to-t after:from-black/5 after:to-transparent after:opacity-0 hover:after:opacity-100 after:transition-opacity";
+      "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl " +
+      "border border-gray-300 dark:border-gray-600 " +
+      "shadow-[0_2px_8px_rgba(0,0,0,0.1)] " +
+      "dark:shadow-[0_2px_8px_rgba(0,0,0,0.3)] " +
+      "hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] " +
+      "dark:hover:shadow-[0_4px_12px_rgba(0,0,0,0.4)] " +
+      "hover:bg-white dark:hover:bg-gray-800 " +
+      "hover:-translate-y-0.5 active:translate-y-0";
 
     if (disabled) {
       return `${baseStyles} opacity-50 cursor-not-allowed hover:translate-y-0`;

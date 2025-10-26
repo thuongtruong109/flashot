@@ -85,6 +85,33 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       return hex;
     };
 
+    // Helper function to apply gradient angle
+    const applyGradientAngle = (background: string, angle: number): string => {
+      if (!background.includes("gradient")) return background;
+
+      // Match linear-gradient with any angle format
+      const gradientMatch = background.match(
+        /linear-gradient\s*\(\s*(\d+)deg\s*,/
+      );
+      if (gradientMatch) {
+        return background.replace(
+          /linear-gradient\s*\(\s*\d+deg\s*,/,
+          `linear-gradient(${angle}deg,`
+        );
+      }
+
+      // If no angle found, try to add it
+      const simpleGradientMatch = background.match(/linear-gradient\s*\(/);
+      if (simpleGradientMatch) {
+        return background.replace(
+          /linear-gradient\s*\(/,
+          `linear-gradient(${angle}deg, `
+        );
+      }
+
+      return background;
+    };
+
     // Callback ref to handle both refs
     const setRefs = useCallback(
       (node: HTMLDivElement | null) => {
@@ -425,7 +452,10 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                 ? transparentGridDataUrl
                   ? `url("${transparentGridDataUrl}")`
                   : "repeating-conic-gradient(#e2e8f0 0deg 90deg, #f8fafc 90deg 180deg) 0 0/20px 20px"
-                : settings.background
+                : applyGradientAngle(
+                    settings.background,
+                    settings.gradientAngle || 135
+                  )
               : "transparent",
             backgroundRepeat:
               settings.showBackground && settings.background === "transparent"
@@ -446,6 +476,19 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
             borderRadius: `${
               settings.frameBorderRadius ?? settings.borderRadius
             }px`,
+            filter: settings.imageFilters
+              ? `grayscale(${settings.imageFilters.grayscale || 0}%) sepia(${
+                  settings.imageFilters.sepia || 0
+                }%) blur(${settings.imageFilters.blur || 0}px) brightness(${
+                  settings.imageFilters.brightness || 100
+                }%) contrast(${
+                  settings.imageFilters.contrast || 100
+                }%) saturate(${
+                  settings.imageFilters.saturate || 100
+                }%) hue-rotate(${
+                  settings.imageFilters.hueRotate || 0
+                }deg) invert(${settings.imageFilters.invert || 0}%)`
+              : undefined,
             width: isFullscreen
               ? "auto"
               : settings.width
@@ -547,17 +590,24 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                   data-show-traffic-lights-color={
                     settings.showTrafficLightsColor
                   }
-                  className="flex items-center justify-between px-4 py-3 border-b space-x-2"
+                  className={`flex items-center justify-between px-4 space-x-2 ${
+                    settings.showHeaderBorder !== false ? "border-b" : ""
+                  }`}
                   style={{
-                    backgroundColor:
-                      settings.theme === "light" ? "#f8f9fa" : "#2a2d3a",
-                    borderBottomColor: `${currentTheme.foreground}20`,
+                    backgroundColor: currentTheme.background,
+                    borderBottomColor:
+                      settings.showHeaderBorder !== false
+                        ? settings.headerBorderColor ||
+                          `${currentTheme.foreground}20`
+                        : "transparent",
                     borderTopLeftRadius: `${
                       settings.codeBorderRadius ?? settings.borderRadius
                     }px`,
                     borderTopRightRadius: `${
                       settings.codeBorderRadius ?? settings.borderRadius
                     }px`,
+                    paddingTop: "12px",
+                    paddingBottom: `${12 + (settings.headerGap ?? 0)}px`,
                   }}
                 >
                   {settings.windowHeaderAlign === "right" ? (

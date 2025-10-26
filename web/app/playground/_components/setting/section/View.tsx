@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Move, CornerRightDown, Type, WrapText } from "lucide-react";
+import { Move, CornerRightDown, Type, WrapText, Sparkles } from "lucide-react";
 import { CodeSettings } from "@/types";
 
 interface ViewSectionProps {
@@ -463,6 +463,260 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             </div>
           </div>
         </label>
+      </div>
+
+      {/* Image Filters */}
+      <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+        <label className="text-sm font-medium text-purple-600 dark:text-purple-400 flex items-center space-x-2 mb-4">
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>Image Filters</span>
+        </label>
+
+        <div className="space-y-3">
+          {/* Grayscale */}
+          <div>
+            <label className="text-xs flex items-center justify-between mb-1">
+              <span className="text-gray-600 dark:text-gray-400">
+                Grayscale
+              </span>
+              <span className="text-purple-600 dark:text-purple-400 font-medium">
+                {settings.imageFilters?.grayscale || 0}%
+              </span>
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={settings.imageFilters?.grayscale || 0}
+              onChange={(e) =>
+                onUpdateSetting("imageFilters", {
+                  ...settings.imageFilters,
+                  grayscale: parseInt(e.target.value),
+                })
+              }
+              className="w-full h-1 bg-gradient-to-r from-purple-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                [&::-webkit-slider-thumb]:from-purple-500 [&::-webkit-slider-thumb]:to-pink-500
+                [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer"
+            />
+          </div>
+
+          {/* Sepia */}
+          <div>
+            <label className="text-xs flex items-center justify-between mb-1">
+              <span className="text-gray-600 dark:text-gray-400">Sepia</span>
+              <span className="text-purple-600 dark:text-purple-400 font-medium">
+                {settings.imageFilters?.sepia || 0}%
+              </span>
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={settings.imageFilters?.sepia || 0}
+              onChange={(e) =>
+                onUpdateSetting("imageFilters", {
+                  ...settings.imageFilters,
+                  sepia: parseInt(e.target.value),
+                })
+              }
+              className="w-full h-1 bg-gradient-to-r from-amber-200 to-orange-200 rounded-lg appearance-none cursor-pointer
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                [&::-webkit-slider-thumb]:from-amber-500 [&::-webkit-slider-thumb]:to-orange-500
+                [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer"
+            />
+          </div>
+
+          {/* Blur */}
+          <div>
+            <label className="text-xs flex items-center justify-between mb-1">
+              <span className="text-gray-600 dark:text-gray-400">Blur</span>
+              <span className="text-purple-600 dark:text-purple-400 font-medium">
+                {settings.imageFilters?.blur || 0}px
+              </span>
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="10"
+              step="0.5"
+              value={settings.imageFilters?.blur || 0}
+              onChange={(e) =>
+                onUpdateSetting("imageFilters", {
+                  ...settings.imageFilters,
+                  blur: parseFloat(e.target.value),
+                })
+              }
+              className="w-full h-1 bg-gradient-to-r from-blue-200 to-cyan-200 rounded-lg appearance-none cursor-pointer
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                [&::-webkit-slider-thumb]:from-blue-500 [&::-webkit-slider-thumb]:to-cyan-500
+                [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer"
+            />
+          </div>
+
+          {/* Brightness */}
+          <div>
+            <label className="text-xs flex items-center justify-between mb-1">
+              <span className="text-gray-600 dark:text-gray-400">
+                Brightness
+              </span>
+              <span className="text-purple-600 dark:text-purple-400 font-medium">
+                {settings.imageFilters?.brightness || 100}%
+              </span>
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="200"
+              value={settings.imageFilters?.brightness || 100}
+              onChange={(e) =>
+                onUpdateSetting("imageFilters", {
+                  ...settings.imageFilters,
+                  brightness: parseInt(e.target.value),
+                })
+              }
+              className="w-full h-1 bg-gradient-to-r from-yellow-200 to-amber-200 rounded-lg appearance-none cursor-pointer
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                [&::-webkit-slider-thumb]:from-yellow-500 [&::-webkit-slider-thumb]:to-amber-500
+                [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer"
+            />
+          </div>
+
+          {/* Contrast */}
+          <div>
+            <label className="text-xs flex items-center justify-between mb-1">
+              <span className="text-gray-600 dark:text-gray-400">Contrast</span>
+              <span className="text-purple-600 dark:text-purple-400 font-medium">
+                {settings.imageFilters?.contrast || 100}%
+              </span>
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="200"
+              value={settings.imageFilters?.contrast || 100}
+              onChange={(e) =>
+                onUpdateSetting("imageFilters", {
+                  ...settings.imageFilters,
+                  contrast: parseInt(e.target.value),
+                })
+              }
+              className="w-full h-1 bg-gradient-to-r from-gray-200 to-gray-300 rounded-lg appearance-none cursor-pointer
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                [&::-webkit-slider-thumb]:from-gray-500 [&::-webkit-slider-thumb]:to-gray-600
+                [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer"
+            />
+          </div>
+
+          {/* Saturate */}
+          <div>
+            <label className="text-xs flex items-center justify-between mb-1">
+              <span className="text-gray-600 dark:text-gray-400">
+                Saturation
+              </span>
+              <span className="text-purple-600 dark:text-purple-400 font-medium">
+                {settings.imageFilters?.saturate || 100}%
+              </span>
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="200"
+              value={settings.imageFilters?.saturate || 100}
+              onChange={(e) =>
+                onUpdateSetting("imageFilters", {
+                  ...settings.imageFilters,
+                  saturate: parseInt(e.target.value),
+                })
+              }
+              className="w-full h-1 bg-gradient-to-r from-pink-200 to-rose-200 rounded-lg appearance-none cursor-pointer
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                [&::-webkit-slider-thumb]:from-pink-500 [&::-webkit-slider-thumb]:to-rose-500
+                [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer"
+            />
+          </div>
+
+          {/* Hue Rotate */}
+          <div>
+            <label className="text-xs flex items-center justify-between mb-1">
+              <span className="text-gray-600 dark:text-gray-400">
+                Hue Rotate
+              </span>
+              <span className="text-purple-600 dark:text-purple-400 font-medium">
+                {settings.imageFilters?.hueRotate || 0}°
+              </span>
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="360"
+              value={settings.imageFilters?.hueRotate || 0}
+              onChange={(e) =>
+                onUpdateSetting("imageFilters", {
+                  ...settings.imageFilters,
+                  hueRotate: parseInt(e.target.value),
+                })
+              }
+              className="w-full h-1 bg-gradient-to-r from-red-200 via-green-200 to-blue-200 rounded-lg appearance-none cursor-pointer
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                [&::-webkit-slider-thumb]:from-red-500 [&::-webkit-slider-thumb]:via-green-500 [&::-webkit-slider-thumb]:to-blue-500
+                [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer"
+            />
+          </div>
+
+          {/* Invert */}
+          <div>
+            <label className="text-xs flex items-center justify-between mb-1">
+              <span className="text-gray-600 dark:text-gray-400">Invert</span>
+              <span className="text-purple-600 dark:text-purple-400 font-medium">
+                {settings.imageFilters?.invert || 0}%
+              </span>
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={settings.imageFilters?.invert || 0}
+              onChange={(e) =>
+                onUpdateSetting("imageFilters", {
+                  ...settings.imageFilters,
+                  invert: parseInt(e.target.value),
+                })
+              }
+              className="w-full h-1 bg-gradient-to-r from-slate-200 to-slate-300 rounded-lg appearance-none cursor-pointer
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                [&::-webkit-slider-thumb]:from-slate-500 [&::-webkit-slider-thumb]:to-slate-600
+                [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer"
+            />
+          </div>
+
+          {/* Reset Filters Button */}
+          <button
+            onClick={() =>
+              onUpdateSetting("imageFilters", {
+                grayscale: 0,
+                sepia: 0,
+                blur: 0,
+                brightness: 100,
+                contrast: 100,
+                saturate: 100,
+                hueRotate: 0,
+                invert: 0,
+              })
+            }
+            className="w-full mt-2 px-3 py-1.5 text-xs rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-sm transition-all"
+          >
+            Reset All Filters
+          </button>
+        </div>
       </div>
     </>
   );
