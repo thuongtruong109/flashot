@@ -73,6 +73,12 @@ export interface CodeSettings {
   lineNumberTextAlign?: "left" | "center" | "right";
   highlights?: HighlightRange[];
   watermark?: WatermarkSettings;
+  // Border customization
+  borderOffset?: number; // Distance from code editor to border in pixels
+  borderStyle?: "solid" | "dashed" | "dotted" | "double" | "none";
+  borderWidth?: number; // Border thickness in pixels
+  borderOpacity?: number; // Border opacity (0-1)
+  borderColor?: string; // Border color (hex or rgba)
 }
 
 export interface SyntaxMatch {

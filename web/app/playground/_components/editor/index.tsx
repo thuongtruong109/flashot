@@ -73,6 +73,18 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
     });
     const positionRef = useRef({ x: 0, y: 0 });
 
+    // Helper function to convert hex color to rgba with opacity
+    const hexToRgba = (hex: string, opacity: number): string => {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      if (result) {
+        return `rgba(${parseInt(result[1], 16)}, ${parseInt(
+          result[2],
+          16
+        )}, ${parseInt(result[3], 16)}, ${opacity})`;
+      }
+      return hex;
+    };
+
     // Callback ref to handle both refs
     const setRefs = useCallback(
       (node: HTMLDivElement | null) => {
@@ -499,6 +511,32 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                 borderRadius: `${
                   settings.codeBorderRadius ?? settings.borderRadius
                 }px`,
+                // Apply custom border if borderOffset is set
+                ...(settings.borderOffset &&
+                settings.borderOffset > 0 &&
+                settings.borderStyle !== "none"
+                  ? {
+                      outline: `${settings.borderWidth ?? 2}px ${
+                        settings.borderStyle ?? "solid"
+                      } ${hexToRgba(
+                        settings.borderColor ?? "#ffffff",
+                        settings.borderOpacity ?? 1
+                      )}`,
+                      outlineOffset: `${settings.borderOffset}px`,
+                    }
+                  : {}),
+                // Apply direct border if no offset
+                ...((!settings.borderOffset || settings.borderOffset === 0) &&
+                settings.borderStyle !== "none"
+                  ? {
+                      border: `${settings.borderWidth ?? 2}px ${
+                        settings.borderStyle ?? "solid"
+                      } ${hexToRgba(
+                        settings.borderColor ?? "#ffffff",
+                        settings.borderOpacity ?? 1
+                      )}`,
+                    }
+                  : {}),
               }}
             >
               {/* Window Controls */}
