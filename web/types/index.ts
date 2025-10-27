@@ -79,6 +79,14 @@ export interface CodeSettings {
   highlights?: HighlightRange[];
   watermark?: WatermarkSettings;
 
+  // Label customization
+  showLabel?: boolean;
+  labelText?: string;
+  labelAlignment?: "left" | "center" | "right";
+  labelOpacity?: number;
+  labelColor?: string;
+  labelFontSize?: number;
+
   // Border customization
   borderOffset?: number;
   borderStyle?: "solid" | "dashed" | "dotted" | "double" | "none";

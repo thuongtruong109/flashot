@@ -145,7 +145,7 @@ const TipsModal: React.FC<TipsModalProps> = ({ isOpen, onClose }) => {
           <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
             <p className="text-xs text-center text-gray-600 dark:text-gray-400">
               Made with <Heart className="w-3 h-3 inline text-red-500" /> by
-              developers, for developers
+              Thuong Truong, for everyone
             </p>
           </div>
         </div>

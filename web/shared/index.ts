@@ -65,6 +65,13 @@ export const DEFAULT_CODE_SETTINGS: CodeSettings = {
     imageWidth: 100,
     imageHeight: 100,
   },
+  // Label customization defaults
+  showLabel: false,
+  labelText: "Created by @username",
+  labelAlignment: "center",
+  labelOpacity: 0.4,
+  labelColor: "#ffffff",
+  labelFontSize: 9,
   // Border customization defaults
   borderOffset: 0,
   borderStyle: "solid",

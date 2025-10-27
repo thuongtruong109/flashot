@@ -17,6 +17,7 @@ import {
 } from "@/utils";
 import Caption from "@/app/playground/_components/editor/Caption";
 import ActionButtons from "@/app/playground/_components/editor/ActionButtons";
+import Label from "@/app/playground/_components/editor/Label";
 
 interface EditorProps {
   code: string;
@@ -1297,6 +1298,16 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                   )}
                 </>
               )}
+
+              {/* Label at bottom */}
+              <Label
+                show={settings.showLabel ?? false}
+                text={settings.labelText ?? ""}
+                alignment={settings.labelAlignment ?? "center"}
+                opacity={settings.labelOpacity ?? 0.6}
+                color={settings.labelColor ?? "#ffffff"}
+                fontSize={settings.labelFontSize ?? 12}
+              />
             </div>
           </div>
 

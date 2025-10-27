@@ -1133,14 +1133,13 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
       </div>
 
       {/* Header Customization Section */}
-      <SubSeparate />
-      <SubTitle
-        title="Header Customization"
-        icon={Frame}
-        color="text-emerald-600 dark:text-emerald-400"
-      />
 
       <div className="space-y-3">
+        <SubTitle
+          title="Header Customization"
+          icon={Frame}
+          color="text-emerald-600 dark:text-emerald-400"
+        />
         {/* Show Header Border Toggle */}
         <label className="flex items-center justify-between cursor-pointer">
           <span className="text-xs text-gray-600 dark:text-gray-400">

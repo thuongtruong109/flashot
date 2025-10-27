@@ -88,50 +88,16 @@ const ThemeSection: React.FC<ThemeSectionProps> = ({
           </div>
         </label>
         {settings.showBackground && (
-          <>
-            <BackgroundSelector
-              selectedBackground={settings.background}
-              onBackgroundChange={(background) =>
-                onUpdateSetting("background", background)
-              }
-            />
-
-            {/* Gradient Angle Control */}
-            {settings.background.includes("gradient") && (
-              <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
-                <label className="text-xs flex items-center justify-between mb-2">
-                  <span className="text-gray-600 dark:text-gray-400">
-                    Gradient Angle
-                  </span>
-                  <span className="text-purple-600 dark:text-purple-400 font-medium">
-                    {settings.gradientAngle || 135}°
-                  </span>
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="360"
-                  step="15"
-                  value={settings.gradientAngle || 135}
-                  onChange={(e) =>
-                    onUpdateSetting("gradientAngle", parseInt(e.target.value))
-                  }
-                  className="w-full h-1 bg-gradient-to-r from-purple-200 to-pink-200 rounded-lg appearance-none cursor-pointer
-                    [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
-                    [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
-                    [&::-webkit-slider-thumb]:from-purple-500 [&::-webkit-slider-thumb]:to-pink-500
-                    [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-                    [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-                />
-                <div className="flex justify-between text-[10px] text-gray-400 mt-1">
-                  <span>0° (→)</span>
-                  <span>90° (↓)</span>
-                  <span>180° (←)</span>
-                  <span>270° (↑)</span>
-                </div>
-              </div>
-            )}
-          </>
+          <BackgroundSelector
+            selectedBackground={settings.background}
+            onBackgroundChange={(background) =>
+              onUpdateSetting("background", background)
+            }
+            gradientAngle={settings.gradientAngle || 135}
+            onGradientAngleChange={(angle) =>
+              onUpdateSetting("gradientAngle", angle)
+            }
+          />
         )}
       </div>
     </>

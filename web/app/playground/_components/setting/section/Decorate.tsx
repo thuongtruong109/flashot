@@ -667,6 +667,175 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
           </div>
         )}
       </div>
+
+      {/* Label Section */}
+      <div className="pb-6 border-b border-gray-200 dark:border-gray-700">
+        <label className="group flex items-center justify-between cursor-pointer mb-4">
+          <div className="flex items-center gap-2">
+            <Stamp
+              className={`size-4 transition-colors ${
+                settings.showLabel
+                  ? "text-emerald-600 dark:text-emerald-400"
+                  : "text-gray-500 dark:text-gray-400"
+              }`}
+            />
+            <span
+              className={`text-sm font-medium transition-colors ${
+                settings.showLabel
+                  ? "text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-300"
+                  : "text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300"
+              }`}
+            >
+              Label
+            </span>
+          </div>
+          <div className="relative">
+            <input
+              type="checkbox"
+              checked={settings.showLabel ?? false}
+              onChange={(e) => onUpdateSetting("showLabel", e.target.checked)}
+              className="sr-only peer"
+            />
+            <div
+              className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                settings.showLabel
+                  ? "bg-gradient-to-br from-emerald-100 to-emerald-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                  : ""
+              }`}
+            >
+              <svg
+                className={`size-3 text-emerald-700 font-bold transition-opacity duration-200 ${
+                  settings.showLabel ? "opacity-100" : "opacity-0"
+                }`}
+                fill="currentColor"
+                stroke="none"
+                viewBox="0 0 24 24"
+                strokeWidth="3"
+              >
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+              </svg>
+            </div>
+          </div>
+        </label>
+
+        {settings.showLabel && (
+          <div className="space-y-3">
+            {/* Label Text */}
+            <div>
+              <label className="text-xs text-gray-600 dark:text-gray-400 mb-1.5 block">
+                Text
+              </label>
+              <input
+                type="text"
+                value={settings.labelText ?? "Created by @username"}
+                onChange={(e) => onUpdateSetting("labelText", e.target.value)}
+                placeholder="Enter label text..."
+                className="w-full px-3 py-1.5 text-xs rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-600 transition-all"
+              />
+            </div>
+
+            {/* Alignment */}
+            <div className="flex justify-between items-center">
+              <label className="text-xs text-gray-600 dark:text-gray-400">
+                Alignment
+              </label>
+              <div className="flex items-center space-x-1">
+                {[
+                  { value: "left", label: "Left" },
+                  { value: "center", label: "Center" },
+                  { value: "right", label: "Right" },
+                ].map((align) => (
+                  <button
+                    key={align.value}
+                    onClick={() =>
+                      onUpdateSetting(
+                        "labelAlignment",
+                        align.value as "left" | "center" | "right"
+                      )
+                    }
+                    className={`px-2 py-1 rounded-md text-xs transition-all duration-200 ${
+                      (settings.labelAlignment || "center") === align.value
+                        ? "bg-gradient-to-r from-emerald-500 to-teal-500 dark:from-emerald-600 dark:to-teal-600 text-white shadow-md font-medium"
+                        : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                    }`}
+                  >
+                    {align.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Color */}
+            <div className="flex justify-between items-center">
+              <label className="text-xs text-gray-600 dark:text-gray-400">
+                Color
+              </label>
+              <input
+                type="color"
+                value={settings.labelColor ?? "#ffffff"}
+                onChange={(e) => onUpdateSetting("labelColor", e.target.value)}
+                className="w-12 h-8 rounded-lg border-2 border-gray-200 dark:border-gray-700 cursor-pointer"
+              />
+            </div>
+
+            {/* Font Size */}
+            <div className="flex justify-between items-center space-x-3">
+              <label className="text-xs flex items-center justify-between">
+                <span className="text-gray-600 dark:text-gray-400 w-24">
+                  Font Size
+                </span>
+                <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent font-bold">
+                  {settings.labelFontSize ?? 12}px
+                </span>
+              </label>
+              <input
+                type="range"
+                min={8}
+                max={24}
+                step={1}
+                value={settings.labelFontSize ?? 12}
+                onChange={(e) =>
+                  onUpdateSetting("labelFontSize", parseInt(e.target.value))
+                }
+                className="w-full h-1 bg-gradient-to-r from-emerald-200 to-teal-200 rounded-lg appearance-none cursor-pointer
+                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                  [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                  [&::-webkit-slider-thumb]:from-emerald-500 [&::-webkit-slider-thumb]:to-teal-500
+                  [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                  [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+              />
+            </div>
+
+            {/* Opacity */}
+            <div className="flex justify-between items-center space-x-3">
+              <label className="text-xs flex items-center justify-between">
+                <span className="text-gray-600 dark:text-gray-400 w-24">
+                  Opacity
+                </span>
+                <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent font-bold">
+                  {Math.round((settings.labelOpacity ?? 0.6) * 100)}%
+                </span>
+              </label>
+              <input
+                type="range"
+                min={0.1}
+                max={1}
+                step={0.01}
+                value={settings.labelOpacity ?? 0.4}
+                onChange={(e) =>
+                  onUpdateSetting("labelOpacity", parseFloat(e.target.value))
+                }
+                className="w-full h-1 bg-gradient-to-r from-emerald-200 to-teal-200 rounded-lg appearance-none cursor-pointer
+                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                  [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                  [&::-webkit-slider-thumb]:from-emerald-500 [&::-webkit-slider-thumb]:to-teal-500
+                  [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                  [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+              />
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 };
