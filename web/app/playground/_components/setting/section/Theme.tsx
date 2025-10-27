@@ -1,5 +1,5 @@
 import React from "react";
-import { Layers, Sun, Moon, Palette } from "lucide-react";
+import { Palette } from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import LanguageSelector from "@/app/playground/_components/LanguageSelector";
 import FontSelector from "@/app/playground/_components/FontSelector";
@@ -31,41 +31,6 @@ const ThemeSection: React.FC<ThemeSectionProps> = ({
         selectedFont={settings.fontFamily}
         onFontChange={(fontFamily) => onUpdateSetting("fontFamily", fontFamily)}
       />
-
-      <div>
-        <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
-          <Layers className="w-3.5 h-3.5 text-purple-600 mr-1.5" />
-          Editor Theme
-        </h4>
-        <div className="flex gap-2">
-          <button
-            onClick={() => onUpdateSetting("theme", "light")}
-            className={`flex-1 p-2 rounded-lg border transition-all duration-200 group ${
-              settings.theme === "light"
-                ? "border-blue-500 bg-blue-50/80 shadow-sm"
-                : "border-gray-200/60 hover:border-gray-300/80 hover:bg-gray-50/50"
-            }`}
-          >
-            <div className="flex items-center justify-center space-x-1 py-1 bg-white rounded-md border shadow-xs group-hover:shadow-sm transition-shadow">
-              <Sun className="size-3 text-yellow-500" />
-              <span className="text-xs font-medium">Light</span>
-            </div>
-          </button>
-          <button
-            onClick={() => onUpdateSetting("theme", "dark")}
-            className={`flex-1 p-2 rounded-lg border transition-all duration-200 group ${
-              settings.theme === "dark"
-                ? "border-blue-500 bg-blue-50/80 shadow-sm"
-                : "border-gray-200/60 hover:border-gray-300/80 hover:bg-gray-50/50"
-            }`}
-          >
-            <div className="flex items-center justify-center space-x-1 py-1 bg-gray-800 rounded-md border shadow-xs group-hover:shadow-sm transition-shadow">
-              <Moon className="size-3 text-blue-400" />
-              <span className="text-xs text-white font-medium">Dark</span>
-            </div>
-          </button>
-        </div>
-      </div>
 
       <ThemeSelector
         selectedTheme={settings.theme as ThemeName}

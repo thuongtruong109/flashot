@@ -159,6 +159,11 @@ const supportedLanguages: {
     label: "Markdown",
     icon: <FileText className="w-4 h-4 text-gray-600" />,
   },
+  {
+    value: "plaintext",
+    label: "Plain Text",
+    icon: <FileText className="w-4 h-4 text-gray-500" />,
+  },
 ];
 
 const LanguageSelector: React.FC<LanguageSelectorProps> = ({

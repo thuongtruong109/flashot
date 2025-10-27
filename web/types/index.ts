@@ -10,6 +10,7 @@ export interface SyntaxTheme {
   parameter?: string; // Color for function parameters
   property?: string; // Color for object properties
   className?: string; // Color for class names
+  variable?: string; // Color for variables
 }
 
 export interface HighlightRange {
@@ -144,7 +145,8 @@ export type SupportedLanguage =
   | "shell"
   | "powershell"
   | "dockerfile"
-  | "markdown";
+  | "markdown"
+  | "plaintext";
 
 export type ThemeName =
   | "dark"

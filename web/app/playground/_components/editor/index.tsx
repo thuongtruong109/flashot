@@ -62,11 +62,17 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
     const [previewWidth, setPreviewWidth] = useState<number | null>(null);
     const [transparentGridDataUrl, setTransparentGridDataUrl] =
       useState<string>("");
+    const [isEditingFilename, setIsEditingFilename] = useState(false);
+    const [editingFilename, setEditingFilename] = useState("");
+    const [inputWidth, setInputWidth] = useState(150);
+    const [inputPosition, setInputPosition] = useState({ top: 16, left: 16 });
+    const filenameInputRef = useRef<HTMLInputElement>(null);
+    const filenameSpanRef = useRef<HTMLSpanElement>(null);
+    const snippetContainerRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const previewRef = useRef<HTMLPreElement>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const currentTheme = themes[settings.theme as ThemeName];
-
     const prevSettingsRef = useRef({
       width: settings.width,
       height: settings.height,
@@ -211,6 +217,118 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
         setPosition(centerPos);
       }
     }, [isResizing]);
+
+    // Handle filename editing
+    const handleFilenameClick = useCallback(() => {
+      if (fileName && filenameSpanRef.current && snippetContainerRef.current) {
+        // For plaintext, don't add extension
+        const fullName =
+          settings.language === "plaintext"
+            ? fileName
+            : `${fileName}.${getFileExtension(settings.language)}`;
+        setEditingFilename(fullName);
+
+        // Get exact position and size from span
+        const spanRect = filenameSpanRef.current.getBoundingClientRect();
+        const containerRect =
+          snippetContainerRef.current.getBoundingClientRect();
+
+        const top = spanRect.top - containerRect.top - 1;
+        const left = spanRect.left - containerRect.left - 2;
+
+        setInputWidth(Math.max(spanRect.width + 20, 100));
+        setInputPosition({ top, left });
+
+        setIsEditingFilename(true);
+      }
+    }, [fileName, settings.language]);
+    const handleFilenameChange = useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEditingFilename(e.target.value);
+      },
+      []
+    );
+
+    const handleFilenameBlur = useCallback(() => {
+      if (editingFilename.trim() && onUpdateSetting) {
+        // Parse filename and extension
+        const lastDotIndex = editingFilename.lastIndexOf(".");
+        if (lastDotIndex > 0) {
+          const name = editingFilename.substring(0, lastDotIndex);
+          const ext = editingFilename.substring(lastDotIndex + 1);
+
+          // Update filename
+          onUpdateSetting("fileName", name);
+
+          // Detect and update language based on extension
+          const languageMap: Record<string, SupportedLanguage> = {
+            js: "javascript",
+            jsx: "javascript",
+            ts: "typescript",
+            tsx: "typescript",
+            py: "python",
+            java: "java",
+            cpp: "cpp",
+            c: "c",
+            cs: "csharp",
+            php: "php",
+            rb: "ruby",
+            go: "go",
+            rs: "rust",
+            swift: "swift",
+            kt: "kotlin",
+            scala: "scala",
+            html: "html",
+            css: "css",
+            scss: "scss",
+            json: "json",
+            xml: "xml",
+            yaml: "yaml",
+            yml: "yaml",
+            sql: "sql",
+            sh: "shell",
+            bash: "shell",
+            ps1: "powershell",
+            dockerfile: "dockerfile",
+            md: "markdown",
+            txt: "plaintext",
+          };
+
+          const detectedLanguage = languageMap[ext.toLowerCase()];
+          if (detectedLanguage) {
+            onUpdateSetting("language", detectedLanguage);
+          }
+        } else {
+          // No extension, update filename and set language to plaintext
+          onUpdateSetting("fileName", editingFilename);
+          onUpdateSetting("language", "plaintext");
+        }
+      }
+      setIsEditingFilename(false);
+    }, [editingFilename, onUpdateSetting]);
+
+    const handleFilenameKeyDown = useCallback(
+      (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          filenameInputRef.current?.blur();
+        } else if (e.key === "Escape") {
+          setIsEditingFilename(false);
+          setEditingFilename("");
+        }
+      },
+      []
+    );
+
+    // Auto-focus filename input when editing starts
+    useEffect(() => {
+      if (isEditingFilename && filenameInputRef.current) {
+        filenameInputRef.current.focus();
+        // Set cursor to end instead of selecting all
+        const length = filenameInputRef.current.value.length;
+        filenameInputRef.current.setSelectionRange(length, length);
+      }
+    }, [isEditingFilename]);
 
     // Use ResizeObserver for real-time size updates
     useLayoutEffect(() => {
@@ -549,6 +667,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
             )}
 
             <div
+              ref={snippetContainerRef}
               className="relative flex flex-col flex-1 min-h-0"
               style={{
                 borderRadius: `${
@@ -582,6 +701,35 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                   : {}),
               }}
             >
+              {/* Filename Edit Input - Absolute positioned over header */}
+              {isEditingFilename &&
+                settings.showFileName &&
+                fileName?.trim() && (
+                  <input
+                    ref={filenameInputRef}
+                    type="text"
+                    value={editingFilename}
+                    onChange={handleFilenameChange}
+                    onBlur={handleFilenameBlur}
+                    onKeyDown={handleFilenameKeyDown}
+                    className="absolute text-white focus:outline-none"
+                    style={{
+                      fontWeight: settings.fileNameFontWeight ?? 400,
+                      fontSize: settings.fileNameFontSize ?? 14,
+                      fontFamily: "inherit",
+                      background: "transparent",
+                      border: "none",
+                      padding: 0,
+                      margin: 0,
+                      width: `${inputWidth}px`,
+                      zIndex: 1000,
+                      // Use exact measured position from span
+                      top: `${inputPosition.top}px`,
+                      left: `${inputPosition.left}px`,
+                    }}
+                  />
+                )}
+
               {/* Window Controls */}
               {settings.showWindowHeader && (
                 <div
@@ -622,15 +770,24 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                       >
                         {settings.showFileName && fileName?.trim() && (
                           <span
+                            ref={filenameSpanRef}
                             data-export-filename
-                            className="text-sm font-medium text-white truncate min-w-0"
+                            className="text-sm font-medium text-white truncate min-w-0 hover:opacity-80 transition-opacity"
                             style={{
-                              opacity: settings.fileNameOpacity ?? 1,
+                              opacity: isEditingFilename
+                                ? 0
+                                : settings.fileNameOpacity ?? 1,
                               fontWeight: settings.fileNameFontWeight ?? 400,
                               fontSize: settings.fileNameFontSize ?? 14,
                             }}
+                            onClick={handleFilenameClick}
+                            title="Click to edit filename"
                           >
-                            {fileName}.{getFileExtension(settings.language)}
+                            {settings.language === "plaintext"
+                              ? fileName
+                              : `${fileName}.${getFileExtension(
+                                  settings.language
+                                )}`}
                           </span>
                         )}
                       </div>
@@ -761,15 +918,24 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                       >
                         {settings.showFileName && fileName?.trim() && (
                           <span
+                            ref={filenameSpanRef}
                             data-export-filename
-                            className="text-sm font-medium text-white truncate min-w-0"
+                            className="text-sm font-medium text-white truncate min-w-0 hover:opacity-80 transition-opacity"
                             style={{
-                              opacity: settings.fileNameOpacity ?? 1,
+                              opacity: isEditingFilename
+                                ? 0
+                                : settings.fileNameOpacity ?? 1,
                               fontWeight: settings.fileNameFontWeight ?? 400,
                               fontSize: settings.fileNameFontSize ?? 14,
                             }}
+                            onClick={handleFilenameClick}
+                            title="Click to edit filename"
                           >
-                            {fileName}.{getFileExtension(settings.language)}
+                            {settings.language === "plaintext"
+                              ? fileName
+                              : `${fileName}.${getFileExtension(
+                                  settings.language
+                                )}`}
                           </span>
                         )}
                       </div>

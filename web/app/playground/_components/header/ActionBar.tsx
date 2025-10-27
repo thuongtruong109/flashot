@@ -270,7 +270,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
       {/* Desktop Layout */}
       <div className="hidden lg:flex items-center space-x-3">
         {/* Export Button with Format Selector */}
-        <div className="flex items-stretch">
+        <div className="flex items-stretch" data-tour="export-button">
           <button
             onClick={handleExportClick}
             disabled={isGenerating}
@@ -335,7 +335,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
         </div>
 
         {/* More Menu Button */}
-        <div className="relative">
+        <div className="relative" data-tour="more-menu">
           <div className="[&>div>button]:min-w-[100px] [&>div>button]:px-2.5 [&>div>button]:py-2 [&>div>button]:rounded-lg [&>div>button]:bg-white/70 [&>div>button]:dark:bg-gray-800/70 [&>div>button]:backdrop-blur-xl [&>div>button]:border [&>div>button]:border-white/60 [&>div>button]:dark:border-gray-700/60 [&>div>button]:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] [&>div>button]:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.15),0_1px_2px_rgba(255,255,255,0.6)_inset] [&>div>button]:transition-all [&>div>button>span]:!flex [&>div>button>span]:!items-center [&>div>button>span]:!gap-1.5">
             <CustomSelect
               options={moreOptions.map((opt) => ({
@@ -363,6 +363,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
         {/* Dark Mode Toggle */}
         <button
           onClick={toggleDarkMode}
+          data-tour="dark-mode-toggle"
           className={`${getButtonStyles(
             "secondary",
             "purple",

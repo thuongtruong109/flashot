@@ -14,6 +14,7 @@ interface SettingsPanelProps {
   onToggleVisibility?: () => void;
   onImportTemplate?: (data: { code: string; settings: CodeSettings }) => void;
   onExportTemplate?: () => void;
+  "data-tour"?: string;
 }
 import { CodeSettings, SupportedLanguage } from "@/types";
 import ThemeSection from "@/app/playground/_components/setting/section/Theme";
@@ -48,6 +49,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       onToggleVisibility,
       onImportTemplate,
       onExportTemplate,
+      "data-tour": dataTour,
     },
     ref
   ) => {
@@ -152,6 +154,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
         {/* Settings Panel */}
         <div
           ref={ref}
+          data-tour={dataTour}
           className={`
         ${isVisible ? "translate-x-0 lg:w-80" : "translate-x-full lg:w-0"}
         w-80 fixed lg:relative top-0 right-0 z-30

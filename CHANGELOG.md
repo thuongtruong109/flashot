@@ -3,6 +3,8 @@
 ### 🚀 Features
 
 - ## **playground**:
+  - Edit filename directly in the editor - by @thuongtruong109 [<samp>()</samp>]()
+  - Support more language themes - by @thuongtruong109 [<samp>()</samp>]()
   - Custom editor border style(type, color, width, and opacity) - by @thuongtruong109 [<samp>()</samp>]()
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.4.0...v2.5.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.5.0)
