@@ -18,6 +18,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#9cdcfe",
     property: "#9cdcfe",
     className: "#4ec9b0",
+    variable: "#9cdcfe",
   },
   light: {
     background: "#ffffff",
@@ -31,6 +32,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#001080",
     property: "#001080",
     className: "#267f99",
+    variable: "#001080",
   },
   monokai: {
     background: "#272822",
@@ -43,7 +45,8 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     operator: "#f92672",
     parameter: "#fd971f",
     property: "#66d9ef",
-    className: "#a6e22e",
+    className: "#ffcb6b",
+    variable: "#f8f8f2",
   },
   github: {
     background: "#f6f8fa",
@@ -57,6 +60,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#e36209",
     property: "#005cc5",
     className: "#6f42c1",
+    variable: "#24292e",
   },
   dracula: {
     background: "#282a36",
@@ -70,6 +74,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#ffb86c",
     property: "#8be9fd",
     className: "#8be9fd",
+    variable: "#bd93f9",
   },
   nord: {
     background: "#2e3440",
@@ -83,6 +88,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#d08770",
     property: "#8fbcbb",
     className: "#88c0d0",
+    variable: "#d8dee9",
   },
   "solarized-dark": {
     background: "#002b36",
@@ -96,6 +102,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#cb4b16",
     property: "#2aa198",
     className: "#b58900",
+    variable: "#839496",
   },
   "solarized-light": {
     background: "#fdf6e3",
@@ -109,6 +116,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#cb4b16",
     property: "#2aa198",
     className: "#b58900",
+    variable: "#657b83",
   },
   material: {
     background: "#263238",
@@ -122,6 +130,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#ffcb6b",
     property: "#89ddff",
     className: "#ffcb6b",
+    variable: "#eeffff",
   },
   "one-dark": {
     background: "#282c34",
@@ -135,6 +144,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#e06c75",
     property: "#56b6c2",
     className: "#e5c07b",
+    variable: "#e06c75",
   },
   "tomorrow-night": {
     background: "#1d1f21",
@@ -147,10 +157,11 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     operator: "#8abeb7",
     parameter: "#f0c674",
     property: "#8abeb7",
-    className: "#81a2be",
+    className: "#f0c674",
+    variable: "#c5c8c6",
   },
   "atom-dark": {
-    background: "#1e1e1e",
+    background: "#1d1f21",
     foreground: "#c5c8c6",
     comment: "#7c7c7c",
     keyword: "#c678dd",
@@ -161,6 +172,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#e5c07b",
     property: "#56b6c2",
     className: "#e5c07b",
+    variable: "#c5c8c6",
   },
   "github-light": {
     background: "#ffffff",
@@ -174,6 +186,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#953800",
     property: "#0550ae",
     className: "#8250df",
+    variable: "#24292f",
   },
   cobalt: {
     background: "#002240",
@@ -187,6 +200,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#ff9d00",
     property: "#80ffbb",
     className: "#ffee80",
+    variable: "#ffffff",
   },
   "night-owl": {
     background: "#011627",
@@ -200,6 +214,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#d7dbe0",
     property: "#7fdbca",
     className: "#ffcb8b",
+    variable: "#d6deeb",
   },
   palenight: {
     background: "#292d3e",
@@ -213,6 +228,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#f07178",
     property: "#89ddff",
     className: "#ffcb6b",
+    variable: "#a6accd",
   },
   "shades-of-purple": {
     background: "#2d2b55",
@@ -226,6 +242,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#fb9e00",
     property: "#80ffbb",
     className: "#fad000",
+    variable: "#e3dfff",
   },
   "ayu-dark": {
     background: "#0a0e14",
@@ -239,6 +256,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#e6b673",
     property: "#59c2ff",
     className: "#59c2ff",
+    variable: "#b3b1ad",
   },
   "ayu-light": {
     background: "#fafafa",
@@ -252,6 +270,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#e6ba7e",
     property: "#55b4d4",
     className: "#55b4d4",
+    variable: "#575f66",
   },
   "gruvbox-dark": {
     background: "#282828",
@@ -265,6 +284,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#fabd2f",
     property: "#83a598",
     className: "#8ec07c",
+    variable: "#ebdbb2",
   },
   "gruvbox-light": {
     background: "#fbf1c7",
@@ -278,6 +298,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#b57614",
     property: "#076678",
     className: "#427b58",
+    variable: "#3c3836",
   },
   "tokyo-night": {
     background: "#1a1b26",
@@ -291,6 +312,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#e0af68",
     property: "#7dcfff",
     className: "#7aa2f7",
+    variable: "#c0caf5",
   },
   "tokyo-night-storm": {
     background: "#24283b",
@@ -304,6 +326,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#e0af68",
     property: "#7dcfff",
     className: "#2ac3de",
+    variable: "#c0caf5",
   },
   "tokyo-night-light": {
     background: "#d5d6db",
@@ -317,6 +340,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#8f5e15",
     property: "#0f4b6e",
     className: "#34548a",
+    variable: "#343b58",
   },
   "catppuccin-mocha": {
     background: "#1e1e2e",
@@ -330,6 +354,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#f9e2af",
     property: "#89dceb",
     className: "#89b4fa",
+    variable: "#cdd6f4",
   },
   "catppuccin-latte": {
     background: "#eff1f5",
@@ -343,6 +368,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#df8e1d",
     property: "#04a5e5",
     className: "#1e66f5",
+    variable: "#4c4f69",
   },
   "synthwave-84": {
     background: "#262335",
@@ -356,6 +382,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#fdca49",
     property: "#36f9f6",
     className: "#fede5d",
+    variable: "#f8f8f2",
   },
   "panda-syntax": {
     background: "#292a2b",
@@ -369,6 +396,7 @@ export const themes: Record<ThemeName, SyntaxTheme> = {
     parameter: "#ffb86c",
     property: "#19f9d8",
     className: "#6fc1ff",
+    variable: "#e6e6e6",
   },
 };
 
@@ -412,6 +440,7 @@ export const supportedLanguages: { value: SupportedLanguage; label: string }[] =
     { value: "powershell", label: "PowerShell" },
     { value: "dockerfile", label: "Dockerfile" },
     { value: "markdown", label: "Markdown" },
+    { value: "plaintext", label: "Plain Text" },
   ];
 
 export const fontFamilies = [
@@ -469,15 +498,36 @@ export const syntaxHighlight = (
         {
           type: "keyword" as const,
           regex:
-            /\b(function|const|let|var|if|else|for|while|return|class|extends|import|export|from|async|await|try|catch|finally|new|this|typeof|instanceof|break|continue|switch|case|default|do)\b/g,
+            /\b(function|const|let|var|if|else|for|while|return|class|extends|import|export|from|async|await|try|catch|finally|new|this|typeof|instanceof|break|continue|switch|case|default|do|yield|static|get|set|of|in|delete|void)\b/g,
         },
-        { type: "number" as const, regex: /\b(\d+(?:\.\d+)?)\b/g },
+        {
+          type: "number" as const,
+          regex:
+            /\b(\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|0x[0-9a-fA-F]+|0b[01]+|0o[0-7]+)\b/g,
+        },
         {
           type: "className" as const,
-          regex: /\b([A-Z]\w*)(?=\s*[{(.]|\s+extends)/g,
+          regex: /\b([A-Z][\w]*)(?=\s*[{(.]|\s+extends)/g,
         },
         { type: "function" as const, regex: /\b([a-z_$][\w$]*)(?=\s*\()/gi },
+        // Parameters inside function parentheses
+        {
+          type: "parameter" as const,
+          regex:
+            /\(([a-z_$][\w$]*(?:\s*,\s*[a-z_$][\w$]*)*)\)(?:\s*=>|\s*\{)/gi,
+        },
+        // Variables declared with const/let/var
+        {
+          type: "variable" as const,
+          regex: /\b(?:const|let|var)\s+([a-z_$][\w$]*)\b/gi,
+        },
+        // Variables assigned in object destructuring or as return values
+        {
+          type: "variable" as const,
+          regex: /\b([a-z_$][\w$]*)\s*(?:=|:)\s*(?!\d)/gi,
+        },
         { type: "property" as const, regex: /\.([a-z_$][\w$]*)/gi },
+        { type: "operator" as const, regex: /[+\-*/%=<>!&|^~?:]+/g },
       ],
       typescript: [
         { type: "comment" as const, regex: /\/\*[\s\S]*?\*\/|\/\/.*$/gm },
@@ -488,56 +538,129 @@ export const syntaxHighlight = (
         {
           type: "keyword" as const,
           regex:
-            /\b(function|const|let|var|if|else|for|while|return|class|extends|import|export|from|async|await|try|catch|finally|new|this|typeof|instanceof|interface|type|enum|public|private|protected|readonly|break|continue|switch|case|default|do|implements|namespace|module|declare)\b/g,
+            /\b(function|const|let|var|if|else|for|while|return|class|extends|import|export|from|async|await|try|catch|finally|new|this|typeof|instanceof|interface|type|enum|public|private|protected|readonly|break|continue|switch|case|default|do|implements|namespace|module|declare|abstract|as|static|get|set|of|in|delete|void|yield)\b/g,
         },
-        { type: "number" as const, regex: /\b(\d+(?:\.\d+)?)\b/g },
+        {
+          type: "number" as const,
+          regex:
+            /\b(\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|0x[0-9a-fA-F]+|0b[01]+|0o[0-7]+)\b/g,
+        },
         {
           type: "className" as const,
-          regex: /\b([A-Z]\w*)(?=\s*[{(<.]|\s+extends|\s+implements)/g,
+          regex: /\b([A-Z][\w]*)(?=\s*[{(<.]|\s+extends|\s+implements)/g,
         },
         { type: "function" as const, regex: /\b([a-z_$][\w$]*)(?=\s*[<(])/gi },
+        // Parameters inside function parentheses
+        {
+          type: "parameter" as const,
+          regex:
+            /\(([a-z_$][\w$]*(?:\s*,\s*[a-z_$][\w$]*)*)\)(?:\s*=>|\s*\{|:\s*\w+)/gi,
+        },
+        // Variables declared with const/let/var
+        {
+          type: "variable" as const,
+          regex: /\b(?:const|let|var)\s+([a-z_$][\w$]*)\b/gi,
+        },
+        // Variables assigned in object destructuring or as return values
+        {
+          type: "variable" as const,
+          regex: /\b([a-z_$][\w$]*)\s*(?:=|:)\s*(?!\d)/gi,
+        },
         { type: "property" as const, regex: /\.([a-z_$][\w$]*)/gi },
+        { type: "operator" as const, regex: /[+\-*/%=<>!&|^~?:]+/g },
       ],
       python: [
         { type: "comment" as const, regex: /#.*$/gm },
         {
           type: "string" as const,
-          regex: /(['"`])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
+          regex:
+            /("""[\s\S]*?"""|'''[\s\S]*?'''|(['"`])((?:(?!\2)[^\\]|\\.)*)(\2))/g,
         },
         {
           type: "keyword" as const,
           regex:
-            /\b(def|class|if|elif|else|for|while|return|import|from|as|try|except|finally|with|lambda|and|or|not|is|in|None|True|False)\b/g,
+            /\b(def|class|if|elif|else|for|while|return|import|from|as|try|except|finally|with|lambda|and|or|not|is|in|None|True|False|pass|break|continue|yield|async|await|del|global|nonlocal|assert|raise)\b/g,
         },
-        { type: "number" as const, regex: /\b(\d+(?:\.\d+)?)\b/g },
+        {
+          type: "number" as const,
+          regex:
+            /\b(\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|0x[0-9a-fA-F]+|0b[01]+|0o[0-7]+)\b/g,
+        },
+        {
+          type: "className" as const,
+          regex: /\b([A-Z][\w]*)(?=\s*[:(]|\s*=)/g,
+        },
         { type: "function" as const, regex: /\b(\w+)(?=\s*\()/g },
+        { type: "property" as const, regex: /\.(\w+)/g },
+        { type: "parameter" as const, regex: /\b(\w+)(?=\s*=)/g },
       ],
       java: [
-        ...common,
+        { type: "comment" as const, regex: /\/\*[\s\S]*?\*\/|\/\/.*$/gm },
+        {
+          type: "string" as const,
+          regex: /(['"])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
+        },
+        {
+          type: "number" as const,
+          regex:
+            /\b(\d+(?:\.\d+)?(?:[eE][+-]?\d+)?[fFdDlL]?|0x[0-9a-fA-F]+[lL]?)\b/g,
+        },
         {
           type: "keyword" as const,
           regex:
-            /\b(public|private|protected|static|final|class|interface|extends|implements|if|else|for|while|return|new|this|super|import|package|try|catch|finally|throw|throws)\b/g,
+            /\b(public|private|protected|static|final|abstract|class|interface|extends|implements|if|else|for|while|do|return|new|this|super|import|package|try|catch|finally|throw|throws|synchronized|volatile|transient|native|strictfp|void|boolean|byte|short|int|long|float|double|char|break|continue|switch|case|default|instanceof|assert|enum)\b/g,
+        },
+        {
+          type: "className" as const,
+          regex: /\b([A-Z][\w]*)(?=\s*[{<(.])/g,
         },
         { type: "function" as const, regex: /\b(\w+)(?=\s*\()/g },
+        { type: "property" as const, regex: /\.(\w+)/g },
+        { type: "operator" as const, regex: /[+\-*/%=<>!&|^~?:]+/g },
       ],
       cpp: [
-        ...common,
+        { type: "comment" as const, regex: /\/\*[\s\S]*?\*\/|\/\/.*$/gm },
+        {
+          type: "string" as const,
+          regex: /(['"])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
+        },
+        {
+          type: "number" as const,
+          regex:
+            /\b(\d+(?:\.\d+)?(?:[eE][+-]?\d+)?[fFlLuU]?|0x[0-9a-fA-F]+[uUlL]*)\b/g,
+        },
         {
           type: "keyword" as const,
           regex:
-            /\b(#include|#define|int|float|double|char|void|if|else|for|while|return|class|public|private|protected|namespace|using|std|cout|cin|endl)\b/g,
+            /\b(#include|#define|#ifdef|#ifndef|#endif|#pragma|int|float|double|char|void|bool|long|short|signed|unsigned|const|static|extern|if|else|for|while|do|return|class|struct|union|enum|public|private|protected|namespace|using|template|typename|virtual|override|final|auto|nullptr|true|false|try|catch|throw|new|delete|sizeof|typedef|this|friend|operator|explicit|inline|constexpr|mutable|volatile|register|break|continue|switch|case|default|goto)\b/g,
+        },
+        {
+          type: "className" as const,
+          regex: /\b([A-Z][\w]*)(?=\s*[{<(.]|::|&|\*)/g,
         },
         { type: "function" as const, regex: /\b(\w+)(?=\s*\()/g },
+        { type: "property" as const, regex: /(?:\.|->)(\w+)/g },
+        { type: "operator" as const, regex: /[+\-*/%=<>!&|^~?:]+|::|->|\.\*/g },
       ],
       c: [
-        ...common,
+        { type: "comment" as const, regex: /\/\*[\s\S]*?\*\/|\/\/.*$/gm },
+        {
+          type: "string" as const,
+          regex: /(['"])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
+        },
+        {
+          type: "number" as const,
+          regex:
+            /\b(\d+(?:\.\d+)?(?:[eE][+-]?\d+)?[fFlLuU]?|0x[0-9a-fA-F]+[uUlL]*)\b/g,
+        },
         {
           type: "keyword" as const,
           regex:
-            /\b(#include|#define|int|float|double|char|void|if|else|for|while|return|struct|typedef|printf|scanf)\b/g,
+            /\b(#include|#define|#ifdef|#ifndef|#endif|#pragma|int|float|double|char|void|long|short|signed|unsigned|const|static|extern|if|else|for|while|do|return|struct|union|enum|typedef|sizeof|auto|register|volatile|break|continue|switch|case|default|goto)\b/g,
         },
         { type: "function" as const, regex: /\b(\w+)(?=\s*\()/g },
+        { type: "property" as const, regex: /(?:\.|->)(\w+)/g },
+        { type: "operator" as const, regex: /[+\-*/%=<>!&|^~?:]+|->|\.\*/g },
       ],
       html: [
         { type: "comment" as const, regex: /<!--[\s\S]*?-->/g },
@@ -545,7 +668,9 @@ export const syntaxHighlight = (
           type: "string" as const,
           regex: /(['"`])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
         },
-        { type: "keyword" as const, regex: /<\/?[\w\s="/.':;#-\/\?]+>/g },
+        { type: "keyword" as const, regex: /<\/?[\w\-]+/g },
+        { type: "property" as const, regex: /\s([\w\-]+)(?==)/g },
+        { type: "operator" as const, regex: /[<>\/=]/g },
       ],
       css: [
         { type: "comment" as const, regex: /\/\*[\s\S]*?\*\//g },
@@ -553,11 +678,16 @@ export const syntaxHighlight = (
           type: "string" as const,
           regex: /(['"`])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
         },
-        { type: "keyword" as const, regex: /[\w-]+(?=\s*:)/g },
+        { type: "className" as const, regex: /\.[a-zA-Z_][\w\-]*/g },
+        { type: "function" as const, regex: /#[a-zA-Z_][\w\-]*/g },
+        { type: "keyword" as const, regex: /[\w\-]+(?=\s*:)/g },
+        { type: "property" as const, regex: /@[\w\-]+/g },
         {
           type: "number" as const,
-          regex: /\b(\d+(?:\.\d+)?(?:px|em|rem|%|vh|vw|pt|pc|in|cm|mm)?)\b/g,
+          regex:
+            /\b(\d+(?:\.\d+)?(?:px|em|rem|%|vh|vw|pt|pc|in|cm|mm|deg|rad|turn|s|ms|fr)?)\b/g,
         },
+        { type: "operator" as const, regex: /[{}:;,()]/g },
       ],
       json: [
         { type: "string" as const, regex: /("[^"]*")/g },
@@ -566,71 +696,214 @@ export const syntaxHighlight = (
       ],
       // Add fallback for other languages
       php: [
-        ...common,
-        {
-          type: "keyword" as const,
-          regex:
-            /\b(function|class|if|else|for|while|return|public|private|protected|static|extends|implements|namespace|use|try|catch|finally|throw|echo|print|var|const)\b/g,
-        },
-      ],
-      ruby: [
-        { type: "comment" as const, regex: /#.*$/gm },
+        { type: "comment" as const, regex: /\/\*[\s\S]*?\*\/|\/\/.*$|#.*$/gm },
         {
           type: "string" as const,
           regex: /(['"`])((?:(?!\1)[^\\]|\\.)*)(\1)/g,
         },
         {
+          type: "number" as const,
+          regex: /\b(\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)\b/g,
+        },
+        {
           type: "keyword" as const,
           regex:
-            /\b(def|class|if|elsif|else|for|while|return|require|include|module|end|do|begin|rescue|ensure|yield|and|or|not|nil|true|false)\b/g,
+            /\b(function|class|if|else|elseif|for|foreach|while|do|return|public|private|protected|static|final|abstract|extends|implements|interface|namespace|use|try|catch|finally|throw|echo|print|var|const|new|clone|isset|unset|empty|array|list|global|require|require_once|include|include_once|die|exit|eval|switch|case|default|break|continue|goto|declare|as|yield|from)\b/g,
+        },
+        {
+          type: "className" as const,
+          regex: /\b([A-Z][\w]*)(?=\s*[{(:])/g,
+        },
+        { type: "function" as const, regex: /\b(\w+)(?=\s*\()/g },
+        { type: "property" as const, regex: /->(\w+)/g },
+        { type: "operator" as const, regex: /[+\-*/%=<>!&|^~?:\.]+|->|=>/g },
+      ],
+      ruby: [
+        { type: "comment" as const, regex: /#.*$/gm },
+        {
+          type: "string" as const,
+          regex:
+            /('''[\s\S]*?'''|"""[\s\S]*?"""|(['"`])((?:(?!\2)[^\\]|\\.)*)(\2))/g,
+        },
+        {
+          type: "number" as const,
+          regex: /\b(\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)\b/g,
+        },
+        {
+          type: "keyword" as const,
+          regex:
+            /\b(def|class|module|if|elsif|else|unless|case|when|for|while|until|loop|do|return|require|require_relative|include|extend|attr_reader|attr_writer|attr_accessor|begin|rescue|ensure|raise|yield|super|self|and|or|not|nil|true|false|break|next|redo|retry|end|alias|undef|defined\?|__FILE__|__LINE__)\b/g,
+        },
+        {
+          type: "className" as const,
+          regex: /\b([A-Z][\w]*)/g,
+        },
+        { type: "function" as const, regex: /\b(\w+)(?=\s*\(|$)/g },
+        { type: "property" as const, regex: /@(\w+)|:(\w+)/g },
+        {
+          type: "operator" as const,
+          regex: /[+\-*/%=<>!&|^~?:\.]+|=>|::|\.{2,3}/g,
         },
       ],
       go: [
-        ...common,
+        { type: "comment" as const, regex: /\/\*[\s\S]*?\*\/|\/\/.*$/gm },
+        {
+          type: "string" as const,
+          regex: /(`[^`]*`|(['"])((?:(?!\2)[^\\]|\\.)*)(\2))/g,
+        },
+        {
+          type: "number" as const,
+          regex: /\b(\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|0x[0-9a-fA-F]+|0[0-7]+)\b/g,
+        },
         {
           type: "keyword" as const,
           regex:
-            /\b(func|package|import|if|else|for|while|return|var|const|type|struct|interface|go|defer|select|switch|case|default|range|make|new|chan|map)\b/g,
+            /\b(func|package|import|if|else|for|range|return|var|const|type|struct|interface|map|chan|select|go|defer|fallthrough|break|continue|switch|case|default|goto|nil|true|false|iota|make|new|len|cap|append|copy|delete|close|panic|recover|print|println)\b/g,
+        },
+        {
+          type: "className" as const,
+          regex: /\b([A-Z][\w]*)/g,
+        },
+        { type: "function" as const, regex: /\b(\w+)(?=\s*\()/g },
+        { type: "property" as const, regex: /\.(\w+)/g },
+        {
+          type: "operator" as const,
+          regex: /[+\-*/%=<>!&|^~:\.]+|:=|<-|\.{3}/g,
         },
       ],
       rust: [
-        ...common,
+        { type: "comment" as const, regex: /\/\*[\s\S]*?\*\/|\/\/.*$/gm },
+        {
+          type: "string" as const,
+          regex: /(r#*"[^"]*"#*|(['"])((?:(?!\2)[^\\]|\\.)*)(\2))/g,
+        },
+        {
+          type: "number" as const,
+          regex:
+            /\b(\d+(?:\.\d+)?(?:[eE][+-]?\d+)?[fi]?(?:8|16|32|64|128|size)?|0x[0-9a-fA-F]+|0o[0-7]+|0b[01]+)\b/g,
+        },
         {
           type: "keyword" as const,
           regex:
-            /\b(fn|let|mut|if|else|for|while|return|struct|enum|impl|trait|pub|use|mod|crate|match|Some|None|Ok|Err|Result|Option)\b/g,
+            /\b(fn|let|mut|const|static|if|else|match|loop|while|for|in|return|break|continue|struct|enum|impl|trait|type|where|use|mod|pub|crate|super|self|as|async|await|dyn|move|ref|unsafe|extern|union|macro|abstract|become|box|do|final|override|priv|typeof|unsized|virtual|yield|try|Some|None|Ok|Err|Result|Option|true|false)\b/g,
+        },
+        {
+          type: "className" as const,
+          regex: /\b([A-Z][\w]*)/g,
+        },
+        { type: "function" as const, regex: /\b(\w+)(?=\s*[!<(])/g },
+        { type: "property" as const, regex: /\.(\w+)/g },
+        {
+          type: "operator" as const,
+          regex: /[+\-*/%=<>!&|^~?:\.]+|=>|::|->|\.{2,3}/g,
         },
       ],
       swift: [
-        ...common,
+        { type: "comment" as const, regex: /\/\*[\s\S]*?\*\/|\/\/.*$/gm },
+        {
+          type: "string" as const,
+          regex: /("""[\s\S]*?"""|(['"])((?:(?!\2)[^\\]|\\.)*)(\2))/g,
+        },
+        {
+          type: "number" as const,
+          regex:
+            /\b(\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|0x[0-9a-fA-F]+(?:\.[0-9a-fA-F]+)?(?:p[+-]?\d+)?|0o[0-7]+|0b[01]+)\b/g,
+        },
         {
           type: "keyword" as const,
           regex:
-            /\b(func|class|struct|if|else|for|while|return|var|let|import|public|private|internal|fileprivate|override|static|final|protocol|extension|enum|case|default|switch|guard|defer)\b/g,
+            /\b(func|class|struct|enum|protocol|extension|if|else|guard|switch|case|default|for|in|while|repeat|return|break|continue|fallthrough|var|let|import|public|private|internal|fileprivate|open|static|final|override|required|convenience|dynamic|inout|mutating|nonmutating|lazy|weak|unowned|optional|throws|rethrows|try|catch|defer|do|as|is|self|super|nil|true|false|where|typealias|associatedtype|infix|prefix|postfix|precedencegroup|operator|subscript|deinit|init|willSet|didSet|get|set|some|any)\b/g,
+        },
+        {
+          type: "className" as const,
+          regex: /\b([A-Z][\w]*)/g,
+        },
+        { type: "function" as const, regex: /\b(\w+)(?=\s*[(<])/g },
+        { type: "property" as const, regex: /\.(\w+)/g },
+        {
+          type: "operator" as const,
+          regex: /[+\-*/%=<>!&|^~?:\.]+|=>|\.{2,3}|&&|\|\|/g,
         },
       ],
       kotlin: [
-        ...common,
+        { type: "comment" as const, regex: /\/\*[\s\S]*?\*\/|\/\/.*$/gm },
+        {
+          type: "string" as const,
+          regex: /("""[\s\S]*?"""|(['"])((?:(?!\2)[^\\]|\\.)*)(\2))/g,
+        },
+        {
+          type: "number" as const,
+          regex:
+            /\b(\d+(?:\.\d+)?(?:[eE][+-]?\d+)?[fFdDlL]?|0x[0-9a-fA-F]+[lL]?|0b[01]+[lL]?)\b/g,
+        },
         {
           type: "keyword" as const,
           regex:
-            /\b(fun|class|if|else|for|while|return|val|var|import|public|private|internal|protected|override|open|final|abstract|interface|enum|object|companion|data|sealed)\b/g,
+            /\b(fun|class|object|interface|if|else|when|for|while|do|return|val|var|import|package|public|private|internal|protected|override|open|final|abstract|sealed|data|inline|noinline|crossinline|reified|infix|operator|suspend|tailrec|vararg|companion|init|constructor|by|delegate|where|this|super|null|true|false|is|as|in|break|continue|throw|try|catch|finally|annotation|enum|typealias|out|dynamic|expect|actual|get|set)\b/g,
+        },
+        {
+          type: "className" as const,
+          regex: /\b([A-Z][\w]*)/g,
+        },
+        { type: "function" as const, regex: /\b(\w+)(?=\s*[(<])/g },
+        { type: "property" as const, regex: /\.(\w+)/g },
+        {
+          type: "operator" as const,
+          regex: /[+\-*/%=<>!&|^~?:\.]+|=>|::|\.{2}/g,
         },
       ],
       scala: [
-        ...common,
+        { type: "comment" as const, regex: /\/\*[\s\S]*?\*\/|\/\/.*$/gm },
+        {
+          type: "string" as const,
+          regex: /("""[\s\S]*?"""|(['"])((?:(?!\2)[^\\]|\\.)*)(\2))/g,
+        },
+        {
+          type: "number" as const,
+          regex:
+            /\b(\d+(?:\.\d+)?(?:[eE][+-]?\d+)?[fFdDlL]?|0x[0-9a-fA-F]+[lL]?)\b/g,
+        },
         {
           type: "keyword" as const,
           regex:
-            /\b(def|class|object|if|else|for|while|return|val|var|import|public|private|protected|override|abstract|final|sealed|case|match|try|catch|finally|throw|extends|with|trait)\b/g,
+            /\b(def|val|var|class|object|trait|extends|with|type|new|if|else|for|yield|while|do|return|match|case|try|catch|finally|throw|import|package|private|protected|override|abstract|final|sealed|implicit|lazy|super|this|null|true|false|forSome)\b/g,
+        },
+        {
+          type: "className" as const,
+          regex: /\b([A-Z][\w]*)/g,
+        },
+        { type: "function" as const, regex: /\b(\w+)(?=\s*[\[(<])/g },
+        { type: "property" as const, regex: /\.(\w+)/g },
+        {
+          type: "operator" as const,
+          regex: /[+\-*/%=<>!&|^~?:\.]+|=>|<-|::|<:|>:/g,
         },
       ],
       csharp: [
-        ...common,
+        { type: "comment" as const, regex: /\/\*[\s\S]*?\*\/|\/\/.*$/gm },
+        {
+          type: "string" as const,
+          regex: /(@"(?:[^"]|"")*"|(['"])((?:(?!\2)[^\\]|\\.)*)(\2))/g,
+        },
+        {
+          type: "number" as const,
+          regex:
+            /\b(\d+(?:\.\d+)?(?:[eE][+-]?\d+)?[fFdDmMlLuU]*|0x[0-9a-fA-F]+[lLuU]*)\b/g,
+        },
         {
           type: "keyword" as const,
           regex:
-            /\b(class|interface|if|else|for|while|return|public|private|protected|static|readonly|const|override|virtual|abstract|sealed|using|namespace|try|catch|finally|throw|new|this|base)\b/g,
+            /\b(class|interface|struct|enum|delegate|event|if|else|switch|case|default|for|foreach|in|while|do|break|continue|return|goto|throw|try|catch|finally|lock|yield|await|async|new|typeof|sizeof|null|true|false|public|private|protected|internal|static|readonly|const|volatile|virtual|override|abstract|sealed|partial|using|namespace|void|bool|byte|sbyte|char|decimal|double|float|int|uint|long|ulong|short|ushort|object|string|var|dynamic|this|base|is|as|ref|out|params|where|get|set|add|remove|value|from|select|group|into|orderby|join|let|on|equals|by|ascending|descending)\b/g,
+        },
+        {
+          type: "className" as const,
+          regex: /\b([A-Z][\w]*)/g,
+        },
+        { type: "function" as const, regex: /\b(\w+)(?=\s*[(<])/g },
+        { type: "property" as const, regex: /\.(\w+)/g },
+        {
+          type: "operator" as const,
+          regex: /[+\-*/%=<>!&|^~?:\.]+|=>|\?\?|\?\.|\?\[/g,
         },
       ],
       scss: [
@@ -701,6 +974,9 @@ export const syntaxHighlight = (
         { type: "comment" as const, regex: /<!--[\s\S]*?-->/g },
         { type: "keyword" as const, regex: /^#{1,6}\s.*/gm },
         { type: "string" as const, regex: /\*\*.*?\*\*|__.*?__|`.*?`/g },
+      ],
+      plaintext: [
+        // No syntax highlighting for plain text
       ],
     };
 
@@ -809,6 +1085,7 @@ export const getFileExtension = (language: string): string => {
     shell: "sh",
     powershell: "ps1",
     dockerfile: "dockerfile",
+    plaintext: "txt",
   };
   return extensions[language] || "txt";
 };
