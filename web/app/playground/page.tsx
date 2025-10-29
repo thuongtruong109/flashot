@@ -9,6 +9,7 @@ import TipsModal from "@/app/playground/_components/header/TipsModal";
 import CodeEditor from "@/app/playground/_components/editor";
 import Header from "@/app/playground/_components/header";
 import TourGuide from "@/app/playground/_components/header/TourGuide";
+import ImportDialog from "@/app/playground/_components/header/ImportDialog";
 import Image from "next/image";
 import { DEFAULT_CODE_SETTINGS } from "@/shared";
 import WidthRuler from "@/app/playground/_components/editor/WidthRuler";
@@ -35,6 +36,7 @@ export default function Page() {
   const [copySuccess, setCopySuccess] = useState(false);
   const [showTipsModal, setShowTipsModal] = useState(false);
   const [showTourGuide, setShowTourGuide] = useState(false);
+  const [showImportDialog, setShowImportDialog] = useState(false);
   const [fileName, setFileName] = useState(settings.fileName);
   const [showSettingsPanel, setShowSettingsPanel] = useState(false); // Start with false to prevent SSR issues
   const [isClient, setIsClient] = useState(false);
@@ -179,6 +181,11 @@ export default function Page() {
     if (data.settings.fileName) {
       setFileName(data.settings.fileName);
     }
+  };
+
+  const handleImportFromURL = (code: string, language: string) => {
+    setCode(code);
+    updateSetting("language", language);
   };
 
   const handleExportJSON = () => {
@@ -366,6 +373,7 @@ export default function Page() {
               onPositionChange={handleEditorPositionChange}
               onSizeChange={handleEditorSizeChange}
               onHoverChange={setIsEditorHovered}
+              onShowImport={() => setShowImportDialog(true)}
             />
 
             {/* Width Ruler - positioned below with fixed spacing */}
@@ -413,6 +421,12 @@ export default function Page() {
       <TourGuide
         isOpen={showTourGuide}
         onClose={() => setShowTourGuide(false)}
+      />
+
+      <ImportDialog
+        isOpen={showImportDialog}
+        onClose={() => setShowImportDialog(false)}
+        onImport={handleImportFromURL}
       />
     </div>
   );

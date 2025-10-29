@@ -33,6 +33,7 @@ interface EditorProps {
   onPositionChange?: (position: { x: number; y: number }) => void;
   onSizeChange?: (size: { width: number; height: number }) => void;
   onHoverChange?: (isHovered: boolean) => void;
+  onShowImport?: () => void;
 }
 
 const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
@@ -48,6 +49,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       onPositionChange,
       onSizeChange,
       onHoverChange,
+      onShowImport,
     },
     ref
   ) => {
@@ -648,6 +650,37 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
         >
           {/* Snip Area Wrapper - Window Controls + Code Content */}
           <div className="relative flex-1 flex flex-col min-h-0">
+            {/* Import Button - Positioned on the left */}
+            {!isFullscreen && onShowImport && (
+              <div
+                data-export-ignore
+                className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                style={{
+                  top: "-44px",
+                  zIndex: 50,
+                }}
+              >
+                <button
+                  onClick={onShowImport}
+                  className="group relative flex items-center space-x-1.5 px-2 py-1 rounded-lg bg-gradient-to-r from-blue-500/80 to-cyan-500/80 hover:from-blue-600/90 hover:to-cyan-600/90 dark:from-blue-600/70 dark:to-cyan-600/70 dark:hover:from-blue-700/80 dark:hover:to-cyan-700/80 backdrop-blur-md border border-blue-400/50 dark:border-blue-700/50 shadow-[0_8px_32px_0_rgba(59,130,246,0.25)] hover:shadow-[0_8px_32px_0_rgba(59,130,246,0.35)] dark:shadow-[0_8px_32px_0_rgba(59,130,246,0.15)] dark:hover:shadow-[0_8px_32px_0_rgba(59,130,246,0.25)] transition-all"
+                  title="Import code from URL"
+                >
+                  <svg
+                    className="size-3.5 text-white drop-shadow-sm"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M3 16l4 4m0 0l4-4m-4 4V4m11 0l4 4m0 0l-4 4m4-4H11" />
+                  </svg>
+                  <span className="text-[13px] text-white font-medium drop-shadow-sm">
+                    Import
+                  </span>
+                </button>
+              </div>
+            )}
+
             {/* Editor Action Buttons - Positioned outside and above code editor */}
             {!isFullscreen && (
               <div
