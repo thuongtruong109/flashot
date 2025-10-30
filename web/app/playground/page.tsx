@@ -6,9 +6,11 @@ import { copyToClipboard } from "@/utils";
 import { generateAndDownloadImage } from "@/lib/imageGenerator";
 import SettingsPanel from "@/app/playground/_components/SettingsPanel";
 import TipsModal from "@/app/playground/_components/header/TipsModal";
+import ShortcutsModal from "@/app/playground/_components/header/ShortcutsModal";
 import CodeEditor from "@/app/playground/_components/editor";
 import Header from "@/app/playground/_components/header";
 import TourGuide from "@/app/playground/_components/header/TourGuide";
+import ImportDialog from "@/app/playground/_components/header/ImportDialog";
 import Image from "next/image";
 import { DEFAULT_CODE_SETTINGS } from "@/shared";
 import WidthRuler from "@/app/playground/_components/editor/WidthRuler";
@@ -34,7 +36,9 @@ export default function Page() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [showTipsModal, setShowTipsModal] = useState(false);
+  const [showShortcutsModal, setShowShortcutsModal] = useState(false);
   const [showTourGuide, setShowTourGuide] = useState(false);
+  const [showImportDialog, setShowImportDialog] = useState(false);
   const [fileName, setFileName] = useState(settings.fileName);
   const [showSettingsPanel, setShowSettingsPanel] = useState(false); // Start with false to prevent SSR issues
   const [isClient, setIsClient] = useState(false);
@@ -45,6 +49,7 @@ export default function Page() {
   const [editorPosition, setEditorPosition] = useState({ x: 0, y: 0 });
   const [editorSize, setEditorSize] = useState({ width: 600, height: 400 });
   const [isEditorHovered, setIsEditorHovered] = useState(false);
+  const [isEditorFocused, setIsEditorFocused] = useState(false);
 
   // Handle position change from CodeEditor
   const handleEditorPositionChange = useCallback(
@@ -154,12 +159,12 @@ export default function Page() {
     };
   }, [showSettingsPanel]);
 
-  const updateSetting = <K extends keyof CodeSettings>(
-    key: K,
-    value: CodeSettings[K]
-  ) => {
-    setSettings((prev) => ({ ...prev, [key]: value }));
-  };
+  const updateSetting = useCallback(
+    <K extends keyof CodeSettings>(key: K, value: CodeSettings[K]) => {
+      setSettings((prev) => ({ ...prev, [key]: value }));
+    },
+    []
+  );
 
   const [activeMenuLabel, setActiveMenuLabel] = useState<string | undefined>(
     undefined
@@ -179,6 +184,11 @@ export default function Page() {
     if (data.settings.fileName) {
       setFileName(data.settings.fileName);
     }
+  };
+
+  const handleImportFromURL = (code: string, language: string) => {
+    setCode(code);
+    updateSetting("language", language);
   };
 
   const handleExportJSON = () => {
@@ -290,6 +300,217 @@ export default function Page() {
     [code, settings, fileName]
   );
 
+  // Keyboard shortcuts handler inspired by ray.so
+  useEffect(() => {
+    const handleKeyDown = async (e: KeyboardEvent) => {
+      // Don't trigger shortcuts when typing in inputs or textareas
+      const target = e.target as HTMLElement;
+      const isTyping =
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.isContentEditable;
+
+      // Cmd/Ctrl + C - Copy editor as image (only when not typing)
+      if (
+        (e.metaKey || e.ctrlKey) &&
+        e.key === "c" &&
+        !isTyping &&
+        !e.shiftKey
+      ) {
+        e.preventDefault();
+        if (codeRef.current) {
+          try {
+            const { generateCodeImage } = await import("@/lib/imageGenerator");
+            const base64Image = await generateCodeImage(
+              codeRef.current,
+              { ...settings, code },
+              "png"
+            );
+
+            if (base64Image) {
+              const response = await fetch(base64Image);
+              const blob = await response.blob();
+
+              if (navigator.clipboard && ClipboardItem) {
+                await navigator.clipboard.write([
+                  new ClipboardItem({
+                    "image/png": blob,
+                  }),
+                ]);
+                setCopySuccess(true);
+                setTimeout(() => setCopySuccess(false), 2000);
+              }
+            }
+          } catch (error) {
+            console.error("Failed to copy image:", error);
+          }
+        }
+        return;
+      }
+
+      // Cmd/Ctrl + Shift + C - Copy URL
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === "C") {
+        e.preventDefault();
+        if (codeRef.current) {
+          try {
+            const { generateCodeImage } = await import("@/lib/imageGenerator");
+            const base64Image = await generateCodeImage(
+              codeRef.current,
+              { ...settings, code },
+              "png"
+            );
+
+            if (base64Image) {
+              const jsonData = {
+                image: base64Image,
+                code: code,
+                settings: settings,
+                timestamp: new Date().toISOString(),
+              };
+
+              const jsonString = JSON.stringify(jsonData);
+              const jsonBase64 = btoa(unescape(encodeURIComponent(jsonString)));
+              const shareableLink = `${window.location.origin}${window.location.pathname}?share=${jsonBase64}`;
+
+              await navigator.clipboard.writeText(shareableLink);
+              setCopySuccess(true);
+              setTimeout(() => setCopySuccess(false), 2000);
+            }
+          } catch (error) {
+            console.error("Failed to copy URL:", error);
+          }
+        }
+        return;
+      }
+
+      // Cmd/Ctrl + S - Save PNG
+      if ((e.metaKey || e.ctrlKey) && e.key === "s" && !e.shiftKey) {
+        e.preventDefault();
+        handleDownloadImage("png");
+        return;
+      }
+
+      // Cmd/Ctrl + Shift + S - Save SVG (fallback to PNG)
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === "S") {
+        e.preventDefault();
+        handleDownloadImage("png"); // SVG not yet implemented
+        return;
+      }
+
+      // Cmd/Ctrl + K - Toggle export menu
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setShowTipsModal(true);
+        return;
+      }
+
+      // Don't trigger single-key shortcuts when typing
+      if (isTyping) return;
+
+      switch (e.key.toLowerCase()) {
+        case "f":
+          // Focus text editor
+          e.preventDefault();
+          setIsEditorFocused(true);
+          // Find and focus the textarea in the editor
+          const textarea = document.querySelector(
+            'textarea[placeholder="Paste or type your code here..."]'
+          ) as HTMLTextAreaElement;
+          if (textarea) {
+            textarea.focus();
+            // Trigger click on the code editor
+            const editorEl = codeRef.current;
+            if (editorEl) {
+              editorEl.click();
+            }
+          }
+          break;
+
+        case "c":
+          // Change colors (cycle through themes)
+          e.preventDefault();
+          const themeNames = [
+            "dark",
+            "light",
+            "monokai",
+            "github",
+            "dracula",
+            "nord",
+            "material",
+            "one-dark",
+          ];
+          const currentIndex = themeNames.indexOf(settings.theme);
+          const nextIndex = (currentIndex + 1) % themeNames.length;
+          updateSetting("theme", themeNames[nextIndex]);
+          break;
+
+        case "b":
+          // Toggle background
+          e.preventDefault();
+          updateSetting("showBackground", !settings.showBackground);
+          break;
+
+        case "d":
+          // Toggle dark mode (cycle through themes)
+          e.preventDefault();
+          updateSetting("theme", settings.theme === "dark" ? "light" : "dark");
+          break;
+
+        case "n":
+          // Toggle line numbers
+          e.preventDefault();
+          updateSetting("showLineNumbers", !settings.showLineNumbers);
+          break;
+
+        case "p":
+          // Change padding (cycle through common values)
+          e.preventDefault();
+          const paddingValues = [16, 32, 48, 64, 80];
+          const currentPaddingIndex = paddingValues.indexOf(settings.padding);
+          const nextPaddingIndex =
+            (currentPaddingIndex + 1) % paddingValues.length;
+          updateSetting("padding", paddingValues[nextPaddingIndex]);
+          break;
+
+        case "l":
+          // Change language (cycle through common ones)
+          e.preventDefault();
+          const commonLanguages = [
+            "javascript",
+            "typescript",
+            "python",
+            "java",
+            "cpp",
+            "html",
+            "css",
+            "json",
+          ];
+          const currentLangIndex = commonLanguages.indexOf(settings.language);
+          const nextLangIndex = (currentLangIndex + 1) % commonLanguages.length;
+          updateSetting("language", commonLanguages[nextLangIndex]);
+          break;
+
+        case "?":
+          // Show shortcuts help
+          e.preventDefault();
+          setShowShortcutsModal(true);
+          break;
+
+        default:
+          break;
+      }
+    };
+
+    if (typeof window !== "undefined") {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("keydown", handleKeyDown);
+      }
+    };
+  }, [code, settings, handleDownloadImage, updateSetting]);
+
   // Bridge export event from SettingsPanel
   useEffect(() => {
     const onExport = () => {
@@ -327,6 +548,7 @@ export default function Page() {
         onShowJSON={() => {}}
         onShowTips={() => setShowTipsModal(true)}
         onShowGuide={() => setShowTourGuide(true)}
+        onShowShortcuts={() => setShowShortcutsModal(true)}
         copySuccess={copySuccess}
         isGenerating={isGenerating}
         fileName={fileName}
@@ -366,6 +588,7 @@ export default function Page() {
               onPositionChange={handleEditorPositionChange}
               onSizeChange={handleEditorSizeChange}
               onHoverChange={setIsEditorHovered}
+              onShowImport={() => setShowImportDialog(true)}
             />
 
             {/* Width Ruler - positioned below with fixed spacing */}
@@ -410,9 +633,20 @@ export default function Page() {
         onClose={() => setShowTipsModal(false)}
       />
 
+      <ShortcutsModal
+        isOpen={showShortcutsModal}
+        onClose={() => setShowShortcutsModal(false)}
+      />
+
       <TourGuide
         isOpen={showTourGuide}
         onClose={() => setShowTourGuide(false)}
+      />
+
+      <ImportDialog
+        isOpen={showImportDialog}
+        onClose={() => setShowImportDialog(false)}
+        onImport={handleImportFromURL}
       />
     </div>
   );

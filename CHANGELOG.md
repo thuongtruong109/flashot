@@ -3,6 +3,8 @@
 ### 🚀 Features
 
 - ## **playground**:
+  - Modal guide for keyboard shortcuts - by @thuongtruong109 [<samp>()</samp>]()
+  - Import and detect code from URL - by @thuongtruong109 [<samp>()</samp>]()
   - Custom label setting (text, font size, color, opacity, alignment) - by @thuongtruong109 [<samp>()</samp>]()
   - Edit filename directly in the editor - by @thuongtruong109 [<samp>(d381c)</samp>](https://github.com/thuongtruong109/flashot/commit/d381ca6bb2e80ed8821213b7f9a037e50b3fe106)
   - Support more language themes - by @thuongtruong109 [<samp>(d33cb)</samp>](https://github.com/thuongtruong109/flashot/commit/d33cba0f79093257b7029df7883dfd7403f24d2c)

@@ -257,33 +257,29 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
   };
 
   const getButtonStyles = (color: string, disabled: boolean = false) => {
+    const gradientMap: Record<string, string> = {
+      red: "bg-gradient-to-r from-red-500/80 to-orange-500/80 hover:from-red-600/90 hover:to-orange-600/90 dark:from-red-600/70 dark:to-orange-600/70 dark:hover:from-red-700/80 dark:hover:to-orange-700/80 border-red-400/50 dark:border-red-700/50 shadow-[0_8px_32px_0_rgba(239,68,68,0.25)] hover:shadow-[0_8px_32px_0_rgba(239,68,68,0.35)] dark:shadow-[0_8px_32px_0_rgba(239,68,68,0.15)] dark:hover:shadow-[0_8px_32px_0_rgba(239,68,68,0.25)]",
+      teal: "bg-gradient-to-r from-teal-500/80 to-cyan-500/80 hover:from-teal-600/90 hover:to-cyan-600/90 dark:from-teal-600/70 dark:to-cyan-600/70 dark:hover:from-teal-700/80 dark:hover:to-cyan-700/80 border-teal-400/50 dark:border-teal-700/50 shadow-[0_8px_32px_0_rgba(20,184,166,0.25)] hover:shadow-[0_8px_32px_0_rgba(20,184,166,0.35)] dark:shadow-[0_8px_32px_0_rgba(20,184,166,0.15)] dark:hover:shadow-[0_8px_32px_0_rgba(20,184,166,0.25)]",
+      violet:
+        "bg-gradient-to-r from-violet-500/80 to-purple-500/80 hover:from-violet-600/90 hover:to-purple-600/90 dark:from-violet-600/70 dark:to-purple-600/70 dark:hover:from-violet-700/80 dark:hover:to-purple-700/80 border-violet-400/50 dark:border-violet-700/50 shadow-[0_8px_32px_0_rgba(139,92,246,0.25)] hover:shadow-[0_8px_32px_0_rgba(139,92,246,0.35)] dark:shadow-[0_8px_32px_0_rgba(139,92,246,0.15)] dark:hover:shadow-[0_8px_32px_0_rgba(139,92,246,0.25)]",
+      green:
+        "bg-gradient-to-r from-green-500/80 to-emerald-500/80 hover:from-green-600/90 hover:to-emerald-600/90 dark:from-green-600/70 dark:to-emerald-600/70 dark:hover:from-green-700/80 dark:hover:to-emerald-700/80 border-green-400/50 dark:border-green-700/50 shadow-[0_8px_32px_0_rgba(34,197,94,0.25)] hover:shadow-[0_8px_32px_0_rgba(34,197,94,0.35)] dark:shadow-[0_8px_32px_0_rgba(34,197,94,0.15)] dark:hover:shadow-[0_8px_32px_0_rgba(34,197,94,0.25)]",
+    };
+
     const baseStyles =
-      "group relative flex items-center space-x-1.5 px-2.5 py-1 rounded-lg transition-all duration-200 " +
-      "bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl " +
-      "border border-gray-300 dark:border-gray-600 " +
-      "shadow-[0_2px_8px_rgba(0,0,0,0.1)] " +
-      "dark:shadow-[0_2px_8px_rgba(0,0,0,0.3)] " +
-      "hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] " +
-      "dark:hover:shadow-[0_4px_12px_rgba(0,0,0,0.4)] " +
-      "hover:bg-white dark:hover:bg-gray-800 " +
-      "hover:-translate-y-0.5 active:translate-y-0";
+      "group relative flex items-center space-x-1.5 px-2 py-1 rounded-lg transition-all duration-200 backdrop-blur-md border ";
 
     if (disabled) {
-      return `${baseStyles} opacity-50 cursor-not-allowed hover:translate-y-0`;
+      return `${baseStyles} ${
+        gradientMap[color] || gradientMap.teal
+      } opacity-50 cursor-not-allowed`;
     }
 
-    return `${baseStyles} text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white`;
+    return `${baseStyles} ${gradientMap[color] || gradientMap.teal}`;
   };
 
-  const colorMap = {
-    red: "text-red-500 group-hover:text-red-600",
-    blue: "text-blue-500 group-hover:text-blue-600",
-    purple: "text-purple-500 group-hover:text-purple-600",
-    green: "text-green-500 group-hover:text-green-600",
-  };
-
-  const getIconStyles = (color: keyof typeof colorMap) => {
-    return `size-3.5 transition-all duration-200 relative z-10 ${colorMap[color]}`;
+  const getIconStyles = (color: string) => {
+    return `size-3.5 transition-all duration-200 relative z-10 text-white drop-shadow-sm`;
   };
 
   return (
@@ -296,27 +292,31 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
           title="Clear code"
         >
           <Trash2 className={getIconStyles("red")} />
-          <span className="text-[13px] relative z-10">Clear</span>
+          <span className="text-[13px] relative z-10 text-white font-medium drop-shadow-sm">
+            Clear
+          </span>
         </button>
 
         {/* Copy Button */}
         <button
           onClick={handleCopy}
-          className={getButtonStyles("blue", isCopied)}
+          className={getButtonStyles(isCopied ? "green" : "teal", isCopied)}
           title="Copy code to clipboard"
           disabled={isCopied}
         >
           {isCopied ? (
             <>
               <Check className={getIconStyles("green")} />
-              <span className="text-[13px] relative z-10 text-green-500">
+              <span className="text-[13px] relative z-10 text-white font-medium drop-shadow-sm">
                 Copied!
               </span>
             </>
           ) : (
             <>
-              <Copy className={getIconStyles("blue")} />
-              <span className="text-[13px] relative z-10">Copy</span>
+              <Copy className={getIconStyles("teal")} />
+              <span className="text-[13px] relative z-10 text-white font-medium drop-shadow-sm">
+                Copy
+              </span>
             </>
           )}
         </button>
@@ -324,11 +324,13 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
         {/* Share Button */}
         <button
           onClick={handleShareClick}
-          className={getButtonStyles("purple")}
+          className={getButtonStyles("violet")}
           title="Share code snippet"
         >
-          <Share2 className={getIconStyles("purple")} />
-          <span className="text-[13px] relative z-10">Share</span>
+          <Share2 className={getIconStyles("violet")} />
+          <span className="text-[13px] relative z-10 text-white font-medium drop-shadow-sm">
+            Share
+          </span>
         </button>
       </div>
 

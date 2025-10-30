@@ -3,7 +3,6 @@
 import React from "react";
 import {
   Info,
-  Keyboard,
   Download,
   Code2,
   Sparkles,
@@ -142,6 +141,39 @@ const TipsModal: React.FC<TipsModalProps> = ({ isOpen, onClose }) => {
             </div>
           </div>
 
+          <div>
+            <div className="flex items-center space-x-2 mb-3">
+              <Code2 className="w-5 h-5 text-green-600 dark:text-green-400" />
+              <h4 className="text-base font-bold text-gray-900 dark:text-gray-100">
+                Contribute
+              </h4>
+            </div>
+            <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-lg p-3 border border-gray-200/50 dark:border-gray-700/50">
+              <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                The project is Open Source and{" "}
+                <a
+                  href="https://github.com/thuongtruong109/flashot"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold underline decoration-2 underline-offset-2"
+                >
+                  available on GitHub
+                </a>
+                .
+              </p>
+              <p className="text-sm text-gray-700 dark:text-gray-300">
+                If you have any questions or feedback, please
+                <a
+                  href="mailto:thuongtruongofficial@gmail.com"
+                  className="ml-1.5 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold underline decoration-2 underline-offset-2"
+                >
+                  send us an email
+                </a>
+                .
+              </p>
+            </div>
+          </div>
+
           <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
             <p className="text-xs text-center text-gray-600 dark:text-gray-400">
               Made with <Heart className="w-3 h-3 inline text-red-500" /> by
@@ -190,65 +222,6 @@ const TipsModal: React.FC<TipsModalProps> = ({ isOpen, onClose }) => {
                     JPG, WebP, AVIF)
                   </p>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div className="flex items-center space-x-2 mb-3">
-              <Keyboard className="w-5 h-5 text-green-600 dark:text-green-400" />
-              <h4 className="text-base font-bold text-gray-900 dark:text-gray-100">
-                Keyboard Shortcuts
-              </h4>
-            </div>
-            <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-3 space-y-1.5 border border-gray-200/50 dark:border-gray-700/50">
-              <div className="flex items-center justify-between py-1.5 px-2 hover:bg-gray-50/50 dark:hover:bg-gray-700/50 rounded-lg transition-colors">
-                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                  Click to edit code
-                </span>
-                <kbd className="px-2 py-1 bg-gray-200 dark:bg-gray-700 dark:text-gray-300 rounded text-xs font-medium">
-                  Click
-                </kbd>
-              </div>
-              <div className="flex items-center justify-between py-1.5 px-2 hover:bg-gray-50/50 dark:hover:bg-gray-700/50 rounded-lg transition-colors">
-                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                  Exit editing mode
-                </span>
-                <div className="flex items-center space-x-1">
-                  <kbd className="px-2 py-1 bg-gray-200 dark:bg-gray-700 dark:text-gray-300 rounded text-xs font-medium">
-                    Esc
-                  </kbd>
-                  <span className="text-xs text-gray-400 dark:text-gray-500">
-                    /
-                  </span>
-                  <kbd className="px-2 py-1 bg-gray-200 dark:bg-gray-700 dark:text-gray-300 rounded text-xs font-medium">
-                    Ctrl+Enter
-                  </kbd>
-                </div>
-              </div>
-              <div className="flex items-center justify-between py-1.5 px-2 hover:bg-gray-50/50 dark:hover:bg-gray-700/50 rounded-lg transition-colors">
-                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                  Indent/Unindent
-                </span>
-                <div className="flex items-center space-x-1">
-                  <kbd className="px-2 py-1 bg-gray-200 dark:bg-gray-700 dark:text-gray-300 rounded text-xs font-medium">
-                    Tab
-                  </kbd>
-                  <span className="text-xs text-gray-400 dark:text-gray-500">
-                    /
-                  </span>
-                  <kbd className="px-2 py-1 bg-gray-200 dark:bg-gray-700 dark:text-gray-300 rounded text-xs font-medium">
-                    Shift+Tab
-                  </kbd>
-                </div>
-              </div>
-              <div className="flex items-center justify-between py-1.5 px-2 hover:bg-gray-50/50 dark:hover:bg-gray-700/50 rounded-lg transition-colors">
-                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                  Toggle fullscreen
-                </span>
-                <kbd className="px-2 py-1 bg-gray-200 dark:bg-gray-700 dark:text-gray-300 rounded text-xs font-medium">
-                  F11
-                </kbd>
               </div>
             </div>
           </div>
@@ -304,7 +277,7 @@ const TipsModal: React.FC<TipsModalProps> = ({ isOpen, onClose }) => {
               </h4>
             </div>
             <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-3 border border-gray-200/50 dark:border-gray-700/50 max-h-48 overflow-y-auto enhanced-scrollbar-light dark:enhanced-scrollbar-dark">
-              <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="grid grid-cols-4 gap-2 text-xs">
                 {[
                   "🟨 JavaScript",
                   "🔷 TypeScript",

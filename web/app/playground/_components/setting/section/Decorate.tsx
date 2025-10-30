@@ -119,7 +119,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                 onChange={(e) =>
                   onUpdateSetting("borderWidth", parseInt(e.target.value))
                 }
-                className="w-full h-1 bg-gradient-to-r from-indigo-200 to-purple-200 rounded-lg appearance-none cursor-pointer
+                className="w-full h-1 bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-900 dark:to-purple-900 rounded-lg appearance-none cursor-pointer
                   [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                   [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                   [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-purple-500
@@ -149,7 +149,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                 onChange={(e) =>
                   onUpdateSetting("borderOffset", parseInt(e.target.value))
                 }
-                className="w-full h-1 bg-gradient-to-r from-indigo-200 to-purple-200 rounded-lg appearance-none cursor-pointer
+                className="w-full h-1 bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-900 dark:to-purple-900 rounded-lg appearance-none cursor-pointer
                   [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                   [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                   [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-purple-500
@@ -207,7 +207,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                 onChange={(e) =>
                   onUpdateSetting("borderOpacity", parseFloat(e.target.value))
                 }
-                className="w-full h-1 bg-gradient-to-r from-indigo-200 to-purple-200 rounded-lg appearance-none cursor-pointer
+                className="w-full h-1 bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-900 dark:to-purple-900 rounded-lg appearance-none cursor-pointer
                   [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                   [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                   [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-purple-500
@@ -397,7 +397,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                         fontSize: parseInt(e.target.value),
                       })
                     }
-                    className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                    className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 dark:from-rose-900 dark:to-pink-900 rounded-lg appearance-none cursor-pointer
                       [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                       [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                       [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
@@ -501,7 +501,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                           imageWidth: parseInt(e.target.value),
                         })
                       }
-                      className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                      className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 dark:from-rose-900 dark:to-pink-900 rounded-lg appearance-none cursor-pointer
                         [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                         [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                         [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
@@ -530,7 +530,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                           imageHeight: parseInt(e.target.value),
                         })
                       }
-                      className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                      className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 dark:from-rose-900 dark:to-pink-900 rounded-lg appearance-none cursor-pointer
                         [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                         [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                         [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
@@ -564,7 +564,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                       x: parseInt(e.target.value),
                     })
                   }
-                  className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                  className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 dark:from-rose-900 dark:to-pink-900 rounded-lg appearance-none cursor-pointer
                     [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                     [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                     [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
@@ -593,7 +593,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                       y: parseInt(e.target.value),
                     })
                   }
-                  className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                  className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 dark:from-rose-900 dark:to-pink-900 rounded-lg appearance-none cursor-pointer
                     [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                     [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                     [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
@@ -625,7 +625,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                     opacity: parseFloat(e.target.value),
                   })
                 }
-                className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 dark:from-rose-900 dark:to-pink-900 rounded-lg appearance-none cursor-pointer
                   [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                   [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                   [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
@@ -656,7 +656,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                     rotation: parseInt(e.target.value),
                   })
                 }
-                className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                className="w-full h-1 bg-gradient-to-r from-rose-200 to-pink-200 dark:from-rose-900 dark:to-pink-900 rounded-lg appearance-none cursor-pointer
                   [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                   [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                   [&::-webkit-slider-thumb]:from-rose-500 [&::-webkit-slider-thumb]:to-pink-500
@@ -697,14 +697,14 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
               className="sr-only peer"
             />
             <div
-              className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+              className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.05)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                 settings.showLabel
-                  ? "bg-gradient-to-br from-emerald-100 to-emerald-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                  ? "bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-800 dark:to-emerald-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
                   : ""
               }`}
             >
               <svg
-                className={`size-3 text-emerald-700 font-bold transition-opacity duration-200 ${
+                className={`size-3 text-emerald-700 dark:text-emerald-300 font-bold transition-opacity duration-200 ${
                   settings.showLabel ? "opacity-100" : "opacity-0"
                 }`}
                 fill="currentColor"
@@ -797,7 +797,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                 onChange={(e) =>
                   onUpdateSetting("labelFontSize", parseInt(e.target.value))
                 }
-                className="w-full h-1 bg-gradient-to-r from-emerald-200 to-teal-200 rounded-lg appearance-none cursor-pointer
+                className="w-full h-1 bg-gradient-to-r from-emerald-200 to-teal-200 dark:from-emerald-900 dark:to-teal-900 rounded-lg appearance-none cursor-pointer
                   [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                   [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                   [&::-webkit-slider-thumb]:from-emerald-500 [&::-webkit-slider-thumb]:to-teal-500
@@ -825,7 +825,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                 onChange={(e) =>
                   onUpdateSetting("labelOpacity", parseFloat(e.target.value))
                 }
-                className="w-full h-1 bg-gradient-to-r from-emerald-200 to-teal-200 rounded-lg appearance-none cursor-pointer
+                className="w-full h-1 bg-gradient-to-r from-emerald-200 to-teal-200 dark:from-emerald-900 dark:to-teal-900 rounded-lg appearance-none cursor-pointer
                   [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                   [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                   [&::-webkit-slider-thumb]:from-emerald-500 [&::-webkit-slider-thumb]:to-teal-500

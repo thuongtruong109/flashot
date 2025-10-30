@@ -264,8 +264,8 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             disabled={!settings.width && !settings.height}
             className={`px-3 py-1 text-xs rounded-md transition-all ${
               !settings.width && !settings.height
-                ? "text-gray-700 bg-gradient-to-b from-white to-gray-50 shadow-[inset_2px_2px_6px_rgba(0,0,0,0.05),inset_-2px_-2px_6px_rgba(255,255,255,0.95)] cursor-not-allowed"
-                : "text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 shadow-md cursor-pointer"
+                ? "text-gray-700 dark:text-gray-300 bg-gradient-to-b from-white to-gray-50 dark:from-gray-700 dark:to-gray-800 shadow-[inset_2px_2px_6px_rgba(0,0,0,0.05),inset_-2px_-2px_6px_rgba(255,255,255,0.95)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.05)] cursor-not-allowed"
+                : "text-white bg-gradient-to-r from-blue-500 to-indigo-500 dark:from-blue-600 dark:to-indigo-600 hover:from-blue-600 hover:to-indigo-600 dark:hover:from-blue-700 dark:hover:to-indigo-700 shadow-md cursor-pointer"
             }`}
           >
             Auto
@@ -443,14 +443,14 @@ const ViewSection: React.FC<ViewSectionProps> = ({
               className="sr-only peer"
             />
             <div
-              className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+              className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.05)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                 settings.wordWrap
-                  ? "bg-gradient-to-br from-blue-100 to-blue-200 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+                  ? "bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-800 dark:to-blue-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
                   : ""
               }`}
             >
               <svg
-                className={`size-3 text-blue-700 font-bold transition-opacity duration-200 ${
+                className={`size-3 text-blue-700 dark:text-blue-300 font-bold transition-opacity duration-200 ${
                   settings.wordWrap ? "opacity-100" : "opacity-0"
                 }`}
                 fill="currentColor"
