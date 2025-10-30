@@ -287,7 +287,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
   return (
     <div>
       {/* Tab Buttons */}
-      <div className="flex items-center space-x-1 mb-4">
+      <div className="flex items-center space-x-3 mb-4">
         {[
           { value: "custom", label: "Custom" },
           { value: "gradient", label: "Gradient" },
@@ -298,7 +298,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
             onClick={() =>
               setActiveTab(tab.value as "custom" | "gradient" | "solid")
             }
-            className={`flex-1 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
+            className={`flex-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
               activeTab === tab.value
                 ? "bg-gradient-to-r from-blue-500 to-indigo-500 dark:from-blue-600 dark:to-indigo-600 text-white shadow-md"
                 : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
@@ -376,8 +376,8 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
           {/* Gradient Angle Control */}
           {selectedBackground.startsWith("linear-gradient") &&
             onGradientAngleChange && (
-              <div className="pt-3 border-t border-gray-200 dark:border-gray-700">
-                <label className="text-xs flex items-center justify-between mb-2">
+              <div className="py-3">
+                <label className="text-xs flex items-center justify-between">
                   <span className="text-gray-600 dark:text-gray-400">
                     Gradient Angle
                   </span>
@@ -394,7 +394,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
                   onChange={(e) =>
                     onGradientAngleChange(parseInt(e.target.value))
                   }
-                  className="w-full h-1 bg-gradient-to-r from-purple-200 to-pink-200 rounded-lg appearance-none cursor-pointer
+                  className="w-full h-1 bg-gradient-to-r from-purple-200 to-pink-200 dark:from-purple-900 dark:to-pink-900 rounded-lg appearance-none cursor-pointer
                   [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                   [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                   [&::-webkit-slider-thumb]:from-purple-500 [&::-webkit-slider-thumb]:to-pink-500

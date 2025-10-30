@@ -10,6 +10,7 @@ interface HeaderProps {
   onShowJSON: () => void;
   onShowTips: () => void;
   onShowGuide: () => void;
+  onShowShortcuts?: () => void;
   copySuccess: boolean;
   isGenerating: boolean;
   fileName: string;
@@ -30,6 +31,7 @@ export default function Header({
   onShowJSON,
   onShowTips,
   onShowGuide,
+  onShowShortcuts,
   copySuccess,
   isGenerating,
   fileName,
@@ -53,6 +55,7 @@ export default function Header({
           onShowJSON={onShowJSON}
           onShowTips={onShowTips}
           onShowGuide={onShowGuide}
+          onShowShortcuts={onShowShortcuts}
           copySuccess={copySuccess}
           isGenerating={isGenerating}
           fileName={fileName}

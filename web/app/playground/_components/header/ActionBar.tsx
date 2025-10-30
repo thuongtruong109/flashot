@@ -16,6 +16,7 @@ import {
   Moon,
   Sun,
   Image as ImageIcon,
+  Keyboard,
 } from "lucide-react";
 
 interface ActionBarProps {
@@ -25,6 +26,7 @@ interface ActionBarProps {
   onShowJSON: () => void;
   onShowTips: () => void;
   onShowGuide: () => void;
+  onShowShortcuts?: () => void;
   copySuccess: boolean;
   isGenerating: boolean;
   fileName: string;
@@ -43,6 +45,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   onShowJSON,
   onShowTips,
   onShowGuide,
+  onShowShortcuts,
   copySuccess,
   isGenerating,
   fileName,
@@ -274,7 +277,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
           <button
             onClick={handleExportClick}
             disabled={isGenerating}
-            className="group relative flex items-center space-x-1 px-3 h-[1.95rem] rounded-l-lg bg-gradient-to-r from-emerald-500/80 to-green-500/80 hover:from-emerald-600/90 hover:to-green-600/90 dark:from-emerald-600/70 dark:to-green-600/70 dark:hover:from-emerald-700/80 dark:hover:to-green-700/80 backdrop-blur-md border border-emerald-400/50 dark:border-emerald-700/50 border-r-0 shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.35)] dark:shadow-[0_8px_32px_0_rgba(16,185,129,0.15)] dark:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            className="group relative flex items-center space-x-1 px-3 h-[1.94rem] rounded-l-lg bg-gradient-to-r from-emerald-500/80 to-green-500/80 hover:from-emerald-600/90 hover:to-green-600/90 dark:from-emerald-600/40 dark:to-green-600/40 dark:hover:from-emerald-700/80 dark:hover:to-green-700/80 backdrop-blur-md border border-emerald-400/50 dark:border-emerald-700/50 border-r-0 shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.35)] dark:shadow-[0_8px_32px_0_rgba(16,185,129,0.15)] dark:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
             {isGenerating ? (
               <Loader2 className="size-3.5 text-white animate-spin" />
@@ -290,7 +293,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
             </span>
           </button>
 
-          <div className="[&>div>button]:h-[1.95rem] [&>div>button]:pl-0 [&_svg]:!text-white [&>div>button]:border-l [&>div>button]:rounded-l-none [&>div>button]:rounded-r-lg [&>div>button]:bg-gradient-to-r [&>div>button]:from-green-500/80 [&>div>button]:to-emerald-500/80 [&>div>button]:hover:from-green-600/90 [&>div>button]:hover:to-emerald-600/90 [&>div>button]:dark:from-green-600/70 [&>div>button]:dark:to-emerald-600/70 [&>div>button]:dark:hover:from-green-700/80 [&>div>button]:dark:hover:to-emerald-700/80 [&>div>button]:backdrop-blur-md [&>div>button]:border-emerald-400/50 [&>div>button]:dark:border-emerald-700/50 [&>div>button]:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] [&>div>button]:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.35)] [&>div>button]:dark:shadow-[0_8px_32px_0_rgba(16,185,129,0.15)] [&>div>button]:dark:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] [&>div>button]:min-w-0 [&>div>button]:px-2 [&>div>button]:transition-all">
+          <div className="[&>div>button]:h-[1.94rem] [&>div>button]:pl-0 [&_svg]:!text-white [&>div>button]:border-l [&>div>button]:rounded-l-none [&>div>button]:rounded-r-lg [&>div>button]:bg-gradient-to-r [&>div>button]:from-green-500/80 [&>div>button]:to-emerald-500/80 [&>div>button]:hover:from-green-600/90 [&>div>button]:hover:to-emerald-600/90 [&>div>button]:dark:from-green-600/40 [&>div>button]:dark:to-emerald-600/40 [&>div>button]:dark:hover:from-green-700/80 [&>div>button]:dark:hover:to-emerald-700/80 [&>div>button]:backdrop-blur-md [&>div>button]:border-emerald-400/50 [&>div>button]:dark:border-emerald-700/50 [&>div>button]:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] [&>div>button]:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.35)] [&>div>button]:dark:shadow-[0_8px_32px_0_rgba(16,185,129,0.15)] [&>div>button]:dark:hover:shadow-[0_8px_32px_0_rgba(16,185,129,0.25)] [&>div>button]:min-w-0 [&>div>button]:px-2 [&>div>button]:transition-all">
             <CustomSelect
               align="right"
               options={exportOptions.map((opt, index) => {
@@ -333,6 +336,25 @@ const ActionBar: React.FC<ActionBarProps> = ({
             />
           </div>
         </div>
+
+        {/* Shortcuts Button */}
+        {onShowShortcuts && (
+          <button
+            onClick={onShowShortcuts}
+            data-tour="shortcuts-button"
+            className={`${getButtonStyles(
+              "secondary",
+              "purple",
+              false
+            )} h-[1.95rem]`}
+            title="Keyboard Shortcuts (Press ?)"
+          >
+            <Keyboard className={getIconStyles("purple", "secondary")} />
+            <span className="text-[13px] relative z-10 font-medium">
+              Shortcuts
+            </span>
+          </button>
+        )}
 
         {/* More Menu Button */}
         <div className="relative" data-tour="more-menu">

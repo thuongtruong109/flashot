@@ -12,7 +12,6 @@
 - Background Patterns - Use patterns instead of solid colors
 - Image Filters - Apply filters (grayscale, sepia, etc.) to images
 - Batch Export - Generate multiple images with different settings at once
-- API Access - Programmatic access to generate images
 - Mobile App - Dedicated app for iOS/Android for on-the-go image generation
 - Localization - Support for multiple languages in the UI
 - Accessibility Features - Improved support for screen readers and keyboard navigation
