@@ -1096,3 +1096,11 @@ export {
   transparentGridPatterns,
   getTransparentGridCSS,
 } from "./transparentGrid";
+
+// Re-export pattern backgrounds
+export {
+  patternBackgrounds,
+  getPatternBackground,
+  getPatternSvgDataUrl,
+  hasPatternOverlay,
+} from "./patterns";

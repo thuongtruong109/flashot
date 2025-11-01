@@ -3,12 +3,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Palette, Upload, X, Link as LinkIcon } from "lucide-react";
 import { cn, transparentGridPatterns } from "@/utils";
+import PatternSelector from "./PatternSelector";
 
 interface BackgroundSelectorProps {
   selectedBackground: string;
   onBackgroundChange: (background: string) => void;
   gradientAngle?: number;
   onGradientAngleChange?: (angle: number) => void;
+  selectedPattern?: string;
+  onPatternChange?: (pattern: string) => void;
 }
 
 const backgrounds = [
@@ -116,14 +119,16 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
   onBackgroundChange,
   gradientAngle = 135,
   onGradientAngleChange,
+  selectedPattern = "none",
+  onPatternChange,
 }) => {
   const [transparentGridDataUrl, setTransparentGridDataUrl] =
     useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
   const [isImageUploaded, setIsImageUploaded] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<"custom" | "gradient" | "solid">(
-    "gradient"
-  );
+  const [activeTab, setActiveTab] = useState<
+    "custom" | "gradient" | "solid" | "pattern"
+  >("gradient");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -159,7 +164,12 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
     } else if (selectedBackground?.startsWith("#")) {
       setActiveTab("solid");
     }
-  }, [selectedBackground]);
+
+    // Set pattern tab if pattern is selected
+    if (selectedPattern && selectedPattern !== "none") {
+      setActiveTab("pattern");
+    }
+  }, [selectedBackground, selectedPattern]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -287,16 +297,19 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
   return (
     <div>
       {/* Tab Buttons */}
-      <div className="flex items-center space-x-3 mb-4">
+      <div className="flex items-center space-x-2 mb-4">
         {[
           { value: "custom", label: "Custom" },
           { value: "gradient", label: "Gradient" },
           { value: "solid", label: "Solid" },
+          { value: "pattern", label: "Pattern" },
         ].map((tab) => (
           <button
             key={tab.value}
             onClick={() =>
-              setActiveTab(tab.value as "custom" | "gradient" | "solid")
+              setActiveTab(
+                tab.value as "custom" | "gradient" | "solid" | "pattern"
+              )
             }
             className={`flex-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
               activeTab === tab.value
@@ -437,6 +450,14 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
               )}
           </div>
         </div>
+      )}
+
+      {/* Pattern Tab */}
+      {activeTab === "pattern" && onPatternChange && (
+        <PatternSelector
+          selectedPattern={selectedPattern}
+          onPatternChange={onPatternChange}
+        />
       )}
     </div>
   );

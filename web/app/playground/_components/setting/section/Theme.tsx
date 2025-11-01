@@ -97,6 +97,10 @@ const ThemeSection: React.FC<ThemeSectionProps> = ({
             onGradientAngleChange={(angle) =>
               onUpdateSetting("gradientAngle", angle)
             }
+            selectedPattern={settings.backgroundPattern || "none"}
+            onPatternChange={(pattern) =>
+              onUpdateSetting("backgroundPattern", pattern)
+            }
           />
         )}
       </div>

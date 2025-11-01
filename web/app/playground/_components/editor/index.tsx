@@ -14,6 +14,9 @@ import {
   syntaxHighlight,
   getFileExtension,
   transparentGridPatterns,
+  getPatternBackground,
+  getPatternSvgDataUrl,
+  hasPatternOverlay,
 } from "@/utils";
 import Caption from "@/app/playground/_components/editor/Caption";
 import ActionButtons from "@/app/playground/_components/editor/ActionButtons";
@@ -119,6 +122,32 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       }
 
       return background;
+    };
+
+    // Helper function to get the complete background style based on pattern and background settings
+    const getBackgroundStyle = (): string => {
+      if (isFullscreen) return "white";
+      if (!settings.showBackground) return "transparent";
+
+      const pattern = settings.backgroundPattern || "none";
+      const hasPattern = hasPatternOverlay(pattern);
+
+      // If pattern is selected and not "none"
+      if (hasPattern) {
+        return getPatternBackground(pattern);
+      }
+
+      // Otherwise use regular background
+      if (settings.background === "transparent") {
+        return transparentGridDataUrl
+          ? `url("${transparentGridDataUrl}")`
+          : "repeating-conic-gradient(#e2e8f0 0deg 90deg, #f8fafc 90deg 180deg) 0 0/20px 20px";
+      }
+
+      return applyGradientAngle(
+        settings.background,
+        settings.gradientAngle || 135
+      );
     };
 
     // Callback ref to handle both refs
@@ -566,18 +595,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
           }
         `}
           style={{
-            background: isFullscreen
-              ? "white"
-              : settings.showBackground
-              ? settings.background === "transparent"
-                ? transparentGridDataUrl
-                  ? `url("${transparentGridDataUrl}")`
-                  : "repeating-conic-gradient(#e2e8f0 0deg 90deg, #f8fafc 90deg 180deg) 0 0/20px 20px"
-                : applyGradientAngle(
-                    settings.background,
-                    settings.gradientAngle || 135
-                  )
-              : "transparent",
+            background: getBackgroundStyle(),
             backgroundRepeat:
               settings.showBackground && settings.background === "transparent"
                 ? "repeat"
@@ -648,6 +666,26 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
             transformOrigin: !isFullscreen ? "center" : "initial",
           }}
         >
+          {/* Pattern SVG Overlay */}
+          {settings.showBackground &&
+            settings.backgroundPattern &&
+            hasPatternOverlay(settings.backgroundPattern) && (
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  backgroundImage: `url("${getPatternSvgDataUrl(
+                    settings.backgroundPattern
+                  )}")`,
+                  backgroundRepeat: "repeat",
+                  backgroundSize: "auto",
+                  borderRadius: `${
+                    settings.frameBorderRadius ?? settings.borderRadius
+                  }px`,
+                  opacity: 1,
+                }}
+              />
+            )}
+
           {/* Snip Area Wrapper - Window Controls + Code Content */}
           <div className="relative flex-1 flex flex-col min-h-0">
             {/* Import Button - Positioned on the left */}

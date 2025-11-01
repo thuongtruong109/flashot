@@ -43,6 +43,7 @@ export interface CodeSettings {
   background: string;
   showBackground: boolean;
   gradientAngle?: number; // Angle for gradient backgrounds (0-360deg)
+  backgroundPattern?: string; // Pattern background ID (e.g., "vercel", "supabase", etc.)
   padding: number;
   borderRadius: number;
   frameBorderRadius?: number;

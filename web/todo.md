@@ -1,6 +1,5 @@
 - Mockup Frame Styles - Different frame styles (browser, terminal, tablet, phone, etc.)
 - Custom Headers/Footers - Add custom text above/below code
-- Keyboard Shortcuts - Quick access to common actions
 - Multi-file Support - Show multiple files in tabs
 - Version History - Undo/redo for settings changes, view and revert to specific points
 - Import fonts from Google Fonts - Access a wider range of fonts
