@@ -11,6 +11,7 @@ interface HeaderProps {
   onShowTips: () => void;
   onShowGuide: () => void;
   onShowShortcuts?: () => void;
+  onNavigateToSection?: (section: string) => void;
   copySuccess: boolean;
   isGenerating: boolean;
   fileName: string;
@@ -32,6 +33,7 @@ export default function Header({
   onShowTips,
   onShowGuide,
   onShowShortcuts,
+  onNavigateToSection,
   copySuccess,
   isGenerating,
   fileName,
@@ -56,6 +58,7 @@ export default function Header({
           onShowTips={onShowTips}
           onShowGuide={onShowGuide}
           onShowShortcuts={onShowShortcuts}
+          onNavigateToSection={onNavigateToSection}
           copySuccess={copySuccess}
           isGenerating={isGenerating}
           fileName={fileName}

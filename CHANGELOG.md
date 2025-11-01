@@ -1,4 +1,13 @@
-## [v2.5.0 - 2025-11-01](https://github.com/thuongtruong109/flashot/releases/tag/v2.5.0)
+## [v2.6.0 - 2025-11-10](https://github.com/thuongtruong109/flashot/releases/tag/v2.6.0)
+
+### 🚀 Features
+
+- ## **playground**:
+  - Search Functionality - Improved search tools for finding settings and features
+
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.4.0...v2.5.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.6.0)
+
+## [v2.5.0 - 2025-11-02](https://github.com/thuongtruong109/flashot/releases/tag/v2.5.0)
 
 ### 🚀 Features
 

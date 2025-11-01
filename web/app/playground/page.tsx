@@ -537,6 +537,13 @@ export default function Page() {
     }
   };
 
+  const handleNavigateToSection = (section: string) => {
+    // Open settings panel if not already open
+    setShowSettingsPanel(true);
+    // Set active menu to the specified section
+    setActiveMenuLabel(section);
+  };
+
   return (
     <div className="h-screen bg-white dark:bg-gray-950 bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 relative overflow-hidden flex flex-col">
       <GradientBg />
@@ -549,6 +556,7 @@ export default function Page() {
         onShowTips={() => setShowTipsModal(true)}
         onShowGuide={() => setShowTourGuide(true)}
         onShowShortcuts={() => setShowShortcutsModal(true)}
+        onNavigateToSection={handleNavigateToSection}
         copySuccess={copySuccess}
         isGenerating={isGenerating}
         fileName={fileName}

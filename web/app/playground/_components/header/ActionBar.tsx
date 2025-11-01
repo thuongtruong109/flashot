@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import CustomSelect from "@/app/playground/_components/base/Select";
+import SearchButton from "@/app/playground/_components/SearchButton";
 import {
   Download,
   Settings,
@@ -27,6 +28,7 @@ interface ActionBarProps {
   onShowTips: () => void;
   onShowGuide: () => void;
   onShowShortcuts?: () => void;
+  onNavigateToSection?: (section: string) => void;
   copySuccess: boolean;
   isGenerating: boolean;
   fileName: string;
@@ -46,6 +48,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   onShowTips,
   onShowGuide,
   onShowShortcuts,
+  onNavigateToSection,
   copySuccess,
   isGenerating,
   fileName,
@@ -356,9 +359,14 @@ const ActionBar: React.FC<ActionBarProps> = ({
           </button>
         )}
 
+        {/* Search Button */}
+        <div data-tour="search-button">
+          <SearchButton onNavigate={onNavigateToSection} />
+        </div>
+
         {/* More Menu Button */}
         <div className="relative" data-tour="more-menu">
-          <div className="[&>div>button]:min-w-[100px] [&>div>button]:px-2.5 [&>div>button]:py-2 [&>div>button]:rounded-lg [&>div>button]:bg-white/70 [&>div>button]:dark:bg-gray-800/70 [&>div>button]:backdrop-blur-xl [&>div>button]:border [&>div>button]:border-white/60 [&>div>button]:dark:border-gray-700/60 [&>div>button]:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] [&>div>button]:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.15),0_1px_2px_rgba(255,255,255,0.6)_inset] [&>div>button]:transition-all [&>div>button>span]:!flex [&>div>button>span]:!items-center [&>div>button>span]:!gap-1.5">
+          <div className="[&>div>button]:min-w-[100px] [&>div>button]:px-2.5 [&>div>button]:py-2 [&>div>button]:rounded-lg [&>div>button]:bg-white/70 [&>div>button]:dark:bg-gray-800/70 [&>div>button]:backdrop-blur-xl [&>div>button]:border [&>div>button]:border-white/60 [&>div>button]:dark:border-gray-700/60 [&>div>button]:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] [&>div>button]:dark:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.3),0_1px_1px_rgba(255,255,255,0.1)_inset] [&>div>button]:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.15),0_1px_2px_rgba(255,255,255,0.6)_inset] [&>div>button]:dark:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.4),0_1px_2px_rgba(255,255,255,0.15)_inset] [&>div>button]:hover:bg-white/80 [&>div>button]:dark:hover:bg-gray-800/80 [&>div>button]:transition-all [&>div>button]:text-gray-700 [&>div>button]:dark:text-gray-200 [&>div>button]:hover:text-gray-900 [&>div>button]:dark:hover:text-white [&>div>button]:before:absolute [&>div>button]:before:inset-0 [&>div>button]:before:rounded-lg [&>div>button]:before:bg-gradient-to-b [&>div>button]:before:from-white/50 [&>div>button]:before:to-transparent [&>div>button]:before:opacity-60 [&>div>button]:dark:before:from-white/10 [&>div>button]:after:absolute [&>div>button]:after:inset-0 [&>div>button]:after:rounded-lg [&>div>button]:after:bg-gradient-to-t [&>div>button]:after:from-black/5 [&>div>button]:after:to-transparent [&>div>button]:after:opacity-0 [&>div>button]:hover:after:opacity-100 [&>div>button]:after:transition-opacity [&>div>button>span]:!flex [&>div>button>span]:!items-center [&>div>button>span]:!gap-1.5 [&>div>button>span]:!relative [&>div>button>span]:!z-10 [&>div>button]:h-[1.95rem]">
             <CustomSelect
               options={moreOptions.map((opt) => ({
                 value: opt.value,
@@ -370,7 +378,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
             />
             {/* Custom placeholder overlay */}
             <div className="absolute inset-0 pointer-events-none flex items-center px-3">
-              <div className="flex items-center gap-1.5 text-[13px] text-gray-700 dark:text-gray-200 relative z-10">
+              <div className="flex items-center gap-1.5 text-[13px] text-gray-700 dark:text-gray-200 relative z-10 font-medium">
                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
                   <circle cx="5" cy="12" r="2" className="fill-blue-500" />
                   <circle cx="12" cy="12" r="2" className="fill-purple-500" />
