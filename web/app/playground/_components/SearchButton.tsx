@@ -24,7 +24,6 @@ const SearchButton: React.FC<SearchButtonProps> = ({
     setIsMac(navigator.platform.toUpperCase().indexOf("MAC") >= 0);
   }, []);
 
-  // Listen for Cmd+K (Mac) or Ctrl+K (Windows/Linux)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -58,10 +57,6 @@ const SearchButton: React.FC<SearchButtonProps> = ({
         title="Search settings (Ctrl+K)"
       >
         <Search className="size-3.5 transition-all duration-200 relative z-10 text-blue-500 group-hover:text-blue-600" />
-        <span className="text-[13px] relative z-10 font-medium">Search</span>
-        <kbd className="hidden sm:flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono text-gray-500 dark:text-gray-400 bg-gray-100/50 dark:bg-gray-700/50 border border-gray-200/50 dark:border-gray-600/50 rounded relative z-10">
-          {isMac ? "⌘" : "Ctrl"}K
-        </kbd>
       </button>
 
       {mounted &&

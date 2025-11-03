@@ -18,10 +18,9 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
   useEffect(() => {
     if (highlightItemId === itemId) {
       setIsHighlighted(true);
-      // Auto clear after 500ms
       const timer = setTimeout(() => {
         setIsHighlighted(false);
-      }, 500);
+      }, 800);
       return () => clearTimeout(timer);
     } else {
       setIsHighlighted(false);
@@ -30,7 +29,6 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
 
   return (
     <div className="relative">
-      {/* Elegant Highlight Overlay - Compact shadow */}
       <div
         className={`absolute -inset-x-2.5 -inset-y-1.5 rounded-lg pointer-events-none z-0
           bg-gradient-to-br from-blue-400/16 via-indigo-400/10 to-purple-400/16
@@ -51,7 +49,6 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
         }}
       />
 
-      {/* Content */}
       <div className="relative z-10">{children}</div>
     </div>
   );

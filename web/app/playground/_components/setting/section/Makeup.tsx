@@ -120,6 +120,91 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
             </div>
           </label>
 
+          {/* Header Customization (inside Window Header section) */}
+          {settings.showWindowHeader && (
+            <div className="space-y-3 pl-4">
+              <label className="flex items-center justify-between cursor-pointer">
+                <span className="text-xs text-gray-600 dark:text-gray-400">
+                  Show Border
+                </span>
+                <div className="relative">
+                  <input
+                    type="checkbox"
+                    checked={settings.showHeaderBorder !== false}
+                    onChange={(e) =>
+                      onUpdateSetting("showHeaderBorder", e.target.checked)
+                    }
+                    className="sr-only peer"
+                  />
+                  <div
+                    className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                      settings.showHeaderBorder !== false
+                        ? "bg-gradient-to-br from-emerald-100 to-green-200 dark:from-emerald-800 dark:to-green-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
+                        : ""
+                    }`}
+                  >
+                    <svg
+                      className={`size-3 text-emerald-700 dark:text-emerald-300 font-bold transition-opacity duration-200 ${
+                        settings.showHeaderBorder !== false
+                          ? "opacity-100"
+                          : "opacity-0"
+                      }`}
+                      fill="currentColor"
+                      stroke="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="3"
+                    >
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                  </div>
+                </div>
+              </label>
+
+              {/* Header Gap/Spacing */}
+              <div className="flex items-center space-x-3">
+                <label className="text-xs flex items-center justify-between">
+                  <span className="text-gray-600 dark:text-gray-400 w-24">
+                    Spacing
+                  </span>
+                  <span className="bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-transparent font-bold">
+                    {settings.headerGap ?? 0}px
+                  </span>
+                </label>
+                <input
+                  type="range"
+                  min={-5}
+                  max={50}
+                  step={1}
+                  value={settings.headerGap ?? 0}
+                  onChange={(e) =>
+                    onUpdateSetting("headerGap", parseInt(e.target.value))
+                  }
+                  className="w-full h-1 bg-gradient-to-r from-emerald-200 to-green-200 rounded-lg appearance-none cursor-pointer
+                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                  [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                  [&::-webkit-slider-thumb]:from-emerald-500 [&::-webkit-slider-thumb]:to-green-500
+                  [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                  [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+                />
+              </div>
+
+              {/* Header Border Color */}
+              <div className="flex items-center justify-between">
+                <label className="text-xs text-gray-600 dark:text-gray-400">
+                  Border Color
+                </label>
+                <input
+                  type="color"
+                  value={settings.headerBorderColor || "#3f3f46"}
+                  onChange={(e) =>
+                    onUpdateSetting("headerBorderColor", e.target.value)
+                  }
+                  className="w-10 h-6 rounded border border-gray-300 dark:border-gray-600 cursor-pointer"
+                />
+              </div>
+            </div>
+          )}
+
           {/* Traffic Light Buttons Option (under Window Header) */}
           {settings.showWindowHeader && (
             <div className="space-y-2 pl-4">
@@ -1176,100 +1261,6 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                 No highlights added. Click &ldquo;Add&rdquo; to create one.
               </div>
             )}
-          </div>
-        </div>
-      </HighlightOverlay>
-
-      {/* Header Customization Section */}
-      <HighlightOverlay
-        itemId="header-customization"
-        highlightItemId={highlightItemId}
-      >
-        <div className="space-y-3">
-          <SubTitle
-            title="Header Customization"
-            icon={Frame}
-            color="text-emerald-600 dark:text-emerald-400"
-          />
-          {/* Show Header Border Toggle */}
-          <label className="flex items-center justify-between cursor-pointer">
-            <span className="text-xs text-gray-600 dark:text-gray-400">
-              Show Border
-            </span>
-            <div className="relative">
-              <input
-                type="checkbox"
-                checked={settings.showHeaderBorder !== false}
-                onChange={(e) =>
-                  onUpdateSetting("showHeaderBorder", e.target.checked)
-                }
-                className="sr-only peer"
-              />
-              <div
-                className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
-                  settings.showHeaderBorder !== false
-                    ? "bg-gradient-to-br from-emerald-100 to-green-200 dark:from-emerald-800 dark:to-green-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
-                    : ""
-                }`}
-              >
-                <svg
-                  className={`size-3 text-emerald-700 dark:text-emerald-300 font-bold transition-opacity duration-200 ${
-                    settings.showHeaderBorder !== false
-                      ? "opacity-100"
-                      : "opacity-0"
-                  }`}
-                  fill="currentColor"
-                  stroke="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="3"
-                >
-                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                </svg>
-              </div>
-            </div>
-          </label>
-
-          {/* Header Gap/Spacing */}
-          <div className="flex items-center space-x-3">
-            <label className="text-xs flex items-center justify-between">
-              <span className="text-gray-600 dark:text-gray-400 w-24">
-                Spacing
-              </span>
-              <span className="bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-transparent font-bold">
-                {settings.headerGap ?? 0}px
-              </span>
-            </label>
-            <input
-              type="range"
-              min={-5}
-              max={50}
-              step={1}
-              value={settings.headerGap ?? 0}
-              onChange={(e) =>
-                onUpdateSetting("headerGap", parseInt(e.target.value))
-              }
-              className="w-full h-1 bg-gradient-to-r from-emerald-200 to-green-200 rounded-lg appearance-none cursor-pointer
-              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
-              [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
-              [&::-webkit-slider-thumb]:from-emerald-500 [&::-webkit-slider-thumb]:to-green-500
-              [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-              [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-            />
-          </div>
-
-          {/* Header Border Color */}
-          <div className="flex items-center justify-between">
-            <label className="text-xs text-gray-600 dark:text-gray-400">
-              Border Color
-            </label>
-            <input
-              type="color"
-              value={settings.headerBorderColor || "#3f3f46"}
-              onChange={(e) =>
-                onUpdateSetting("headerBorderColor", e.target.value)
-              }
-              className="w-10 h-6 rounded border border-gray-300 dark:border-gray-600 cursor-pointer"
-            />
           </div>
         </div>
       </HighlightOverlay>

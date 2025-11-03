@@ -60,7 +60,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
           <div className="flex items-center gap-2 mb-4">
             <Frame className="size-4 text-indigo-600 dark:text-indigo-400" />
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Border Customization
+              Frame border
             </span>
           </div>
 
@@ -677,7 +677,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
 
       {/* Label Section */}
       <HighlightOverlay itemId="label" highlightItemId={highlightItemId}>
-        <div className="pb-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="">
           <label className="group flex items-center justify-between cursor-pointer mb-4">
             <div className="flex items-center gap-2">
               <Stamp

@@ -1,4 +1,4 @@
-## [v2.6.0 - 2025-11-10](https://github.com/thuongtruong109/flashot/releases/tag/v2.6.0)
+## [v2.5.1 - 2025-11-10](https://github.com/thuongtruong109/flashot/releases/tag/v2.5.1)
 
 ### 🚀 Features
 
@@ -6,9 +6,9 @@
   - Match selected highlights with search results matching - by @thuongtruong109 [<samp>()</samp>]()
   - Search functionality for finding settings - by @thuongtruong109 [<samp>()</samp>]()
 
-##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.4.0...v2.5.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.6.0)
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.5.0...v2.5.1) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.5.1)
 
-## [v2.5.0 - 2025-11-02](https://github.com/thuongtruong109/flashot/releases/tag/v2.5.0)
+## [v2.5.0 - 2025-11-04](https://github.com/thuongtruong109/flashot/releases/tag/v2.5.0)
 
 ### 🚀 Features
 

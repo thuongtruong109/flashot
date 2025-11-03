@@ -224,10 +224,8 @@ const ActionBar: React.FC<ActionBarProps> = ({
     }
   };
 
-  // Remove Info button from main buttons list
   const allButtons: any[] = [];
 
-  // Always show all buttons (settings button will be added separately at the end)
   const buttons = allButtons;
 
   const getButtonStyles = (
@@ -235,9 +233,8 @@ const ActionBar: React.FC<ActionBarProps> = ({
     color: string,
     disabled: boolean
   ) => {
-    // Refined clean style - giảm padding, shadow, translate
     const baseStyles =
-      "group relative flex items-center space-x-1.5 px-2.5 rounded-lg transition-all duration-200 " +
+      "group relative flex items-center rounded-lg transition-all duration-200 " +
       "bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl " +
       "border border-white/60 dark:border-gray-700/60 " +
       "shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] " +
@@ -274,7 +271,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   return (
     <div className={`flex flex-wrap items-center space-x-2 ${className}`}>
       {/* Desktop Layout */}
-      <div className="hidden lg:flex items-center space-x-3">
+      <div className="hidden lg:flex items-center space-x-2.5">
         {/* Export Button with Format Selector */}
         <div className="flex items-stretch" data-tour="export-button">
           <button
@@ -302,14 +299,10 @@ const ActionBar: React.FC<ActionBarProps> = ({
               options={exportOptions.map((opt, index) => {
                 const Icon = opt.icon;
                 const isSelected = exportFormat === opt.value;
-                const showDivider = opt.value === "original";
                 return {
                   value: opt.value,
                   label: (
                     <div>
-                      {showDivider && (
-                        <div className="h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent my-1.5 -mx-2" />
-                      )}
                       <span
                         className={`flex items-center space-x-2 text-xs ${
                           isSelected
@@ -340,6 +333,14 @@ const ActionBar: React.FC<ActionBarProps> = ({
           </div>
         </div>
 
+        {/* Search Button */}
+        <div data-tour="search-button">
+          <SearchButton
+            onNavigate={onNavigateToSection}
+            className="!h-[1.95rem] !w-[2rem] !px-0 justify-center"
+          />
+        </div>
+
         {/* Shortcuts Button */}
         {onShowShortcuts && (
           <button
@@ -349,46 +350,12 @@ const ActionBar: React.FC<ActionBarProps> = ({
               "secondary",
               "purple",
               false
-            )} h-[1.95rem]`}
+            )} h-[1.95rem] w-[1.98rem] !px-0 justify-center`}
             title="Keyboard Shortcuts (Press ?)"
           >
             <Keyboard className={getIconStyles("purple", "secondary")} />
-            <span className="text-[13px] relative z-10 font-medium">
-              Shortcuts
-            </span>
           </button>
         )}
-
-        {/* Search Button */}
-        <div data-tour="search-button">
-          <SearchButton onNavigate={onNavigateToSection} />
-        </div>
-
-        {/* More Menu Button */}
-        <div className="relative" data-tour="more-menu">
-          <div className="[&>div>button]:min-w-[100px] [&>div>button]:px-2.5 [&>div>button]:py-2 [&>div>button]:rounded-lg [&>div>button]:bg-white/70 [&>div>button]:dark:bg-gray-800/70 [&>div>button]:backdrop-blur-xl [&>div>button]:border [&>div>button]:border-white/60 [&>div>button]:dark:border-gray-700/60 [&>div>button]:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] [&>div>button]:dark:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.3),0_1px_1px_rgba(255,255,255,0.1)_inset] [&>div>button]:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.15),0_1px_2px_rgba(255,255,255,0.6)_inset] [&>div>button]:dark:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.4),0_1px_2px_rgba(255,255,255,0.15)_inset] [&>div>button]:hover:bg-white/80 [&>div>button]:dark:hover:bg-gray-800/80 [&>div>button]:transition-all [&>div>button]:text-gray-700 [&>div>button]:dark:text-gray-200 [&>div>button]:hover:text-gray-900 [&>div>button]:dark:hover:text-white [&>div>button]:before:absolute [&>div>button]:before:inset-0 [&>div>button]:before:rounded-lg [&>div>button]:before:bg-gradient-to-b [&>div>button]:before:from-white/50 [&>div>button]:before:to-transparent [&>div>button]:before:opacity-60 [&>div>button]:dark:before:from-white/10 [&>div>button]:after:absolute [&>div>button]:after:inset-0 [&>div>button]:after:rounded-lg [&>div>button]:after:bg-gradient-to-t [&>div>button]:after:from-black/5 [&>div>button]:after:to-transparent [&>div>button]:after:opacity-0 [&>div>button]:hover:after:opacity-100 [&>div>button]:after:transition-opacity [&>div>button>span]:!flex [&>div>button>span]:!items-center [&>div>button>span]:!gap-1.5 [&>div>button>span]:!relative [&>div>button>span]:!z-10 [&>div>button]:h-[1.95rem]">
-            <CustomSelect
-              options={moreOptions.map((opt) => ({
-                value: opt.value,
-                label: opt.label,
-              }))}
-              value=""
-              onChange={handleMoreOptionSelect}
-              placeholder=""
-            />
-            {/* Custom placeholder overlay */}
-            <div className="absolute inset-0 pointer-events-none flex items-center px-3">
-              <div className="flex items-center gap-1.5 text-[13px] text-gray-700 dark:text-gray-200 relative z-10 font-medium">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
-                  <circle cx="5" cy="12" r="2" className="fill-blue-500" />
-                  <circle cx="12" cy="12" r="2" className="fill-purple-500" />
-                  <circle cx="19" cy="12" r="2" className="fill-pink-500" />
-                </svg>
-                More
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Dark Mode Toggle */}
         <button
@@ -398,7 +365,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
             "secondary",
             "purple",
             false
-          )} h-[1.85rem]`}
+          )} h-[1.95rem] w-[2rem] !px-0 justify-center`}
           title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
         >
           {isDarkMode ? (
@@ -407,6 +374,32 @@ const ActionBar: React.FC<ActionBarProps> = ({
             <Moon className={getIconStyles("purple", "secondary")} />
           )}
         </button>
+
+        {/* More Menu Button */}
+        <div className="relative" data-tour="more-menu">
+          <div className="[&>div>button]:w-[1.98rem] [&>div>button]:h-[1.95rem] [&>div>button]:!px-0 [&>div>button]:justify-center [&>div>button]:rounded-lg [&>div>button]:bg-white/70 [&>div>button]:dark:bg-gray-800/70 [&>div>button]:backdrop-blur-xl [&>div>button]:border [&>div>button]:border-white/60 [&>div>button]:dark:border-gray-700/60 [&>div>button]:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset] [&>div>button]:dark:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.3),0_1px_1px_rgba(255,255,255,0.1)_inset] [&>div>button]:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.15),0_1px_2px_rgba(255,255,255,0.6)_inset] [&>div>button]:dark:hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.4),0_1px_2px_rgba(255,255,255,0.15)_inset] [&>div>button]:hover:bg-white/80 [&>div>button]:dark:hover:bg-gray-800/80 [&>div>button]:transition-all [&>div>button]:text-gray-700 [&>div>button]:dark:text-gray-200 [&>div>button]:hover:text-gray-900 [&>div>button]:dark:hover:text-white [&>div>button]:before:absolute [&>div>button]:before:inset-0 [&>div>button]:before:rounded-lg [&>div>button]:before:bg-gradient-to-b [&>div>button]:before:from-white/50 [&>div>button]:before:to-transparent [&>div>button]:before:opacity-60 [&>div>button]:dark:before:from-white/10 [&>div>button]:after:absolute [&>div>button]:after:inset-0 [&>div>button]:after:rounded-lg [&>div>button]:after:bg-gradient-to-t [&>div>button]:after:from-black/5 [&>div>button]:after:to-transparent [&>div>button]:after:opacity-0 [&>div>button]:hover:after:opacity-100 [&>div>button]:after:transition-opacity [&>div>button>span]:!flex [&>div>button>span]:!items-center [&>div>button>span]:!justify-center [&>div>button>span]:!relative [&>div>button>span]:!z-10 [&>div>button>svg]:!hidden">
+            <CustomSelect
+              align="right"
+              options={moreOptions.map((opt) => ({
+                value: opt.value,
+                label: opt.label,
+              }))}
+              value=""
+              onChange={handleMoreOptionSelect}
+              placeholder=""
+            />
+
+            <svg
+              className="size-3.5 absolute pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <circle cx="5" cy="12" r="2" className="fill-blue-500" />
+              <circle cx="12" cy="12" r="2" className="fill-purple-500" />
+              <circle cx="19" cy="12" r="2" className="fill-pink-500" />
+            </svg>
+          </div>
+        </div>
       </div>
 
       {/* Mobile Layout */}
