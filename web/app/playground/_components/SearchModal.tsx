@@ -31,7 +31,7 @@ interface SearchItem {
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onNavigate?: (section: string) => void;
+  onNavigate?: (section: string, itemId?: string) => void;
 }
 
 const SearchModal: React.FC<SearchModalProps> = ({
@@ -89,10 +89,18 @@ const SearchModal: React.FC<SearchModalProps> = ({
         icon: <FileCode className="size-4" />,
       },
       {
+        id: "project-name",
+        title: "Project Name",
+        description: "Display custom project name in header",
+        category: "general",
+        keywords: ["project", "name", "header", "custom", "title", "window"],
+        icon: <FileCode className="size-4" />,
+      },
+      {
         id: "line-numbers",
         title: "Line Numbers",
         description: "Show or hide line numbers",
-        category: "view",
+        category: "general",
         keywords: ["line", "number", "count", "gutter"],
         icon: <FileCode className="size-4" />,
       },
@@ -100,7 +108,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
         id: "window-header",
         title: "Window Header",
         description: "Toggle window control buttons",
-        category: "view",
+        category: "general",
         keywords: ["window", "header", "controls", "traffic", "lights", "mac"],
         icon: <Settings className="size-4" />,
       },
@@ -108,7 +116,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
         id: "filename",
         title: "File Name",
         description: "Show or customize file name",
-        category: "view",
+        category: "general",
         keywords: ["file", "name", "title", "label"],
         icon: <FileCode className="size-4" />,
       },
@@ -294,10 +302,23 @@ const SearchModal: React.FC<SearchModalProps> = ({
           view: "View",
           theme: "Theme",
           decorate: "Decorate",
-          general: "View", // Default to View for general features
+          general: "Makeup", // Makeup for window-header, filename, caption, etc.
         };
-        const tab = categoryToTab[item.category] || "View";
-        onNavigate(tab);
+
+        // Special handling for specific items
+        const itemToTab: Record<string, string> = {
+          "window-header": "Makeup",
+          filename: "Makeup",
+          caption: "Makeup",
+          highlights: "Makeup",
+          "line-numbers": "Makeup",
+          "header-customization": "Makeup",
+        };
+
+        const tab =
+          itemToTab[item.id] || categoryToTab[item.category] || "View";
+        // Pass both tab and item id for highlighting
+        onNavigate(tab, item.id);
       }
       onClose();
     },
@@ -417,7 +438,18 @@ const SearchModal: React.FC<SearchModalProps> = ({
         {/* Results */}
         <div
           ref={resultsRef}
-          className="max-h-[60vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent"
+          className="max-h-[60vh] overflow-y-auto
+            [&::-webkit-scrollbar]:w-2
+            [&::-webkit-scrollbar-track]:bg-transparent
+            [&::-webkit-scrollbar-thumb]:bg-gray-300
+            [&::-webkit-scrollbar-thumb]:dark:bg-gray-600
+            [&::-webkit-scrollbar-thumb]:rounded-full
+            [&::-webkit-scrollbar-thumb]:border-2
+            [&::-webkit-scrollbar-thumb]:border-transparent
+            [&::-webkit-scrollbar-thumb]:bg-clip-padding
+            [&::-webkit-scrollbar-thumb]:hover:bg-gray-400
+            [&::-webkit-scrollbar-thumb]:dark:hover:bg-gray-500
+            scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent"
         >
           {filteredItems.length === 0 ? (
             <div className="py-12 text-center">

@@ -55,7 +55,11 @@ export interface CodeSettings {
   fileName: string;
   fontFamily: string;
   fontSize: number;
-  showLineCount?: boolean;
+  showProjectName?: boolean;
+  projectName?: string;
+  projectNameOpacity?: number;
+  projectNameFontSize?: number;
+  projectNameFontWeight?: number;
   showFileName?: boolean;
   exportFormat?: "png" | "jpg" | "webp" | "avif" | "svg" | "original" | "plain";
   width?: number;
@@ -69,10 +73,7 @@ export interface CodeSettings {
   fileNameOpacity?: number;
   fileNameFontSize?: number;
   fileNameAlign?: "left" | "center";
-  lineCountOpacity?: number;
   fileNameFontWeight?: number;
-  lineCountFontSize?: number;
-  lineCountFontWeight?: number;
   showLineNumbers?: boolean;
   lineNumberOpacity?: number;
   lineNumberBorder?: boolean;

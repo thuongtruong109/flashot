@@ -7,7 +7,7 @@ import SearchModal from "./SearchModal";
 import { cn } from "@/utils";
 
 interface SearchButtonProps {
-  onNavigate?: (section: string) => void;
+  onNavigate?: (section: string, itemId?: string) => void;
   className?: string;
 }
 

@@ -11,7 +11,7 @@ interface HeaderProps {
   onShowTips: () => void;
   onShowGuide: () => void;
   onShowShortcuts?: () => void;
-  onNavigateToSection?: (section: string) => void;
+  onNavigateToSection?: (section: string, itemId?: string) => void;
   copySuccess: boolean;
   isGenerating: boolean;
   fileName: string;

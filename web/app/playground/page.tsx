@@ -169,6 +169,9 @@ export default function Page() {
   const [activeMenuLabel, setActiveMenuLabel] = useState<string | undefined>(
     undefined
   );
+  const [highlightItemId, setHighlightItemId] = useState<string | undefined>(
+    undefined
+  );
 
   const handleCopyCode = async () => {
     const success = await copyToClipboard(code);
@@ -537,11 +540,18 @@ export default function Page() {
     }
   };
 
-  const handleNavigateToSection = (section: string) => {
+  const handleNavigateToSection = (section: string, itemId?: string) => {
     // Open settings panel if not already open
     setShowSettingsPanel(true);
     // Set active menu to the specified section
     setActiveMenuLabel(section);
+    // Set highlight item id for 500ms
+    if (itemId) {
+      setHighlightItemId(itemId);
+      setTimeout(() => {
+        setHighlightItemId(undefined);
+      }, 500);
+    }
   };
 
   return (
@@ -626,6 +636,7 @@ export default function Page() {
           code={code}
           isVisible={showSettingsPanel}
           activeMenu={activeMenuLabel}
+          highlightItemId={highlightItemId}
           onChangeActiveMenu={(m) => setActiveMenuLabel(m)}
           onUpdateSetting={updateSetting}
           onFileNameChange={setFileName}

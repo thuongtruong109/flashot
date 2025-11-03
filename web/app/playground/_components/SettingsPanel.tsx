@@ -4,6 +4,7 @@ interface SettingsPanelProps {
   code: string;
   isVisible?: boolean;
   activeMenu?: string;
+  highlightItemId?: string;
   onChangeActiveMenu?: (menu: string | undefined) => void;
   onUpdateSetting: <K extends keyof CodeSettings>(
     key: K,
@@ -42,6 +43,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       code,
       isVisible = true,
       activeMenu = _PLAYGROUND_SETTINGS_TAB.VIEW,
+      highlightItemId,
       onChangeActiveMenu,
       onUpdateSetting,
       onFileNameChange,
@@ -254,6 +256,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                 <ViewSection
                   settings={settings}
                   onUpdateSetting={onUpdateSetting}
+                  highlightItemId={highlightItemId}
                 />
               )}
               {activeMenu === _PLAYGROUND_SETTINGS_TAB.THEME && (
@@ -261,6 +264,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                   settings={settings}
                   onUpdateSetting={onUpdateSetting}
                   handleLanguageChange={handleLanguageChange}
+                  highlightItemId={highlightItemId}
                 />
               )}
               {activeMenu === _PLAYGROUND_SETTINGS_TAB.MAKEUP && (
@@ -269,12 +273,14 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                   fileName={fileName}
                   onUpdateSetting={onUpdateSetting}
                   onFileNameChange={onFileNameChange}
+                  highlightItemId={highlightItemId}
                 />
               )}
               {activeMenu === _PLAYGROUND_SETTINGS_TAB.DECORATE && (
                 <DecorateSection
                   settings={settings}
                   onUpdateSetting={onUpdateSetting}
+                  highlightItemId={highlightItemId}
                 />
               )}
               {activeMenu === _PLAYGROUND_SETTINGS_TAB.TEMPLATE && (

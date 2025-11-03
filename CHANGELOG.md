@@ -3,7 +3,8 @@
 ### 🚀 Features
 
 - ## **playground**:
-  - Search Functionality - Improved search tools for finding settings and features
+  - Match selected highlights with search results matching - by @thuongtruong109 [<samp>()</samp>]()
+  - Search functionality for finding settings - by @thuongtruong109 [<samp>()</samp>]()
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.4.0...v2.5.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.6.0)
 
@@ -12,13 +13,13 @@
 ### 🚀 Features
 
 - ## **playground**:
-  - Pattern choice for background - by @thuongtruong109 [<samp>()</samp>]()
+  - Pattern choice for background - by @thuongtruong109 [<samp>(eb501)</samp>](https://github.com/thuongtruong109/flashot/commit/eb50172a555e6b655f1939b5bd1abec944670889)
   - Modal guide for keyboard shortcuts - by @thuongtruong109 [<samp>(52ae9)</samp>](https://github.com/thuongtruong109/flashot/commit/52ae97079b25a0337e03f4aad7ac30a103ff25c0)
   - Import and detect code from URL - by @thuongtruong109 [<samp>(204f3)</samp>](https://github.com/thuongtruong109/flashot/commit/204f3f376454ec5a870567d66def8430a5e1aad8)
-  - Custom label setting (text, font size, color, opacity, alignment) - by @thuongtruong109 [<samp>()</samp>]()
+  - Custom label setting (text, font size, color, opacity, alignment) - by @thuongtruong109 [<samp>(43ff4)</samp>](https://github.com/thuongtruong109/flashot/commit/43ff4ccd4f14ce2253b2bafac9ace494f8f5ff00)
   - Edit filename directly in the editor - by @thuongtruong109 [<samp>(d381c)</samp>](https://github.com/thuongtruong109/flashot/commit/d381ca6bb2e80ed8821213b7f9a037e50b3fe106)
   - Support more language themes - by @thuongtruong109 [<samp>(d33cb)</samp>](https://github.com/thuongtruong109/flashot/commit/d33cba0f79093257b7029df7883dfd7403f24d2c)
-  - Custom editor border style(type, color, width, and opacity) - by @thuongtruong109 [<samp>()</samp>]()
+  - Custom editor border style(type, color, width, and opacity) - by @thuongtruong109 [<samp>(99b65)</samp>](https://github.com/thuongtruong109/flashot/commit/99b654b77b29088679034eab038d33101c83e6a5)
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.4.0...v2.5.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.5.0)
 
