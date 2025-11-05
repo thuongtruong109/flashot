@@ -458,7 +458,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                     : "text-gray-500 group-hover:text-gray-700"
                 }`}
               >
-                Word Wrap
+                {t("settingsPanel.view.wordWrap")}
               </span>
             </div>
             <div className="relative">

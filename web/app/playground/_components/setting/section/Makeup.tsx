@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Monitor,
   Hash,
@@ -19,6 +21,7 @@ import type { CodeSettings, HighlightRange } from "@/types";
 import SubTitle from "@/app/playground/_components/setting/sub/Title";
 import SubSeparate from "@/app/playground/_components/setting/sub/Separate";
 import HighlightOverlay from "../HighlightOverlay";
+import { useLocalization } from "../../../LocalizationContext";
 
 interface MakeupSectionProps {
   settings: CodeSettings;
@@ -38,6 +41,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
   onFileNameChange,
   highlightItemId,
 }) => {
+  const { t } = useLocalization();
   const [isEditingFileName, setIsEditingFileName] = useState(false);
   const [tempFileName, setTempFileName] = useState(fileName);
   const fileNameInputRef = useRef<HTMLInputElement>(null);
@@ -86,7 +90,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                     : "text-gray-500 group-hover:text-gray-700"
                 }`}
               >
-                Window Header
+                {t("settingsPanel.makeup.windowHeader")}
               </span>
             </div>
             <div className="relative">

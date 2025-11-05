@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Palette } from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
@@ -6,6 +8,7 @@ import FontSelector from "@/app/playground/_components/FontSelector";
 import ThemeSelector from "@/app/playground/_components/ThemeSelector";
 import BackgroundSelector from "@/app/playground/_components/BackgroundSelector";
 import HighlightOverlay from "../HighlightOverlay";
+import { useLocalization } from "../../../LocalizationContext";
 
 interface ThemeSectionProps {
   settings: CodeSettings;
@@ -23,6 +26,7 @@ const ThemeSection: React.FC<ThemeSectionProps> = ({
   onUpdateSetting,
   handleLanguageChange,
 }) => {
+  const { t } = useLocalization();
   return (
     <>
       <HighlightOverlay itemId="language" highlightItemId={highlightItemId}>
@@ -66,7 +70,7 @@ const ThemeSection: React.FC<ThemeSectionProps> = ({
                     : "text-gray-500 group-hover:text-gray-700"
                 }`}
               >
-                Background
+                {t("settingsPanel.theme.background")}
               </span>
             </div>
             <div className="relative">
