@@ -1,0 +1,358 @@
+{
+  "common": {
+    "copy": "コピー",
+    "download": "ダウンロード",
+    "save": "保存",
+    "export": "エクスポート",
+    "import": "インポート",
+    "settings": "設定",
+    "close": "閉じる",
+    "cancel": "キャンセル",
+    "reset": "リセット",
+    "apply": "適用",
+    "all": "すべて",
+    "outer": "外側",
+    "inner": "内側"
+  },
+  "header": {
+    "brand": "Flashot",
+    "tips": "ヒントと情報",
+    "shortcuts": "ショートカット",
+    "guide": "ガイド",
+    "json": "JSON",
+    "fileName": "ファイル名",
+    "copySuccess": "コピーしました！",
+    "generating": "生成中..."
+  },
+  "tipsModal": {
+    "title": "情報とクイックスタート",
+    "about": {
+      "title": "Flashotについて",
+      "description": "は、開発者が数秒でプロフェッショナルで美しいコードのスクリーンショットを作成するための、強力でモダンなWebアプリケーションです。ドキュメント、チュートリアル、ソーシャルメディア投稿、プレゼンテーションを作成する際、Flashotはあなたのコードを素晴らしく見せます。",
+      "keyFeaturesTitle": "主な機能",
+      "features": [
+        "50以上の美しいシンタックステーマ",
+        "25以上のプログラミング言語をサポート",
+        "複数のエクスポート形式（PNG、JPG、WebP、AVIF）",
+        "ライブ編集によるリアルタイムプレビュー",
+        "パディング、シャドウ、ボーダーの精密な制御",
+        "カスタマイズ可能な寸法とスケーリング",
+        "ウィンドウコントロール（macOSおよびWindowsスタイル）",
+        "カスタムテンプレートの保存と読み込み"
+      ],
+      "whyTitle": "なぜFlashotなのか？",
+      "whyItems": [
+        {
+          "title": "超高速",
+          "description": "遅延なく高品質のスクリーンショットを瞬時に生成"
+        },
+        {
+          "title": "開発者フレンドリー",
+          "description": "キーボードショートカットとスマートなデフォルト設定を備えた直感的なインターフェース"
+        },
+        {
+          "title": "高度にカスタマイズ可能",
+          "description": "すべての側面が設定可能 - 真にあなたのものにしましょう"
+        }
+      ],
+      "contributeTitle": "貢献する",
+      "contributeText": "このプロジェクトはオープンソースで、",
+      "githubLink": "GitHubで利用可能",
+      "feedbackText": "ご質問やフィードバックがございましたら、",
+      "emailText": "メールをお送りください",
+      "madeWith": "作成者：",
+      "madeBy": "Thuong Truong、すべての人のために"
+    },
+    "quickStart": {
+      "title": "クイックスタートガイド",
+      "steps": [
+        {
+          "title": "コード領域をクリック",
+          "description": "してコードの編集を直接開始"
+        },
+        {
+          "title": "外観をカスタマイズ",
+          "description": "設定パネルを使用（テーマ、フォント、背景）"
+        },
+        {
+          "title": "画像をエクスポート",
+          "description": "複数の形式で（PNG、JPG、WebP、AVIF）"
+        }
+      ]
+    },
+    "exportFormats": {
+      "title": "エクスポート形式",
+      "png": {
+        "name": "PNG",
+        "description": "透明度付きの高品質"
+      },
+      "jpg": {
+        "name": "JPG",
+        "description": "圧縮済み、単色背景"
+      },
+      "webp": {
+        "name": "WebP",
+        "description": "モダン、優れた圧縮"
+      },
+      "avif": {
+        "name": "AVIF",
+        "description": "次世代、最小サイズ"
+      }
+    },
+    "languages": {
+      "title": "25以上のサポート言語"
+    },
+    "proTips": {
+      "title": "プロのヒントとベストプラクティス",
+      "tips": [
+        {
+          "title": "行番号を使用",
+          "description": "コードドキュメントとチュートリアルに最適"
+        },
+        {
+          "title": "異なるテーマを試す",
+          "description": "ブランドやプレゼンテーションスタイルに合わせる"
+        },
+        {
+          "title": "パディングを調整",
+          "description": "ソーシャルメディア投稿のためのより良いフレーミング"
+        },
+        {
+          "title": "JSONとして保存",
+          "description": "お気に入りの設定をバックアップして共有"
+        },
+        {
+          "title": "ウィンドウコントロール",
+          "description": "プレゼンテーションのための本物のエディタの外観"
+        },
+        {
+          "title": "フルスクリーンモード",
+          "description": "邪魔のないビューで編集に集中"
+        }
+      ]
+    }
+  },
+  "shortcutsModal": {
+    "title": "キーボードショートカット",
+    "categories": {
+      "editor": {
+        "title": "エディタ",
+        "shortcuts": [
+          { "key": "F", "description": "エディタにフォーカス" },
+          { "key": "Esc", "description": "フォーカス解除" },
+          { "key": "Tab", "description": "インデント" },
+          { "key": "Shift+Tab", "description": "インデント解除" }
+        ]
+      },
+      "appearance": {
+        "title": "外観",
+        "shortcuts": [
+          { "key": "C", "description": "カラー" },
+          { "key": "B", "description": "背景" },
+          { "key": "D", "description": "ダークモード" },
+          { "key": "N", "description": "行番号" },
+          { "key": "P", "description": "パディング" },
+          { "key": "L", "description": "言語" }
+        ]
+      },
+      "exportShare": {
+        "title": "エクスポートと共有",
+        "shortcuts": [
+          { "key": "Ctrl+S", "description": "PNGを保存" },
+          { "key": "Ctrl+Shift+S", "description": "SVGを保存" },
+          { "key": "Ctrl+C", "description": "画像をコピー" },
+          { "key": "Ctrl+Shift+C", "description": "URLをコピー" },
+          { "key": "Ctrl+K", "description": "エクスポートメニュー" }
+        ]
+      },
+      "navigation": {
+        "title": "ナビゲーション",
+        "shortcuts": [
+          { "key": "?", "description": "ショートカット" },
+          { "key": "F11", "description": "フルスクリーン" }
+        ]
+      }
+    },
+    "proTip": {
+      "title": "💡 プロのヒント",
+      "description": "単一キーのショートカットは入力していないときに機能します。",
+      "escKey": "Esc",
+      "exitText": "を押して編集モードを終了してください。"
+    }
+  },
+  "settings": {
+    "theme": "テーマ",
+    "language": "言語",
+    "font": "フォント",
+    "fontSize": "フォントサイズ",
+    "lineHeight": "行の高さ",
+    "padding": "パディング",
+    "background": "背景",
+    "border": "ボーダー",
+    "shadow": "シャドウ",
+    "lineNumbers": "行番号",
+    "windowControls": "ウィンドウコントロール"
+  },
+  "actionBar": {
+    "export": "エクスポート",
+    "exporting": "エクスポート中...",
+    "more": "その他",
+    "darkMode": "ダークモード",
+    "lightMode": "ライトモード",
+    "sharePage": "ページを共有",
+    "reportIssue": "問題を報告",
+    "info": "情報"
+  },
+  "exportFormats": {
+    "png": "PNG",
+    "jpg": "JPG",
+    "webp": "WebP",
+    "avif": "AVIF",
+    "svg": "SVG",
+    "original": "元のコード",
+    "plain": "プレーンテキスト"
+  },
+  "editor": {
+    "clickToEdit": "コードを編集するにはクリック",
+    "dragToResize": "ドラッグしてサイズ変更",
+    "caption": "キャプション",
+    "addCaption": "キャプションを追加...",
+    "label": "ラベル",
+    "addLabel": "ラベルを追加..."
+  },
+  "settingsPanel": {
+    "title": "設定",
+    "tabs": {
+      "view": "表示",
+      "theme": "テーマ",
+      "makeup": "メイクアップ",
+      "decorate": "装飾",
+      "template": "テンプレート"
+    },
+    "resetToDefaults": "デフォルトにリセット",
+    "view": {
+      "fontSize": "フォントサイズ",
+      "lineHeight": "行の高さ",
+      "wordWrap": "ワードラップ",
+      "customSize": "カスタムサイズ",
+      "width": "幅",
+      "height": "高さ",
+      "lineNumbers": "行番号",
+      "lineNumberOpacity": "番号の不透明度",
+      "lineNumberBorder": "番号の境界線",
+      "lineNumberAlign": "番号の配置",
+      "textAlign": {
+        "left": "左",
+        "center": "中央",
+        "right": "右"
+      }
+    },
+    "theme": {
+      "language": "言語",
+      "fontFamily": "フォントファミリー",
+      "colorTheme": "カラーテーマ",
+      "background": "背景"
+    },
+    "makeup": {
+      "padding": "パディング",
+      "borderRadius": "角の丸み",
+      "frameBorderRadius": "フレームの角の丸み",
+      "codeBorderRadius": "コードの角の丸み",
+      "windowHeader": "ウィンドウヘッダー",
+      "windowHeaderAlign": "ヘッダーの配置",
+      "trafficLights": "信号機",
+      "trafficLightsColor": "信号機の色",
+      "fileName": "ファイル名",
+      "fileNameOpacity": "ファイル名の不透明度",
+      "fileNameFontWeight": "ファイル名のフォントウェイト",
+      "fileNameFontSize": "ファイル名のフォントサイズ",
+      "fileNameAlign": "ファイル名の配置",
+      "projectName": "プロジェクト名",
+      "projectNamePlaceholder": "プロジェクト名を入力",
+      "projectNameOpacity": "プロジェクト名の不透明度",
+      "projectNameFontWeight": "プロジェクト名のフォントウェイト",
+      "projectNameFontSize": "プロジェクト名のフォントサイズ",
+      "showBackground": "背景を表示",
+      "gradientAngle": "グラデーション角度",
+      "alignment": "配置"
+    },
+    "decorate": {
+      "caption": "キャプション",
+      "captionText": "キャプションテキスト",
+      "captionPlaceholder": "キャプションテキストを入力",
+      "captionStyle": "キャプションスタイル",
+      "captionOpacity": "キャプションの不透明度",
+      "captionPosition": "キャプション位置",
+      "captionStyles": {
+        "normal": "標準",
+        "italic": "斜体",
+        "bold": "太字"
+      },
+      "captionPositions": {
+        "top": "上",
+        "bottom": "下"
+      },
+      "label": "ラベル",
+      "labelText": "ラベルテキスト",
+      "labelPlaceholder": "@ユーザー名作成",
+      "labelAlignment": "ラベルの配置",
+      "labelOpacity": "ラベルの不透明度",
+      "labelColor": "ラベルの色",
+      "labelFontSize": "ラベルのフォントサイズ",
+      "watermark": "透かし",
+      "watermarkType": "透かしタイプ",
+      "watermarkTypes": {
+        "text": "テキスト",
+        "image": "画像"
+      },
+      "watermarkText": "透かしテキスト",
+      "watermarkTextPlaceholder": "Flashot",
+      "watermarkOpacity": "透かしの不透明度",
+      "watermarkColor": "透かしの色",
+      "watermarkPosition": "透かしの位置",
+      "watermarkRotation": "透かしの回転",
+      "watermarkFontSize": "透かしのフォントサイズ",
+      "watermarkFontWeight": "透かしのフォントウェイト",
+      "watermarkImageUrl": "透かし画像のURL",
+      "watermarkImageWidth": "透かし画像の幅",
+      "watermarkImageHeight": "透かし画像の高さ",
+      "border": "境界線",
+      "borderOffset": "境界線オフセット",
+      "borderStyle": "境界線スタイル",
+      "borderWidth": "境界線の幅",
+      "borderOpacity": "境界線の不透明度",
+      "borderColor": "境界線の色",
+      "borderStyles": {
+        "solid": "実線",
+        "dashed": "破線",
+        "dotted": "点線"
+      },
+      "headerGap": "ヘッダーギャップ",
+      "headerBorder": "ヘッダー境界線",
+      "headerBorderColor": "ヘッダー境界線の色",
+      "imageFilters": "画像フィルター",
+      "grayscale": "グレースケール",
+      "sepia": "セピア",
+      "blur": "ぼかし",
+      "brightness": "明るさ",
+      "contrast": "コントラスト",
+      "saturate": "彩度",
+      "hueRotate": "色相回転",
+      "invert": "反転"
+    },
+    "template": {
+      "saveTemplate": "テンプレートを保存",
+      "loadTemplate": "テンプレートを読み込む",
+      "import": "インポート",
+      "export": "エクスポート",
+      "importDescription": "保存されたテンプレート（JSONファイル）をインポートして設定とコードを復元",
+      "exportDescription": "現在の設定とコードを再利用可能なテンプレートとしてエクスポート",
+      "dragDropDescription": "JSONファイルをここにドラッグ＆ドロップ",
+      "or": "または",
+      "selectFile": "ファイルを選択",
+      "invalidJson": "無効なJSONファイル",
+      "importSuccess": "テンプレートが正常にインポートされました",
+      "exportSuccess": "テンプレートが正常にエクスポートされました"
+    }
+  }
+}

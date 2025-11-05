@@ -1,7 +1,10 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { Move, CornerRightDown, Type, WrapText } from "lucide-react";
 import { CodeSettings } from "@/types";
 import HighlightOverlay from "../HighlightOverlay";
+import { useLocalization } from "../../../LocalizationContext";
 
 interface ViewSectionProps {
   settings: CodeSettings;
@@ -17,6 +20,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
   highlightItemId,
   onUpdateSetting,
 }) => {
+  const { t } = useLocalization();
   const [widthInput, setWidthInput] = useState(
     settings.width?.toString() || ""
   );
@@ -40,7 +44,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
           <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
             <div className="flex items-center text-orange-600">
               <Type className="w-3.5 h-3.5 mr-1.5" />
-              Font Size
+              {t("settingsPanel.view.fontSize")}
             </div>
             <span className="text-xs bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent font-bold">
               {settings.fontSize}px
@@ -73,7 +77,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
           <label className="text-xs font-semibold text-gray-700 flex items-center justify-between">
             <div className="flex items-center text-pink-600">
               <Move className="w-3.5 h-3.5 mr-1.5" />
-              Padding
+              {t("settingsPanel.makeup.padding")}
             </div>
             <span className="text-xs bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent font-bold">
               {settings.padding}px
@@ -108,11 +112,13 @@ const ViewSection: React.FC<ViewSectionProps> = ({
         <div>
           <label className="text-sm font-medium text-teal-600 dark:text-teal-400 flex items-center space-x-2 mb-4">
             <CornerRightDown className="w-3.5 h-3.5 mr-1.5" />
-            Border Radius
+            {t("settingsPanel.makeup.borderRadius")}
           </label>
           <div className="space-y-3">
             <div className="flex items-center space-x-3">
-              <span className="text-xs text-gray-500 w-24">All</span>
+              <span className="text-xs text-gray-500 w-24">
+                {t("common.all")}
+              </span>
               <span className="text-xs bg-gradient-to-r from-teal-500 to-cyan-500 bg-clip-text text-transparent font-bold">
                 {settings.borderRadius}px
               </span>
@@ -138,7 +144,9 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             </div>
 
             <div className="flex items-center space-x-3">
-              <span className="text-xs text-gray-500 w-24">Outer</span>
+              <span className="text-xs text-gray-500 w-24">
+                {t("common.outer")}
+              </span>
               <span className="text-xs bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent font-bold">
                 {settings.frameBorderRadius ?? settings.borderRadius}px
               </span>
@@ -161,7 +169,9 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             </div>
 
             <div className="flex items-center space-x-3">
-              <span className="text-xs text-gray-500 w-24">Inner</span>
+              <span className="text-xs text-gray-500 w-24">
+                {t("common.inner")}
+              </span>
               <span className="text-xs bg-gradient-to-r from-indigo-500 to-blue-500 bg-clip-text text-transparent font-bold">
                 {settings.codeBorderRadius ?? settings.borderRadius}px
               </span>
@@ -191,7 +201,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
         <div className="space-y-2">
           <label className="text-blue-600 text-sm font-medium mb-4 flex items-center">
             <Move className="w-3.5 h-3.5 mr-1.5" />
-            Sizing
+            {t("settingsPanel.view.sizing")}
           </label>
 
           <div className="flex items-center space-x-2">

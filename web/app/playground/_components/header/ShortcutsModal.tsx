@@ -3,6 +3,7 @@
 import React from "react";
 import { Keyboard } from "lucide-react";
 import Modal from "@/app/playground/_components/base/Modal";
+import { useLocalization } from "../../LocalizationContext";
 
 interface ShortcutsModalProps {
   isOpen: boolean;
@@ -10,47 +11,28 @@ interface ShortcutsModalProps {
 }
 
 const ShortcutsModal: React.FC<ShortcutsModalProps> = ({ isOpen, onClose }) => {
+  const { t } = useLocalization();
+
   const shortcuts = [
     {
-      category: "Editor",
+      category: t("shortcutsModal.categories.editor.title"),
       color: "from-blue-500 to-cyan-500",
-      items: [
-        { key: "F", description: "Focus editor" },
-        { key: "Esc", description: "Unfocus" },
-        { key: "Tab", description: "Indent" },
-        { key: "Shift+Tab", description: "Unindent" },
-      ],
+      items: t("shortcutsModal.categories.editor.shortcuts"),
     },
     {
-      category: "Appearance",
+      category: t("shortcutsModal.categories.appearance.title"),
       color: "from-purple-500 to-pink-500",
-      items: [
-        { key: "C", description: "Colors" },
-        { key: "B", description: "Background" },
-        { key: "D", description: "Dark mode" },
-        { key: "N", description: "Line numbers" },
-        { key: "P", description: "Padding" },
-        { key: "L", description: "Language" },
-      ],
+      items: t("shortcutsModal.categories.appearance.shortcuts"),
     },
     {
-      category: "Export & Share",
+      category: t("shortcutsModal.categories.exportShare.title"),
       color: "from-emerald-500 to-teal-500",
-      items: [
-        { key: "Ctrl+S", description: "Save PNG" },
-        { key: "Ctrl+Shift+S", description: "Save SVG" },
-        { key: "Ctrl+C", description: "Copy image" },
-        { key: "Ctrl+Shift+C", description: "Copy URL" },
-        { key: "Ctrl+K", description: "Export menu" },
-      ],
+      items: t("shortcutsModal.categories.exportShare.shortcuts"),
     },
     {
-      category: "Navigation",
+      category: t("shortcutsModal.categories.navigation.title"),
       color: "from-orange-500 to-red-500",
-      items: [
-        { key: "?", description: "Shortcuts" },
-        { key: "F11", description: "Fullscreen" },
-      ],
+      items: t("shortcutsModal.categories.navigation.shortcuts"),
     },
   ];
 
@@ -58,7 +40,7 @@ const ShortcutsModal: React.FC<ShortcutsModalProps> = ({ isOpen, onClose }) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Keyboard Shortcuts"
+      title={t("shortcutsModal.title")}
       icon={<Keyboard className="w-7 h-7 text-purple-600" />}
       maxWidth="4xl"
     >
@@ -82,7 +64,7 @@ const ShortcutsModal: React.FC<ShortcutsModalProps> = ({ isOpen, onClose }) => {
 
               {/* Shortcuts List - Simple vertical stack */}
               <div className="space-y-2">
-                {section.items.map((item, itemIndex) => (
+                {section.items.map((item: any, itemIndex: number) => (
                   <div
                     key={itemIndex}
                     className="group flex items-center justify-between gap-2 py-1.5 px-2.5 bg-white/70 dark:bg-gray-800/70 rounded-lg border border-gray-200/40 dark:border-gray-700/40 hover:border-gray-300/60 dark:hover:border-gray-600/60 hover:bg-white/90 dark:hover:bg-gray-800/90 transition-all duration-150"
@@ -109,14 +91,14 @@ const ShortcutsModal: React.FC<ShortcutsModalProps> = ({ isOpen, onClose }) => {
           </div>
           <div className="flex-1 min-w-0">
             <h4 className="text-xs font-semibold text-gray-900 dark:text-white mb-0.5">
-              💡 Pro Tip
+              {t("shortcutsModal.proTip.title")}
             </h4>
             <p className="text-[11px] text-gray-600 dark:text-gray-400 leading-relaxed">
-              Single-key shortcuts work when not typing. Press{" "}
+              {t("shortcutsModal.proTip.description")}{" "}
               <kbd className="px-1.5 py-0.5 bg-white/80 dark:bg-gray-700/80 rounded text-[10px] font-bold shadow-sm">
-                Esc
+                {t("shortcutsModal.proTip.escKey")}
               </kbd>{" "}
-              to exit editing mode first.
+              {t("shortcutsModal.proTip.exitText")}
             </p>
           </div>
         </div>

@@ -1,0 +1,358 @@
+{
+  "common": {
+    "copy": "复制",
+    "download": "下载",
+    "save": "保存",
+    "export": "导出",
+    "import": "导入",
+    "settings": "设置",
+    "close": "关闭",
+    "cancel": "取消",
+    "reset": "重置",
+    "apply": "应用",
+    "all": "全部",
+    "outer": "外部",
+    "inner": "内部"
+  },
+  "header": {
+    "brand": "Flashot",
+    "tips": "提示和信息",
+    "shortcuts": "快捷键",
+    "guide": "指南",
+    "json": "JSON",
+    "fileName": "文件名",
+    "copySuccess": "已复制！",
+    "generating": "生成中..."
+  },
+  "tipsModal": {
+    "title": "信息和快速入门",
+    "about": {
+      "title": "关于 Flashot",
+      "description": "是一个强大的现代Web应用程序，旨在帮助开发者在几秒钟内创建令人惊叹的专业代码截图。无论您是在创建文档、教程、社交媒体帖子还是演示文稿，Flashot都能让您的代码看起来非常出色。",
+      "keyFeaturesTitle": "主要功能",
+      "features": [
+        "50多个漂亮的语法主题",
+        "支持25多种编程语言",
+        "多种导出格式（PNG、JPG、WebP、AVIF）",
+        "实时预览与实时编辑",
+        "精确控制内边距、阴影、边框",
+        "可自定义的尺寸和缩放",
+        "窗口控件（macOS和Windows样式）",
+        "保存和加载自定义模板"
+      ],
+      "whyTitle": "为什么选择 Flashot？",
+      "whyItems": [
+        {
+          "title": "闪电般快速",
+          "description": "零延迟即时生成高质量截图"
+        },
+        {
+          "title": "开发者友好",
+          "description": "直观的界面，配有键盘快捷键和智能默认设置"
+        },
+        {
+          "title": "高度可定制",
+          "description": "每个方面都可配置 - 真正属于您"
+        }
+      ],
+      "contributeTitle": "贡献",
+      "contributeText": "该项目是开源的，",
+      "githubLink": "可在GitHub上获取",
+      "feedbackText": "如果您有任何问题或反馈，请",
+      "emailText": "给我们发送电子邮件",
+      "madeWith": "用",
+      "madeBy": "制作，作者：Thuong Truong，为所有人"
+    },
+    "quickStart": {
+      "title": "快速入门指南",
+      "steps": [
+        {
+          "title": "点击代码区域",
+          "description": "直接开始编辑您的代码"
+        },
+        {
+          "title": "自定义外观",
+          "description": "使用设置面板（主题、字体、背景）"
+        },
+        {
+          "title": "导出图片",
+          "description": "支持多种格式（PNG、JPG、WebP、AVIF）"
+        }
+      ]
+    },
+    "exportFormats": {
+      "title": "导出格式",
+      "png": {
+        "name": "PNG",
+        "description": "高质量，支持透明度"
+      },
+      "jpg": {
+        "name": "JPG",
+        "description": "压缩，纯色背景"
+      },
+      "webp": {
+        "name": "WebP",
+        "description": "现代，出色的压缩"
+      },
+      "avif": {
+        "name": "AVIF",
+        "description": "下一代，最小体积"
+      }
+    },
+    "languages": {
+      "title": "支持25多种语言"
+    },
+    "proTips": {
+      "title": "专业技巧和最佳实践",
+      "tips": [
+        {
+          "title": "使用行号",
+          "description": "非常适合代码文档和教程"
+        },
+        {
+          "title": "尝试不同的主题",
+          "description": "匹配您的品牌或演示风格"
+        },
+        {
+          "title": "调整内边距",
+          "description": "更好地适应社交媒体帖子"
+        },
+        {
+          "title": "保存为JSON",
+          "description": "备份并分享您最喜欢的配置"
+        },
+        {
+          "title": "窗口控件",
+          "description": "演示时呈现真实的编辑器外观"
+        },
+        {
+          "title": "全屏模式",
+          "description": "专注于编辑，无干扰视图"
+        }
+      ]
+    }
+  },
+  "shortcutsModal": {
+    "title": "键盘快捷键",
+    "categories": {
+      "editor": {
+        "title": "编辑器",
+        "shortcuts": [
+          { "key": "F", "description": "聚焦编辑器" },
+          { "key": "Esc", "description": "取消聚焦" },
+          { "key": "Tab", "description": "缩进" },
+          { "key": "Shift+Tab", "description": "取消缩进" }
+        ]
+      },
+      "appearance": {
+        "title": "外观",
+        "shortcuts": [
+          { "key": "C", "description": "颜色" },
+          { "key": "B", "description": "背景" },
+          { "key": "D", "description": "暗黑模式" },
+          { "key": "N", "description": "行号" },
+          { "key": "P", "description": "内边距" },
+          { "key": "L", "description": "语言" }
+        ]
+      },
+      "exportShare": {
+        "title": "导出和分享",
+        "shortcuts": [
+          { "key": "Ctrl+S", "description": "保存PNG" },
+          { "key": "Ctrl+Shift+S", "description": "保存SVG" },
+          { "key": "Ctrl+C", "description": "复制图片" },
+          { "key": "Ctrl+Shift+C", "description": "复制URL" },
+          { "key": "Ctrl+K", "description": "导出菜单" }
+        ]
+      },
+      "navigation": {
+        "title": "导航",
+        "shortcuts": [
+          { "key": "?", "description": "快捷键" },
+          { "key": "F11", "description": "全屏" }
+        ]
+      }
+    },
+    "proTip": {
+      "title": "💡 专业提示",
+      "description": "单键快捷键在不输入时工作。按",
+      "escKey": "Esc",
+      "exitText": "先退出编辑模式。"
+    }
+  },
+  "settings": {
+    "theme": "主题",
+    "language": "语言",
+    "font": "字体",
+    "fontSize": "字体大小",
+    "lineHeight": "行高",
+    "padding": "内边距",
+    "background": "背景",
+    "border": "边框",
+    "shadow": "阴影",
+    "lineNumbers": "行号",
+    "windowControls": "窗口控件"
+  },
+  "actionBar": {
+    "export": "导出",
+    "exporting": "导出中...",
+    "more": "更多",
+    "darkMode": "暗黑模式",
+    "lightMode": "明亮模式",
+    "sharePage": "分享页面",
+    "reportIssue": "报告问题",
+    "info": "信息"
+  },
+  "exportFormats": {
+    "png": "PNG",
+    "jpg": "JPG",
+    "webp": "WebP",
+    "avif": "AVIF",
+    "svg": "SVG",
+    "original": "原始代码",
+    "plain": "纯文本"
+  },
+  "editor": {
+    "clickToEdit": "点击编辑代码",
+    "dragToResize": "拖动调整大小",
+    "caption": "标题",
+    "addCaption": "添加标题...",
+    "label": "标签",
+    "addLabel": "添加标签..."
+  },
+  "settingsPanel": {
+    "title": "设置",
+    "tabs": {
+      "view": "视图",
+      "theme": "主题",
+      "makeup": "化妆",
+      "decorate": "装饰",
+      "template": "模板"
+    },
+    "resetToDefaults": "重置为默认值",
+    "view": {
+      "fontSize": "字体大小",
+      "lineHeight": "行高",
+      "wordWrap": "自动换行",
+      "customSize": "自定义大小",
+      "width": "宽度",
+      "height": "高度",
+      "lineNumbers": "行号",
+      "lineNumberOpacity": "行号不透明度",
+      "lineNumberBorder": "行号边框",
+      "lineNumberAlign": "行号对齐",
+      "textAlign": {
+        "left": "左对齐",
+        "center": "居中",
+        "right": "右对齐"
+      }
+    },
+    "theme": {
+      "language": "语言",
+      "fontFamily": "字体系列",
+      "colorTheme": "颜色主题",
+      "background": "背景"
+    },
+    "makeup": {
+      "padding": "内边距",
+      "borderRadius": "边框圆角",
+      "frameBorderRadius": "框架边框圆角",
+      "codeBorderRadius": "代码边框圆角",
+      "windowHeader": "窗口标题",
+      "windowHeaderAlign": "标题对齐",
+      "trafficLights": "交通灯",
+      "trafficLightsColor": "交通灯颜色",
+      "fileName": "文件名",
+      "fileNameOpacity": "文件名不透明度",
+      "fileNameFontWeight": "文件名字重",
+      "fileNameFontSize": "文件名字体大小",
+      "fileNameAlign": "文件名对齐",
+      "projectName": "项目名称",
+      "projectNamePlaceholder": "输入项目名称",
+      "projectNameOpacity": "项目名称不透明度",
+      "projectNameFontWeight": "项目名称字重",
+      "projectNameFontSize": "项目名称字体大小",
+      "showBackground": "显示背景",
+      "gradientAngle": "渐变角度",
+      "alignment": "对齐"
+    },
+    "decorate": {
+      "caption": "标题",
+      "captionText": "标题文本",
+      "captionPlaceholder": "输入标题文本",
+      "captionStyle": "标题样式",
+      "captionOpacity": "标题不透明度",
+      "captionPosition": "标题位置",
+      "captionStyles": {
+        "normal": "普通",
+        "italic": "斜体",
+        "bold": "粗体"
+      },
+      "captionPositions": {
+        "top": "顶部",
+        "bottom": "底部"
+      },
+      "label": "标签",
+      "labelText": "标签文本",
+      "labelPlaceholder": "由@用户名创建",
+      "labelAlignment": "标签对齐",
+      "labelOpacity": "标签不透明度",
+      "labelColor": "标签颜色",
+      "labelFontSize": "标签字体大小",
+      "watermark": "水印",
+      "watermarkType": "水印类型",
+      "watermarkTypes": {
+        "text": "文本",
+        "image": "图片"
+      },
+      "watermarkText": "水印文本",
+      "watermarkTextPlaceholder": "Flashot",
+      "watermarkOpacity": "水印不透明度",
+      "watermarkColor": "水印颜色",
+      "watermarkPosition": "水印位置",
+      "watermarkRotation": "水印旋转",
+      "watermarkFontSize": "水印字体大小",
+      "watermarkFontWeight": "水印字重",
+      "watermarkImageUrl": "水印图片URL",
+      "watermarkImageWidth": "水印图片宽度",
+      "watermarkImageHeight": "水印图片高度",
+      "border": "边框",
+      "borderOffset": "边框偏移",
+      "borderStyle": "边框样式",
+      "borderWidth": "边框宽度",
+      "borderOpacity": "边框不透明度",
+      "borderColor": "边框颜色",
+      "borderStyles": {
+        "solid": "实线",
+        "dashed": "虚线",
+        "dotted": "点线"
+      },
+      "headerGap": "标题间距",
+      "headerBorder": "标题边框",
+      "headerBorderColor": "标题边框颜色",
+      "imageFilters": "图像滤镜",
+      "grayscale": "灰度",
+      "sepia": "棕褐色",
+      "blur": "模糊",
+      "brightness": "亮度",
+      "contrast": "对比度",
+      "saturate": "饱和度",
+      "hueRotate": "色相旋转",
+      "invert": "反转"
+    },
+    "template": {
+      "saveTemplate": "保存模板",
+      "loadTemplate": "加载模板",
+      "import": "导入",
+      "export": "导出",
+      "importDescription": "导入已保存的模板（JSON文件）以恢复设置和代码",
+      "exportDescription": "将当前设置和代码导出为可重用模板",
+      "dragDropDescription": "将JSON文件拖放到此处",
+      "or": "或",
+      "selectFile": "选择文件",
+      "invalidJson": "无效的JSON文件",
+      "importSuccess": "模板导入成功",
+      "exportSuccess": "模板导出成功"
+    }
+  }
+}
