@@ -866,18 +866,18 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
 
                       {/* Line count and Traffic Lights grouped */}
                       <div className="flex items-center order-last">
-                        {/* Line count */}
-                        {settings.showLineCount && (
+                        {/* Project Name */}
+                        {settings.showProjectName && (
                           <span
-                            data-export-linecount
+                            data-export-projectname
                             className="flex items-center space-x-2 text-xs text-white"
                             style={{
-                              opacity: settings.lineCountOpacity ?? 1,
-                              fontWeight: settings.lineCountFontWeight ?? 400,
-                              fontSize: settings.lineCountFontSize ?? 12,
+                              opacity: settings.projectNameOpacity ?? 1,
+                              fontWeight: settings.projectNameFontWeight ?? 400,
+                              fontSize: settings.projectNameFontSize ?? 12,
                             }}
                           >
-                            {lineCount} lines
+                            {settings.projectName || "Project Name"}
                           </span>
                         )}
 
@@ -1012,18 +1012,18 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                         )}
                       </div>
 
-                      {/* Line count */}
-                      {settings.showLineCount && (
+                      {/* Project Name */}
+                      {settings.showProjectName && (
                         <span
-                          data-export-linecount
+                          data-export-projectname
                           className="flex items-center space-x-2 text-[13px] text-white"
                           style={{
-                            opacity: settings.lineCountOpacity ?? 1,
-                            fontWeight: settings.lineCountFontWeight ?? 400,
-                            fontSize: settings.lineCountFontSize ?? 13,
+                            opacity: settings.projectNameOpacity ?? 1,
+                            fontWeight: settings.projectNameFontWeight ?? 400,
+                            fontSize: settings.projectNameFontSize ?? 13,
                           }}
                         >
-                          {lineCount} lines
+                          {settings.projectName || "Project Name"}
                         </span>
                       )}
                     </>
