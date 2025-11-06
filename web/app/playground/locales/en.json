@@ -219,6 +219,8 @@
     "addCaption": "Add caption...",
     "label": "Label",
     "addLabel": "Add label...",
+    "import": "Import",
+    "importCodeFromUrl": "Import code from URL",
     "clear": "Clear",
     "clearConfirm": "Are you sure you want to clear the code?",
     "copy": "Copy",
@@ -264,6 +266,17 @@
       "customSize": "Custom Size",
       "width": "Width",
       "height": "Height",
+      "auto": "Auto",
+      "socialMediaSize": "Social Media Size",
+      "presets": {
+        "igSquare": "IG Square",
+        "igPortrait": "IG Portrait",
+        "igStory": "IG Story",
+        "twitter": "Twitter/X",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn",
+        "youtube": "YouTube"
+      },
       "lineNumbers": "Line Numbers",
       "lineNumberOpacity": "Number Opacity",
       "lineNumberBorder": "Number Border",
@@ -278,7 +291,19 @@
       "language": "Language",
       "fontFamily": "Font Family",
       "colorTheme": "Color Theme",
-      "background": "Background"
+      "background": "Background",
+      "backgroundTabs": {
+        "custom": "Custom",
+        "gradient": "Gradient",
+        "solid": "Solid",
+        "pattern": "Pattern"
+      },
+      "customImage": "Custom Image",
+      "upload": "Upload",
+      "uploadFromDevice": "Upload image from device",
+      "imageUrlPlaceholder": "Enter image URL or upload from device",
+      "gradientAngle": "Gradient Angle",
+      "solidColors": "Solid Colors"
     },
     "makeup": {
       "padding": "Padding",
@@ -286,22 +311,60 @@
       "frameBorderRadius": "Frame Border Radius",
       "codeBorderRadius": "Code Border Radius",
       "windowHeader": "Window Header",
-      "windowHeaderAlign": "Window Header Align",
-      "trafficLights": "Traffic Lights",
-      "trafficLightsColor": "Traffic Lights Color",
+      "showBorder": "Show Border",
+      "spacing": "Spacing",
+      "borderColor": "Border Color",
+      "trafficLight": "Traffic Light",
+      "alignment": "Alignment",
+      "alignments": {
+        "left": "Left",
+        "right": "Right",
+        "default": "Default",
+        "center": "Center"
+      },
       "fileName": "File Name",
-      "fileNameOpacity": "File Name Opacity",
-      "fileNameFontWeight": "File Name Font Weight",
-      "fileNameFontSize": "File Name Font Size",
+      "fileNamePlaceholder": "Enter filename",
+      "opacity": "Opacity",
+      "fontWeight": "Font Weight",
+      "fontWeights": {
+        "thin": "Thin",
+        "normal": "Normal",
+        "bold": "Bold"
+      },
+      "fontSize": "Font Size",
       "fileNameAlign": "File Name Align",
       "projectName": "Project Name",
       "projectNamePlaceholder": "Enter project name",
-      "projectNameOpacity": "Project Name Opacity",
-      "projectNameFontWeight": "Project Name Font Weight",
-      "projectNameFontSize": "Project Name Font Size",
+      "customName": "Custom Name",
       "showBackground": "Show Background",
       "gradientAngle": "Gradient Angle",
-      "alignment": "Alignment"
+      "trafficLightColor": "Color",
+      "caption": "Caption",
+      "captionPlaceholder": "Enter figure caption...",
+      "captionStyle": "Style",
+      "captionStyles": {
+        "normal": "Normal",
+        "italic": "Italic"
+      },
+      "captionPosition": "Position",
+      "positions": {
+        "top": "Top",
+        "bottom": "Bottom",
+        "left": "Left",
+        "right": "Right"
+      },
+      "lineHighlights": "Line Highlights",
+      "addHighlight": "Add",
+      "preview": "Preview",
+      "lines": "Lines",
+      "startLine": "Start Line",
+      "endLine": "End Line",
+      "highlightType": "Type",
+      "highlightTypes": {
+        "add": "Add",
+        "remove": "Remove"
+      },
+      "delete": "Delete"
     },
     "decorate": {
       "frameBorder": "Frame border",
@@ -385,7 +448,34 @@
       "selectFile": "Select file",
       "invalidJson": "Invalid JSON file",
       "importSuccess": "Template imported successfully",
-      "exportSuccess": "Template exported successfully"
+      "invalidTemplateFormat": "Invalid template format",
+      "errorParsingJson": "Error parsing JSON file",
+      "currentTemplate": "Current Template",
+      "exportSuccess": "Template exported successfully",
+      "description": "Save your current configuration as a template or load a previously saved one.",
+      "popularTemplates": "Popular Templates",
+      "templates": {
+        "cyberpunk-neon": {
+          "name": "Cyberpunk Neon",
+          "description": "High-contrast neon with futuristic vibes"
+        },
+        "minimal-zen": {
+          "name": "Minimal Zen",
+          "description": "Ultra-clean white space design"
+        },
+        "retro-sunset": {
+          "name": "Retro Sunset",
+          "description": "Warm 80s sunset vibes"
+        },
+        "arctic-ice": {
+          "name": "Arctic Ice",
+          "description": "Cool Nordic-inspired frost theme"
+        },
+        "dark-hacker": {
+          "name": "Dark Hacker",
+          "description": "Matrix-style terminal look"
+        }
+      }
     }
   }
 }

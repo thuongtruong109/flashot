@@ -21,6 +21,7 @@ import {
 import Caption from "@/app/playground/_components/editor/Caption";
 import ActionButtons from "@/app/playground/_components/editor/ActionButtons";
 import Label from "@/app/playground/_components/editor/Label";
+import { useLocalization } from "../../LocalizationContext";
 
 interface EditorProps {
   code: string;
@@ -56,6 +57,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
     },
     ref
   ) => {
+    const { t } = useLocalization();
     const [isEditing, setIsEditing] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
@@ -701,7 +703,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                 <button
                   onClick={onShowImport}
                   className="group relative flex items-center space-x-1.5 px-2 py-1 rounded-lg bg-gradient-to-r from-blue-500/80 to-cyan-500/80 hover:from-blue-600/90 hover:to-cyan-600/90 dark:from-blue-600/70 dark:to-cyan-600/70 dark:hover:from-blue-700/80 dark:hover:to-cyan-700/80 backdrop-blur-md border border-blue-400/50 dark:border-blue-700/50 shadow-[0_8px_32px_0_rgba(59,130,246,0.25)] hover:shadow-[0_8px_32px_0_rgba(59,130,246,0.35)] dark:shadow-[0_8px_32px_0_rgba(59,130,246,0.15)] dark:hover:shadow-[0_8px_32px_0_rgba(59,130,246,0.25)] transition-all"
-                  title="Import code from URL"
+                  title={t("editor.importCodeFromUrl")}
                 >
                   <svg
                     className="size-3.5 text-white drop-shadow-sm"
@@ -713,7 +715,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                     <path d="M3 16l4 4m0 0l4-4m-4 4V4m11 0l4 4m0 0l-4 4m4-4H11" />
                   </svg>
                   <span className="text-[13px] text-white font-medium drop-shadow-sm">
-                    Import
+                    {t("editor.import")}
                   </span>
                 </button>
               </div>

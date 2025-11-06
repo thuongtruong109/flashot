@@ -219,6 +219,8 @@
     "addCaption": "添加标题...",
     "label": "标签",
     "addLabel": "添加标签...",
+    "import": "导入",
+    "importCodeFromUrl": "从URL导入代码",
     "clear": "清除",
     "clearConfirm": "确定要清除代码吗？",
     "copy": "复制",
@@ -260,9 +262,21 @@
       "fontSize": "字体大小",
       "lineHeight": "行高",
       "wordWrap": "自动换行",
+      "sizing": "尺寸调整",
       "customSize": "自定义大小",
       "width": "宽度",
       "height": "高度",
+      "auto": "自动",
+      "socialMediaSize": "社交媒体尺寸",
+      "presets": {
+        "igSquare": "IG 正方形",
+        "igPortrait": "IG 竖版",
+        "igStory": "IG 快拍",
+        "twitter": "Twitter/X",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn",
+        "youtube": "YouTube"
+      },
       "lineNumbers": "行号",
       "lineNumberOpacity": "行号不透明度",
       "lineNumberBorder": "行号边框",
@@ -277,7 +291,19 @@
       "language": "语言",
       "fontFamily": "字体系列",
       "colorTheme": "颜色主题",
-      "background": "背景"
+      "background": "背景",
+      "backgroundTabs": {
+        "custom": "自定义",
+        "gradient": "渐变",
+        "solid": "纯色",
+        "pattern": "图案"
+      },
+      "customImage": "自定义图片",
+      "upload": "上传",
+      "uploadFromDevice": "从设备上传图片",
+      "imageUrlPlaceholder": "输入图片URL或从设备上传",
+      "gradientAngle": "渐变角度",
+      "solidColors": "纯色"
     },
     "makeup": {
       "padding": "内边距",
@@ -285,22 +311,60 @@
       "frameBorderRadius": "框架边框圆角",
       "codeBorderRadius": "代码边框圆角",
       "windowHeader": "窗口标题",
-      "windowHeaderAlign": "标题对齐",
-      "trafficLights": "交通灯",
-      "trafficLightsColor": "交通灯颜色",
+      "showBorder": "显示边框",
+      "spacing": "间距",
+      "borderColor": "边框颜色",
+      "trafficLight": "交通灯",
+      "alignment": "对齐",
+      "alignments": {
+        "left": "左",
+        "right": "右",
+        "default": "默认",
+        "center": "居中"
+      },
       "fileName": "文件名",
-      "fileNameOpacity": "文件名不透明度",
-      "fileNameFontWeight": "文件名字重",
-      "fileNameFontSize": "文件名字体大小",
+      "fileNamePlaceholder": "输入文件名",
+      "opacity": "不透明度",
+      "fontWeight": "字重",
+      "fontWeights": {
+        "thin": "细",
+        "normal": "普通",
+        "bold": "粗体"
+      },
+      "fontSize": "字体大小",
       "fileNameAlign": "文件名对齐",
       "projectName": "项目名称",
       "projectNamePlaceholder": "输入项目名称",
-      "projectNameOpacity": "项目名称不透明度",
-      "projectNameFontWeight": "项目名称字重",
-      "projectNameFontSize": "项目名称字体大小",
+      "customName": "自定义名称",
       "showBackground": "显示背景",
       "gradientAngle": "渐变角度",
-      "alignment": "对齐"
+      "trafficLightColor": "颜色",
+      "caption": "标题",
+      "captionPlaceholder": "输入图片标题...",
+      "captionStyle": "样式",
+      "captionStyles": {
+        "normal": "普通",
+        "italic": "斜体"
+      },
+      "captionPosition": "位置",
+      "positions": {
+        "top": "上",
+        "bottom": "下",
+        "left": "左",
+        "right": "右"
+      },
+      "lineHighlights": "行高亮",
+      "addHighlight": "添加",
+      "preview": "预览",
+      "lines": "行",
+      "startLine": "起始行",
+      "endLine": "结束行",
+      "highlightType": "类型",
+      "highlightTypes": {
+        "add": "添加",
+        "remove": "移除"
+      },
+      "delete": "删除"
     },
     "decorate": {
       "frameBorder": "框架边框",
@@ -384,7 +448,34 @@
       "selectFile": "选择文件",
       "invalidJson": "无效的JSON文件",
       "importSuccess": "模板导入成功",
-      "exportSuccess": "模板导出成功"
+      "invalidTemplateFormat": "无效的模板格式",
+      "errorParsingJson": "JSON文件解析错误",
+      "currentTemplate": "当前模板",
+      "exportSuccess": "模板导出成功",
+      "description": "将当前配置保存为模板或加载之前保存的模板。",
+      "popularTemplates": "热门模板",
+      "templates": {
+        "cyberpunk-neon": {
+          "name": "赛博朋克霓虹",
+          "description": "高对比度霓虹灯，未来感十足"
+        },
+        "minimal-zen": {
+          "name": "极简禅意",
+          "description": "超干净的留白设计"
+        },
+        "retro-sunset": {
+          "name": "复古日落",
+          "description": "温暖的80年代氛围"
+        },
+        "arctic-ice": {
+          "name": "北极冰霜",
+          "description": "北欧风格的清凉主题"
+        },
+        "dark-hacker": {
+          "name": "黑客暗黑",
+          "description": "黑客帝国风格的终端外观"
+        }
+      }
     }
   }
 }

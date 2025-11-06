@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import CustomSelect from "@/app/playground/_components/base/Select";
 import SearchButton from "@/app/playground/_components/SearchButton";
+import LanguageSwitcher from "./LanguageSwitcher";
 import { useLocalization } from "../../LocalizationContext";
 import {
   Download,
@@ -342,6 +343,9 @@ const ActionBar: React.FC<ActionBarProps> = ({
             className="!h-[1.95rem] !w-[2rem] !px-0 justify-center"
           />
         </div>
+
+        {/* Language Switcher */}
+        <LanguageSwitcher />
 
         {/* Shortcuts Button */}
         {onShowShortcuts && (

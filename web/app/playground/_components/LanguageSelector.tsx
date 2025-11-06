@@ -23,6 +23,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { SupportedLanguage } from "@/types";
+import { useLocalization } from "../LocalizationContext";
 
 interface LanguageSelectorProps {
   selectedLanguage: SupportedLanguage;
@@ -170,6 +171,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   selectedLanguage,
   onLanguageChange,
 }) => {
+  const { t } = useLocalization();
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -293,7 +295,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
     <div>
       <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
         <Code className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
-        Programming Language
+        {t("settingsPanel.theme.language")}
       </label>
 
       <button

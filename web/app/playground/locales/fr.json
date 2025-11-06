@@ -219,6 +219,8 @@
     "addCaption": "Ajouter une légende...",
     "label": "Étiquette",
     "addLabel": "Ajouter une étiquette...",
+    "import": "Importer",
+    "importCodeFromUrl": "Importer le code depuis l'URL",
     "clear": "Effacer",
     "clearConfirm": "Êtes-vous sûr de vouloir effacer le code ?",
     "copy": "Copier",
@@ -260,9 +262,21 @@
       "fontSize": "Taille de police",
       "lineHeight": "Hauteur de ligne",
       "wordWrap": "Retour à la ligne",
+      "sizing": "Dimensionnement",
       "customSize": "Taille personnalisée",
       "width": "Largeur",
       "height": "Hauteur",
+      "auto": "Auto",
+      "socialMediaSize": "Taille Réseaux Sociaux",
+      "presets": {
+        "igSquare": "IG Carré",
+        "igPortrait": "IG Portrait",
+        "igStory": "IG Story",
+        "twitter": "Twitter/X",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn",
+        "youtube": "YouTube"
+      },
       "lineNumbers": "Numéros de ligne",
       "lineNumberOpacity": "Opacité des numéros",
       "lineNumberBorder": "Bordure des numéros",
@@ -277,7 +291,19 @@
       "language": "Langue",
       "fontFamily": "Famille de polices",
       "colorTheme": "Thème de couleur",
-      "background": "Arrière-plan"
+      "background": "Arrière-plan",
+      "backgroundTabs": {
+        "custom": "Personnalisé",
+        "gradient": "Dégradé",
+        "solid": "Solide",
+        "pattern": "Motif"
+      },
+      "customImage": "Image Personnalisée",
+      "upload": "Télécharger",
+      "uploadFromDevice": "Télécharger l'image depuis l'appareil",
+      "imageUrlPlaceholder": "Entrez l'URL de l'image ou téléchargez depuis l'appareil",
+      "gradientAngle": "Angle de Dégradé",
+      "solidColors": "Couleurs Solides"
     },
     "makeup": {
       "padding": "Rembourrage",
@@ -285,22 +311,60 @@
       "frameBorderRadius": "Rayon de bordure du cadre",
       "codeBorderRadius": "Rayon de bordure du code",
       "windowHeader": "En-tête de fenêtre",
-      "windowHeaderAlign": "Alignement de l'en-tête",
-      "trafficLights": "Feux de signalisation",
-      "trafficLightsColor": "Couleur des feux",
+      "showBorder": "Afficher bordure",
+      "spacing": "Espacement",
+      "borderColor": "Couleur de bordure",
+      "trafficLight": "Feu de signalisation",
+      "alignment": "Alignement",
+      "alignments": {
+        "left": "Gauche",
+        "right": "Droite",
+        "default": "Par défaut",
+        "center": "Centre"
+      },
       "fileName": "Nom de fichier",
-      "fileNameOpacity": "Opacité du nom de fichier",
-      "fileNameFontWeight": "Poids de police du nom",
-      "fileNameFontSize": "Taille de police du nom",
+      "fileNamePlaceholder": "Entrez le nom du fichier",
+      "opacity": "Opacité",
+      "fontWeight": "Poids de police",
+      "fontWeights": {
+        "thin": "Fin",
+        "normal": "Normal",
+        "bold": "Gras"
+      },
+      "fontSize": "Taille de police",
       "fileNameAlign": "Alignement du nom",
       "projectName": "Nom du projet",
       "projectNamePlaceholder": "Entrez le nom du projet",
-      "projectNameOpacity": "Opacité du nom du projet",
-      "projectNameFontWeight": "Poids de police du projet",
-      "projectNameFontSize": "Taille de police du projet",
+      "customName": "Nom personnalisé",
       "showBackground": "Afficher l'arrière-plan",
       "gradientAngle": "Angle de dégradé",
-      "alignment": "Alignement"
+      "trafficLightColor": "Couleur",
+      "caption": "Légende",
+      "captionPlaceholder": "Entrez la légende de la figure...",
+      "captionStyle": "Style",
+      "captionStyles": {
+        "normal": "Normal",
+        "italic": "Italique"
+      },
+      "captionPosition": "Position",
+      "positions": {
+        "top": "Haut",
+        "bottom": "Bas",
+        "left": "Gauche",
+        "right": "Droite"
+      },
+      "lineHighlights": "Surlignage de Lignes",
+      "addHighlight": "Ajouter",
+      "preview": "Aperçu",
+      "lines": "Lignes",
+      "startLine": "Ligne de début",
+      "endLine": "Ligne de fin",
+      "highlightType": "Type",
+      "highlightTypes": {
+        "add": "Ajouter",
+        "remove": "Supprimer"
+      },
+      "delete": "Supprimer"
     },
     "decorate": {
       "frameBorder": "Bordure du cadre",
@@ -384,7 +448,34 @@
       "selectFile": "Sélectionner un fichier",
       "invalidJson": "Fichier JSON invalide",
       "importSuccess": "Modèle importé avec succès",
-      "exportSuccess": "Modèle exporté avec succès"
+      "invalidTemplateFormat": "Format de modèle invalide",
+      "errorParsingJson": "Erreur lors de l'analyse du fichier JSON",
+      "currentTemplate": "Modèle actuel",
+      "exportSuccess": "Modèle exporté avec succès",
+      "description": "Enregistrez votre configuration actuelle comme modèle ou chargez-en un enregistré précédemment.",
+      "popularTemplates": "Modèles Populaires",
+      "templates": {
+        "cyberpunk-neon": {
+          "name": "Néon Cyberpunk",
+          "description": "Néon à contraste élevé avec ambiances futuristes"
+        },
+        "minimal-zen": {
+          "name": "Zen Minimal",
+          "description": "Design ultra-épuré à espace blanc"
+        },
+        "retro-sunset": {
+          "name": "Coucher de Soleil Rétro",
+          "description": "Ambiances chaleureuses des années 80"
+        },
+        "arctic-ice": {
+          "name": "Glace Arctique",
+          "description": "Thème froid inspiré du nordique"
+        },
+        "dark-hacker": {
+          "name": "Hacker Sombre",
+          "description": "Look de terminal style Matrix"
+        }
+      }
     }
   }
 }

@@ -2,7 +2,6 @@ import React from "react";
 import { CodeSettings } from "@/types";
 import ActionBar from "./ActionBar";
 import Brand from "./Brand";
-import LanguageSwitcher from "./LanguageSwitcher";
 
 interface HeaderProps {
   onCopy: () => Promise<void>;
@@ -51,8 +50,6 @@ export default function Header({
       </div>
 
       <div className="flex items-center gap-2 ml-auto">
-        <LanguageSwitcher />
-
         <div data-tour="action-bar" className="flex-shrink-0">
           <ActionBar
             onCopy={onCopy}

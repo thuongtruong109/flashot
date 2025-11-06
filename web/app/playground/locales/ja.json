@@ -219,6 +219,8 @@
     "addCaption": "キャプションを追加...",
     "label": "ラベル",
     "addLabel": "ラベルを追加...",
+    "import": "インポート",
+    "importCodeFromUrl": "URLからコードをインポート",
     "clear": "クリア",
     "clearConfirm": "コードをクリアしてもよろしいですか？",
     "copy": "コピー",
@@ -260,9 +262,21 @@
       "fontSize": "フォントサイズ",
       "lineHeight": "行の高さ",
       "wordWrap": "ワードラップ",
+      "sizing": "サイズ調整",
       "customSize": "カスタムサイズ",
       "width": "幅",
       "height": "高さ",
+      "auto": "自動",
+      "socialMediaSize": "ソーシャルメディアサイズ",
+      "presets": {
+        "igSquare": "IG スクエア",
+        "igPortrait": "IG ポートレート",
+        "igStory": "IG ストーリー",
+        "twitter": "Twitter/X",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn",
+        "youtube": "YouTube"
+      },
       "lineNumbers": "行番号",
       "lineNumberOpacity": "番号の不透明度",
       "lineNumberBorder": "番号の境界線",
@@ -277,7 +291,19 @@
       "language": "言語",
       "fontFamily": "フォントファミリー",
       "colorTheme": "カラーテーマ",
-      "background": "背景"
+      "background": "背景",
+      "backgroundTabs": {
+        "custom": "カスタム",
+        "gradient": "グラデーション",
+        "solid": "単色",
+        "pattern": "パターン"
+      },
+      "customImage": "カスタム画像",
+      "upload": "アップロード",
+      "uploadFromDevice": "デバイスから画像をアップロード",
+      "imageUrlPlaceholder": "画像URLを入力するか、デバイスからアップロード",
+      "gradientAngle": "グラデーション角度",
+      "solidColors": "単色"
     },
     "makeup": {
       "padding": "パディング",
@@ -285,22 +311,60 @@
       "frameBorderRadius": "フレームの角の丸み",
       "codeBorderRadius": "コードの角の丸み",
       "windowHeader": "ウィンドウヘッダー",
-      "windowHeaderAlign": "ヘッダーの配置",
-      "trafficLights": "信号機",
-      "trafficLightsColor": "信号機の色",
+      "showBorder": "境界線を表示",
+      "spacing": "間隔",
+      "borderColor": "境界線の色",
+      "trafficLight": "信号機",
+      "alignment": "配置",
+      "alignments": {
+        "left": "左",
+        "right": "右",
+        "default": "デフォルト",
+        "center": "中央"
+      },
       "fileName": "ファイル名",
-      "fileNameOpacity": "ファイル名の不透明度",
-      "fileNameFontWeight": "ファイル名のフォントウェイト",
-      "fileNameFontSize": "ファイル名のフォントサイズ",
+      "fileNamePlaceholder": "ファイル名を入力",
+      "opacity": "不透明度",
+      "fontWeight": "フォントウェイト",
+      "fontWeights": {
+        "thin": "細字",
+        "normal": "標準",
+        "bold": "太字"
+      },
+      "fontSize": "フォントサイズ",
       "fileNameAlign": "ファイル名の配置",
       "projectName": "プロジェクト名",
       "projectNamePlaceholder": "プロジェクト名を入力",
-      "projectNameOpacity": "プロジェクト名の不透明度",
-      "projectNameFontWeight": "プロジェクト名のフォントウェイト",
-      "projectNameFontSize": "プロジェクト名のフォントサイズ",
+      "customName": "カスタム名",
       "showBackground": "背景を表示",
       "gradientAngle": "グラデーション角度",
-      "alignment": "配置"
+      "trafficLightColor": "色",
+      "caption": "キャプション",
+      "captionPlaceholder": "図のキャプションを入力...",
+      "captionStyle": "スタイル",
+      "captionStyles": {
+        "normal": "標準",
+        "italic": "斜体"
+      },
+      "captionPosition": "位置",
+      "positions": {
+        "top": "上",
+        "bottom": "下",
+        "left": "左",
+        "right": "右"
+      },
+      "lineHighlights": "行のハイライト",
+      "addHighlight": "追加",
+      "preview": "プレビュー",
+      "lines": "行",
+      "startLine": "開始行",
+      "endLine": "終了行",
+      "highlightType": "タイプ",
+      "highlightTypes": {
+        "add": "追加",
+        "remove": "削除"
+      },
+      "delete": "削除"
     },
     "decorate": {
       "frameBorder": "フレーム枠線",
@@ -384,7 +448,34 @@
       "selectFile": "ファイルを選択",
       "invalidJson": "無効なJSONファイル",
       "importSuccess": "テンプレートが正常にインポートされました",
-      "exportSuccess": "テンプレートが正常にエクスポートされました"
+      "invalidTemplateFormat": "無効なテンプレート形式",
+      "errorParsingJson": "JSONファイルの解析エラー",
+      "currentTemplate": "現在のテンプレート",
+      "exportSuccess": "テンプレートが正常にエクスポートされました",
+      "description": "現在の設定をテンプレートとして保存するか、以前に保存したものを読み込みます。",
+      "popularTemplates": "人気テンプレート",
+      "templates": {
+        "cyberpunk-neon": {
+          "name": "サイバーパンク ネオン",
+          "description": "未来的な雰囲気の高コントラスト ネオン"
+        },
+        "minimal-zen": {
+          "name": "ミニマル 禅",
+          "description": "超クリーンなホワイトスペース デザイン"
+        },
+        "retro-sunset": {
+          "name": "レトロ サンセット",
+          "description": "温かい80年代の雰囲気"
+        },
+        "arctic-ice": {
+          "name": "北極の氷",
+          "description": "北欧風の涼しいテーマ"
+        },
+        "dark-hacker": {
+          "name": "ダーク ハッカー",
+          "description": "マトリックススタイルのターミナルルック"
+        }
+      }
     }
   }
 }
