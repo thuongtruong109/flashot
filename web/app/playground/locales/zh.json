@@ -359,10 +359,11 @@
       "lines": "行",
       "startLine": "起始行",
       "endLine": "结束行",
+      "color": "颜色",
       "highlightType": "类型",
       "highlightTypes": {
         "add": "添加",
-        "remove": "移除"
+        "remove": "删除"
       },
       "delete": "删除"
     },
@@ -603,5 +604,55 @@
     "cancel": "取消",
     "import": "导入",
     "importing": "导入中..."
+  },
+  "tourGuide": {
+    "buttons": {
+      "next": "下一步 →",
+      "previous": "← 上一步",
+      "done": "完成 ✓",
+      "progress": "{{current}} / {{total}}"
+    },
+    "steps": {
+      "welcome": {
+        "title": "🎨 欢迎来到 Flashot Playground",
+        "description": "欢迎来到 Flashot！这是一个功能强大的工具，可以创建美观、专业的代码截图，并提供广泛的自定义选项。让我们快速浏览所有功能！"
+      },
+      "actionBar": {
+        "title": "🛠️ 主操作栏",
+        "description": "您的指挥中心，配备管理代码截图的基本工具。让我们详细探索每个按钮！"
+      },
+      "exportButton": {
+        "title": "📥 导出按钮",
+        "description": "以各种格式下载您的代码截图：PNG、JPG、WebP、AVIF用于图像，或原始/纯文本用于代码。点击下拉菜单选择您喜欢的格式。每种格式具有不同的质量和文件大小特性。"
+      },
+      "moreMenu": {
+        "title": "⚙️ 更多菜单",
+        "description": "访问其他功能：指南（重新开始此教程）、信息（快速提示和快捷键）、分享（分享页面）和报告问题（在GitHub上提交反馈）。"
+      },
+      "darkModeToggle": {
+        "title": "🌓 深色模式切换",
+        "description": "在浅色和深色主题之间切换。您的偏好会自动保存以供将来访问。"
+      },
+      "backgroundSelector": {
+        "title": "🎨 背景画布",
+        "description": "这是代码编辑器所在的画布区域。可以从设置中的美化选项卡自定义背景。选择纯色、漂亮的渐变色，甚至透明背景。网格帮助您完美对齐代码。"
+      },
+      "codeEditor": {
+        "title": "📝 交互式代码编辑器",
+        "description": "这是您的主要工作区。点击代码的任意位置开始编辑。您可以拖动边框调整大小，编辑器支持26种以上编程语言的语法高亮和实时预览。点击文件名即可编辑！"
+      },
+      "settingsPanel": {
+        "title": "⚙️ 设置面板",
+        "description": "在此处自定义代码截图的每个方面。包括以下部分：视图（尺寸、语言）、主题（编辑器主题）、美化（颜色、字体）、装饰（窗口控件、阴影）和模板（保存/加载预设）。在桌面上，此面板始终显示在右侧。"
+      },
+      "proTips": {
+        "title": "💡 专业提示",
+        "description": "记住：使用Ctrl+Enter或Esc退出编辑模式，Tab/Shift+Tab缩进/取消缩进代码。工作时，编辑器位置和大小会保留。导出支持具有不同压缩级别的多种格式。直接点击文件名即可编辑！"
+      },
+      "finish": {
+        "title": "🎉 一切就绪！",
+        "description": "您现在了解了 Flashot Playground 的所有功能！开始创建美丽的代码截图吧。如果您随时需要帮助，请点击更多菜单中的指南选项。编码愉快！🚀"
+      }
+    }
   }
 }

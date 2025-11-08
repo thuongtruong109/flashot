@@ -359,6 +359,7 @@
       "lines": "Lignes",
       "startLine": "Ligne de début",
       "endLine": "Ligne de fin",
+      "color": "Couleur",
       "highlightType": "Type",
       "highlightTypes": {
         "add": "Ajouter",
@@ -603,5 +604,55 @@
     "cancel": "Annuler",
     "import": "Importer",
     "importing": "Import en cours..."
+  },
+  "tourGuide": {
+    "buttons": {
+      "next": "Suivant →",
+      "previous": "← Précédent",
+      "done": "Terminé ✓",
+      "progress": "{{current}} sur {{total}}"
+    },
+    "steps": {
+      "welcome": {
+        "title": "🎨 Bienvenue sur Flashot Playground",
+        "description": "Bienvenue sur Flashot ! Un outil puissant pour créer de belles captures d'écran de code professionnelles avec de nombreuses options de personnalisation. Faisons un tour rapide de toutes les fonctionnalités !"
+      },
+      "actionBar": {
+        "title": "🛠️ Barre d'Action Principale",
+        "description": "Votre centre de commande avec des outils essentiels pour gérer vos captures d'écran de code. Explorons chaque bouton en détail !"
+      },
+      "exportButton": {
+        "title": "📥 Bouton d'Exportation",
+        "description": "Téléchargez votre capture d'écran de code dans différents formats : PNG, JPG, WebP, AVIF pour les images, ou Original/Texte Brut pour le code. Cliquez sur le menu déroulant pour choisir votre format préféré. Chaque format a des caractéristiques différentes de qualité et de taille de fichier."
+      },
+      "moreMenu": {
+        "title": "⚙️ Menu Plus",
+        "description": "Accédez à des fonctionnalités supplémentaires : Guide (redémarrer ce tour), Informations (conseils rapides et raccourcis), Partager (partager la page) et Signaler un Problème (soumettre des commentaires sur GitHub)."
+      },
+      "darkModeToggle": {
+        "title": "🌓 Basculer le Mode Sombre",
+        "description": "Basculez entre les thèmes clair et sombre. Votre préférence est enregistrée automatiquement pour les visites futures."
+      },
+      "backgroundSelector": {
+        "title": "🎨 Canevas d'Arrière-plan",
+        "description": "C'est la zone de canevas où se trouve votre éditeur de code. L'arrière-plan peut être personnalisé à partir de l'onglet Maquillage dans Paramètres. Choisissez des couleurs unies, de beaux dégradés ou même des arrière-plans transparents. La grille vous aide à aligner votre code parfaitement."
+      },
+      "codeEditor": {
+        "title": "📝 Éditeur de Code Interactif",
+        "description": "C'est votre espace de travail principal. Cliquez n'importe où sur le code pour commencer à éditer. Vous pouvez faire glisser les bordures pour redimensionner, et l'éditeur prend en charge la coloration syntaxique pour plus de 26 langages de programmation avec aperçu en temps réel. Cliquez sur le nom du fichier pour le modifier !"
+      },
+      "settingsPanel": {
+        "title": "⚙️ Panneau des Paramètres",
+        "description": "Personnalisez chaque aspect de votre capture d'écran de code ici. Comprend des sections pour : Vue (dimensions, langage), Thème (thèmes de l'éditeur), Maquillage (couleurs, polices), Décorer (contrôles de fenêtre, ombres) et Modèles (enregistrer/charger des préréglages). Sur ordinateur, ce panneau est toujours visible sur le côté droit."
+      },
+      "proTips": {
+        "title": "💡 Conseils Pro",
+        "description": "N'oubliez pas : Utilisez Ctrl+Entrée ou Échap pour quitter le mode édition, Tab/Shift+Tab pour indenter/désindenter le code. Votre position et taille d'éditeur sont préservées pendant que vous travaillez. L'exportation prend en charge plusieurs formats avec différents niveaux de compression. Cliquez sur le nom du fichier pour le modifier directement !"
+      },
+      "finish": {
+        "title": "🎉 Vous êtes Prêt !",
+        "description": "Vous connaissez maintenant toutes les fonctionnalités de Flashot Playground ! Commencez à créer de belles captures d'écran de code. Si vous avez besoin d'aide à tout moment, cliquez sur l'option Guide dans le menu Plus. Bon codage ! 🚀"
+      }
+    }
   }
 }

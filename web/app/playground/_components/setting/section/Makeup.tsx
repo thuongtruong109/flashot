@@ -1193,7 +1193,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   {/* Line Range */}
                   <div className="flex items-center space-x-2">
                     <label className="text-[10px] text-gray-600 dark:text-gray-400 font-medium w-8">
-                      Lines:
+                      {t("settingsPanel.makeup.lines")}:
                     </label>
                     <input
                       type="number"

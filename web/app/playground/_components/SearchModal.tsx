@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/utils";
 import { useLocalization } from "../LocalizationContext";
+import Modal from "./base/Modal";
 
 interface SearchItem {
   id: string;
@@ -409,32 +410,44 @@ const SearchModal: React.FC<SearchModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-start justify-center pt-[10vh] bg-black/50 dark:bg-black/70 backdrop-blur-sm"
+      className="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl mx-4 bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+        className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl dark:shadow-gray-950/50 max-w-2xl w-full max-h-[90vh] flex flex-col border border-white/20 dark:border-gray-700/30"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Search Input */}
-        <div className="relative border-b border-gray-200 dark:border-gray-700">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-gray-400 dark:text-gray-500" />
-          <input
-            ref={inputRef}
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={t("searchModal.placeholder")}
-            className="w-full pl-12 pr-12 py-4 text-base bg-transparent border-none outline-none text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
-          />
-          {searchQuery && (
+        {/* Header with Search Input */}
+        <div className="px-3 py-2 border-b border-gray-200/50 dark:border-gray-700/50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-t-2xl">
+          <div className="flex items-center gap-2">
+            <div className="p-1 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-md flex-shrink-0">
+              <Search className="size-3.5 text-white" />
+            </div>
+            <div className="flex-1 relative">
+              <input
+                ref={inputRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t("searchModal.placeholder")}
+                className="w-full px-1.5 py-0.5 text-xs bg-transparent border-none outline-none text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
+              />
+            </div>
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="p-0.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex-shrink-0"
+              >
+                <X className="size-3 text-gray-400 dark:text-gray-500" />
+              </button>
+            )}
             <button
-              onClick={() => setSearchQuery("")}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              onClick={onClose}
+              className="p-0.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100/50 dark:hover:bg-gray-700/50 rounded-lg transition-all duration-200 group flex-shrink-0"
             >
-              <X className="size-4 text-gray-400 dark:text-gray-500" />
+              <X className="w-3.5 h-3.5 group-hover:rotate-90 transition-transform duration-200" />
             </button>
-          )}
+          </div>
         </div>
 
         {/* Results */}
@@ -464,14 +477,14 @@ const SearchModal: React.FC<SearchModalProps> = ({
               </p>
             </div>
           ) : (
-            <div className="py-2">
+            <div className="py-1">
               {filteredItems.map((item, index) => (
                 <button
                   key={item.id}
                   data-index={index}
                   onClick={() => handleItemClick(item)}
                   className={cn(
-                    "w-full px-4 py-3 flex items-start gap-3 transition-colors text-left",
+                    "w-full px-3 py-2 flex items-start gap-2 transition-colors text-left",
                     selectedIndex === index
                       ? "bg-blue-50 dark:bg-blue-900/20"
                       : "hover:bg-gray-50 dark:hover:bg-gray-800/50"
@@ -480,7 +493,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                   {/* Icon */}
                   <div
                     className={cn(
-                      "mt-0.5 p-2 rounded-lg",
+                      "mt-0.5 p-1.5 rounded-md",
                       getCategoryColor(item.category)
                     )}
                   >
@@ -489,29 +502,29 @@ const SearchModal: React.FC<SearchModalProps> = ({
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    <div className="flex items-center gap-1.5 mb-0.5">
+                      <h3 className="text-xs font-medium text-gray-900 dark:text-gray-100">
                         {item.title}
                       </h3>
                       <span
                         className={cn(
-                          "px-1.5 py-0.5 text-[10px] font-medium rounded uppercase tracking-wide",
+                          "px-1 py-0.5 text-[9px] font-medium rounded uppercase tracking-wide",
                           getCategoryColor(item.category)
                         )}
                       >
                         {getCategoryLabel(item.category)}
                       </span>
                     </div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-[11px] text-gray-500 dark:text-gray-400">
                       {item.description}
                     </p>
                   </div>
 
                   {/* Arrow indicator */}
                   {selectedIndex === index && (
-                    <div className="mt-2">
+                    <div className="mt-1.5">
                       <svg
-                        className="size-4 text-blue-600 dark:text-blue-400"
+                        className="size-3.5 text-blue-600 dark:text-blue-400"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -532,26 +545,26 @@ const SearchModal: React.FC<SearchModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
-          <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-            <div className="flex items-center gap-4">
+        <div className="px-3 rounded-b-xl py-2 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+          <div className="flex items-center justify-between text-[11px] text-gray-500 dark:text-gray-400">
+            <div className="flex items-center gap-3">
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded text-[10px] font-mono">
+                <kbd className="px-1 py-0.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded text-[9px] font-mono">
                   ↑↓
                 </kbd>
-                {t("searchModal.navigate")}
+                <span className="text-[10px]">{t("searchModal.navigate")}</span>
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded text-[10px] font-mono">
+                <kbd className="px-1 py-0.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded text-[9px] font-mono">
                   Enter
                 </kbd>
-                {t("searchModal.select")}
+                <span className="text-[10px]">{t("searchModal.select")}</span>
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded text-[10px] font-mono">
+                <kbd className="px-1 py-0.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded text-[9px] font-mono">
                   Esc
                 </kbd>
-                {t("searchModal.close")}
+                <span className="text-[10px]">{t("searchModal.close")}</span>
               </span>
             </div>
             <span className="text-[10px]">

@@ -353,12 +353,13 @@
         "left": "Izquierda",
         "right": "Derecha"
       },
-      "lineHighlights": "Resaltar Líneas",
+      "lineHighlights": "Resaltado de Líneas",
       "addHighlight": "Agregar",
       "preview": "Vista previa",
       "lines": "Líneas",
       "startLine": "Línea inicial",
       "endLine": "Línea final",
+      "color": "Color",
       "highlightType": "Tipo",
       "highlightTypes": {
         "add": "Agregar",
@@ -603,5 +604,55 @@
     "cancel": "Cancelar",
     "import": "Importar",
     "importing": "Importando..."
+  },
+  "tourGuide": {
+    "buttons": {
+      "next": "Siguiente →",
+      "previous": "← Anterior",
+      "done": "Hecho ✓",
+      "progress": "{{current}} de {{total}}"
+    },
+    "steps": {
+      "welcome": {
+        "title": "🎨 Bienvenido a Flashot Playground",
+        "description": "¡Bienvenido a Flashot! Una herramienta poderosa para crear hermosas capturas de pantalla de código profesionales con amplias opciones de personalización. ¡Hagamos un recorrido rápido de todas las funciones!"
+      },
+      "actionBar": {
+        "title": "🛠️ Barra de Acción Principal",
+        "description": "Tu centro de comando con herramientas esenciales para gestionar tus capturas de pantalla de código. ¡Exploremos cada botón en detalle!"
+      },
+      "exportButton": {
+        "title": "📥 Botón de Exportar",
+        "description": "Descarga tu captura de pantalla de código en varios formatos: PNG, JPG, WebP, AVIF para imágenes, u Original/Texto Plano para código. Haz clic en el menú desplegable para elegir tu formato preferido. Cada formato tiene diferentes características de calidad y tamaño de archivo."
+      },
+      "moreMenu": {
+        "title": "⚙️ Menú Más",
+        "description": "Accede a funciones adicionales: Guía (reiniciar este recorrido), Información (consejos rápidos y atajos), Compartir (compartir la página) y Reportar Problema (enviar comentarios en GitHub)."
+      },
+      "darkModeToggle": {
+        "title": "🌓 Alternar Modo Oscuro",
+        "description": "Cambia entre temas claro y oscuro. Tu preferencia se guarda automáticamente para futuras visitas."
+      },
+      "backgroundSelector": {
+        "title": "🎨 Lienzo de Fondo",
+        "description": "Esta es el área de lienzo donde se encuentra tu editor de código. El fondo se puede personalizar desde la pestaña Maquillaje en Configuración. Elige colores sólidos, hermosos degradados o incluso fondos transparentes. La cuadrícula te ayuda a alinear tu código perfectamente."
+      },
+      "codeEditor": {
+        "title": "📝 Editor de Código Interactivo",
+        "description": "Este es tu espacio de trabajo principal. Haz clic en cualquier lugar del código para comenzar a editar. Puedes arrastrar los bordes para cambiar el tamaño, y el editor admite resaltado de sintaxis para más de 26 lenguajes de programación con vista previa en tiempo real. ¡Haz clic en el nombre del archivo para editarlo!"
+      },
+      "settingsPanel": {
+        "title": "⚙️ Panel de Configuración",
+        "description": "Personaliza cada aspecto de tu captura de pantalla de código aquí. Incluye secciones para: Vista (dimensiones, idioma), Tema (temas del editor), Maquillaje (colores, fuentes), Decorar (controles de ventana, sombras) y Plantillas (guardar/cargar preajustes). En escritorio, este panel siempre está visible en el lado derecho."
+      },
+      "proTips": {
+        "title": "💡 Consejos Pro",
+        "description": "Recuerda: Usa Ctrl+Enter o Esc para salir del modo de edición, Tab/Shift+Tab para sangrar/desangrar código. Tu posición y tamaño del editor se conservan mientras trabajas. La exportación admite múltiples formatos con diferentes niveles de compresión. ¡Haz clic en el nombre del archivo para editarlo directamente!"
+      },
+      "finish": {
+        "title": "🎉 ¡Ya Estás Listo!",
+        "description": "¡Ahora conoces todas las funciones de Flashot Playground! Comienza a crear hermosas capturas de pantalla de código. Si necesitas ayuda en cualquier momento, haz clic en la opción Guía en el menú Más. ¡Feliz codificación! 🚀"
+      }
+    }
   }
 }

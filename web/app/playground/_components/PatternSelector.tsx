@@ -217,6 +217,207 @@ const patterns = [
     </svg>`,
     background: "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)",
   },
+  {
+    id: "hexagons",
+    name: "Hexagons",
+    svg: `<svg width="60" height="52" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="hexagons-new-pattern" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
+          <path d="M30 0 L45 13 L45 39 L30 52 L15 39 L15 13 Z" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.12"/>
+        </pattern>
+      </defs>
+      <rect width="60" height="52" fill="url(#hexagons-new-pattern)"/>
+    </svg>`,
+    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+  },
+  {
+    id: "zigzag",
+    name: "Zigzag",
+    svg: `<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="zigzag-new-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M0 20 L10 10 L20 20 L30 10 L40 20" stroke="currentColor" stroke-width="1" fill="none" opacity="0.15"/>
+          <path d="M0 40 L10 30 L20 40 L30 30 L40 40" stroke="currentColor" stroke-width="1" fill="none" opacity="0.15"/>
+        </pattern>
+      </defs>
+      <rect width="40" height="40" fill="url(#zigzag-new-pattern)"/>
+    </svg>`,
+    background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+  },
+  {
+    id: "waves",
+    name: "Waves",
+    svg: `<svg width="100" height="20" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="waves-new-pattern" x="0" y="0" width="100" height="20" patternUnits="userSpaceOnUse">
+          <path d="M0 10 Q25 0 50 10 T100 10" stroke="currentColor" stroke-width="1" fill="none" opacity="0.12"/>
+        </pattern>
+      </defs>
+      <rect width="100" height="20" fill="url(#waves-new-pattern)"/>
+    </svg>`,
+    background: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+  },
+  {
+    id: "crosses",
+    name: "Crosses",
+    svg: `<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="crosses-new-pattern" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+          <line x1="15" y1="10" x2="15" y2="20" stroke="currentColor" stroke-width="0.5" opacity="0.15"/>
+          <line x1="10" y1="15" x2="20" y2="15" stroke="currentColor" stroke-width="0.5" opacity="0.15"/>
+        </pattern>
+      </defs>
+      <rect width="30" height="30" fill="url(#crosses-new-pattern)"/>
+    </svg>`,
+    background: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+  },
+  {
+    id: "triangles",
+    name: "Triangles",
+    svg: `<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="triangles-new-pattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+          <path d="M25 10 L40 40 L10 40 Z" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.1"/>
+        </pattern>
+      </defs>
+      <rect width="50" height="50" fill="url(#triangles-new-pattern)"/>
+    </svg>`,
+    background: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+  },
+  {
+    id: "squares-tilted",
+    name: "Tilted Squares",
+    svg: `<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="squares-tilted-new-pattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+          <rect x="15" y="15" width="30" height="30" transform="rotate(45 30 30)" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.12"/>
+        </pattern>
+      </defs>
+      <rect width="60" height="60" fill="url(#squares-tilted-new-pattern)"/>
+    </svg>`,
+    background: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
+  },
+  {
+    id: "stars",
+    name: "Stars",
+    svg: `<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="stars-new-pattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+          <path d="M25 15 L27 22 L34 22 L28 27 L30 34 L25 29 L20 34 L22 27 L16 22 L23 22 Z" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.1"/>
+        </pattern>
+      </defs>
+      <rect width="50" height="50" fill="url(#stars-new-pattern)"/>
+    </svg>`,
+    background: "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
+  },
+  {
+    id: "circuit",
+    name: "Circuit",
+    svg: `<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="circuit-new-pattern" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+          <circle cx="20" cy="20" r="2" fill="currentColor" opacity="0.2"/>
+          <circle cx="60" cy="20" r="2" fill="currentColor" opacity="0.2"/>
+          <circle cx="20" cy="60" r="2" fill="currentColor" opacity="0.2"/>
+          <circle cx="60" cy="60" r="2" fill="currentColor" opacity="0.2"/>
+          <line x1="20" y1="20" x2="60" y2="20" stroke="currentColor" stroke-width="0.5" opacity="0.15"/>
+          <line x1="20" y1="60" x2="60" y2="60" stroke="currentColor" stroke-width="0.5" opacity="0.15"/>
+          <line x1="20" y1="20" x2="20" y2="60" stroke="currentColor" stroke-width="0.5" opacity="0.15"/>
+          <line x1="60" y1="20" x2="60" y2="60" stroke="currentColor" stroke-width="0.5" opacity="0.15"/>
+          <line x1="20" y1="20" x2="60" y2="60" stroke="currentColor" stroke-width="0.3" opacity="0.1"/>
+        </pattern>
+      </defs>
+      <rect width="80" height="80" fill="url(#circuit-new-pattern)"/>
+    </svg>`,
+    background: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
+  },
+  {
+    id: "plus",
+    name: "Plus Signs",
+    svg: `<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="plus-new-pattern" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+          <line x1="15" y1="8" x2="15" y2="22" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+          <line x1="8" y1="15" x2="22" y2="15" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+        </pattern>
+      </defs>
+      <rect width="30" height="30" fill="url(#plus-new-pattern)"/>
+    </svg>`,
+    background: "linear-gradient(135deg, #ff8a80 0%, #ea80fc 100%)",
+  },
+  {
+    id: "dots-grid",
+    name: "Dots Grid",
+    svg: `<svg width="25" height="25" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="dots-grid-new-pattern" x="0" y="0" width="25" height="25" patternUnits="userSpaceOnUse">
+          <circle cx="12.5" cy="12.5" r="1.5" fill="currentColor" opacity="0.2"/>
+        </pattern>
+      </defs>
+      <rect width="25" height="25" fill="url(#dots-grid-new-pattern)"/>
+    </svg>`,
+    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+  },
+  {
+    id: "mesh",
+    name: "Mesh",
+    svg: `<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="mesh-new-pattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="60" y2="60" stroke="currentColor" stroke-width="0.3" opacity="0.1"/>
+          <line x1="0" y1="60" x2="60" y2="0" stroke="currentColor" stroke-width="0.3" opacity="0.1"/>
+          <line x1="30" y1="0" x2="30" y2="60" stroke="currentColor" stroke-width="0.3" opacity="0.1"/>
+          <line x1="0" y1="30" x2="60" y2="30" stroke="currentColor" stroke-width="0.3" opacity="0.1"/>
+        </pattern>
+      </defs>
+      <rect width="60" height="60" fill="url(#mesh-new-pattern)"/>
+    </svg>`,
+    background: "linear-gradient(135deg, #8bc34a 0%, #4caf50 100%)",
+  },
+  {
+    id: "chevron",
+    name: "Chevron",
+    svg: `<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="chevron-new-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M0 20 L20 10 L40 20" stroke="currentColor" stroke-width="1" fill="none" opacity="0.12"/>
+          <path d="M0 30 L20 20 L40 30" stroke="currentColor" stroke-width="1" fill="none" opacity="0.12"/>
+        </pattern>
+      </defs>
+      <rect width="40" height="40" fill="url(#chevron-new-pattern)"/>
+    </svg>`,
+    background: "linear-gradient(135deg, #ff5722 0%, #ff9800 100%)",
+  },
+  {
+    id: "brick",
+    name: "Brick Wall",
+    svg: `<svg width="60" height="40" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="brick-new-pattern" x="0" y="0" width="60" height="40" patternUnits="userSpaceOnUse">
+          <rect x="0" y="0" width="30" height="20" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.1"/>
+          <rect x="30" y="0" width="30" height="20" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.1"/>
+          <rect x="-15" y="20" width="30" height="20" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.1"/>
+          <rect x="15" y="20" width="30" height="20" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.1"/>
+          <rect x="45" y="20" width="30" height="20" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.1"/>
+        </pattern>
+      </defs>
+      <rect width="60" height="40" fill="url(#brick-new-pattern)"/>
+    </svg>`,
+    background: "linear-gradient(135deg, #2196f3 0%, #21cbf3 100%)",
+  },
+  {
+    id: "polka-dots",
+    name: "Polka Dots",
+    svg: `<svg width="35" height="35" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="polka-new-pattern" x="0" y="0" width="35" height="35" patternUnits="userSpaceOnUse">
+          <circle cx="17.5" cy="17.5" r="3" fill="currentColor" opacity="0.15"/>
+        </pattern>
+      </defs>
+      <rect width="35" height="35" fill="url(#polka-new-pattern)"/>
+    </svg>`,
+    background: "linear-gradient(135deg, #9c27b0 0%, #673ab7 100%)",
+  },
 ];
 
 const PatternSelector: React.FC<PatternSelectorProps> = ({

@@ -359,6 +359,7 @@
       "lines": "Lines",
       "startLine": "Start Line",
       "endLine": "End Line",
+      "color": "Color",
       "highlightType": "Type",
       "highlightTypes": {
         "add": "Add",
@@ -603,5 +604,55 @@
     "cancel": "Cancel",
     "import": "Import",
     "importing": "Importing..."
+  },
+  "tourGuide": {
+    "buttons": {
+      "next": "Next →",
+      "previous": "← Previous",
+      "done": "Done ✓",
+      "progress": "{{current}} of {{total}}"
+    },
+    "steps": {
+      "welcome": {
+        "title": "🎨 Welcome to Flashot Playground",
+        "description": "Welcome to Flashot! A powerful tool for creating beautiful, professional code screenshots with extensive customization options. Let's take a quick tour of all the features!"
+      },
+      "actionBar": {
+        "title": "🛠️ Main Action Bar",
+        "description": "Your command center with essential tools for managing your code screenshots. Let's explore each button in detail!"
+      },
+      "exportButton": {
+        "title": "📥 Export Button",
+        "description": "Download your code screenshot in various formats: PNG, JPG, WebP, AVIF for images, or Original/Plain Text for code. Click the dropdown to choose your preferred format. Each format has different quality and file size characteristics."
+      },
+      "moreMenu": {
+        "title": "⚙️ More Menu",
+        "description": "Access additional features: Guide (restart this tour), Info (quick tips and shortcuts), Share (share the page), and Report Issue (submit feedback on GitHub)."
+      },
+      "darkModeToggle": {
+        "title": "🌓 Dark Mode Toggle",
+        "description": "Switch between light and dark themes. Your preference is saved automatically for future visits."
+      },
+      "backgroundSelector": {
+        "title": "🎨 Background Canvas",
+        "description": "This is the canvas area where your code editor sits. The background can be customized from the Makeup tab in Settings. Choose solid colors, beautiful gradients, or even transparent backgrounds. The grid helps you align your code perfectly."
+      },
+      "codeEditor": {
+        "title": "📝 Interactive Code Editor",
+        "description": "This is your main workspace. Click anywhere on the code to start editing. You can drag the borders to resize, and the editor supports syntax highlighting for 26+ programming languages with real-time preview. Click on the filename to edit it!"
+      },
+      "settingsPanel": {
+        "title": "⚙️ Settings Panel",
+        "description": "Customize every aspect of your code screenshot here. Includes sections for: View (dimensions, language), Theme (editor themes), Makeup (colors, fonts), Decorate (window controls, shadows), and Templates (save/load presets). On desktop, this panel is always visible on the right side."
+      },
+      "proTips": {
+        "title": "💡 Pro Tips",
+        "description": "Remember: Use Ctrl+Enter or Esc to exit edit mode, Tab/Shift+Tab to indent/unindent code. Your editor position and size are preserved as you work. Export supports multiple formats with different compression levels. Click on filename to edit it directly!"
+      },
+      "finish": {
+        "title": "🎉 You're All Set!",
+        "description": "You now know all the features of Flashot Playground! Start creating beautiful code screenshots. If you need help anytime, click the Guide option in the More menu. Happy coding! 🚀"
+      }
+    }
   }
 }

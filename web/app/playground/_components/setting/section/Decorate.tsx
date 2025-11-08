@@ -724,7 +724,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                     : "text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300"
                 }`}
               >
-                {t("settingsPanel.makeup.label")}
+                {t("settingsPanel.decorate.label")}
               </span>
             </div>
             <div className="relative">
@@ -761,13 +761,13 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
               {/* Label Text */}
               <div>
                 <label className="text-xs text-gray-600 dark:text-gray-400 mb-1.5 block">
-                  {t("settingsPanel.makeup.labelText")}
+                  {t("settingsPanel.decorate.labelText")}
                 </label>
                 <input
                   type="text"
                   value={settings.labelText ?? "Created by @username"}
                   onChange={(e) => onUpdateSetting("labelText", e.target.value)}
-                  placeholder={t("settingsPanel.makeup.labelPlaceholder")}
+                  placeholder={t("settingsPanel.decorate.labelPlaceholder")}
                   className="w-full px-3 py-1.5 text-xs rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-600 transition-all"
                 />
               </div>
@@ -775,7 +775,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
               {/* Alignment */}
               <div className="flex justify-between items-center">
                 <label className="text-xs text-gray-600 dark:text-gray-400">
-                  {t("settingsPanel.makeup.labelAlignment")}
+                  {t("settingsPanel.decorate.labelAlignment")}
                 </label>
                 <div className="flex items-center space-x-1">
                   {[
@@ -815,7 +815,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
               {/* Color */}
               <div className="flex justify-between items-center">
                 <label className="text-xs text-gray-600 dark:text-gray-400">
-                  {t("settingsPanel.makeup.labelColor")}
+                  {t("settingsPanel.decorate.labelColor")}
                 </label>
                 <input
                   type="color"
@@ -831,7 +831,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
               <div className="flex justify-between items-center space-x-3">
                 <label className="text-xs flex items-center justify-between">
                   <span className="text-gray-600 dark:text-gray-400 w-24">
-                    {t("settingsPanel.makeup.labelFontSize")}
+                    {t("settingsPanel.decorate.labelFontSize")}
                   </span>
                   <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent font-bold">
                     {settings.labelFontSize ?? 12}px
@@ -859,7 +859,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
               <div className="flex justify-between items-center space-x-3">
                 <label className="text-xs flex items-center justify-between">
                   <span className="text-gray-600 dark:text-gray-400 w-24">
-                    {t("settingsPanel.makeup.labelOpacity")}
+                    {t("settingsPanel.decorate.labelOpacity")}
                   </span>
                   <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent font-bold">
                     {Math.round((settings.labelOpacity ?? 0.6) * 100)}%
