@@ -472,10 +472,136 @@
           "description": "北欧风格的清凉主题"
         },
         "dark-hacker": {
-          "name": "黑客暗黑",
-          "description": "黑客帝国风格的终端外观"
+          "name": "黑客黑暗",
+          "description": "Matrix风格的终端外观"
         }
       }
     }
+  },
+  "searchModal": {
+    "placeholder": "搜索设置和功能...",
+    "noResults": "未找到搜索结果",
+    "tryDifferent": "尝试不同的关键词或检查拼写",
+    "navigate": "导航",
+    "select": "选择",
+    "close": "关闭",
+    "result": "个结果",
+    "results": "个结果",
+    "categories": {
+      "view": "视图",
+      "theme": "主题",
+      "decorate": "装饰",
+      "general": "通用"
+    },
+    "items": {
+      "fontSize": {
+        "title": "字体大小",
+        "description": "调整代码文本的大小"
+      },
+      "padding": {
+        "title": "内边距",
+        "description": "控制代码块周围的间距"
+      },
+      "borderRadius": {
+        "title": "边框圆角",
+        "description": "调整角的圆度"
+      },
+      "sizing": {
+        "title": "图像尺寸",
+        "description": "设置自定义宽度和高度"
+      },
+      "wordWrap": {
+        "title": "自动换行",
+        "description": "为长行启用文本换行"
+      },
+      "projectName": {
+        "title": "项目名称",
+        "description": "在标题中显示自定义项目名称"
+      },
+      "lineNumbers": {
+        "title": "行号",
+        "description": "显示或隐藏行号"
+      },
+      "windowHeader": {
+        "title": "窗口标题",
+        "description": "切换窗口控制按钮"
+      },
+      "filename": {
+        "title": "文件名",
+        "description": "显示或自定义文件名"
+      },
+      "language": {
+        "title": "编程语言",
+        "description": "选择语法高亮语言"
+      },
+      "fontFamily": {
+        "title": "字体家族",
+        "description": "选择代码字体样式"
+      },
+      "colorTheme": {
+        "title": "颜色主题",
+        "description": "选择语法颜色方案"
+      },
+      "background": {
+        "title": "背景",
+        "description": "选择背景颜色或渐变"
+      },
+      "pattern": {
+        "title": "图案背景",
+        "description": "应用品牌灵感的图案"
+      },
+      "gradientAngle": {
+        "title": "渐变角度",
+        "description": "调整渐变方向"
+      },
+      "border": {
+        "title": "边框自定义",
+        "description": "添加和设置边框样式"
+      },
+      "watermark": {
+        "title": "水印",
+        "description": "添加文本或图像水印"
+      },
+      "label": {
+        "title": "标签",
+        "description": "向图像添加自定义标签"
+      },
+      "highlights": {
+        "title": "行高亮",
+        "description": "高亮特定代码行"
+      },
+      "export": {
+        "title": "导出图像",
+        "description": "下载为PNG、JPG或SVG"
+      },
+      "copy": {
+        "title": "复制到剪贴板",
+        "description": "快速复制图像或代码"
+      },
+      "import": {
+        "title": "导入代码",
+        "description": "从URL或GitHub加载代码"
+      },
+      "shortcuts": {
+        "title": "键盘快捷键",
+        "description": "查看所有可用的快捷键"
+      }
+    }
+  },
+  "importDialog": {
+    "title": "导入代码",
+    "subtitle": "粘贴原始代码URL",
+    "placeholder": "https://raw.githubusercontent.com/...",
+    "urlRequired": "请输入URL",
+    "fetchFailed": "获取失败",
+    "emptyContent": "URL返回空内容",
+    "importError": "从URL获取代码失败",
+    "successMessage": "代码导入成功！",
+    "exampleLabel": "示例：",
+    "exampleGithub": "• GitHub原始文件",
+    "exampleGist": "• GitHub Gist原始文件",
+    "cancel": "取消",
+    "import": "导入",
+    "importing": "导入中..."
   }
 }

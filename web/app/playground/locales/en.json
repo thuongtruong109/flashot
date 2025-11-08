@@ -477,5 +477,131 @@
         }
       }
     }
+  },
+  "searchModal": {
+    "placeholder": "Search settings and features...",
+    "noResults": "No results found for",
+    "tryDifferent": "Try different keywords or check spelling",
+    "navigate": "Navigate",
+    "select": "Select",
+    "close": "Close",
+    "result": "result",
+    "results": "results",
+    "categories": {
+      "view": "View",
+      "theme": "Theme",
+      "decorate": "Decorate",
+      "general": "General"
+    },
+    "items": {
+      "fontSize": {
+        "title": "Font Size",
+        "description": "Adjust the size of code text"
+      },
+      "padding": {
+        "title": "Padding",
+        "description": "Control spacing around code block"
+      },
+      "borderRadius": {
+        "title": "Border Radius",
+        "description": "Adjust corner roundness"
+      },
+      "sizing": {
+        "title": "Image Sizing",
+        "description": "Set custom width and height"
+      },
+      "wordWrap": {
+        "title": "Word Wrap",
+        "description": "Enable text wrapping for long lines"
+      },
+      "projectName": {
+        "title": "Project Name",
+        "description": "Display custom project name in header"
+      },
+      "lineNumbers": {
+        "title": "Line Numbers",
+        "description": "Show or hide line numbers"
+      },
+      "windowHeader": {
+        "title": "Window Header",
+        "description": "Toggle window control buttons"
+      },
+      "filename": {
+        "title": "File Name",
+        "description": "Show or customize file name"
+      },
+      "language": {
+        "title": "Programming Language",
+        "description": "Select syntax highlighting language"
+      },
+      "fontFamily": {
+        "title": "Font Family",
+        "description": "Choose code font style"
+      },
+      "colorTheme": {
+        "title": "Color Theme",
+        "description": "Select syntax color scheme"
+      },
+      "background": {
+        "title": "Background",
+        "description": "Choose background color or gradient"
+      },
+      "pattern": {
+        "title": "Pattern Background",
+        "description": "Apply brand-inspired patterns"
+      },
+      "gradientAngle": {
+        "title": "Gradient Angle",
+        "description": "Adjust gradient direction"
+      },
+      "border": {
+        "title": "Border Customization",
+        "description": "Add and style borders"
+      },
+      "watermark": {
+        "title": "Watermark",
+        "description": "Add text or image watermark"
+      },
+      "label": {
+        "title": "Label",
+        "description": "Add custom label to image"
+      },
+      "highlights": {
+        "title": "Line Highlights",
+        "description": "Highlight specific code lines"
+      },
+      "export": {
+        "title": "Export Image",
+        "description": "Download as PNG, JPG, or SVG"
+      },
+      "copy": {
+        "title": "Copy to Clipboard",
+        "description": "Quick copy image or code"
+      },
+      "import": {
+        "title": "Import Code",
+        "description": "Load code from URL or GitHub"
+      },
+      "shortcuts": {
+        "title": "Keyboard Shortcuts",
+        "description": "View all available shortcuts"
+      }
+    }
+  },
+  "importDialog": {
+    "title": "Import Code",
+    "subtitle": "Paste raw code URL",
+    "placeholder": "https://raw.githubusercontent.com/...",
+    "urlRequired": "Please enter a URL",
+    "fetchFailed": "Failed to fetch",
+    "emptyContent": "The URL returned empty content",
+    "importError": "Failed to fetch code from URL",
+    "successMessage": "Code imported successfully!",
+    "exampleLabel": "Example:",
+    "exampleGithub": "• GitHub raw file",
+    "exampleGist": "• GitHub Gist raw",
+    "cancel": "Cancel",
+    "import": "Import",
+    "importing": "Importing..."
   }
 }

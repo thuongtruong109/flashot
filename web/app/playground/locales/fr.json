@@ -473,9 +473,135 @@
         },
         "dark-hacker": {
           "name": "Hacker Sombre",
-          "description": "Look de terminal style Matrix"
+          "description": "Look terminal style Matrix"
         }
       }
     }
+  },
+  "searchModal": {
+    "placeholder": "Rechercher les paramètres et fonctionnalités...",
+    "noResults": "Aucun résultat trouvé pour",
+    "tryDifferent": "Essayez différents mots-clés ou vérifiez l'orthographe",
+    "navigate": "Naviguer",
+    "select": "Sélectionner",
+    "close": "Fermer",
+    "result": "résultat",
+    "results": "résultats",
+    "categories": {
+      "view": "Vue",
+      "theme": "Thème",
+      "decorate": "Décorer",
+      "general": "Général"
+    },
+    "items": {
+      "fontSize": {
+        "title": "Taille de Police",
+        "description": "Ajuster la taille du texte du code"
+      },
+      "padding": {
+        "title": "Marge Intérieure",
+        "description": "Contrôler l'espacement autour du bloc de code"
+      },
+      "borderRadius": {
+        "title": "Rayon de Bordure",
+        "description": "Ajuster l'arrondi des coins"
+      },
+      "sizing": {
+        "title": "Dimensionnement d'Image",
+        "description": "Définir largeur et hauteur personnalisées"
+      },
+      "wordWrap": {
+        "title": "Retour à la Ligne",
+        "description": "Activer le retour à la ligne pour les longues lignes"
+      },
+      "projectName": {
+        "title": "Nom du Projet",
+        "description": "Afficher un nom de projet personnalisé dans l'en-tête"
+      },
+      "lineNumbers": {
+        "title": "Numéros de Ligne",
+        "description": "Afficher ou masquer les numéros de ligne"
+      },
+      "windowHeader": {
+        "title": "En-tête de Fenêtre",
+        "description": "Basculer les boutons de contrôle de fenêtre"
+      },
+      "filename": {
+        "title": "Nom de Fichier",
+        "description": "Afficher ou personnaliser le nom de fichier"
+      },
+      "language": {
+        "title": "Langage de Programmation",
+        "description": "Sélectionner le langage de coloration syntaxique"
+      },
+      "fontFamily": {
+        "title": "Famille de Police",
+        "description": "Choisir le style de police du code"
+      },
+      "colorTheme": {
+        "title": "Thème de Couleur",
+        "description": "Sélectionner le schéma de couleurs de syntaxe"
+      },
+      "background": {
+        "title": "Arrière-plan",
+        "description": "Choisir la couleur de fond ou le dégradé"
+      },
+      "pattern": {
+        "title": "Motif d'Arrière-plan",
+        "description": "Appliquer des motifs inspirés de marques"
+      },
+      "gradientAngle": {
+        "title": "Angle du Dégradé",
+        "description": "Ajuster la direction du dégradé"
+      },
+      "border": {
+        "title": "Personnalisation de Bordure",
+        "description": "Ajouter et styliser les bordures"
+      },
+      "watermark": {
+        "title": "Filigrane",
+        "description": "Ajouter un filigrane texte ou image"
+      },
+      "label": {
+        "title": "Étiquette",
+        "description": "Ajouter une étiquette personnalisée à l'image"
+      },
+      "highlights": {
+        "title": "Surlignage de Lignes",
+        "description": "Surligner des lignes de code spécifiques"
+      },
+      "export": {
+        "title": "Exporter l'Image",
+        "description": "Télécharger en PNG, JPG ou SVG"
+      },
+      "copy": {
+        "title": "Copier dans le Presse-papiers",
+        "description": "Copie rapide d'image ou de code"
+      },
+      "import": {
+        "title": "Importer du Code",
+        "description": "Charger le code depuis une URL ou GitHub"
+      },
+      "shortcuts": {
+        "title": "Raccourcis Clavier",
+        "description": "Voir tous les raccourcis disponibles"
+      }
+    }
+  },
+  "importDialog": {
+    "title": "Importer du Code",
+    "subtitle": "Coller l'URL du code brut",
+    "placeholder": "https://raw.githubusercontent.com/...",
+    "urlRequired": "Veuillez entrer une URL",
+    "fetchFailed": "Échec de la récupération",
+    "emptyContent": "L'URL a renvoyé un contenu vide",
+    "importError": "Échec de la récupération du code depuis l'URL",
+    "successMessage": "Code importé avec succès !",
+    "exampleLabel": "Exemple :",
+    "exampleGithub": "• Fichier brut GitHub",
+    "exampleGist": "• GitHub Gist brut",
+    "cancel": "Annuler",
+    "import": "Importer",
+    "importing": "Import en cours..."
   }
 }

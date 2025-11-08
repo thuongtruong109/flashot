@@ -473,9 +473,135 @@
         },
         "dark-hacker": {
           "name": "Hacker Oscuro",
-          "description": "Aspecto de terminal estilo Matrix"
+          "description": "Aspecto terminal estilo Matrix"
         }
       }
     }
+  },
+  "searchModal": {
+    "placeholder": "Buscar configuraciones y funciones...",
+    "noResults": "No se encontraron resultados para",
+    "tryDifferent": "Intenta con diferentes palabras clave o verifica la ortografía",
+    "navigate": "Navegar",
+    "select": "Seleccionar",
+    "close": "Cerrar",
+    "result": "resultado",
+    "results": "resultados",
+    "categories": {
+      "view": "Vista",
+      "theme": "Tema",
+      "decorate": "Decorar",
+      "general": "General"
+    },
+    "items": {
+      "fontSize": {
+        "title": "Tamaño de Fuente",
+        "description": "Ajustar el tamaño del texto del código"
+      },
+      "padding": {
+        "title": "Relleno",
+        "description": "Controlar el espaciado alrededor del bloque de código"
+      },
+      "borderRadius": {
+        "title": "Radio del Borde",
+        "description": "Ajustar la redondez de las esquinas"
+      },
+      "sizing": {
+        "title": "Tamaño de Imagen",
+        "description": "Establecer ancho y alto personalizados"
+      },
+      "wordWrap": {
+        "title": "Ajuste de Línea",
+        "description": "Habilitar ajuste de texto para líneas largas"
+      },
+      "projectName": {
+        "title": "Nombre del Proyecto",
+        "description": "Mostrar nombre personalizado del proyecto en el encabezado"
+      },
+      "lineNumbers": {
+        "title": "Números de Línea",
+        "description": "Mostrar u ocultar números de línea"
+      },
+      "windowHeader": {
+        "title": "Encabezado de Ventana",
+        "description": "Alternar botones de control de ventana"
+      },
+      "filename": {
+        "title": "Nombre de Archivo",
+        "description": "Mostrar o personalizar nombre de archivo"
+      },
+      "language": {
+        "title": "Lenguaje de Programación",
+        "description": "Seleccionar lenguaje de resaltado de sintaxis"
+      },
+      "fontFamily": {
+        "title": "Familia de Fuente",
+        "description": "Elegir estilo de fuente del código"
+      },
+      "colorTheme": {
+        "title": "Tema de Color",
+        "description": "Seleccionar esquema de color de sintaxis"
+      },
+      "background": {
+        "title": "Fondo",
+        "description": "Elegir color de fondo o degradado"
+      },
+      "pattern": {
+        "title": "Patrón de Fondo",
+        "description": "Aplicar patrones inspirados en marcas"
+      },
+      "gradientAngle": {
+        "title": "Ángulo del Degradado",
+        "description": "Ajustar dirección del degradado"
+      },
+      "border": {
+        "title": "Personalización de Borde",
+        "description": "Agregar y estilizar bordes"
+      },
+      "watermark": {
+        "title": "Marca de Agua",
+        "description": "Agregar marca de agua de texto o imagen"
+      },
+      "label": {
+        "title": "Etiqueta",
+        "description": "Agregar etiqueta personalizada a la imagen"
+      },
+      "highlights": {
+        "title": "Resaltado de Líneas",
+        "description": "Resaltar líneas de código específicas"
+      },
+      "export": {
+        "title": "Exportar Imagen",
+        "description": "Descargar como PNG, JPG o SVG"
+      },
+      "copy": {
+        "title": "Copiar al Portapapeles",
+        "description": "Copia rápida de imagen o código"
+      },
+      "import": {
+        "title": "Importar Código",
+        "description": "Cargar código desde URL o GitHub"
+      },
+      "shortcuts": {
+        "title": "Atajos de Teclado",
+        "description": "Ver todos los atajos disponibles"
+      }
+    }
+  },
+  "importDialog": {
+    "title": "Importar Código",
+    "subtitle": "Pegar URL de código sin procesar",
+    "placeholder": "https://raw.githubusercontent.com/...",
+    "urlRequired": "Por favor ingrese una URL",
+    "fetchFailed": "Error al obtener",
+    "emptyContent": "La URL devolvió contenido vacío",
+    "importError": "Error al obtener código desde URL",
+    "successMessage": "¡Código importado con éxito!",
+    "exampleLabel": "Ejemplo:",
+    "exampleGithub": "• Archivo raw de GitHub",
+    "exampleGist": "• GitHub Gist raw",
+    "cancel": "Cancelar",
+    "import": "Importar",
+    "importing": "Importando..."
   }
 }

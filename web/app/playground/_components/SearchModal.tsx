@@ -17,6 +17,7 @@ import {
   Command,
 } from "lucide-react";
 import { cn } from "@/utils";
+import { useLocalization } from "../LocalizationContext";
 
 interface SearchItem {
   id: string;
@@ -39,6 +40,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
   onClose,
   onNavigate,
 }) => {
+  const { t } = useLocalization();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -50,72 +52,72 @@ const SearchModal: React.FC<SearchModalProps> = ({
       // View Settings
       {
         id: "font-size",
-        title: "Font Size",
-        description: "Adjust the size of code text",
+        title: t("searchModal.items.fontSize.title"),
+        description: t("searchModal.items.fontSize.description"),
         category: "view",
         keywords: ["font", "size", "text", "scale", "zoom"],
         icon: <FileCode className="size-4" />,
       },
       {
         id: "padding",
-        title: "Padding",
-        description: "Control spacing around code block",
+        title: t("searchModal.items.padding.title"),
+        description: t("searchModal.items.padding.description"),
         category: "view",
         keywords: ["padding", "spacing", "margin", "gap"],
         icon: <Settings className="size-4" />,
       },
       {
         id: "border-radius",
-        title: "Border Radius",
-        description: "Adjust corner roundness",
+        title: t("searchModal.items.borderRadius.title"),
+        description: t("searchModal.items.borderRadius.description"),
         category: "view",
         keywords: ["border", "radius", "corner", "round", "curve"],
         icon: <Settings className="size-4" />,
       },
       {
         id: "sizing",
-        title: "Image Sizing",
-        description: "Set custom width and height",
+        title: t("searchModal.items.sizing.title"),
+        description: t("searchModal.items.sizing.description"),
         category: "view",
         keywords: ["size", "width", "height", "dimension", "resolution"],
         icon: <Settings className="size-4" />,
       },
       {
         id: "word-wrap",
-        title: "Word Wrap",
-        description: "Enable text wrapping for long lines",
+        title: t("searchModal.items.wordWrap.title"),
+        description: t("searchModal.items.wordWrap.description"),
         category: "view",
         keywords: ["wrap", "text", "line", "break", "overflow"],
         icon: <FileCode className="size-4" />,
       },
       {
         id: "project-name",
-        title: "Project Name",
-        description: "Display custom project name in header",
+        title: t("searchModal.items.projectName.title"),
+        description: t("searchModal.items.projectName.description"),
         category: "general",
         keywords: ["project", "name", "header", "custom", "title", "window"],
         icon: <FileCode className="size-4" />,
       },
       {
         id: "line-numbers",
-        title: "Line Numbers",
-        description: "Show or hide line numbers",
+        title: t("searchModal.items.lineNumbers.title"),
+        description: t("searchModal.items.lineNumbers.description"),
         category: "general",
         keywords: ["line", "number", "count", "gutter"],
         icon: <FileCode className="size-4" />,
       },
       {
         id: "window-header",
-        title: "Window Header",
-        description: "Toggle window control buttons",
+        title: t("searchModal.items.windowHeader.title"),
+        description: t("searchModal.items.windowHeader.description"),
         category: "general",
         keywords: ["window", "header", "controls", "traffic", "lights", "mac"],
         icon: <Settings className="size-4" />,
       },
       {
         id: "filename",
-        title: "File Name",
-        description: "Show or customize file name",
+        title: t("searchModal.items.filename.title"),
+        description: t("searchModal.items.filename.description"),
         category: "general",
         keywords: ["file", "name", "title", "label"],
         icon: <FileCode className="size-4" />,
@@ -124,8 +126,8 @@ const SearchModal: React.FC<SearchModalProps> = ({
       // Theme Settings
       {
         id: "language",
-        title: "Programming Language",
-        description: "Select syntax highlighting language",
+        title: t("searchModal.items.language.title"),
+        description: t("searchModal.items.language.description"),
         category: "theme",
         keywords: [
           "language",
@@ -139,8 +141,8 @@ const SearchModal: React.FC<SearchModalProps> = ({
       },
       {
         id: "font-family",
-        title: "Font Family",
-        description: "Choose code font style",
+        title: t("searchModal.items.fontFamily.title"),
+        description: t("searchModal.items.fontFamily.description"),
         category: "theme",
         keywords: [
           "font",
@@ -154,8 +156,8 @@ const SearchModal: React.FC<SearchModalProps> = ({
       },
       {
         id: "color-theme",
-        title: "Color Theme",
-        description: "Select syntax color scheme",
+        title: t("searchModal.items.colorTheme.title"),
+        description: t("searchModal.items.colorTheme.description"),
         category: "theme",
         keywords: [
           "theme",
@@ -170,24 +172,24 @@ const SearchModal: React.FC<SearchModalProps> = ({
       },
       {
         id: "background",
-        title: "Background",
-        description: "Choose background color or gradient",
+        title: t("searchModal.items.background.title"),
+        description: t("searchModal.items.background.description"),
         category: "theme",
         keywords: ["background", "gradient", "color", "solid", "image"],
         icon: <Palette className="size-4" />,
       },
       {
         id: "pattern",
-        title: "Pattern Background",
-        description: "Apply brand-inspired patterns",
+        title: t("searchModal.items.pattern.title"),
+        description: t("searchModal.items.pattern.description"),
         category: "theme",
         keywords: ["pattern", "vercel", "supabase", "tailwind", "grid", "dots"],
         icon: <Palette className="size-4" />,
       },
       {
         id: "gradient-angle",
-        title: "Gradient Angle",
-        description: "Adjust gradient direction",
+        title: t("searchModal.items.gradientAngle.title"),
+        description: t("searchModal.items.gradientAngle.description"),
         category: "theme",
         keywords: ["gradient", "angle", "direction", "rotation"],
         icon: <Palette className="size-4" />,
@@ -196,32 +198,32 @@ const SearchModal: React.FC<SearchModalProps> = ({
       // Decorate Settings
       {
         id: "border",
-        title: "Border Customization",
-        description: "Add and style borders",
+        title: t("searchModal.items.border.title"),
+        description: t("searchModal.items.border.description"),
         category: "decorate",
         keywords: ["border", "outline", "frame", "edge"],
         icon: <Sparkles className="size-4" />,
       },
       {
         id: "watermark",
-        title: "Watermark",
-        description: "Add text or image watermark",
+        title: t("searchModal.items.watermark.title"),
+        description: t("searchModal.items.watermark.description"),
         category: "decorate",
         keywords: ["watermark", "logo", "brand", "signature"],
         icon: <Sparkles className="size-4" />,
       },
       {
         id: "label",
-        title: "Label",
-        description: "Add custom label to image",
+        title: t("searchModal.items.label.title"),
+        description: t("searchModal.items.label.description"),
         category: "decorate",
         keywords: ["label", "caption", "text", "footer"],
         icon: <Sparkles className="size-4" />,
       },
       {
         id: "highlights",
-        title: "Line Highlights",
-        description: "Highlight specific code lines",
+        title: t("searchModal.items.highlights.title"),
+        description: t("searchModal.items.highlights.description"),
         category: "decorate",
         keywords: ["highlight", "emphasis", "focus", "attention"],
         icon: <Sparkles className="size-4" />,
@@ -230,38 +232,38 @@ const SearchModal: React.FC<SearchModalProps> = ({
       // General Features
       {
         id: "export",
-        title: "Export Image",
-        description: "Download as PNG, JPG, or SVG",
+        title: t("searchModal.items.export.title"),
+        description: t("searchModal.items.export.description"),
         category: "general",
         keywords: ["export", "download", "save", "png", "jpg", "svg"],
         icon: <Settings className="size-4" />,
       },
       {
         id: "copy",
-        title: "Copy to Clipboard",
-        description: "Quick copy image or code",
+        title: t("searchModal.items.copy.title"),
+        description: t("searchModal.items.copy.description"),
         category: "general",
         keywords: ["copy", "clipboard", "paste"],
         icon: <Settings className="size-4" />,
       },
       {
         id: "import",
-        title: "Import Code",
-        description: "Load code from URL or GitHub",
+        title: t("searchModal.items.import.title"),
+        description: t("searchModal.items.import.description"),
         category: "general",
         keywords: ["import", "load", "fetch", "github", "url"],
         icon: <Settings className="size-4" />,
       },
       {
         id: "shortcuts",
-        title: "Keyboard Shortcuts",
-        description: "View all available shortcuts",
+        title: t("searchModal.items.shortcuts.title"),
+        description: t("searchModal.items.shortcuts.description"),
         category: "general",
         keywords: ["keyboard", "shortcuts", "hotkeys", "keys"],
         icon: <Command className="size-4" />,
       },
     ],
-    []
+    [t]
   );
 
   // Filter items based on search query
@@ -391,13 +393,13 @@ const SearchModal: React.FC<SearchModalProps> = ({
   const getCategoryLabel = (category: string) => {
     switch (category) {
       case "view":
-        return "View";
+        return t("searchModal.categories.view");
       case "theme":
-        return "Theme";
+        return t("searchModal.categories.theme");
       case "decorate":
-        return "Decorate";
+        return t("searchModal.categories.decorate");
       case "general":
-        return "General";
+        return t("searchModal.categories.general");
       default:
         return category;
     }
@@ -422,7 +424,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search settings and features..."
+            placeholder={t("searchModal.placeholder")}
             className="w-full pl-12 pr-12 py-4 text-base bg-transparent border-none outline-none text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
           />
           {searchQuery && (
@@ -455,10 +457,10 @@ const SearchModal: React.FC<SearchModalProps> = ({
             <div className="py-12 text-center">
               <Search className="size-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                No results found for &ldquo;{searchQuery}&rdquo;
+                {t("searchModal.noResults")} &ldquo;{searchQuery}&rdquo;
               </p>
               <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-                Try different keywords or check spelling
+                {t("searchModal.tryDifferent")}
               </p>
             </div>
           ) : (
@@ -537,24 +539,26 @@ const SearchModal: React.FC<SearchModalProps> = ({
                 <kbd className="px-1.5 py-0.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded text-[10px] font-mono">
                   ↑↓
                 </kbd>
-                Navigate
+                {t("searchModal.navigate")}
               </span>
               <span className="flex items-center gap-1">
                 <kbd className="px-1.5 py-0.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded text-[10px] font-mono">
                   Enter
                 </kbd>
-                Select
+                {t("searchModal.select")}
               </span>
               <span className="flex items-center gap-1">
                 <kbd className="px-1.5 py-0.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded text-[10px] font-mono">
                   Esc
                 </kbd>
-                Close
+                {t("searchModal.close")}
               </span>
             </div>
             <span className="text-[10px]">
-              {filteredItems.length} result
-              {filteredItems.length !== 1 ? "s" : ""}
+              {filteredItems.length}{" "}
+              {filteredItems.length !== 1
+                ? t("searchModal.results")
+                : t("searchModal.result")}
             </span>
           </div>
         </div>

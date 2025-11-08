@@ -9,6 +9,7 @@ import {
   CheckCircle2,
   AlertCircle,
 } from "lucide-react";
+import { useLocalization } from "../../LocalizationContext";
 
 interface ImportDialogProps {
   isOpen: boolean;
@@ -21,6 +22,7 @@ const ImportDialog: React.FC<ImportDialogProps> = ({
   onClose,
   onImport,
 }) => {
+  const { t } = useLocalization();
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -113,7 +115,7 @@ const ImportDialog: React.FC<ImportDialogProps> = ({
 
   const handleImport = async () => {
     if (!url.trim()) {
-      setError("Please enter a URL");
+      setError(t("importDialog.urlRequired"));
       return;
     }
 
@@ -126,14 +128,16 @@ const ImportDialog: React.FC<ImportDialogProps> = ({
 
       if (!response.ok) {
         throw new Error(
-          `Failed to fetch: ${response.status} ${response.statusText}`
+          `${t("importDialog.fetchFailed")}: ${response.status} ${
+            response.statusText
+          }`
         );
       }
 
       const content = await response.text();
 
       if (!content || content.trim().length === 0) {
-        throw new Error("The URL returned empty content");
+        throw new Error(t("importDialog.emptyContent"));
       }
 
       // Detect language from URL first, then from content
@@ -156,7 +160,7 @@ const ImportDialog: React.FC<ImportDialogProps> = ({
     } catch (err) {
       console.error("Import error:", err);
       setError(
-        err instanceof Error ? err.message : "Failed to fetch code from URL"
+        err instanceof Error ? err.message : t("importDialog.importError")
       );
     } finally {
       setIsLoading(false);
@@ -188,10 +192,10 @@ const ImportDialog: React.FC<ImportDialogProps> = ({
             </div>
             <div>
               <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                Import Code
+                {t("importDialog.title")}
               </h2>
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                Paste raw code URL
+                {t("importDialog.subtitle")}
               </p>
             </div>
           </div>
@@ -215,7 +219,7 @@ const ImportDialog: React.FC<ImportDialogProps> = ({
               setError(null);
             }}
             onKeyDown={handleKeyDown}
-            placeholder="https://raw.githubusercontent.com/..."
+            placeholder={t("importDialog.placeholder")}
             disabled={isLoading}
             className="w-full px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm"
           />
@@ -233,7 +237,7 @@ const ImportDialog: React.FC<ImportDialogProps> = ({
             <div className="flex items-center space-x-2 p-3 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
               <CheckCircle2 className="size-4 text-green-600 dark:text-green-400 flex-shrink-0" />
               <p className="text-xs text-green-700 dark:text-green-300 font-medium">
-                Code imported successfully!
+                {t("importDialog.successMessage")}
               </p>
             </div>
           )}
@@ -241,7 +245,7 @@ const ImportDialog: React.FC<ImportDialogProps> = ({
           {/* Examples */}
           <div className="space-x-3 flex items-center justify-between">
             <p className="text-xs font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap flex-1">
-              Example:
+              {t("importDialog.exampleLabel")}
             </p>
             <button
               onClick={() =>
@@ -252,7 +256,7 @@ const ImportDialog: React.FC<ImportDialogProps> = ({
               disabled={isLoading}
               className="text-xs text-left text-blue-600 dark:text-blue-400 hover:underline block truncate w-full disabled:opacity-50"
             >
-              • GitHub raw file
+              {t("importDialog.exampleGithub")}
             </button>
             <button
               onClick={() =>
@@ -263,7 +267,7 @@ const ImportDialog: React.FC<ImportDialogProps> = ({
               disabled={isLoading}
               className="text-xs text-left text-blue-600 dark:text-blue-400 hover:underline block truncate w-full disabled:opacity-50"
             >
-              • GitHub Gist raw
+              {t("importDialog.exampleGist")}
             </button>
           </div>
         </div>
@@ -275,7 +279,7 @@ const ImportDialog: React.FC<ImportDialogProps> = ({
             disabled={isLoading}
             className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Cancel
+            {t("importDialog.cancel")}
           </button>
           <button
             onClick={handleImport}
@@ -285,12 +289,12 @@ const ImportDialog: React.FC<ImportDialogProps> = ({
             {isLoading ? (
               <>
                 <Loader2 className="size-4 animate-spin" />
-                <span>Importing...</span>
+                <span>{t("importDialog.importing")}</span>
               </>
             ) : (
               <>
                 <Download className="size-4" />
-                <span>Import</span>
+                <span>{t("importDialog.import")}</span>
               </>
             )}
           </button>

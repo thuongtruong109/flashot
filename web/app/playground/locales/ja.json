@@ -472,10 +472,136 @@
           "description": "北欧風の涼しいテーマ"
         },
         "dark-hacker": {
-          "name": "ダーク ハッカー",
-          "description": "マトリックススタイルのターミナルルック"
+          "name": "ダークハッカー",
+          "description": "Matrix スタイルのターミナルルック"
         }
       }
     }
+  },
+  "searchModal": {
+    "placeholder": "設定と機能を検索...",
+    "noResults": "検索結果が見つかりません",
+    "tryDifferent": "別のキーワードを試すか、スペルを確認してください",
+    "navigate": "ナビゲート",
+    "select": "選択",
+    "close": "閉じる",
+    "result": "件",
+    "results": "件",
+    "categories": {
+      "view": "表示",
+      "theme": "テーマ",
+      "decorate": "装飾",
+      "general": "一般"
+    },
+    "items": {
+      "fontSize": {
+        "title": "フォントサイズ",
+        "description": "コードテキストのサイズを調整"
+      },
+      "padding": {
+        "title": "パディング",
+        "description": "コードブロック周りの間隔を制御"
+      },
+      "borderRadius": {
+        "title": "角の丸み",
+        "description": "角の丸みを調整"
+      },
+      "sizing": {
+        "title": "画像サイズ",
+        "description": "カスタム幅と高さを設定"
+      },
+      "wordWrap": {
+        "title": "ワードラップ",
+        "description": "長い行のテキスト折り返しを有効化"
+      },
+      "projectName": {
+        "title": "プロジェクト名",
+        "description": "ヘッダーにカスタムプロジェクト名を表示"
+      },
+      "lineNumbers": {
+        "title": "行番号",
+        "description": "行番号の表示/非表示"
+      },
+      "windowHeader": {
+        "title": "ウィンドウヘッダー",
+        "description": "ウィンドウコントロールボタンの切り替え"
+      },
+      "filename": {
+        "title": "ファイル名",
+        "description": "ファイル名の表示またはカスタマイズ"
+      },
+      "language": {
+        "title": "プログラミング言語",
+        "description": "シンタックスハイライト言語を選択"
+      },
+      "fontFamily": {
+        "title": "フォントファミリー",
+        "description": "コードフォントスタイルを選択"
+      },
+      "colorTheme": {
+        "title": "カラーテーマ",
+        "description": "シンタックスカラースキームを選択"
+      },
+      "background": {
+        "title": "背景",
+        "description": "背景色またはグラデーションを選択"
+      },
+      "pattern": {
+        "title": "パターン背景",
+        "description": "ブランドにインスパイアされたパターンを適用"
+      },
+      "gradientAngle": {
+        "title": "グラデーション角度",
+        "description": "グラデーションの方向を調整"
+      },
+      "border": {
+        "title": "ボーダーカスタマイズ",
+        "description": "ボーダーを追加してスタイル設定"
+      },
+      "watermark": {
+        "title": "透かし",
+        "description": "テキストまたは画像の透かしを追加"
+      },
+      "label": {
+        "title": "ラベル",
+        "description": "画像にカスタムラベルを追加"
+      },
+      "highlights": {
+        "title": "行のハイライト",
+        "description": "特定のコード行をハイライト"
+      },
+      "export": {
+        "title": "画像のエクスポート",
+        "description": "PNG、JPG、またはSVGとしてダウンロード"
+      },
+      "copy": {
+        "title": "クリップボードにコピー",
+        "description": "画像またはコードを素早くコピー"
+      },
+      "import": {
+        "title": "コードのインポート",
+        "description": "URLまたはGitHubからコードを読み込む"
+      },
+      "shortcuts": {
+        "title": "キーボードショートカット",
+        "description": "利用可能なすべてのショートカットを表示"
+      }
+    }
+  },
+  "importDialog": {
+    "title": "コードのインポート",
+    "subtitle": "生のコードURLを貼り付け",
+    "placeholder": "https://raw.githubusercontent.com/...",
+    "urlRequired": "URLを入力してください",
+    "fetchFailed": "取得に失敗しました",
+    "emptyContent": "URLが空のコンテンツを返しました",
+    "importError": "URLからコードの取得に失敗しました",
+    "successMessage": "コードが正常にインポートされました！",
+    "exampleLabel": "例：",
+    "exampleGithub": "• GitHub rawファイル",
+    "exampleGist": "• GitHub Gist raw",
+    "cancel": "キャンセル",
+    "import": "インポート",
+    "importing": "インポート中..."
   }
 }
