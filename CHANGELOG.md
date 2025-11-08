@@ -1,4 +1,14 @@
-## [v2.5.1 - 2025-11-10](https://github.com/thuongtruong109/flashot/releases/tag/v2.5.1)
+## [v2.7.0 - 2025-11-10](https://github.com/thuongtruong109/flashot/releases/tag/v2.7.0)
+
+### 🚀 Features
+
+- ## **playground**:
+  - Custom reuse modals from base component - by @thuongtruong109 [<samp>()</samp>]()
+  - Comprehensive localization support with multi-language translations - by @thuongtruong109 [<samp>()</samp>]()
+
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.6.0...v2.7.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.7.0)
+
+## [v2.6.0 - 2025-11-09](https://github.com/thuongtruong109/flashot/releases/tag/v2.6.0)
 
 ### 🚀 Features
 
@@ -7,7 +17,7 @@
   - Search functionality for finding settings - by @thuongtruong109 [<samp>(8d00a)</samp>](https://github.com/thuongtruong109/flashot/commit/8d00a77b9ee1a53d9a3ca4e3c8f62aa7461a6308)
   - Pattern choice for background - by @thuongtruong109 [<samp>(eb501)</samp>](https://github.com/thuongtruong109/flashot/commit/eb50172a555e6b655f1939b5bd1abec944670889)
 
-##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.5.0...v2.5.1) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.5.1)
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.5.0...v2.6.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.6.0)
 
 ## [v2.5.0 - 2025-11-04](https://github.com/thuongtruong109/flashot/releases/tag/v2.5.0)
 
