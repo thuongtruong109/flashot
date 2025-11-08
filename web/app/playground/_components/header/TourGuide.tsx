@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { driver, DriveStep } from "driver.js";
 import "driver.js/dist/driver.css";
+import { useLocalization } from "../../LocalizationContext";
 
 interface TourGuideProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface TourGuideProps {
 }
 
 const TourGuide: React.FC<TourGuideProps> = ({ isOpen, onClose }) => {
+  const { t } = useLocalization();
   useEffect(() => {
     if (isOpen) {
       // Wait for DOM to be fully ready
@@ -19,9 +21,8 @@ const TourGuide: React.FC<TourGuideProps> = ({ isOpen, onClose }) => {
           {
             element: "[data-tour='brand']",
             popover: {
-              title: "🎨 Welcome to Flashot Playground",
-              description:
-                "Welcome to Flashot! A powerful tool for creating beautiful, professional code screenshots with extensive customization options. Let's take a quick tour of all the features!",
+              title: t("tourGuide.steps.welcome.title"),
+              description: t("tourGuide.steps.welcome.description"),
               side: "bottom",
               align: "start",
             },
@@ -29,9 +30,8 @@ const TourGuide: React.FC<TourGuideProps> = ({ isOpen, onClose }) => {
           {
             element: "[data-tour='action-bar']",
             popover: {
-              title: "🛠️ Main Action Bar",
-              description:
-                "Your command center with essential tools for managing your code screenshots. Let's explore each button in detail!",
+              title: t("tourGuide.steps.actionBar.title"),
+              description: t("tourGuide.steps.actionBar.description"),
               side: "bottom",
               align: "end",
             },
@@ -39,9 +39,8 @@ const TourGuide: React.FC<TourGuideProps> = ({ isOpen, onClose }) => {
           {
             element: "[data-tour='export-button']",
             popover: {
-              title: "📥 Export Button",
-              description:
-                "Download your code screenshot in various formats: PNG, JPG, WebP, AVIF for images, or Original/Plain Text for code. Click the dropdown to choose your preferred format. Each format has different quality and file size characteristics.",
+              title: t("tourGuide.steps.exportButton.title"),
+              description: t("tourGuide.steps.exportButton.description"),
               side: "bottom",
               align: "center",
             },
@@ -49,9 +48,8 @@ const TourGuide: React.FC<TourGuideProps> = ({ isOpen, onClose }) => {
           {
             element: "[data-tour='more-menu']",
             popover: {
-              title: "⚙️ More Menu",
-              description:
-                "Access additional features: Guide (restart this tour), Info (quick tips and shortcuts), Share (share the page), and Report Issue (submit feedback on GitHub).",
+              title: t("tourGuide.steps.moreMenu.title"),
+              description: t("tourGuide.steps.moreMenu.description"),
               side: "bottom",
               align: "center",
             },
@@ -59,9 +57,8 @@ const TourGuide: React.FC<TourGuideProps> = ({ isOpen, onClose }) => {
           {
             element: "[data-tour='dark-mode-toggle']",
             popover: {
-              title: "🌓 Dark Mode Toggle",
-              description:
-                "Switch between light and dark themes. Your preference is saved automatically for future visits.",
+              title: t("tourGuide.steps.darkModeToggle.title"),
+              description: t("tourGuide.steps.darkModeToggle.description"),
               side: "bottom",
               align: "end",
             },
@@ -69,9 +66,8 @@ const TourGuide: React.FC<TourGuideProps> = ({ isOpen, onClose }) => {
           {
             element: "[data-tour='background-selector']",
             popover: {
-              title: "🎨 Background Canvas",
-              description:
-                "This is the canvas area where your code editor sits. The background can be customized from the Makeup tab in Settings. Choose solid colors, beautiful gradients, or even transparent backgrounds. The grid helps you align your code perfectly.",
+              title: t("tourGuide.steps.backgroundSelector.title"),
+              description: t("tourGuide.steps.backgroundSelector.description"),
               side: "right",
               align: "center",
             },
@@ -79,9 +75,8 @@ const TourGuide: React.FC<TourGuideProps> = ({ isOpen, onClose }) => {
           {
             element: "[data-tour='code-editor']",
             popover: {
-              title: "📝 Interactive Code Editor",
-              description:
-                "This is your main workspace. Click anywhere on the code to start editing. You can drag the borders to resize, and the editor supports syntax highlighting for 26+ programming languages with real-time preview. Click on the filename to edit it!",
+              title: t("tourGuide.steps.codeEditor.title"),
+              description: t("tourGuide.steps.codeEditor.description"),
               side: "right",
               align: "center",
             },
@@ -89,27 +84,24 @@ const TourGuide: React.FC<TourGuideProps> = ({ isOpen, onClose }) => {
           {
             element: "[data-tour='settings-panel']",
             popover: {
-              title: "⚙️ Settings Panel",
-              description:
-                "Customize every aspect of your code screenshot here. Includes sections for: View (dimensions, language), Theme (editor themes), Makeup (colors, fonts), Decorate (window controls, shadows), and Templates (save/load presets). On desktop, this panel is always visible on the right side.",
+              title: t("tourGuide.steps.settingsPanel.title"),
+              description: t("tourGuide.steps.settingsPanel.description"),
               side: "left",
               align: "center",
             },
           },
           {
             popover: {
-              title: " Pro Tips",
-              description:
-                "Remember: Use Ctrl+Enter or Esc to exit edit mode, Tab/Shift+Tab to indent/unindent code. Your editor position and size are preserved as you work. Export supports multiple formats with different compression levels. Click on filename to edit it directly!",
+              title: t("tourGuide.steps.proTips.title"),
+              description: t("tourGuide.steps.proTips.description"),
               side: "bottom",
               align: "center",
             },
           },
           {
             popover: {
-              title: "🎉 You're All Set!",
-              description:
-                "You now know all the features of Flashot Playground! Start creating beautiful code screenshots. If you need help anytime, click the Guide option in the More menu. Happy coding! 🚀",
+              title: t("tourGuide.steps.finish.title"),
+              description: t("tourGuide.steps.finish.description"),
               side: "bottom",
               align: "center",
             },
@@ -131,10 +123,10 @@ const TourGuide: React.FC<TourGuideProps> = ({ isOpen, onClose }) => {
         const driverObj = driver({
           showProgress: true,
           showButtons: ["next", "previous", "close"],
-          nextBtnText: "Next →",
-          prevBtnText: "← Previous",
-          doneBtnText: "Done ✓",
-          progressText: "{{current}} of {{total}}",
+          nextBtnText: t("tourGuide.buttons.next"),
+          prevBtnText: t("tourGuide.buttons.previous"),
+          doneBtnText: t("tourGuide.buttons.done"),
+          progressText: t("tourGuide.buttons.progress"),
           allowClose: true,
           overlayColor: "rgba(0, 0, 0, 0.75)",
           smoothScroll: true,
@@ -159,7 +151,7 @@ const TourGuide: React.FC<TourGuideProps> = ({ isOpen, onClose }) => {
 
       return () => clearTimeout(timeout);
     }
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, t]);
 
   return null;
 };

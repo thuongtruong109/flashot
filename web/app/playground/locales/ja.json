@@ -1,0 +1,658 @@
+{
+  "common": {
+    "copy": "コピー",
+    "download": "ダウンロード",
+    "save": "保存",
+    "export": "エクスポート",
+    "import": "インポート",
+    "settings": "設定",
+    "close": "閉じる",
+    "cancel": "キャンセル",
+    "reset": "リセット",
+    "apply": "適用",
+    "all": "すべて",
+    "outer": "外側",
+    "inner": "内側"
+  },
+  "header": {
+    "brand": "Flashot",
+    "tips": "ヒントと情報",
+    "shortcuts": "ショートカット",
+    "guide": "ガイド",
+    "json": "JSON",
+    "fileName": "ファイル名",
+    "copySuccess": "コピーしました！",
+    "generating": "生成中..."
+  },
+  "tipsModal": {
+    "title": "情報とクイックスタート",
+    "about": {
+      "title": "Flashotについて",
+      "description": "は、開発者が数秒でプロフェッショナルで美しいコードのスクリーンショットを作成するための、強力でモダンなWebアプリケーションです。ドキュメント、チュートリアル、ソーシャルメディア投稿、プレゼンテーションを作成する際、Flashotはあなたのコードを素晴らしく見せます。",
+      "keyFeaturesTitle": "主な機能",
+      "features": [
+        "50以上の美しいシンタックステーマ",
+        "25以上のプログラミング言語をサポート",
+        "複数のエクスポート形式（PNG、JPG、WebP、AVIF）",
+        "ライブ編集によるリアルタイムプレビュー",
+        "パディング、シャドウ、ボーダーの精密な制御",
+        "カスタマイズ可能な寸法とスケーリング",
+        "ウィンドウコントロール（macOSおよびWindowsスタイル）",
+        "カスタムテンプレートの保存と読み込み"
+      ],
+      "whyTitle": "なぜFlashotなのか？",
+      "whyItems": [
+        {
+          "title": "超高速",
+          "description": "遅延なく高品質のスクリーンショットを瞬時に生成"
+        },
+        {
+          "title": "開発者フレンドリー",
+          "description": "キーボードショートカットとスマートなデフォルト設定を備えた直感的なインターフェース"
+        },
+        {
+          "title": "高度にカスタマイズ可能",
+          "description": "すべての側面が設定可能 - 真にあなたのものにしましょう"
+        }
+      ],
+      "contributeTitle": "貢献する",
+      "contributeText": "このプロジェクトはオープンソースで、",
+      "githubLink": "GitHubで利用可能",
+      "feedbackText": "ご質問やフィードバックがございましたら、",
+      "emailText": "メールをお送りください",
+      "madeWith": "作成者：",
+      "madeBy": "Thuong Truong、すべての人のために"
+    },
+    "quickStart": {
+      "title": "クイックスタートガイド",
+      "steps": [
+        {
+          "title": "コード領域をクリック",
+          "description": "してコードの編集を直接開始"
+        },
+        {
+          "title": "外観をカスタマイズ",
+          "description": "設定パネルを使用（テーマ、フォント、背景）"
+        },
+        {
+          "title": "画像をエクスポート",
+          "description": "複数の形式で（PNG、JPG、WebP、AVIF）"
+        }
+      ]
+    },
+    "exportFormats": {
+      "title": "エクスポート形式",
+      "png": {
+        "name": "PNG",
+        "description": "透明度付きの高品質"
+      },
+      "jpg": {
+        "name": "JPG",
+        "description": "圧縮済み、単色背景"
+      },
+      "webp": {
+        "name": "WebP",
+        "description": "モダン、優れた圧縮"
+      },
+      "avif": {
+        "name": "AVIF",
+        "description": "次世代、最小サイズ"
+      }
+    },
+    "languages": {
+      "title": "25以上のサポート言語"
+    },
+    "proTips": {
+      "title": "プロのヒントとベストプラクティス",
+      "tips": [
+        {
+          "title": "行番号を使用",
+          "description": "コードドキュメントとチュートリアルに最適"
+        },
+        {
+          "title": "異なるテーマを試す",
+          "description": "ブランドやプレゼンテーションスタイルに合わせる"
+        },
+        {
+          "title": "パディングを調整",
+          "description": "ソーシャルメディア投稿のためのより良いフレーミング"
+        },
+        {
+          "title": "JSONとして保存",
+          "description": "お気に入りの設定をバックアップして共有"
+        },
+        {
+          "title": "ウィンドウコントロール",
+          "description": "プレゼンテーションのための本物のエディタの外観"
+        },
+        {
+          "title": "フルスクリーンモード",
+          "description": "邪魔のないビューで編集に集中"
+        }
+      ]
+    }
+  },
+  "shortcutsModal": {
+    "title": "キーボードショートカット",
+    "categories": {
+      "editor": {
+        "title": "エディタ",
+        "shortcuts": [
+          { "key": "F", "description": "エディタにフォーカス" },
+          { "key": "Esc", "description": "フォーカス解除" },
+          { "key": "Tab", "description": "インデント" },
+          { "key": "Shift+Tab", "description": "インデント解除" }
+        ]
+      },
+      "appearance": {
+        "title": "外観",
+        "shortcuts": [
+          { "key": "C", "description": "カラー" },
+          { "key": "B", "description": "背景" },
+          { "key": "D", "description": "ダークモード" },
+          { "key": "N", "description": "行番号" },
+          { "key": "P", "description": "パディング" },
+          { "key": "L", "description": "言語" }
+        ]
+      },
+      "exportShare": {
+        "title": "エクスポートと共有",
+        "shortcuts": [
+          { "key": "Ctrl+S", "description": "PNGを保存" },
+          { "key": "Ctrl+Shift+S", "description": "SVGを保存" },
+          { "key": "Ctrl+C", "description": "画像をコピー" },
+          { "key": "Ctrl+Shift+C", "description": "URLをコピー" },
+          { "key": "Ctrl+K", "description": "エクスポートメニュー" }
+        ]
+      },
+      "navigation": {
+        "title": "ナビゲーション",
+        "shortcuts": [
+          { "key": "?", "description": "ショートカット" },
+          { "key": "F11", "description": "フルスクリーン" }
+        ]
+      }
+    },
+    "proTip": {
+      "title": "💡 プロのヒント",
+      "description": "単一キーのショートカットは入力していないときに機能します。",
+      "escKey": "Esc",
+      "exitText": "を押して編集モードを終了してください。"
+    }
+  },
+  "settings": {
+    "theme": "テーマ",
+    "language": "言語",
+    "font": "フォント",
+    "fontSize": "フォントサイズ",
+    "lineHeight": "行の高さ",
+    "padding": "パディング",
+    "background": "背景",
+    "border": "ボーダー",
+    "shadow": "シャドウ",
+    "lineNumbers": "行番号",
+    "windowControls": "ウィンドウコントロール"
+  },
+  "actionBar": {
+    "export": "エクスポート",
+    "exporting": "エクスポート中...",
+    "more": "その他",
+    "darkMode": "ダークモード",
+    "lightMode": "ライトモード",
+    "sharePage": "ページを共有",
+    "reportIssue": "問題を報告",
+    "info": "情報"
+  },
+  "exportFormats": {
+    "png": "PNG",
+    "jpg": "JPG",
+    "webp": "WebP",
+    "avif": "AVIF",
+    "svg": "SVG",
+    "original": "元のコード",
+    "plain": "プレーンテキスト"
+  },
+  "editor": {
+    "clickToEdit": "コードを編集するにはクリック",
+    "dragToResize": "ドラッグしてサイズ変更",
+    "caption": "キャプション",
+    "addCaption": "キャプションを追加...",
+    "label": "ラベル",
+    "addLabel": "ラベルを追加...",
+    "import": "インポート",
+    "importCodeFromUrl": "URLからコードをインポート",
+    "clear": "クリア",
+    "clearConfirm": "コードをクリアしてもよろしいですか？",
+    "copy": "コピー",
+    "copied": "コピーしました！",
+    "share": "共有",
+    "clearCode": "コードをクリア",
+    "copyCode": "コードをクリップボードにコピー",
+    "shareCode": "コードスニペットを共有",
+    "failedToCopy": "クリップボードへのコピーに失敗しました",
+    "shareCodeSnippet": "コードスニペットを共有",
+    "copyAsImageLink": "画像リンクとしてコピー",
+    "copyAsImageLinkDesc": "画像を表示する共有可能なリンクを生成",
+    "copyImage": "画像をコピー",
+    "copyImageDesc": "画像をクリップボードに直接コピー",
+    "shareToSocial": "ソーシャルメディアで共有",
+    "generating": "生成中...",
+    "copying": "コピー中...",
+    "editorNotReady": "エディタの準備ができていません。もう一度お試しください。",
+    "linkCopied": "リンクをクリップボードにコピーしました！ブラウザに貼り付けて画像を表示してください。",
+    "imageCopied": "画像をクリップボードにコピーしました！",
+    "linkCopiedPasteInDiscord": "リンクをコピーしました！Discordに貼り付けることができます。",
+    "linkCopiedPasteInSlack": "リンクをコピーしました！Slackに貼り付けることができます。",
+    "failedToGenerateLink": "共有可能なリンクの生成に失敗しました。",
+    "failedToCopyImage": "クリップボードへの画像のコピーに失敗しました。",
+    "failedToShare": "共有に失敗しました",
+    "shareSuccess": "この美しいコードスニペットをチェックしてください！"
+  },
+  "settingsPanel": {
+    "title": "設定",
+    "tabs": {
+      "view": "表示",
+      "theme": "テーマ",
+      "makeup": "メイクアップ",
+      "decorate": "装飾",
+      "template": "テンプレート"
+    },
+    "resetToDefaults": "デフォルトにリセット",
+    "view": {
+      "fontSize": "フォントサイズ",
+      "lineHeight": "行の高さ",
+      "wordWrap": "ワードラップ",
+      "sizing": "サイズ調整",
+      "customSize": "カスタムサイズ",
+      "width": "幅",
+      "height": "高さ",
+      "auto": "自動",
+      "socialMediaSize": "ソーシャルメディアサイズ",
+      "presets": {
+        "igSquare": "IG スクエア",
+        "igPortrait": "IG ポートレート",
+        "igStory": "IG ストーリー",
+        "twitter": "Twitter/X",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn",
+        "youtube": "YouTube"
+      },
+      "lineNumbers": "行番号",
+      "lineNumberOpacity": "番号の不透明度",
+      "lineNumberBorder": "番号の境界線",
+      "lineNumberAlign": "番号の配置",
+      "textAlign": {
+        "left": "左",
+        "center": "中央",
+        "right": "右"
+      }
+    },
+    "theme": {
+      "language": "言語",
+      "fontFamily": "フォントファミリー",
+      "colorTheme": "カラーテーマ",
+      "background": "背景",
+      "backgroundTabs": {
+        "custom": "カスタム",
+        "gradient": "グラデーション",
+        "solid": "単色",
+        "pattern": "パターン"
+      },
+      "customImage": "カスタム画像",
+      "upload": "アップロード",
+      "uploadFromDevice": "デバイスから画像をアップロード",
+      "imageUrlPlaceholder": "画像URLを入力するか、デバイスからアップロード",
+      "gradientAngle": "グラデーション角度",
+      "solidColors": "単色"
+    },
+    "makeup": {
+      "padding": "パディング",
+      "borderRadius": "角の丸み",
+      "frameBorderRadius": "フレームの角の丸み",
+      "codeBorderRadius": "コードの角の丸み",
+      "windowHeader": "ウィンドウヘッダー",
+      "showBorder": "境界線を表示",
+      "spacing": "間隔",
+      "borderColor": "境界線の色",
+      "trafficLight": "信号機",
+      "alignment": "配置",
+      "alignments": {
+        "left": "左",
+        "right": "右",
+        "default": "デフォルト",
+        "center": "中央"
+      },
+      "fileName": "ファイル名",
+      "fileNamePlaceholder": "ファイル名を入力",
+      "opacity": "不透明度",
+      "fontWeight": "フォントウェイト",
+      "fontWeights": {
+        "thin": "細字",
+        "normal": "標準",
+        "bold": "太字"
+      },
+      "fontSize": "フォントサイズ",
+      "fileNameAlign": "ファイル名の配置",
+      "projectName": "プロジェクト名",
+      "projectNamePlaceholder": "プロジェクト名を入力",
+      "customName": "カスタム名",
+      "showBackground": "背景を表示",
+      "gradientAngle": "グラデーション角度",
+      "trafficLightColor": "色",
+      "caption": "キャプション",
+      "captionPlaceholder": "図のキャプションを入力...",
+      "captionStyle": "スタイル",
+      "captionStyles": {
+        "normal": "標準",
+        "italic": "斜体"
+      },
+      "captionPosition": "位置",
+      "positions": {
+        "top": "上",
+        "bottom": "下",
+        "left": "左",
+        "right": "右"
+      },
+      "lineHighlights": "行のハイライト",
+      "addHighlight": "追加",
+      "preview": "プレビュー",
+      "lines": "行",
+      "startLine": "開始行",
+      "endLine": "終了行",
+      "color": "色",
+      "highlightType": "タイプ",
+      "highlightTypes": {
+        "add": "追加",
+        "remove": "削除"
+      },
+      "delete": "削除"
+    },
+    "decorate": {
+      "frameBorder": "フレーム枠線",
+      "style": "スタイル",
+      "borderStyles": {
+        "none": "なし",
+        "solid": "実線",
+        "dashed": "破線",
+        "dotted": "点線",
+        "double": "二重線"
+      },
+      "width": "幅",
+      "offset": "オフセット",
+      "color": "色",
+      "opacity": "不透明度",
+      "caption": "キャプション",
+      "captionText": "キャプションテキスト",
+      "captionPlaceholder": "キャプションテキストを入力",
+      "captionStyle": "キャプションスタイル",
+      "captionOpacity": "キャプションの不透明度",
+      "captionPosition": "キャプション位置",
+      "captionStyles": {
+        "normal": "標準",
+        "italic": "斜体",
+        "bold": "太字"
+      },
+      "captionPositions": {
+        "top": "上",
+        "bottom": "下"
+      },
+      "label": "ラベル",
+      "labelText": "ラベルテキスト",
+      "labelPlaceholder": "@ユーザー名作成",
+      "labelAlignment": "ラベルの配置",
+      "labelOpacity": "ラベルの不透明度",
+      "labelColor": "ラベルの色",
+      "labelFontSize": "ラベルのフォントサイズ",
+      "watermark": "透かし",
+      "type": "タイプ",
+      "watermarkTypes": {
+        "text": "テキスト",
+        "image": "画像"
+      },
+      "watermarkTextPlaceholder": "透かしテキストを入力",
+      "fontSize": "フォントサイズ",
+      "fontWeight": "フォントウェイト",
+      "fontWeights": {
+        "thin": "細字",
+        "normal": "標準",
+        "bold": "太字"
+      },
+      "upload": "アップロード",
+      "reset": "リセット",
+      "imageUrlPlaceholder": "または画像URLを入力...",
+      "height": "高さ",
+      "positionX": "X位置",
+      "positionY": "Y位置",
+      "rotation": "回転",
+      "headerGap": "ヘッダーギャップ",
+      "headerBorder": "ヘッダー境界線",
+      "headerBorderColor": "ヘッダー境界線の色",
+      "imageFilters": "画像フィルター",
+      "grayscale": "グレースケール",
+      "sepia": "セピア",
+      "blur": "ぼかし",
+      "brightness": "明るさ",
+      "contrast": "コントラスト",
+      "saturate": "彩度",
+      "hueRotate": "色相回転",
+      "invert": "反転"
+    },
+    "template": {
+      "saveTemplate": "テンプレートを保存",
+      "loadTemplate": "テンプレートを読み込む",
+      "import": "インポート",
+      "export": "エクスポート",
+      "importDescription": "保存されたテンプレート（JSONファイル）をインポートして設定とコードを復元",
+      "exportDescription": "現在の設定とコードを再利用可能なテンプレートとしてエクスポート",
+      "dragDropDescription": "JSONファイルをここにドラッグ＆ドロップ",
+      "or": "または",
+      "selectFile": "ファイルを選択",
+      "invalidJson": "無効なJSONファイル",
+      "importSuccess": "テンプレートが正常にインポートされました",
+      "invalidTemplateFormat": "無効なテンプレート形式",
+      "errorParsingJson": "JSONファイルの解析エラー",
+      "currentTemplate": "現在のテンプレート",
+      "exportSuccess": "テンプレートが正常にエクスポートされました",
+      "description": "現在の設定をテンプレートとして保存するか、以前に保存したものを読み込みます。",
+      "popularTemplates": "人気テンプレート",
+      "templates": {
+        "cyberpunk-neon": {
+          "name": "サイバーパンク ネオン",
+          "description": "未来的な雰囲気の高コントラスト ネオン"
+        },
+        "minimal-zen": {
+          "name": "ミニマル 禅",
+          "description": "超クリーンなホワイトスペース デザイン"
+        },
+        "retro-sunset": {
+          "name": "レトロ サンセット",
+          "description": "温かい80年代の雰囲気"
+        },
+        "arctic-ice": {
+          "name": "北極の氷",
+          "description": "北欧風の涼しいテーマ"
+        },
+        "dark-hacker": {
+          "name": "ダークハッカー",
+          "description": "Matrix スタイルのターミナルルック"
+        }
+      }
+    }
+  },
+  "searchModal": {
+    "placeholder": "設定と機能を検索...",
+    "noResults": "検索結果が見つかりません",
+    "tryDifferent": "別のキーワードを試すか、スペルを確認してください",
+    "navigate": "ナビゲート",
+    "select": "選択",
+    "close": "閉じる",
+    "result": "件",
+    "results": "件",
+    "categories": {
+      "view": "表示",
+      "theme": "テーマ",
+      "decorate": "装飾",
+      "general": "一般"
+    },
+    "items": {
+      "fontSize": {
+        "title": "フォントサイズ",
+        "description": "コードテキストのサイズを調整"
+      },
+      "padding": {
+        "title": "パディング",
+        "description": "コードブロック周りの間隔を制御"
+      },
+      "borderRadius": {
+        "title": "角の丸み",
+        "description": "角の丸みを調整"
+      },
+      "sizing": {
+        "title": "画像サイズ",
+        "description": "カスタム幅と高さを設定"
+      },
+      "wordWrap": {
+        "title": "ワードラップ",
+        "description": "長い行のテキスト折り返しを有効化"
+      },
+      "projectName": {
+        "title": "プロジェクト名",
+        "description": "ヘッダーにカスタムプロジェクト名を表示"
+      },
+      "lineNumbers": {
+        "title": "行番号",
+        "description": "行番号の表示/非表示"
+      },
+      "windowHeader": {
+        "title": "ウィンドウヘッダー",
+        "description": "ウィンドウコントロールボタンの切り替え"
+      },
+      "filename": {
+        "title": "ファイル名",
+        "description": "ファイル名の表示またはカスタマイズ"
+      },
+      "language": {
+        "title": "プログラミング言語",
+        "description": "シンタックスハイライト言語を選択"
+      },
+      "fontFamily": {
+        "title": "フォントファミリー",
+        "description": "コードフォントスタイルを選択"
+      },
+      "colorTheme": {
+        "title": "カラーテーマ",
+        "description": "シンタックスカラースキームを選択"
+      },
+      "background": {
+        "title": "背景",
+        "description": "背景色またはグラデーションを選択"
+      },
+      "pattern": {
+        "title": "パターン背景",
+        "description": "ブランドにインスパイアされたパターンを適用"
+      },
+      "gradientAngle": {
+        "title": "グラデーション角度",
+        "description": "グラデーションの方向を調整"
+      },
+      "border": {
+        "title": "ボーダーカスタマイズ",
+        "description": "ボーダーを追加してスタイル設定"
+      },
+      "watermark": {
+        "title": "透かし",
+        "description": "テキストまたは画像の透かしを追加"
+      },
+      "label": {
+        "title": "ラベル",
+        "description": "画像にカスタムラベルを追加"
+      },
+      "highlights": {
+        "title": "行のハイライト",
+        "description": "特定のコード行をハイライト"
+      },
+      "export": {
+        "title": "画像のエクスポート",
+        "description": "PNG、JPG、またはSVGとしてダウンロード"
+      },
+      "copy": {
+        "title": "クリップボードにコピー",
+        "description": "画像またはコードを素早くコピー"
+      },
+      "import": {
+        "title": "コードのインポート",
+        "description": "URLまたはGitHubからコードを読み込む"
+      },
+      "shortcuts": {
+        "title": "キーボードショートカット",
+        "description": "利用可能なすべてのショートカットを表示"
+      }
+    }
+  },
+  "importDialog": {
+    "title": "コードのインポート",
+    "subtitle": "生のコードURLを貼り付け",
+    "placeholder": "https://raw.githubusercontent.com/...",
+    "urlRequired": "URLを入力してください",
+    "fetchFailed": "取得に失敗しました",
+    "emptyContent": "URLが空のコンテンツを返しました",
+    "importError": "URLからコードの取得に失敗しました",
+    "successMessage": "コードが正常にインポートされました！",
+    "exampleLabel": "例：",
+    "exampleGithub": "• GitHub rawファイル",
+    "exampleGist": "• GitHub Gist raw",
+    "cancel": "キャンセル",
+    "import": "インポート",
+    "importing": "インポート中..."
+  },
+  "tourGuide": {
+    "buttons": {
+      "next": "次へ →",
+      "previous": "← 前へ",
+      "done": "完了 ✓",
+      "progress": "{{current}} / {{total}}"
+    },
+    "steps": {
+      "welcome": {
+        "title": "🎨 Flashot Playgroundへようこそ",
+        "description": "Flashotへようこそ！豊富なカスタマイズオプションで美しくプロフェッショナルなコードスクリーンショットを作成するための強力なツールです。すべての機能を簡単にご紹介します！"
+      },
+      "actionBar": {
+        "title": "🛠️ メインアクションバー",
+        "description": "コードスクリーンショットを管理するための重要なツールを備えたコマンドセンターです。各ボタンを詳しく見ていきましょう！"
+      },
+      "exportButton": {
+        "title": "📥 エクスポートボタン",
+        "description": "コードスクリーンショットをさまざまな形式でダウンロード：画像の場合はPNG、JPG、WebP、AVIF、コードの場合はオリジナル/プレーンテキスト。ドロップダウンをクリックして好みの形式を選択してください。各形式には異なる品質とファイルサイズの特性があります。"
+      },
+      "moreMenu": {
+        "title": "⚙️ その他のメニュー",
+        "description": "追加機能にアクセス：ガイド（このツアーを再開）、情報（クイックヒントとショートカット）、共有（ページを共有）、問題を報告（GitHubでフィードバックを送信）。"
+      },
+      "darkModeToggle": {
+        "title": "🌓 ダークモード切り替え",
+        "description": "ライトテーマとダークテーマを切り替えます。設定は今後の訪問のために自動的に保存されます。"
+      },
+      "backgroundSelector": {
+        "title": "🎨 背景キャンバス",
+        "description": "これはコードエディターが配置されるキャンバスエリアです。背景は設定のメイクアップタブからカスタマイズできます。ソリッドカラー、美しいグラデーション、または透明な背景を選択してください。グリッドはコードを完璧に整列させるのに役立ちます。"
+      },
+      "codeEditor": {
+        "title": "📝 インタラクティブコードエディター",
+        "description": "これはあなたのメインワークスペースです。コードの任意の場所をクリックして編集を開始します。境界線をドラッグしてサイズを変更でき、エディターは26以上のプログラミング言語の構文ハイライトをリアルタイムプレビューでサポートしています。ファイル名をクリックして編集できます！"
+      },
+      "settingsPanel": {
+        "title": "⚙️ 設定パネル",
+        "description": "ここでコードスクリーンショットのあらゆる側面をカスタマイズします。セクションには次のものが含まれます：ビュー（寸法、言語）、テーマ（エディターテーマ）、メイクアップ（色、フォント）、装飾（ウィンドウコントロール、影）、およびテンプレート（プリセットの保存/読み込み）。デスクトップでは、このパネルは常に右側に表示されます。"
+      },
+      "proTips": {
+        "title": "💡 プロのヒント",
+        "description": "覚えておいてください：編集モードを終了するにはCtrl+EnterまたはEscを使用し、コードをインデント/アンインデントするにはTab/Shift+Tabを使用します。作業中、エディターの位置とサイズは保持されます。エクスポートは異なる圧縮レベルで複数の形式をサポートしています。ファイル名を直接クリックして編集できます！"
+      },
+      "finish": {
+        "title": "🎉 準備完了！",
+        "description": "Flashot Playgroundのすべての機能を理解しました！美しいコードスクリーンショットの作成を始めましょう。いつでもヘルプが必要な場合は、その他メニューのガイドオプションをクリックしてください。ハッピーコーディング！🚀"
+      }
+    }
+  }
+}

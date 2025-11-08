@@ -16,6 +16,7 @@ import { DEFAULT_CODE_SETTINGS } from "@/shared";
 import WidthRuler from "@/app/playground/_components/editor/WidthRuler";
 import HeightRuler from "@/app/playground/_components/editor/HeightRuler";
 import GradientBg from "@/app/playground/_components/GradientBg";
+import { LocalizationProvider } from "./LocalizationContext";
 
 const defaultCode = `function mergeAndUniqueArrays(arrays) {
   if (!Array.isArray(arrays) || arrays.length === 0) return [];
@@ -555,118 +556,120 @@ export default function Page() {
   };
 
   return (
-    <div className="h-screen bg-white dark:bg-gray-950 bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 relative overflow-hidden flex flex-col">
-      <GradientBg />
+    <LocalizationProvider>
+      <div className="h-screen bg-white dark:bg-gray-950 bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 relative overflow-hidden flex flex-col">
+        <GradientBg />
 
-      <Header
-        onCopy={handleCopyCode}
-        onDownload={handleDownloadImage}
-        onShowSettings={handleToggleSettings}
-        onShowJSON={() => {}}
-        onShowTips={() => setShowTipsModal(true)}
-        onShowGuide={() => setShowTourGuide(true)}
-        onShowShortcuts={() => setShowShortcutsModal(true)}
-        onNavigateToSection={handleNavigateToSection}
-        copySuccess={copySuccess}
-        isGenerating={isGenerating}
-        fileName={fileName}
-        onFileNameChange={setFileName}
-        showSettingsPanel={showSettingsPanel}
-        showJSONPanel={false}
-        settings={settings}
-        onUpdateSetting={updateSetting}
-      />
+        <Header
+          onCopy={handleCopyCode}
+          onDownload={handleDownloadImage}
+          onShowSettings={handleToggleSettings}
+          onShowJSON={() => {}}
+          onShowTips={() => setShowTipsModal(true)}
+          onShowGuide={() => setShowTourGuide(true)}
+          onShowShortcuts={() => setShowShortcutsModal(true)}
+          onNavigateToSection={handleNavigateToSection}
+          copySuccess={copySuccess}
+          isGenerating={isGenerating}
+          fileName={fileName}
+          onFileNameChange={setFileName}
+          showSettingsPanel={showSettingsPanel}
+          showJSONPanel={false}
+          settings={settings}
+          onUpdateSetting={updateSetting}
+        />
 
-      {/* Main Container with Sidebar Layout */}
-      <div className="flex-1 flex h-[calc(100vh-3rem)] lg:h-[calc(100vh-4rem)] transition-all duration-300 w-full">
-        {/* Main Content Area */}
-        <div className="flex-1 transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 h-full relative">
-          {/* Grid Background */}
-          <div
-            data-tour="background-selector"
-            className="absolute inset-0 pointer-events-none grid-background opacity-60"
-          />
-          <Image
-            src="/playground_bg.svg"
-            alt="grad_bg"
-            className="absolute inset-0 size-full"
-            fill
-          />
-
-          {/* Code Editor and Ruler Container */}
-          <div data-tour="code-editor" className="absolute inset-0 z-10">
-            <CodeEditor
-              ref={codeRef}
-              code={code}
-              onChange={handleCodeChange}
-              settings={settings}
-              fileName={fileName}
-              className="w-full h-full"
-              onUpdateSetting={updateSetting}
-              onPositionChange={handleEditorPositionChange}
-              onSizeChange={handleEditorSizeChange}
-              onHoverChange={setIsEditorHovered}
-              onShowImport={() => setShowImportDialog(true)}
+        {/* Main Container with Sidebar Layout */}
+        <div className="flex-1 flex h-[calc(100vh-3rem)] lg:h-[calc(100vh-4rem)] transition-all duration-300 w-full">
+          {/* Main Content Area */}
+          <div className="flex-1 transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 h-full relative">
+            {/* Grid Background */}
+            <div
+              data-tour="background-selector"
+              className="absolute inset-0 pointer-events-none grid-background opacity-60"
+            />
+            <Image
+              src="/playground_bg.svg"
+              alt="grad_bg"
+              className="absolute inset-0 size-full"
+              fill
             />
 
-            {/* Width Ruler - positioned below with fixed spacing */}
-            <WidthRuler
-              width={editorSize.width}
-              height={editorSize.height}
-              editorPosition={editorPosition}
-              showJSONPanel={false}
-              isHovered={isEditorHovered}
-            />
+            {/* Code Editor and Ruler Container */}
+            <div data-tour="code-editor" className="absolute inset-0 z-10">
+              <CodeEditor
+                ref={codeRef}
+                code={code}
+                onChange={handleCodeChange}
+                settings={settings}
+                fileName={fileName}
+                className="w-full h-full"
+                onUpdateSetting={updateSetting}
+                onPositionChange={handleEditorPositionChange}
+                onSizeChange={handleEditorSizeChange}
+                onHoverChange={setIsEditorHovered}
+                onShowImport={() => setShowImportDialog(true)}
+              />
 
-            {/* Height Ruler - positioned left with fixed spacing */}
-            <HeightRuler
-              width={editorSize.width}
-              height={editorSize.height}
-              editorPosition={editorPosition}
-              showJSONPanel={false}
-              isHovered={isEditorHovered}
-            />
+              {/* Width Ruler - positioned below with fixed spacing */}
+              <WidthRuler
+                width={editorSize.width}
+                height={editorSize.height}
+                editorPosition={editorPosition}
+                showJSONPanel={false}
+                isHovered={isEditorHovered}
+              />
+
+              {/* Height Ruler - positioned left with fixed spacing */}
+              <HeightRuler
+                width={editorSize.width}
+                height={editorSize.height}
+                editorPosition={editorPosition}
+                showJSONPanel={false}
+                isHovered={isEditorHovered}
+              />
+            </div>
           </div>
+
+          <SettingsPanel
+            data-tour="settings-panel"
+            settings={settings}
+            fileName={fileName}
+            code={code}
+            isVisible={showSettingsPanel}
+            activeMenu={activeMenuLabel}
+            highlightItemId={highlightItemId}
+            onChangeActiveMenu={(m) => setActiveMenuLabel(m)}
+            onUpdateSetting={updateSetting}
+            onFileNameChange={setFileName}
+            onCodeChange={setCode}
+            onToggleVisibility={handleToggleSettings}
+            onImportTemplate={handleImportJSON}
+            onExportTemplate={handleExportJSON}
+          />
         </div>
 
-        <SettingsPanel
-          data-tour="settings-panel"
-          settings={settings}
-          fileName={fileName}
-          code={code}
-          isVisible={showSettingsPanel}
-          activeMenu={activeMenuLabel}
-          highlightItemId={highlightItemId}
-          onChangeActiveMenu={(m) => setActiveMenuLabel(m)}
-          onUpdateSetting={updateSetting}
-          onFileNameChange={setFileName}
-          onCodeChange={setCode}
-          onToggleVisibility={handleToggleSettings}
-          onImportTemplate={handleImportJSON}
-          onExportTemplate={handleExportJSON}
+        <TipsModal
+          isOpen={showTipsModal}
+          onClose={() => setShowTipsModal(false)}
+        />
+
+        <ShortcutsModal
+          isOpen={showShortcutsModal}
+          onClose={() => setShowShortcutsModal(false)}
+        />
+
+        <TourGuide
+          isOpen={showTourGuide}
+          onClose={() => setShowTourGuide(false)}
+        />
+
+        <ImportDialog
+          isOpen={showImportDialog}
+          onClose={() => setShowImportDialog(false)}
+          onImport={handleImportFromURL}
         />
       </div>
-
-      <TipsModal
-        isOpen={showTipsModal}
-        onClose={() => setShowTipsModal(false)}
-      />
-
-      <ShortcutsModal
-        isOpen={showShortcutsModal}
-        onClose={() => setShowShortcutsModal(false)}
-      />
-
-      <TourGuide
-        isOpen={showTourGuide}
-        onClose={() => setShowTourGuide(false)}
-      />
-
-      <ImportDialog
-        isOpen={showImportDialog}
-        onClose={() => setShowImportDialog(false)}
-        onImport={handleImportFromURL}
-      />
-    </div>
+    </LocalizationProvider>
   );
 }

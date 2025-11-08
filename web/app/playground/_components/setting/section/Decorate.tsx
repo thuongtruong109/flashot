@@ -1,7 +1,10 @@
+"use client";
+
 import { Stamp, Upload, X, Frame } from "lucide-react";
 import React, { useRef } from "react";
 import type { CodeSettings } from "@/types";
 import HighlightOverlay from "../HighlightOverlay";
+import { useLocalization } from "../../../LocalizationContext";
 
 interface DecorateSectionProps {
   settings: CodeSettings;
@@ -17,6 +20,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
   highlightItemId,
   onUpdateSetting,
 }) => {
+  const { t } = useLocalization();
   const watermarkImageInputRef = useRef<HTMLInputElement>(null);
 
   const handleWatermarkImageUpload = (
@@ -56,171 +60,184 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
     <>
       {/* Border Customization Section */}
       <HighlightOverlay itemId="border" highlightItemId={highlightItemId}>
-        <div className="pb-6 border-b border-gray-200 dark:border-gray-700">
-          <div className="flex items-center gap-2 mb-4">
-            <Frame className="size-4 text-indigo-600 dark:text-indigo-400" />
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Frame border
-            </span>
+        <div className="flex items-center gap-2 mb-4">
+          <Frame className="size-4 text-indigo-600 dark:text-indigo-400" />
+          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            {t("settingsPanel.decorate.frameBorder")}
+          </span>
+        </div>
+
+        <div className="space-y-3">
+          {/* Border Style */}
+          <div className="flex justify-between items-center">
+            <label className="text-xs text-gray-600 dark:text-gray-400">
+              {t("settingsPanel.decorate.style")}
+            </label>
+            <div className="flex items-center space-x-1">
+              {[
+                {
+                  value: "none",
+                  label: t("settingsPanel.decorate.borderStyles.none"),
+                },
+                {
+                  value: "solid",
+                  label: t("settingsPanel.decorate.borderStyles.solid"),
+                },
+                {
+                  value: "dashed",
+                  label: t("settingsPanel.decorate.borderStyles.dashed"),
+                },
+                {
+                  value: "dotted",
+                  label: t("settingsPanel.decorate.borderStyles.dotted"),
+                },
+                {
+                  value: "double",
+                  label: t("settingsPanel.decorate.borderStyles.double"),
+                },
+              ].map((style) => (
+                <button
+                  key={style.value}
+                  onClick={() =>
+                    onUpdateSetting(
+                      "borderStyle",
+                      style.value as
+                        | "solid"
+                        | "dashed"
+                        | "dotted"
+                        | "double"
+                        | "none"
+                    )
+                  }
+                  className={`px-2 py-1 rounded-md text-xs transition-all duration-200 ${
+                    (settings.borderStyle || "solid") === style.value
+                      ? "bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-600 dark:to-purple-600 text-white shadow-md font-medium"
+                      : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                  }`}
+                >
+                  {style.label}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div className="space-y-3">
-            {/* Border Style */}
-            <div className="flex justify-between items-center">
-              <label className="text-xs text-gray-600 dark:text-gray-400">
-                Style
+          {/* Border Width */}
+          {settings.borderStyle !== "none" && (
+            <div className="flex items-center space-x-3">
+              <label className="text-xs flex items-center justify-between">
+                <span className="text-gray-600 dark:text-gray-400 w-24">
+                  {t("settingsPanel.decorate.width")}
+                </span>
+                <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent font-bold">
+                  {settings.borderWidth ?? 2}px
+                </span>
               </label>
-              <div className="flex items-center space-x-1">
-                {[
-                  { value: "none", label: "None" },
-                  { value: "solid", label: "Solid" },
-                  { value: "dashed", label: "Dashed" },
-                  { value: "dotted", label: "Dotted" },
-                  { value: "double", label: "Double" },
-                ].map((style) => (
-                  <button
-                    key={style.value}
-                    onClick={() =>
-                      onUpdateSetting(
-                        "borderStyle",
-                        style.value as
-                          | "solid"
-                          | "dashed"
-                          | "dotted"
-                          | "double"
-                          | "none"
-                      )
-                    }
-                    className={`px-2 py-1 rounded-md text-xs transition-all duration-200 ${
-                      (settings.borderStyle || "solid") === style.value
-                        ? "bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-600 dark:to-purple-600 text-white shadow-md font-medium"
-                        : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
-                    }`}
-                  >
-                    {style.label}
-                  </button>
-                ))}
+              <input
+                type="range"
+                min={1}
+                max={20}
+                step={1}
+                value={settings.borderWidth ?? 2}
+                onChange={(e) =>
+                  onUpdateSetting("borderWidth", parseInt(e.target.value))
+                }
+                className="w-full h-1 bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-900 dark:to-purple-900 rounded-lg appearance-none cursor-pointer
+                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                  [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                  [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-purple-500
+                  [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                  [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+              />
+            </div>
+          )}
+
+          {/* Border Offset */}
+          {settings.borderStyle !== "none" && (
+            <div className="flex items-center space-x-3">
+              <label className="text-xs flex items-center justify-between">
+                <span className="text-gray-600 dark:text-gray-400 w-24">
+                  {t("settingsPanel.decorate.offset")}
+                </span>
+                <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent font-bold">
+                  {settings.borderOffset ?? 0}px
+                </span>
+              </label>
+              <input
+                type="range"
+                min={0}
+                max={50}
+                step={1}
+                value={settings.borderOffset ?? 0}
+                onChange={(e) =>
+                  onUpdateSetting("borderOffset", parseInt(e.target.value))
+                }
+                className="w-full h-1 bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-900 dark:to-purple-900 rounded-lg appearance-none cursor-pointer
+                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
+                  [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
+                  [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-purple-500
+                  [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
+                  [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
+              />
+            </div>
+          )}
+
+          {/* Border Color */}
+          {settings.borderStyle !== "none" && (
+            <div className="flex justify-between items-center space-x-3">
+              <label className="text-xs text-gray-600 dark:text-gray-400">
+                {t("settingsPanel.decorate.color")}
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="color"
+                  value={settings.borderColor || "#ffffff"}
+                  onChange={(e) =>
+                    onUpdateSetting("borderColor", e.target.value)
+                  }
+                  className="w-12 h-7 rounded cursor-pointer border border-gray-300 dark:border-gray-600"
+                />
+                <input
+                  type="text"
+                  value={settings.borderColor || "#ffffff"}
+                  onChange={(e) =>
+                    onUpdateSetting("borderColor", e.target.value)
+                  }
+                  className="flex-1 px-2 py-1 text-sm rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none font-mono"
+                  placeholder="#ffffff"
+                />
               </div>
             </div>
+          )}
 
-            {/* Border Width */}
-            {settings.borderStyle !== "none" && (
-              <div className="flex items-center space-x-3">
-                <label className="text-xs flex items-center justify-between">
-                  <span className="text-gray-600 dark:text-gray-400 w-24">
-                    Width
-                  </span>
-                  <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent font-bold">
-                    {settings.borderWidth ?? 2}px
-                  </span>
-                </label>
-                <input
-                  type="range"
-                  min={1}
-                  max={20}
-                  step={1}
-                  value={settings.borderWidth ?? 2}
-                  onChange={(e) =>
-                    onUpdateSetting("borderWidth", parseInt(e.target.value))
-                  }
-                  className="w-full h-1 bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-900 dark:to-purple-900 rounded-lg appearance-none cursor-pointer
+          {/* Border Opacity */}
+          {settings.borderStyle !== "none" && (
+            <div className="flex items-center space-x-3">
+              <label className="text-xs flex items-center justify-between">
+                <span className="text-gray-600 dark:text-gray-400 w-24">
+                  {t("settingsPanel.decorate.opacity")}
+                </span>
+                <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent font-bold">
+                  {Math.round((settings.borderOpacity ?? 1) * 100)}%
+                </span>
+              </label>
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step={0.01}
+                value={settings.borderOpacity ?? 1}
+                onChange={(e) =>
+                  onUpdateSetting("borderOpacity", parseFloat(e.target.value))
+                }
+                className="w-full h-1 bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-900 dark:to-purple-900 rounded-lg appearance-none cursor-pointer
                   [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
                   [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
                   [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-purple-500
                   [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
                   [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-                />
-              </div>
-            )}
-
-            {/* Border Offset */}
-            {settings.borderStyle !== "none" && (
-              <div className="flex items-center space-x-3">
-                <label className="text-xs flex items-center justify-between">
-                  <span className="text-gray-600 dark:text-gray-400 w-24">
-                    Offset
-                  </span>
-                  <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent font-bold">
-                    {settings.borderOffset ?? 0}px
-                  </span>
-                </label>
-                <input
-                  type="range"
-                  min={0}
-                  max={50}
-                  step={1}
-                  value={settings.borderOffset ?? 0}
-                  onChange={(e) =>
-                    onUpdateSetting("borderOffset", parseInt(e.target.value))
-                  }
-                  className="w-full h-1 bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-900 dark:to-purple-900 rounded-lg appearance-none cursor-pointer
-                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
-                  [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
-                  [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-purple-500
-                  [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-                  [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-                />
-              </div>
-            )}
-
-            {/* Border Color */}
-            {settings.borderStyle !== "none" && (
-              <div className="flex justify-between items-center space-x-3">
-                <label className="text-xs text-gray-600 dark:text-gray-400">
-                  Color
-                </label>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="color"
-                    value={settings.borderColor || "#ffffff"}
-                    onChange={(e) =>
-                      onUpdateSetting("borderColor", e.target.value)
-                    }
-                    className="w-12 h-7 rounded cursor-pointer border border-gray-300 dark:border-gray-600"
-                  />
-                  <input
-                    type="text"
-                    value={settings.borderColor || "#ffffff"}
-                    onChange={(e) =>
-                      onUpdateSetting("borderColor", e.target.value)
-                    }
-                    className="flex-1 px-2 py-1 text-sm rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none font-mono"
-                    placeholder="#ffffff"
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* Border Opacity */}
-            {settings.borderStyle !== "none" && (
-              <div className="flex items-center space-x-3">
-                <label className="text-xs flex items-center justify-between">
-                  <span className="text-gray-600 dark:text-gray-400 w-24">
-                    Opacity
-                  </span>
-                  <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent font-bold">
-                    {Math.round((settings.borderOpacity ?? 1) * 100)}%
-                  </span>
-                </label>
-                <input
-                  type="range"
-                  min={0}
-                  max={1}
-                  step={0.01}
-                  value={settings.borderOpacity ?? 1}
-                  onChange={(e) =>
-                    onUpdateSetting("borderOpacity", parseFloat(e.target.value))
-                  }
-                  className="w-full h-1 bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-900 dark:to-purple-900 rounded-lg appearance-none cursor-pointer
-                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3
-                  [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-r
-                  [&::-webkit-slider-thumb]:from-indigo-500 [&::-webkit-slider-thumb]:to-purple-500
-                  [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-pointer
-                  [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-110"
-                />
-              </div>
-            )}
-          </div>
+              />
+            </div>
+          )}
         </div>
       </HighlightOverlay>
 
@@ -243,7 +260,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                     : "text-gray-500 group-hover:text-gray-700"
                 }`}
               >
-                Watermark
+                {t("settingsPanel.decorate.watermark")}
               </span>
             </div>
             <div className="relative">
@@ -297,7 +314,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
               {/* Type Toggle */}
               <div className="flex justify-between items-center">
                 <span className="text-xs text-gray-600 dark:text-gray-400">
-                  Type
+                  {t("settingsPanel.decorate.type")}
                 </span>
                 <div className="flex items-center space-x-2">
                   <button
@@ -313,7 +330,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                         : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                     }`}
                   >
-                    Text
+                    {t("settingsPanel.decorate.watermarkTypes.text")}
                   </button>
                   <button
                     onClick={() =>
@@ -328,7 +345,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                         : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                     }`}
                   >
-                    Image
+                    {t("settingsPanel.decorate.watermarkTypes.image")}
                   </button>
                 </div>
               </div>
@@ -346,13 +363,15 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                       })
                     }
                     className="w-full px-2 py-1.5 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 outline-none"
-                    placeholder="Enter watermark text"
+                    placeholder={t(
+                      "settingsPanel.decorate.watermarkTextPlaceholder"
+                    )}
                   />
 
                   {/* Color */}
                   <div className="flex justify-between items-center space-x-3">
                     <label className="text-xs text-gray-600 dark:text-gray-400">
-                      Color
+                      {t("settingsPanel.decorate.color")}
                     </label>
                     <div className="flex items-center gap-2">
                       <input
@@ -385,7 +404,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                   <div className="flex justify-between items-center space-x-3">
                     <label className="text-xs flex items-center justify-between">
                       <span className="text-gray-600 dark:text-gray-400 w-24">
-                        Font Size
+                        {t("settingsPanel.decorate.fontSize")}
                       </span>
                       <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
                         {settings.watermark?.fontSize || 48}px
@@ -415,13 +434,22 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                   {/* Font Weight */}
                   <div className="flex justify-between items-center">
                     <label className="text-xs text-gray-600 dark:text-gray-400 w-24">
-                      Font Weight
+                      {t("settingsPanel.decorate.fontWeight")}
                     </label>
                     <div className="flex items-center space-x-2">
                       {[
-                        { value: 300, label: "Thin" },
-                        { value: 500, label: "Normal" },
-                        { value: 800, label: "Bold" },
+                        {
+                          value: 300,
+                          label: t("settingsPanel.decorate.fontWeights.thin"),
+                        },
+                        {
+                          value: 500,
+                          label: t("settingsPanel.decorate.fontWeights.normal"),
+                        },
+                        {
+                          value: 800,
+                          label: t("settingsPanel.decorate.fontWeights.bold"),
+                        },
                       ].map((weight) => (
                         <button
                           key={weight.value}
@@ -461,7 +489,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                         className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-md hover:from-rose-600 hover:to-pink-600 transition-all shadow-sm"
                       >
                         <Upload className="size-3" />
-                        Upload
+                        {t("settingsPanel.decorate.upload")}
                       </button>
                       {settings.watermark?.imageUrl && (
                         <button
@@ -469,7 +497,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                           className="flex items-center gap-1 px-2 py-1.5 text-xs bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-md transition-all"
                         >
                           <X className="size-3" />
-                          Reset
+                          {t("settingsPanel.decorate.reset")}
                         </button>
                       )}
                     </div>
@@ -479,7 +507,9 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                       onChange={(e) =>
                         handleWatermarkImageUrlChange(e.target.value)
                       }
-                      placeholder="Or enter image URL..."
+                      placeholder={t(
+                        "settingsPanel.decorate.imageUrlPlaceholder"
+                      )}
                       className="w-full px-2 py-1.5 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 outline-none"
                     />
                   </div>
@@ -489,7 +519,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                     <div>
                       <label className="text-xs flex items-center justify-between">
                         <span className="text-gray-600 dark:text-gray-400">
-                          Width
+                          {t("settingsPanel.decorate.width")}
                         </span>
                         <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
                           {settings.watermark?.imageWidth || 100}px
@@ -518,7 +548,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                     <div>
                       <label className="text-xs flex items-center justify-between">
                         <span className="text-gray-600 dark:text-gray-400">
-                          Height
+                          {t("settingsPanel.decorate.height")}
                         </span>
                         <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
                           {settings.watermark?.imageHeight || 100}px
@@ -552,7 +582,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                 <div>
                   <label className="text-xs flex items-center justify-between">
                     <span className="text-gray-600 dark:text-gray-400">
-                      Position X
+                      {t("settingsPanel.decorate.positionX")}
                     </span>
                     <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
                       {settings.watermark?.x || 0}%
@@ -581,7 +611,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                 <div>
                   <label className="text-xs flex items-center justify-between">
                     <span className="text-gray-600 dark:text-gray-400">
-                      Position Y
+                      {t("settingsPanel.decorate.positionY")}
                     </span>
                     <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
                       {settings.watermark?.y || 0}%
@@ -613,7 +643,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
               <div className="flex items-center space-x-3">
                 <label className="text-xs flex items-center justify-between">
                   <span className="text-gray-600 dark:text-gray-400 w-24">
-                    Opacity
+                    {t("settingsPanel.decorate.opacity")}
                   </span>
                   <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
                     {Math.round((settings.watermark?.opacity || 0.1) * 100)}%
@@ -644,7 +674,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
               <div className="flex justify-between items-center space-x-3">
                 <label className="text-xs flex items-center justify-between">
                   <span className="text-gray-600 dark:text-gray-400 w-24">
-                    Rotation
+                    {t("settingsPanel.decorate.rotation")}
                   </span>
                   <span className="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent font-bold">
                     {settings.watermark?.rotation || 0}°
@@ -694,7 +724,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
                     : "text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300"
                 }`}
               >
-                Label
+                {t("settingsPanel.decorate.label")}
               </span>
             </div>
             <div className="relative">
@@ -731,13 +761,13 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
               {/* Label Text */}
               <div>
                 <label className="text-xs text-gray-600 dark:text-gray-400 mb-1.5 block">
-                  Text
+                  {t("settingsPanel.decorate.labelText")}
                 </label>
                 <input
                   type="text"
                   value={settings.labelText ?? "Created by @username"}
                   onChange={(e) => onUpdateSetting("labelText", e.target.value)}
-                  placeholder="Enter label text..."
+                  placeholder={t("settingsPanel.decorate.labelPlaceholder")}
                   className="w-full px-3 py-1.5 text-xs rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-600 transition-all"
                 />
               </div>
@@ -745,13 +775,22 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
               {/* Alignment */}
               <div className="flex justify-between items-center">
                 <label className="text-xs text-gray-600 dark:text-gray-400">
-                  Alignment
+                  {t("settingsPanel.decorate.labelAlignment")}
                 </label>
                 <div className="flex items-center space-x-1">
                   {[
-                    { value: "left", label: "Left" },
-                    { value: "center", label: "Center" },
-                    { value: "right", label: "Right" },
+                    {
+                      value: "left",
+                      label: t("settingsPanel.makeup.alignments.left"),
+                    },
+                    {
+                      value: "center",
+                      label: t("settingsPanel.makeup.alignments.center"),
+                    },
+                    {
+                      value: "right",
+                      label: t("settingsPanel.makeup.alignments.right"),
+                    },
                   ].map((align) => (
                     <button
                       key={align.value}
@@ -776,7 +815,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
               {/* Color */}
               <div className="flex justify-between items-center">
                 <label className="text-xs text-gray-600 dark:text-gray-400">
-                  Color
+                  {t("settingsPanel.decorate.labelColor")}
                 </label>
                 <input
                   type="color"
@@ -792,7 +831,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
               <div className="flex justify-between items-center space-x-3">
                 <label className="text-xs flex items-center justify-between">
                   <span className="text-gray-600 dark:text-gray-400 w-24">
-                    Font Size
+                    {t("settingsPanel.decorate.labelFontSize")}
                   </span>
                   <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent font-bold">
                     {settings.labelFontSize ?? 12}px
@@ -820,7 +859,7 @@ const DecorateSection: React.FC<DecorateSectionProps> = ({
               <div className="flex justify-between items-center space-x-3">
                 <label className="text-xs flex items-center justify-between">
                   <span className="text-gray-600 dark:text-gray-400 w-24">
-                    Opacity
+                    {t("settingsPanel.decorate.labelOpacity")}
                   </span>
                   <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent font-bold">
                     {Math.round((settings.labelOpacity ?? 0.6) * 100)}%

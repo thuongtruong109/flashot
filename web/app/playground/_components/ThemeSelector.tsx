@@ -29,6 +29,7 @@ import {
   Feather,
 } from "lucide-react";
 import { ThemeName } from "@/types";
+import { useLocalization } from "../LocalizationContext";
 
 interface ThemeSelectorProps {
   selectedTheme: ThemeName;
@@ -215,6 +216,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   selectedTheme,
   onThemeChange,
 }) => {
+  const { t } = useLocalization();
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -350,7 +352,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
     <div>
       <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
         <Palette className="w-3.5 h-3.5 text-purple-600 mr-1.5" />
-        Code Theme
+        {t("settingsPanel.theme.colorTheme")}
       </label>
 
       <div className="relative">

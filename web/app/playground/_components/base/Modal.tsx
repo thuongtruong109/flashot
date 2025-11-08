@@ -45,11 +45,11 @@ const Modal: React.FC<ModalProps> = ({
       >
         {/* Fixed Header */}
         {title && (
-          <div className="flex items-center justify-between p-4 border-b border-gray-200/50 dark:border-gray-700/50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-t-2xl">
-            <h2 className="text-xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent flex items-center">
+          <div className="flex items-center justify-between px-3 py-2 border-b border-gray-200/50 dark:border-gray-700/50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-t-2xl">
+            <h2 className="text-sm font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent flex items-center">
               {icon && (
-                <div className="relative mr-2">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 rounded-xl blur opacity-20"></div>
+                <div className="relative mr-1.5">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 rounded-lg blur opacity-20"></div>
                   <div className="relative">{icon}</div>
                 </div>
               )}
@@ -57,9 +57,9 @@ const Modal: React.FC<ModalProps> = ({
             </h2>
             <button
               onClick={onClose}
-              className="p-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100/50 dark:hover:bg-gray-700/50 rounded-lg transition-all duration-200 group"
+              className="p-0.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100/50 dark:hover:bg-gray-700/50 rounded-lg transition-all duration-200 group"
             >
-              <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-200" />
+              <X className="w-3.5 h-3.5 group-hover:rotate-90 transition-transform duration-200" />
             </button>
           </div>
         )}

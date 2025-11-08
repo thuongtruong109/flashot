@@ -21,6 +21,12 @@
   }
 }
 
+html,
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

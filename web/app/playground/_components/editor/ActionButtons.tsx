@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { generateCodeImage } from "@/lib/imageGenerator";
 import { CodeSettings } from "@/types";
+import { useLocalization } from "../../LocalizationContext";
 
 interface EditorActionButtonsProps {
   code: string;
@@ -27,6 +28,7 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
   settings,
   editorRef,
 }) => {
+  const { t } = useLocalization();
   const [isCopied, setIsCopied] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
@@ -34,7 +36,7 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
 
   // Clear code handler
   const handleClear = () => {
-    if (confirm("Are you sure you want to clear the code?")) {
+    if (confirm(t("editor.clearConfirm"))) {
       onClear();
     }
   };
@@ -47,7 +49,7 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
       setTimeout(() => setIsCopied(false), 2000);
     } catch (error) {
       console.error("Failed to copy code:", error);
-      alert("Failed to copy code to clipboard");
+      alert(t("editor.failedToCopy"));
     }
   };
 
@@ -65,7 +67,7 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
   // Generate base64 image and create JSON data link
   const handleCopyAsImageLink = async () => {
     if (!editorRef) {
-      alert("Editor not ready. Please try again.");
+      alert(t("editor.editorNotReady"));
       return;
     }
 
@@ -99,11 +101,11 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
 
       // Copy to clipboard
       await navigator.clipboard.writeText(shareableLink);
-      alert("Link copied to clipboard! Paste it in browser to view the image.");
+      alert(t("editor.linkCopied"));
       closeShareModal();
     } catch (error) {
       console.error("Failed to generate link:", error);
-      alert("Failed to generate shareable link.");
+      alert(t("editor.failedToGenerateLink"));
     } finally {
       setShareModalAction(null);
     }
@@ -112,7 +114,7 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
   // Copy image to clipboard
   const handleCopyImage = async () => {
     if (!editorRef) {
-      alert("Editor not ready. Please try again.");
+      alert(t("editor.editorNotReady"));
       return;
     }
 
@@ -140,14 +142,14 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
             "image/png": blob,
           }),
         ]);
-        alert("Image copied to clipboard!");
+        alert(t("editor.imageCopied"));
         closeShareModal();
       } else {
         throw new Error("Clipboard API not supported");
       }
     } catch (error) {
       console.error("Failed to copy image:", error);
-      alert("Failed to copy image to clipboard.");
+      alert(t("editor.failedToCopyImage"));
     } finally {
       setShareModalAction(null);
     }
@@ -289,11 +291,11 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
         <button
           onClick={handleClear}
           className={getButtonStyles("red")}
-          title="Clear code"
+          title={t("editor.clearCode")}
         >
           <Trash2 className={getIconStyles("red")} />
           <span className="text-[13px] relative z-10 text-white font-medium drop-shadow-sm">
-            Clear
+            {t("editor.clear")}
           </span>
         </button>
 
@@ -301,21 +303,21 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
         <button
           onClick={handleCopy}
           className={getButtonStyles(isCopied ? "green" : "teal", isCopied)}
-          title="Copy code to clipboard"
+          title={t("editor.copyCode")}
           disabled={isCopied}
         >
           {isCopied ? (
             <>
               <Check className={getIconStyles("green")} />
               <span className="text-[13px] relative z-10 text-white font-medium drop-shadow-sm">
-                Copied!
+                {t("editor.copied")}
               </span>
             </>
           ) : (
             <>
               <Copy className={getIconStyles("teal")} />
               <span className="text-[13px] relative z-10 text-white font-medium drop-shadow-sm">
-                Copy
+                {t("editor.copy")}
               </span>
             </>
           )}
@@ -325,11 +327,11 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
         <button
           onClick={handleShareClick}
           className={getButtonStyles("violet")}
-          title="Share code snippet"
+          title={t("editor.shareCode")}
         >
           <Share2 className={getIconStyles("violet")} />
           <span className="text-[13px] relative z-10 text-white font-medium drop-shadow-sm">
-            Share
+            {t("editor.share")}
           </span>
         </button>
       </div>
@@ -350,7 +352,7 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
               <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                   <Share2 className="w-5 h-5 text-purple-500" />
-                  Share Code Snippet
+                  {t("editor.shareCodeSnippet")}
                 </h3>
                 <button
                   onClick={closeShareModal}
@@ -374,11 +376,11 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
                   <div className="flex-1 text-left">
                     <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-0.5">
                       {shareModalAction === "link"
-                        ? "Generating..."
-                        : "Copy as Image Link"}
+                        ? t("editor.generating")
+                        : t("editor.copyAsImageLink")}
                     </h4>
                     <p className="text-xs text-gray-600 dark:text-gray-400">
-                      Generate shareable link that displays image
+                      {t("editor.copyAsImageLinkDesc")}
                     </p>
                   </div>
                 </button>
@@ -395,11 +397,11 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
                   <div className="flex-1 text-left">
                     <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-0.5">
                       {shareModalAction === "image"
-                        ? "Copying..."
-                        : "Copy Image"}
+                        ? t("editor.copying")
+                        : t("editor.copyImage")}
                     </h4>
                     <p className="text-xs text-gray-600 dark:text-gray-400">
-                      Copy image directly to clipboard
+                      {t("editor.copyImageDesc")}
                     </p>
                   </div>
                 </button>
@@ -411,7 +413,7 @@ const EditorActionButtons: React.FC<EditorActionButtonsProps> = ({
                   </div>
                   <div className="relative flex justify-center text-xs">
                     <span className="bg-white dark:bg-gray-800 px-2 text-gray-500 dark:text-gray-400">
-                      Share to Social
+                      {t("editor.shareToSocial")}
                     </span>
                   </div>
                 </div>

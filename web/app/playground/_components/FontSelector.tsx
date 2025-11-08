@@ -20,6 +20,7 @@ import {
   Search,
   Layers,
 } from "lucide-react";
+import { useLocalization } from "../LocalizationContext";
 
 interface FontSelectorProps {
   selectedFont: string;
@@ -123,6 +124,7 @@ const FontSelector: React.FC<FontSelectorProps> = ({
   selectedFont,
   onFontChange,
 }) => {
+  const { t } = useLocalization();
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -247,7 +249,7 @@ const FontSelector: React.FC<FontSelectorProps> = ({
     <div>
       <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
         <Type className="w-3.5 h-3.5 text-green-600 mr-1.5" />
-        Font Family
+        {t("settingsPanel.theme.fontFamily")}
       </label>
 
       <div className="relative">

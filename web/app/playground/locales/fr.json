@@ -1,0 +1,658 @@
+{
+  "common": {
+    "copy": "Copier",
+    "download": "Télécharger",
+    "save": "Enregistrer",
+    "export": "Exporter",
+    "import": "Importer",
+    "settings": "Paramètres",
+    "close": "Fermer",
+    "cancel": "Annuler",
+    "reset": "Réinitialiser",
+    "apply": "Appliquer",
+    "all": "Tout",
+    "outer": "Externe",
+    "inner": "Interne"
+  },
+  "header": {
+    "brand": "Flashot",
+    "tips": "Conseils et Infos",
+    "shortcuts": "Raccourcis",
+    "guide": "Guide",
+    "json": "JSON",
+    "fileName": "Nom du Fichier",
+    "copySuccess": "Copié !",
+    "generating": "Génération..."
+  },
+  "tipsModal": {
+    "title": "Informations et Guide Rapide",
+    "about": {
+      "title": "À propos de Flashot",
+      "description": "est une application web moderne et puissante conçue pour aider les développeurs à créer de superbes captures d'écran de code professionnelles en quelques secondes. Que vous créiez de la documentation, des tutoriels, des publications sur les réseaux sociaux ou des présentations, Flashot rend votre code magnifique.",
+      "keyFeaturesTitle": "Fonctionnalités Principales",
+      "features": [
+        "50+ magnifiques thèmes de syntaxe",
+        "25+ langages de programmation pris en charge",
+        "Plusieurs formats d'exportation (PNG, JPG, WebP, AVIF)",
+        "Aperçu en temps réel avec édition en direct",
+        "Contrôles précis pour le rembourrage, les ombres, les bordures",
+        "Dimensions et mise à l'échelle personnalisables",
+        "Contrôles de fenêtre (styles macOS et Windows)",
+        "Enregistrer et charger des modèles personnalisés"
+      ],
+      "whyTitle": "Pourquoi Flashot ?",
+      "whyItems": [
+        {
+          "title": "Ultra Rapide",
+          "description": "Générez des captures d'écran de haute qualité instantanément sans délai"
+        },
+        {
+          "title": "Convivial pour les Développeurs",
+          "description": "Interface intuitive avec raccourcis clavier et paramètres par défaut intelligents"
+        },
+        {
+          "title": "Hautement Personnalisable",
+          "description": "Chaque aspect est configurable - faites-le vraiment vôtre"
+        }
+      ],
+      "contributeTitle": "Contribuer",
+      "contributeText": "Le projet est open source et",
+      "githubLink": "disponible sur GitHub",
+      "feedbackText": "Si vous avez des questions ou des commentaires, veuillez",
+      "emailText": "nous envoyer un e-mail",
+      "madeWith": "Fait avec",
+      "madeBy": "par Thuong Truong, pour tout le monde"
+    },
+    "quickStart": {
+      "title": "Guide de Démarrage Rapide",
+      "steps": [
+        {
+          "title": "Cliquez sur la zone de code",
+          "description": "pour commencer à modifier votre code directement"
+        },
+        {
+          "title": "Personnalisez l'apparence",
+          "description": "en utilisant le panneau Paramètres (thèmes, polices, arrière-plans)"
+        },
+        {
+          "title": "Exportez votre image",
+          "description": "dans plusieurs formats (PNG, JPG, WebP, AVIF)"
+        }
+      ]
+    },
+    "exportFormats": {
+      "title": "Formats d'Exportation",
+      "png": {
+        "name": "PNG",
+        "description": "Haute qualité avec transparence"
+      },
+      "jpg": {
+        "name": "JPG",
+        "description": "Compressé, fond uni"
+      },
+      "webp": {
+        "name": "WebP",
+        "description": "Moderne, excellente compression"
+      },
+      "avif": {
+        "name": "AVIF",
+        "description": "Nouvelle génération, taille la plus petite"
+      }
+    },
+    "languages": {
+      "title": "25+ Langages Pris en Charge"
+    },
+    "proTips": {
+      "title": "Conseils Professionnels et Meilleures Pratiques",
+      "tips": [
+        {
+          "title": "Utilisez les numéros de ligne",
+          "description": "Parfait pour la documentation de code et les tutoriels"
+        },
+        {
+          "title": "Essayez différents thèmes",
+          "description": "Correspondez à votre marque ou style de présentation"
+        },
+        {
+          "title": "Ajustez le rembourrage",
+          "description": "Meilleur cadrage pour les publications sur les réseaux sociaux"
+        },
+        {
+          "title": "Enregistrer en JSON",
+          "description": "Sauvegardez et partagez vos configurations préférées"
+        },
+        {
+          "title": "Contrôles de fenêtre",
+          "description": "Aspect éditeur authentique pour les présentations"
+        },
+        {
+          "title": "Mode plein écran",
+          "description": "Concentrez-vous sur l'édition avec une vue sans distraction"
+        }
+      ]
+    }
+  },
+  "shortcutsModal": {
+    "title": "Raccourcis Clavier",
+    "categories": {
+      "editor": {
+        "title": "Éditeur",
+        "shortcuts": [
+          { "key": "F", "description": "Focuser l'éditeur" },
+          { "key": "Esc", "description": "Défocuser" },
+          { "key": "Tab", "description": "Indenter" },
+          { "key": "Shift+Tab", "description": "Désindenter" }
+        ]
+      },
+      "appearance": {
+        "title": "Apparence",
+        "shortcuts": [
+          { "key": "C", "description": "Couleurs" },
+          { "key": "B", "description": "Arrière-plan" },
+          { "key": "D", "description": "Mode sombre" },
+          { "key": "N", "description": "Numéros de ligne" },
+          { "key": "P", "description": "Rembourrage" },
+          { "key": "L", "description": "Langage" }
+        ]
+      },
+      "exportShare": {
+        "title": "Exporter et Partager",
+        "shortcuts": [
+          { "key": "Ctrl+S", "description": "Enregistrer PNG" },
+          { "key": "Ctrl+Shift+S", "description": "Enregistrer SVG" },
+          { "key": "Ctrl+C", "description": "Copier l'image" },
+          { "key": "Ctrl+Shift+C", "description": "Copier l'URL" },
+          { "key": "Ctrl+K", "description": "Menu d'exportation" }
+        ]
+      },
+      "navigation": {
+        "title": "Navigation",
+        "shortcuts": [
+          { "key": "?", "description": "Raccourcis" },
+          { "key": "F11", "description": "Plein écran" }
+        ]
+      }
+    },
+    "proTip": {
+      "title": "💡 Conseil Professionnel",
+      "description": "Les raccourcis à une touche fonctionnent lorsque vous ne tapez pas. Appuyez sur",
+      "escKey": "Esc",
+      "exitText": "pour quitter le mode d'édition d'abord."
+    }
+  },
+  "settings": {
+    "theme": "Thème",
+    "language": "Langue",
+    "font": "Police",
+    "fontSize": "Taille de Police",
+    "lineHeight": "Hauteur de Ligne",
+    "padding": "Rembourrage",
+    "background": "Arrière-plan",
+    "border": "Bordure",
+    "shadow": "Ombre",
+    "lineNumbers": "Numéros de Ligne",
+    "windowControls": "Contrôles de Fenêtre"
+  },
+  "actionBar": {
+    "export": "Exporter",
+    "exporting": "Exportation...",
+    "more": "Plus",
+    "darkMode": "Mode Sombre",
+    "lightMode": "Mode Clair",
+    "sharePage": "Partager la page",
+    "reportIssue": "Signaler un problème",
+    "info": "Information"
+  },
+  "exportFormats": {
+    "png": "PNG",
+    "jpg": "JPG",
+    "webp": "WebP",
+    "avif": "AVIF",
+    "svg": "SVG",
+    "original": "Code Original",
+    "plain": "Texte Brut"
+  },
+  "editor": {
+    "clickToEdit": "Cliquer pour éditer le code",
+    "dragToResize": "Glisser pour redimensionner",
+    "caption": "Légende",
+    "addCaption": "Ajouter une légende...",
+    "label": "Étiquette",
+    "addLabel": "Ajouter une étiquette...",
+    "import": "Importer",
+    "importCodeFromUrl": "Importer le code depuis l'URL",
+    "clear": "Effacer",
+    "clearConfirm": "Êtes-vous sûr de vouloir effacer le code ?",
+    "copy": "Copier",
+    "copied": "Copié !",
+    "share": "Partager",
+    "clearCode": "Effacer le code",
+    "copyCode": "Copier le code dans le presse-papiers",
+    "shareCode": "Partager l'extrait de code",
+    "failedToCopy": "Échec de la copie du code dans le presse-papiers",
+    "shareCodeSnippet": "Partager l'Extrait de Code",
+    "copyAsImageLink": "Copier comme Lien d'Image",
+    "copyAsImageLinkDesc": "Générer un lien partageable qui affiche l'image",
+    "copyImage": "Copier l'Image",
+    "copyImageDesc": "Copier l'image directement dans le presse-papiers",
+    "shareToSocial": "Partager sur les Réseaux Sociaux",
+    "generating": "Génération...",
+    "copying": "Copie...",
+    "editorNotReady": "L'éditeur n'est pas prêt. Veuillez réessayer.",
+    "linkCopied": "Lien copié dans le presse-papiers ! Collez-le dans le navigateur pour voir l'image.",
+    "imageCopied": "Image copiée dans le presse-papiers !",
+    "linkCopiedPasteInDiscord": "Lien copié ! Vous pouvez le coller dans Discord.",
+    "linkCopiedPasteInSlack": "Lien copié ! Vous pouvez le coller dans Slack.",
+    "failedToGenerateLink": "Échec de la génération du lien partageable.",
+    "failedToCopyImage": "Échec de la copie de l'image dans le presse-papiers.",
+    "failedToShare": "Échec du partage sur",
+    "shareSuccess": "Découvrez ce magnifique extrait de code !"
+  },
+  "settingsPanel": {
+    "title": "Paramètres",
+    "tabs": {
+      "view": "Vue",
+      "theme": "Thème",
+      "makeup": "Maquillage",
+      "decorate": "Décorer",
+      "template": "Modèle"
+    },
+    "resetToDefaults": "Réinitialiser aux paramètres par défaut",
+    "view": {
+      "fontSize": "Taille de police",
+      "lineHeight": "Hauteur de ligne",
+      "wordWrap": "Retour à la ligne",
+      "sizing": "Dimensionnement",
+      "customSize": "Taille personnalisée",
+      "width": "Largeur",
+      "height": "Hauteur",
+      "auto": "Auto",
+      "socialMediaSize": "Taille Réseaux Sociaux",
+      "presets": {
+        "igSquare": "IG Carré",
+        "igPortrait": "IG Portrait",
+        "igStory": "IG Story",
+        "twitter": "Twitter/X",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn",
+        "youtube": "YouTube"
+      },
+      "lineNumbers": "Numéros de ligne",
+      "lineNumberOpacity": "Opacité des numéros",
+      "lineNumberBorder": "Bordure des numéros",
+      "lineNumberAlign": "Alignement des numéros",
+      "textAlign": {
+        "left": "Gauche",
+        "center": "Centre",
+        "right": "Droite"
+      }
+    },
+    "theme": {
+      "language": "Langue",
+      "fontFamily": "Famille de polices",
+      "colorTheme": "Thème de couleur",
+      "background": "Arrière-plan",
+      "backgroundTabs": {
+        "custom": "Personnalisé",
+        "gradient": "Dégradé",
+        "solid": "Solide",
+        "pattern": "Motif"
+      },
+      "customImage": "Image Personnalisée",
+      "upload": "Télécharger",
+      "uploadFromDevice": "Télécharger l'image depuis l'appareil",
+      "imageUrlPlaceholder": "Entrez l'URL de l'image ou téléchargez depuis l'appareil",
+      "gradientAngle": "Angle de Dégradé",
+      "solidColors": "Couleurs Solides"
+    },
+    "makeup": {
+      "padding": "Rembourrage",
+      "borderRadius": "Rayon de bordure",
+      "frameBorderRadius": "Rayon de bordure du cadre",
+      "codeBorderRadius": "Rayon de bordure du code",
+      "windowHeader": "En-tête de fenêtre",
+      "showBorder": "Afficher bordure",
+      "spacing": "Espacement",
+      "borderColor": "Couleur de bordure",
+      "trafficLight": "Feu de signalisation",
+      "alignment": "Alignement",
+      "alignments": {
+        "left": "Gauche",
+        "right": "Droite",
+        "default": "Par défaut",
+        "center": "Centre"
+      },
+      "fileName": "Nom de fichier",
+      "fileNamePlaceholder": "Entrez le nom du fichier",
+      "opacity": "Opacité",
+      "fontWeight": "Poids de police",
+      "fontWeights": {
+        "thin": "Fin",
+        "normal": "Normal",
+        "bold": "Gras"
+      },
+      "fontSize": "Taille de police",
+      "fileNameAlign": "Alignement du nom",
+      "projectName": "Nom du projet",
+      "projectNamePlaceholder": "Entrez le nom du projet",
+      "customName": "Nom personnalisé",
+      "showBackground": "Afficher l'arrière-plan",
+      "gradientAngle": "Angle de dégradé",
+      "trafficLightColor": "Couleur",
+      "caption": "Légende",
+      "captionPlaceholder": "Entrez la légende de la figure...",
+      "captionStyle": "Style",
+      "captionStyles": {
+        "normal": "Normal",
+        "italic": "Italique"
+      },
+      "captionPosition": "Position",
+      "positions": {
+        "top": "Haut",
+        "bottom": "Bas",
+        "left": "Gauche",
+        "right": "Droite"
+      },
+      "lineHighlights": "Surlignage de Lignes",
+      "addHighlight": "Ajouter",
+      "preview": "Aperçu",
+      "lines": "Lignes",
+      "startLine": "Ligne de début",
+      "endLine": "Ligne de fin",
+      "color": "Couleur",
+      "highlightType": "Type",
+      "highlightTypes": {
+        "add": "Ajouter",
+        "remove": "Supprimer"
+      },
+      "delete": "Supprimer"
+    },
+    "decorate": {
+      "frameBorder": "Bordure du cadre",
+      "style": "Style",
+      "borderStyles": {
+        "none": "Aucun",
+        "solid": "Solide",
+        "dashed": "Pointillé",
+        "dotted": "Points",
+        "double": "Double"
+      },
+      "width": "Largeur",
+      "offset": "Décalage",
+      "color": "Couleur",
+      "opacity": "Opacité",
+      "caption": "Légende",
+      "captionText": "Texte de légende",
+      "captionPlaceholder": "Entrez le texte de légende",
+      "captionStyle": "Style de légende",
+      "captionOpacity": "Opacité de légende",
+      "captionPosition": "Position de légende",
+      "captionStyles": {
+        "normal": "Normal",
+        "italic": "Italique",
+        "bold": "Gras"
+      },
+      "captionPositions": {
+        "top": "Haut",
+        "bottom": "Bas"
+      },
+      "label": "Étiquette",
+      "labelText": "Texte d'étiquette",
+      "labelPlaceholder": "Créé par @utilisateur",
+      "labelAlignment": "Alignement de l'étiquette",
+      "labelOpacity": "Opacité de l'étiquette",
+      "labelColor": "Couleur de l'étiquette",
+      "labelFontSize": "Taille de police de l'étiquette",
+      "watermark": "Filigrane",
+      "type": "Type",
+      "watermarkTypes": {
+        "text": "Texte",
+        "image": "Image"
+      },
+      "watermarkTextPlaceholder": "Entrez le texte du filigrane",
+      "fontSize": "Taille de police",
+      "fontWeight": "Poids de police",
+      "fontWeights": {
+        "thin": "Fin",
+        "normal": "Normal",
+        "bold": "Gras"
+      },
+      "upload": "Télécharger",
+      "reset": "Réinitialiser",
+      "imageUrlPlaceholder": "Ou entrez l'URL de l'image...",
+      "height": "Hauteur",
+      "positionX": "Position X",
+      "positionY": "Position Y",
+      "rotation": "Rotation",
+      "headerGap": "Espace d'en-tête",
+      "headerBorder": "Bordure d'en-tête",
+      "headerBorderColor": "Couleur de bordure d'en-tête",
+      "imageFilters": "Filtres d'image",
+      "grayscale": "Niveaux de gris",
+      "sepia": "Sépia",
+      "blur": "Flou",
+      "brightness": "Luminosité",
+      "contrast": "Contraste",
+      "saturate": "Saturation",
+      "hueRotate": "Rotation de teinte",
+      "invert": "Inverser"
+    },
+    "template": {
+      "saveTemplate": "Enregistrer le modèle",
+      "loadTemplate": "Charger le modèle",
+      "import": "Importer",
+      "export": "Exporter",
+      "importDescription": "Importer un modèle enregistré (fichier JSON) pour restaurer les paramètres et le code",
+      "exportDescription": "Exporter les paramètres et le code actuels comme modèle réutilisable",
+      "dragDropDescription": "Glissez-déposez le fichier JSON ici",
+      "or": "ou",
+      "selectFile": "Sélectionner un fichier",
+      "invalidJson": "Fichier JSON invalide",
+      "importSuccess": "Modèle importé avec succès",
+      "invalidTemplateFormat": "Format de modèle invalide",
+      "errorParsingJson": "Erreur lors de l'analyse du fichier JSON",
+      "currentTemplate": "Modèle actuel",
+      "exportSuccess": "Modèle exporté avec succès",
+      "description": "Enregistrez votre configuration actuelle comme modèle ou chargez-en un enregistré précédemment.",
+      "popularTemplates": "Modèles Populaires",
+      "templates": {
+        "cyberpunk-neon": {
+          "name": "Néon Cyberpunk",
+          "description": "Néon à contraste élevé avec ambiances futuristes"
+        },
+        "minimal-zen": {
+          "name": "Zen Minimal",
+          "description": "Design ultra-épuré à espace blanc"
+        },
+        "retro-sunset": {
+          "name": "Coucher de Soleil Rétro",
+          "description": "Ambiances chaleureuses des années 80"
+        },
+        "arctic-ice": {
+          "name": "Glace Arctique",
+          "description": "Thème froid inspiré du nordique"
+        },
+        "dark-hacker": {
+          "name": "Hacker Sombre",
+          "description": "Look terminal style Matrix"
+        }
+      }
+    }
+  },
+  "searchModal": {
+    "placeholder": "Rechercher les paramètres et fonctionnalités...",
+    "noResults": "Aucun résultat trouvé pour",
+    "tryDifferent": "Essayez différents mots-clés ou vérifiez l'orthographe",
+    "navigate": "Naviguer",
+    "select": "Sélectionner",
+    "close": "Fermer",
+    "result": "résultat",
+    "results": "résultats",
+    "categories": {
+      "view": "Vue",
+      "theme": "Thème",
+      "decorate": "Décorer",
+      "general": "Général"
+    },
+    "items": {
+      "fontSize": {
+        "title": "Taille de Police",
+        "description": "Ajuster la taille du texte du code"
+      },
+      "padding": {
+        "title": "Marge Intérieure",
+        "description": "Contrôler l'espacement autour du bloc de code"
+      },
+      "borderRadius": {
+        "title": "Rayon de Bordure",
+        "description": "Ajuster l'arrondi des coins"
+      },
+      "sizing": {
+        "title": "Dimensionnement d'Image",
+        "description": "Définir largeur et hauteur personnalisées"
+      },
+      "wordWrap": {
+        "title": "Retour à la Ligne",
+        "description": "Activer le retour à la ligne pour les longues lignes"
+      },
+      "projectName": {
+        "title": "Nom du Projet",
+        "description": "Afficher un nom de projet personnalisé dans l'en-tête"
+      },
+      "lineNumbers": {
+        "title": "Numéros de Ligne",
+        "description": "Afficher ou masquer les numéros de ligne"
+      },
+      "windowHeader": {
+        "title": "En-tête de Fenêtre",
+        "description": "Basculer les boutons de contrôle de fenêtre"
+      },
+      "filename": {
+        "title": "Nom de Fichier",
+        "description": "Afficher ou personnaliser le nom de fichier"
+      },
+      "language": {
+        "title": "Langage de Programmation",
+        "description": "Sélectionner le langage de coloration syntaxique"
+      },
+      "fontFamily": {
+        "title": "Famille de Police",
+        "description": "Choisir le style de police du code"
+      },
+      "colorTheme": {
+        "title": "Thème de Couleur",
+        "description": "Sélectionner le schéma de couleurs de syntaxe"
+      },
+      "background": {
+        "title": "Arrière-plan",
+        "description": "Choisir la couleur de fond ou le dégradé"
+      },
+      "pattern": {
+        "title": "Motif d'Arrière-plan",
+        "description": "Appliquer des motifs inspirés de marques"
+      },
+      "gradientAngle": {
+        "title": "Angle du Dégradé",
+        "description": "Ajuster la direction du dégradé"
+      },
+      "border": {
+        "title": "Personnalisation de Bordure",
+        "description": "Ajouter et styliser les bordures"
+      },
+      "watermark": {
+        "title": "Filigrane",
+        "description": "Ajouter un filigrane texte ou image"
+      },
+      "label": {
+        "title": "Étiquette",
+        "description": "Ajouter une étiquette personnalisée à l'image"
+      },
+      "highlights": {
+        "title": "Surlignage de Lignes",
+        "description": "Surligner des lignes de code spécifiques"
+      },
+      "export": {
+        "title": "Exporter l'Image",
+        "description": "Télécharger en PNG, JPG ou SVG"
+      },
+      "copy": {
+        "title": "Copier dans le Presse-papiers",
+        "description": "Copie rapide d'image ou de code"
+      },
+      "import": {
+        "title": "Importer du Code",
+        "description": "Charger le code depuis une URL ou GitHub"
+      },
+      "shortcuts": {
+        "title": "Raccourcis Clavier",
+        "description": "Voir tous les raccourcis disponibles"
+      }
+    }
+  },
+  "importDialog": {
+    "title": "Importer du Code",
+    "subtitle": "Coller l'URL du code brut",
+    "placeholder": "https://raw.githubusercontent.com/...",
+    "urlRequired": "Veuillez entrer une URL",
+    "fetchFailed": "Échec de la récupération",
+    "emptyContent": "L'URL a renvoyé un contenu vide",
+    "importError": "Échec de la récupération du code depuis l'URL",
+    "successMessage": "Code importé avec succès !",
+    "exampleLabel": "Exemple :",
+    "exampleGithub": "• Fichier brut GitHub",
+    "exampleGist": "• GitHub Gist brut",
+    "cancel": "Annuler",
+    "import": "Importer",
+    "importing": "Import en cours..."
+  },
+  "tourGuide": {
+    "buttons": {
+      "next": "Suivant →",
+      "previous": "← Précédent",
+      "done": "Terminé ✓",
+      "progress": "{{current}} sur {{total}}"
+    },
+    "steps": {
+      "welcome": {
+        "title": "🎨 Bienvenue sur Flashot Playground",
+        "description": "Bienvenue sur Flashot ! Un outil puissant pour créer de belles captures d'écran de code professionnelles avec de nombreuses options de personnalisation. Faisons un tour rapide de toutes les fonctionnalités !"
+      },
+      "actionBar": {
+        "title": "🛠️ Barre d'Action Principale",
+        "description": "Votre centre de commande avec des outils essentiels pour gérer vos captures d'écran de code. Explorons chaque bouton en détail !"
+      },
+      "exportButton": {
+        "title": "📥 Bouton d'Exportation",
+        "description": "Téléchargez votre capture d'écran de code dans différents formats : PNG, JPG, WebP, AVIF pour les images, ou Original/Texte Brut pour le code. Cliquez sur le menu déroulant pour choisir votre format préféré. Chaque format a des caractéristiques différentes de qualité et de taille de fichier."
+      },
+      "moreMenu": {
+        "title": "⚙️ Menu Plus",
+        "description": "Accédez à des fonctionnalités supplémentaires : Guide (redémarrer ce tour), Informations (conseils rapides et raccourcis), Partager (partager la page) et Signaler un Problème (soumettre des commentaires sur GitHub)."
+      },
+      "darkModeToggle": {
+        "title": "🌓 Basculer le Mode Sombre",
+        "description": "Basculez entre les thèmes clair et sombre. Votre préférence est enregistrée automatiquement pour les visites futures."
+      },
+      "backgroundSelector": {
+        "title": "🎨 Canevas d'Arrière-plan",
+        "description": "C'est la zone de canevas où se trouve votre éditeur de code. L'arrière-plan peut être personnalisé à partir de l'onglet Maquillage dans Paramètres. Choisissez des couleurs unies, de beaux dégradés ou même des arrière-plans transparents. La grille vous aide à aligner votre code parfaitement."
+      },
+      "codeEditor": {
+        "title": "📝 Éditeur de Code Interactif",
+        "description": "C'est votre espace de travail principal. Cliquez n'importe où sur le code pour commencer à éditer. Vous pouvez faire glisser les bordures pour redimensionner, et l'éditeur prend en charge la coloration syntaxique pour plus de 26 langages de programmation avec aperçu en temps réel. Cliquez sur le nom du fichier pour le modifier !"
+      },
+      "settingsPanel": {
+        "title": "⚙️ Panneau des Paramètres",
+        "description": "Personnalisez chaque aspect de votre capture d'écran de code ici. Comprend des sections pour : Vue (dimensions, langage), Thème (thèmes de l'éditeur), Maquillage (couleurs, polices), Décorer (contrôles de fenêtre, ombres) et Modèles (enregistrer/charger des préréglages). Sur ordinateur, ce panneau est toujours visible sur le côté droit."
+      },
+      "proTips": {
+        "title": "💡 Conseils Pro",
+        "description": "N'oubliez pas : Utilisez Ctrl+Entrée ou Échap pour quitter le mode édition, Tab/Shift+Tab pour indenter/désindenter le code. Votre position et taille d'éditeur sont préservées pendant que vous travaillez. L'exportation prend en charge plusieurs formats avec différents niveaux de compression. Cliquez sur le nom du fichier pour le modifier directement !"
+      },
+      "finish": {
+        "title": "🎉 Vous êtes Prêt !",
+        "description": "Vous connaissez maintenant toutes les fonctionnalités de Flashot Playground ! Commencez à créer de belles captures d'écran de code. Si vous avez besoin d'aide à tout moment, cliquez sur l'option Guide dans le menu Plus. Bon codage ! 🚀"
+      }
+    }
+  }
+}

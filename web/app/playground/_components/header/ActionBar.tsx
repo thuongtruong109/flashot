@@ -3,6 +3,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import CustomSelect from "@/app/playground/_components/base/Select";
 import SearchButton from "@/app/playground/_components/SearchButton";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useLocalization } from "../../LocalizationContext";
 import {
   Download,
   Settings,
@@ -59,6 +61,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   settings,
   onUpdateSetting,
 }) => {
+  const { t } = useLocalization();
   const [moreValue, setMoreValue] = useState<string>("_placeholder_");
   const [exportFormat, setExportFormat] = useState<string>(
     settings?.exportFormat || "webp"
@@ -106,7 +109,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
       label: (
         <span className="flex items-center text-[13px] text-emerald-500">
           <BookOpen className="size-3.5 mr-1" />
-          Guide
+          {t("header.guide")}
         </span>
       ),
     },
@@ -115,7 +118,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
       label: (
         <span className="flex items-center text-[13px] text-amber-500">
           <Info className="size-3.5 mr-1" />
-          Info
+          {t("actionBar.info")}
         </span>
       ),
     },
@@ -124,7 +127,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
       label: (
         <span className="flex items-center text-[13px] text-green-500">
           <Share2 className="size-3.5 mr-1" />
-          Share page
+          {t("actionBar.sharePage")}
         </span>
       ),
     },
@@ -133,7 +136,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
       label: (
         <span className="flex items-center text-[13px] text-indigo-500">
           <CircleDotDashed className="size-3.5 mr-1" />
-          Report issue
+          {t("actionBar.reportIssue")}
         </span>
       ),
     },
@@ -142,37 +145,37 @@ const ActionBar: React.FC<ActionBarProps> = ({
   const exportOptions = [
     {
       value: "png",
-      label: "PNG",
+      label: t("exportFormats.png"),
       icon: ImageIcon,
       color: "text-blue-500",
     },
     {
       value: "jpg",
-      label: "JPG",
+      label: t("exportFormats.jpg"),
       icon: ImageIcon,
       color: "text-orange-500",
     },
     {
       value: "webp",
-      label: "WEBP",
+      label: t("exportFormats.webp"),
       icon: ImageIcon,
       color: "text-purple-500",
     },
     {
       value: "avif",
-      label: "AVIF",
+      label: t("exportFormats.avif"),
       icon: ImageIcon,
       color: "text-pink-500",
     },
     {
       value: "original",
-      label: "Original",
+      label: t("exportFormats.original"),
       icon: Code2,
       color: "text-emerald-500",
     },
     {
       value: "plain",
-      label: "Plain Text",
+      label: t("exportFormats.plain"),
       icon: FileText,
       color: "text-slate-500",
     },
@@ -289,7 +292,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
               <ImageIcon className="size-3.5 text-white drop-shadow-sm" />
             )}
             <span className="text-[13px] text-white font-medium drop-shadow-sm">
-              {isGenerating ? "Exporting..." : `Export`}
+              {isGenerating ? t("actionBar.exporting") : t("actionBar.export")}
             </span>
           </button>
 
@@ -340,6 +343,9 @@ const ActionBar: React.FC<ActionBarProps> = ({
             className="!h-[1.95rem] !w-[2rem] !px-0 justify-center"
           />
         </div>
+
+        {/* Language Switcher */}
+        <LanguageSwitcher />
 
         {/* Shortcuts Button */}
         {onShowShortcuts && (

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Monitor,
   Hash,
@@ -19,6 +21,7 @@ import type { CodeSettings, HighlightRange } from "@/types";
 import SubTitle from "@/app/playground/_components/setting/sub/Title";
 import SubSeparate from "@/app/playground/_components/setting/sub/Separate";
 import HighlightOverlay from "../HighlightOverlay";
+import { useLocalization } from "../../../LocalizationContext";
 
 interface MakeupSectionProps {
   settings: CodeSettings;
@@ -38,6 +41,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
   onFileNameChange,
   highlightItemId,
 }) => {
+  const { t } = useLocalization();
   const [isEditingFileName, setIsEditingFileName] = useState(false);
   const [tempFileName, setTempFileName] = useState(fileName);
   const fileNameInputRef = useRef<HTMLInputElement>(null);
@@ -86,7 +90,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                     : "text-gray-500 group-hover:text-gray-700"
                 }`}
               >
-                Window Header
+                {t("settingsPanel.makeup.windowHeader")}
               </span>
             </div>
             <div className="relative">
@@ -125,7 +129,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
             <div className="space-y-3 pl-4">
               <label className="flex items-center justify-between cursor-pointer">
                 <span className="text-xs text-gray-600 dark:text-gray-400">
-                  Show Border
+                  {t("settingsPanel.makeup.showBorder")}
                 </span>
                 <div className="relative">
                   <input
@@ -164,7 +168,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               <div className="flex items-center space-x-3">
                 <label className="text-xs flex items-center justify-between">
                   <span className="text-gray-600 dark:text-gray-400 w-24">
-                    Spacing
+                    {t("settingsPanel.makeup.spacing")}
                   </span>
                   <span className="bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-transparent font-bold">
                     {settings.headerGap ?? 0}px
@@ -191,7 +195,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               {/* Header Border Color */}
               <div className="flex items-center justify-between">
                 <label className="text-xs text-gray-600 dark:text-gray-400">
-                  Border Color
+                  {t("settingsPanel.makeup.borderColor")}
                 </label>
                 <input
                   type="color"
@@ -211,7 +215,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               <label className="flex items-center justify-between cursor-pointer">
                 <SubTitle
                   icon={TrafficCone}
-                  title="Traffic Light"
+                  title={t("settingsPanel.makeup.trafficLight")}
                   color={
                     settings.showTrafficLights
                       ? "text-green-500"
@@ -261,7 +265,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               {settings.showTrafficLights !== false && (
                 <>
                   <label className="flex items-center justify-between cursor-pointer">
-                    <span className="text-xs text-gray-500">Color</span>
+                    <span className="text-xs text-gray-500">
+                      {t("settingsPanel.makeup.trafficLightColor")}
+                    </span>
                     <div className="relative">
                       <input
                         type="checkbox"
@@ -299,7 +305,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   </label>
 
                   <div className="flex justify-between items-center">
-                    <span className="text-xs text-gray-500">Alignment</span>
+                    <span className="text-xs text-gray-500">
+                      {t("settingsPanel.makeup.alignment")}
+                    </span>
                     <div className="flex items-center space-x-2">
                       <button
                         type="button"
@@ -313,7 +321,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                           onUpdateSetting("windowHeaderAlign", "left")
                         }
                       >
-                        Left
+                        {t("settingsPanel.makeup.alignments.left")}
                       </button>
                       <button
                         type="button"
@@ -326,7 +334,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                           onUpdateSetting("windowHeaderAlign", "right")
                         }
                       >
-                        Right
+                        {t("settingsPanel.makeup.alignments.right")}
                       </button>
                     </div>
                   </div>
@@ -340,7 +348,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               <label className="flex items-center justify-between cursor-pointer">
                 <SubTitle
                   icon={Folder}
-                  title="File Name"
+                  title={t("settingsPanel.makeup.fileName")}
                   color={
                     settings.showFileName ? "text-yellow-500" : "text-gray-500"
                   }
@@ -394,7 +402,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                         onKeyDown={handleFileNameKeyDown}
                         onBlur={handleFileNameBlur}
                         className="flex-1 px-2.5 py-1.5 text-xs border border-gray-300/60 hover:border-gray-400/80 dark:border-gray-700/60 dark:hover:border-gray-600/80 dark:bg-gray-900 dark:text-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/60 transition-all duration-200"
-                        placeholder="Enter filename"
+                        placeholder={t(
+                          "settingsPanel.makeup.fileNamePlaceholder"
+                        )}
                       />
                     ) : (
                       <div
@@ -414,7 +424,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                         htmlFor="fileNameOpacity"
                         className="text-xs flex items-center justify-between w-full"
                       >
-                        <span className="text-xs text-gray-500">Opacity</span>
+                        <span className="text-xs text-gray-500">
+                          {t("settingsPanel.makeup.opacity")}
+                        </span>
 
                         <span className="text-xs bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent font-bold">
                           {Math.round((settings.fileNameOpacity ?? 1) * 100)}%
@@ -449,7 +461,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                         className="text-xs text-gray-700 flex items-center justify-between w-full"
                       >
                         <span className="text-xs text-gray-500">
-                          Font Weight
+                          {t("settingsPanel.makeup.fontWeight")}
                         </span>
                         <span className="text-xs bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent font-bold">
                           {settings.fileNameFontWeight ?? 400}
@@ -483,7 +495,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                         htmlFor="fileNameFontSize"
                         className="text-xs text-gray-700 flex items-center justify-between w-full"
                       >
-                        <span className="text-xs text-gray-500">Font Size</span>
+                        <span className="text-xs text-gray-500">
+                          {t("settingsPanel.makeup.fontSize")}
+                        </span>
                         <span className="text-xs bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent font-bold">
                           {settings.fileNameFontSize ?? 14}px
                         </span>
@@ -513,7 +527,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                     {/* Filename Alignment */}
                     <div className="flex items-center justify-between space-x-3">
                       <label className="text-xs text-gray-500 flex-1">
-                        Alignment
+                        {t("settingsPanel.makeup.alignment")}
                       </label>
                       <button
                         onClick={() => onUpdateSetting("fileNameAlign", "left")}
@@ -523,7 +537,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                             : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                         }`}
                       >
-                        Default
+                        {t("settingsPanel.makeup.alignments.default")}
                       </button>
                       <button
                         onClick={() =>
@@ -535,7 +549,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                             : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                         }`}
                       >
-                        Center
+                        {t("settingsPanel.makeup.alignments.center")}
                       </button>
                     </div>
                   </div>
@@ -549,7 +563,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               <label className="flex items-center justify-between cursor-pointer">
                 <SubTitle
                   icon={BarChart3}
-                  title="Project name"
+                  title={t("settingsPanel.makeup.projectName")}
                   color={
                     settings.showProjectName ? "text-sky-500" : "text-gray-500"
                   }
@@ -595,14 +609,18 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                 <div className="space-y-3">
                   {/* Project Name Input */}
                   <div className="flex flex-col space-y-2">
-                    <label className="text-xs text-gray-500">Custom Name</label>
+                    <label className="text-xs text-gray-500">
+                      {t("settingsPanel.makeup.customName")}
+                    </label>
                     <input
                       type="text"
                       value={settings.projectName || ""}
                       onChange={(e) =>
                         onUpdateSetting("projectName", e.target.value)
                       }
-                      placeholder="Enter project name..."
+                      placeholder={t(
+                        "settingsPanel.makeup.projectNamePlaceholder"
+                      )}
                       className="w-full px-3 py-2 text-sm rounded-lg
                         border border-gray-200 dark:border-gray-700
                         bg-white dark:bg-gray-900
@@ -618,7 +636,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                       htmlFor="projectNameOpacity"
                       className="text-xs text-gray-700 flex items-center justify-between w-full"
                     >
-                      <span className="text-xs text-gray-500">Opacity</span>
+                      <span className="text-xs text-gray-500">
+                        {t("settingsPanel.makeup.opacity")}
+                      </span>
                       <span className="text-xs bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-transparent font-bold">
                         {Math.round((settings.projectNameOpacity ?? 1) * 100)}%
                       </span>
@@ -650,7 +670,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                       htmlFor="projectNameFontWeight"
                       className="text-xs text-gray-700 flex items-center justify-between w-full"
                     >
-                      <span className="text-xs text-gray-500">Font Weight</span>
+                      <span className="text-xs text-gray-500">
+                        {t("settingsPanel.makeup.fontWeight")}
+                      </span>
                       <span className="text-xs bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-transparent font-bold">
                         {settings.projectNameFontWeight ?? 400}
                       </span>
@@ -683,7 +705,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                       htmlFor="projectNameFontSize"
                       className="text-xs text-gray-700 flex items-center justify-between w-full"
                     >
-                      <span className="text-xs text-gray-500">Font Size</span>
+                      <span className="text-xs text-gray-500">
+                        {t("settingsPanel.makeup.fontSize")}
+                      </span>
                       <span className="text-xs bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-transparent font-bold">
                         {settings.projectNameFontSize ?? 13}px
                       </span>
@@ -736,7 +760,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                     : "text-gray-500 group-hover:text-gray-700"
                 }`}
               >
-                Line Numbers
+                {t("settingsPanel.view.lineNumbers")}
               </span>
             </div>
             <div className="relative">
@@ -776,7 +800,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   htmlFor="lineNumberOpacity"
                   className="text-xs flex items-center justify-between w-full"
                 >
-                  <span className="text-xs text-gray-500">Opacity</span>
+                  <span className="text-xs text-gray-500">
+                    {t("settingsPanel.view.lineNumberOpacity")}
+                  </span>
                   <span className="text-xs bg-gradient-to-r from-teal-500 to-cyan-500 bg-clip-text text-transparent font-bold">
                     {Math.round((settings.lineNumberOpacity ?? 0.5) * 100)}%
                   </span>
@@ -804,7 +830,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                 />
               </div>
               <label className="flex items-center justify-between cursor-pointer">
-                <span className="text-xs text-gray-500">Border</span>
+                <span className="text-xs text-gray-500">
+                  {t("settingsPanel.view.lineNumberBorder")}
+                </span>
                 <div className="relative">
                   <input
                     type="checkbox"
@@ -896,7 +924,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   settings.showCaption ? "text-indigo-600" : "text-gray-500"
                 }`}
               >
-                Caption
+                {t("settingsPanel.makeup.caption")}
               </span>
             </div>
             <div className="relative">
@@ -937,11 +965,13 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                 value={settings.captionText || ""}
                 onChange={(e) => onUpdateSetting("captionText", e.target.value)}
                 className="w-full px-2.5 py-1.5 text-xs border border-gray-300/60 hover:border-gray-400/80 dark:border-gray-700/60 dark:hover:border-gray-600/80 dark:bg-gray-900 dark:text-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/60 transition-all duration-200"
-                placeholder="Enter figure caption..."
+                placeholder={t("settingsPanel.makeup.captionPlaceholder")}
               />
 
               <div className="flex justify-between items-center">
-                <span className="text-xs text-gray-500">Style</span>
+                <span className="text-xs text-gray-500">
+                  {t("settingsPanel.makeup.captionStyle")}
+                </span>
                 <div className="flex items-center space-x-1.5">
                   <button
                     onClick={() => onUpdateSetting("captionStyle", "normal")}
@@ -951,7 +981,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                         : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 py-[5px]"
                     }`}
                   >
-                    Normal
+                    {t("settingsPanel.makeup.captionStyles.normal")}
                   </button>
                   <button
                     onClick={() => onUpdateSetting("captionStyle", "italic")}
@@ -961,7 +991,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                         : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 py-[5px]"
                     }`}
                   >
-                    <em>Italic</em>
+                    <em>{t("settingsPanel.makeup.captionStyles.italic")}</em>
                   </button>
                 </div>
               </div>
@@ -971,7 +1001,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   htmlFor="captionOpacity"
                   className="text-xs flex items-center justify-between w-full"
                 >
-                  <span className="text-xs text-gray-500">Opacity</span>
+                  <span className="text-xs text-gray-500">
+                    {t("settingsPanel.makeup.opacity")}
+                  </span>
 
                   <span className="text-xs bg-gradient-to-r from-indigo-500 to-indigo-500 bg-clip-text text-transparent font-bold">
                     {Math.round((settings.captionOpacity || 1) * 100)}%
@@ -1000,7 +1032,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                 />
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-xs text-gray-500 mr-2">Position</span>
+                <span className="text-xs text-gray-500 mr-2">
+                  {t("settingsPanel.makeup.captionPosition")}
+                </span>
                 <div className="grid grid-cols-4 gap-1.5">
                   {["top", "bottom", "left", "right"].map((position) => (
                     <button
@@ -1017,7 +1051,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                           : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 py-[5px]"
                       }`}
                     >
-                      {position}
+                      {t(`settingsPanel.makeup.positions.${position}`)}
                     </button>
                   ))}
                 </div>
@@ -1033,7 +1067,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
           <div className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center justify-between">
             <label className="flex items-center text-yellow-600 dark:text-yellow-400">
               <Highlighter className="w-3.5 h-3.5 mr-1.5" />
-              Line Highlights
+              {t("settingsPanel.makeup.lineHighlights")}
             </label>
             <button
               type="button"
@@ -1053,7 +1087,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
               className="w-fit px-2 py-1 text-xs rounded-lg bg-gradient-to-r from-yellow-500 to-amber-500 dark:from-yellow-600 dark:to-amber-600 hover:from-yellow-600 hover:to-amber-600 dark:hover:from-yellow-700 dark:hover:to-amber-700 text-white shadow-sm transition-all flex items-center space-x-1"
             >
               <Plus className="w-3 h-3" />
-              Add
+              {t("settingsPanel.makeup.addHighlight")}
             </button>
           </div>
 
@@ -1074,7 +1108,9 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                         borderColor: highlight.color.slice(0, 7) + "40",
                       }}
                     >
-                      Preview: Lines {highlight.startLine}-{highlight.endLine}
+                      {t("settingsPanel.makeup.preview")}:{" "}
+                      {t("settingsPanel.makeup.lines")} {highlight.startLine}-
+                      {highlight.endLine}
                     </div>
                     <button
                       onClick={() => {
@@ -1093,7 +1129,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   {/* Type Selector */}
                   <div className="flex items-center gap-2">
                     <label className="text-[10px] text-gray-600 dark:text-gray-400 font-medium w-8">
-                      Type:
+                      {t("settingsPanel.makeup.highlightType")}:
                     </label>
                     <div className="flex-1 flex gap-1">
                       {[
@@ -1157,7 +1193,7 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                   {/* Line Range */}
                   <div className="flex items-center space-x-2">
                     <label className="text-[10px] text-gray-600 dark:text-gray-400 font-medium w-8">
-                      Lines:
+                      {t("settingsPanel.makeup.lines")}:
                     </label>
                     <input
                       type="number"
@@ -1174,10 +1210,10 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                         onUpdateSetting("highlights", newHighlights);
                       }}
                       className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none"
-                      placeholder="Start"
+                      placeholder={t("settingsPanel.makeup.startLine")}
                     />
                     <span className="text-xs text-gray-500 dark:text-gray-400 w-12">
-                      to
+                      {t("settingsPanel.makeup.lines").toLowerCase()}
                     </span>
                     <input
                       type="number"
@@ -1195,14 +1231,14 @@ const MakeupSection: React.FC<MakeupSectionProps> = ({
                         onUpdateSetting("highlights", newHighlights);
                       }}
                       className="w-full px-2 py-1 text-xs rounded-md border border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 outline-none"
-                      placeholder="End"
+                      placeholder={t("settingsPanel.makeup.endLine")}
                     />
                   </div>
 
                   {/* Color Picker */}
                   <div className="flex items-center justify-between space-x-2 w-full">
                     <label className="text-[10px] text-gray-600 dark:text-gray-400 font-medium w-8">
-                      Color:
+                      {t("settingsPanel.makeup.color")}:
                     </label>
                     <input
                       type="color"

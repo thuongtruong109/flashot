@@ -1,0 +1,658 @@
+{
+  "common": {
+    "copy": "Copy",
+    "download": "Download",
+    "save": "Save",
+    "export": "Export",
+    "import": "Import",
+    "settings": "Settings",
+    "close": "Close",
+    "cancel": "Cancel",
+    "reset": "Reset",
+    "apply": "Apply",
+    "all": "All",
+    "outer": "Outer",
+    "inner": "Inner"
+  },
+  "header": {
+    "brand": "Flashot",
+    "tips": "Tips & Info",
+    "shortcuts": "Shortcuts",
+    "guide": "Guide",
+    "json": "JSON",
+    "fileName": "File Name",
+    "copySuccess": "Copied!",
+    "generating": "Generating..."
+  },
+  "tipsModal": {
+    "title": "Information & Quick Start",
+    "about": {
+      "title": "About Flashot",
+      "description": "is a powerful, modern web application designed to help developers create stunning, professional code screenshots in seconds. Whether you're creating documentation, tutorials, social media posts, or presentations, Flashot makes your code look amazing.",
+      "keyFeaturesTitle": "Key Features",
+      "features": [
+        "50+ beautiful syntax themes",
+        "25+ programming languages supported",
+        "Multiple export formats (PNG, JPG, WebP, AVIF)",
+        "Real-time preview with live editing",
+        "Precise controls for padding, shadows, borders",
+        "Customizable dimensions and scaling",
+        "Window controls (macOS & Windows styles)",
+        "Save and load custom templates"
+      ],
+      "whyTitle": "Why Flashot?",
+      "whyItems": [
+        {
+          "title": "Lightning Fast",
+          "description": "Generate high-quality screenshots instantly with zero lag"
+        },
+        {
+          "title": "Developer Friendly",
+          "description": "Intuitive interface with keyboard shortcuts and smart defaults"
+        },
+        {
+          "title": "Highly Customizable",
+          "description": "Every aspect is configurable - make it truly yours"
+        }
+      ],
+      "contributeTitle": "Contribute",
+      "contributeText": "The project is Open Source and",
+      "githubLink": "available on GitHub",
+      "feedbackText": "If you have any questions or feedback, please",
+      "emailText": "send us an email",
+      "madeWith": "Made with",
+      "madeBy": "by Thuong Truong, for everyone"
+    },
+    "quickStart": {
+      "title": "Quick Start Guide",
+      "steps": [
+        {
+          "title": "Click on the code area",
+          "description": "to start editing your code directly"
+        },
+        {
+          "title": "Customize appearance",
+          "description": "using the Settings panel (themes, fonts, backgrounds)"
+        },
+        {
+          "title": "Export your image",
+          "description": "in multiple formats (PNG, JPG, WebP, AVIF)"
+        }
+      ]
+    },
+    "exportFormats": {
+      "title": "Export Formats",
+      "png": {
+        "name": "PNG",
+        "description": "High quality with transparency"
+      },
+      "jpg": {
+        "name": "JPG",
+        "description": "Compressed, solid background"
+      },
+      "webp": {
+        "name": "WebP",
+        "description": "Modern, great compression"
+      },
+      "avif": {
+        "name": "AVIF",
+        "description": "Next-gen, smallest size"
+      }
+    },
+    "languages": {
+      "title": "25+ Supported Languages"
+    },
+    "proTips": {
+      "title": "Pro Tips & Best Practices",
+      "tips": [
+        {
+          "title": "Use line numbers",
+          "description": "Perfect for code documentation and tutorials"
+        },
+        {
+          "title": "Try different themes",
+          "description": "Match your brand or presentation style"
+        },
+        {
+          "title": "Adjust padding",
+          "description": "Better framing for social media posts"
+        },
+        {
+          "title": "Save as JSON",
+          "description": "Backup and share your favorite configurations"
+        },
+        {
+          "title": "Window controls",
+          "description": "Authentic editor look for presentations"
+        },
+        {
+          "title": "Fullscreen mode",
+          "description": "Focus on editing with distraction-free view"
+        }
+      ]
+    }
+  },
+  "shortcutsModal": {
+    "title": "Keyboard Shortcuts",
+    "categories": {
+      "editor": {
+        "title": "Editor",
+        "shortcuts": [
+          { "key": "F", "description": "Focus editor" },
+          { "key": "Esc", "description": "Unfocus" },
+          { "key": "Tab", "description": "Indent" },
+          { "key": "Shift+Tab", "description": "Unindent" }
+        ]
+      },
+      "appearance": {
+        "title": "Appearance",
+        "shortcuts": [
+          { "key": "C", "description": "Colors" },
+          { "key": "B", "description": "Background" },
+          { "key": "D", "description": "Dark mode" },
+          { "key": "N", "description": "Line numbers" },
+          { "key": "P", "description": "Padding" },
+          { "key": "L", "description": "Language" }
+        ]
+      },
+      "exportShare": {
+        "title": "Export & Share",
+        "shortcuts": [
+          { "key": "Ctrl+S", "description": "Save PNG" },
+          { "key": "Ctrl+Shift+S", "description": "Save SVG" },
+          { "key": "Ctrl+C", "description": "Copy image" },
+          { "key": "Ctrl+Shift+C", "description": "Copy URL" },
+          { "key": "Ctrl+K", "description": "Export menu" }
+        ]
+      },
+      "navigation": {
+        "title": "Navigation",
+        "shortcuts": [
+          { "key": "?", "description": "Shortcuts" },
+          { "key": "F11", "description": "Fullscreen" }
+        ]
+      }
+    },
+    "proTip": {
+      "title": "💡 Pro Tip",
+      "description": "Single-key shortcuts work when not typing. Press",
+      "escKey": "Esc",
+      "exitText": "to exit editing mode first."
+    }
+  },
+  "settings": {
+    "theme": "Theme",
+    "language": "Language",
+    "font": "Font",
+    "fontSize": "Font Size",
+    "lineHeight": "Line Height",
+    "padding": "Padding",
+    "background": "Background",
+    "border": "Border",
+    "shadow": "Shadow",
+    "lineNumbers": "Line Numbers",
+    "windowControls": "Window Controls"
+  },
+  "actionBar": {
+    "export": "Export",
+    "exporting": "Exporting...",
+    "more": "More",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "sharePage": "Share page",
+    "reportIssue": "Report issue",
+    "info": "Info"
+  },
+  "exportFormats": {
+    "png": "PNG",
+    "jpg": "JPG",
+    "webp": "WebP",
+    "avif": "AVIF",
+    "svg": "SVG",
+    "original": "Original Code",
+    "plain": "Plain Text"
+  },
+  "editor": {
+    "clickToEdit": "Click to edit code",
+    "dragToResize": "Drag to resize",
+    "caption": "Caption",
+    "addCaption": "Add caption...",
+    "label": "Label",
+    "addLabel": "Add label...",
+    "import": "Import",
+    "importCodeFromUrl": "Import code from URL",
+    "clear": "Clear",
+    "clearConfirm": "Are you sure you want to clear the code?",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "share": "Share",
+    "clearCode": "Clear code",
+    "copyCode": "Copy code to clipboard",
+    "shareCode": "Share code snippet",
+    "failedToCopy": "Failed to copy code to clipboard",
+    "shareCodeSnippet": "Share Code Snippet",
+    "copyAsImageLink": "Copy as Image Link",
+    "copyAsImageLinkDesc": "Generate shareable link that displays image",
+    "copyImage": "Copy Image",
+    "copyImageDesc": "Copy image directly to clipboard",
+    "shareToSocial": "Share to Social",
+    "generating": "Generating...",
+    "copying": "Copying...",
+    "editorNotReady": "Editor not ready. Please try again.",
+    "linkCopied": "Link copied to clipboard! Paste it in browser to view the image.",
+    "imageCopied": "Image copied to clipboard!",
+    "linkCopiedPasteInDiscord": "Link copied! You can paste it in Discord.",
+    "linkCopiedPasteInSlack": "Link copied! You can paste it in Slack.",
+    "failedToGenerateLink": "Failed to generate shareable link.",
+    "failedToCopyImage": "Failed to copy image to clipboard.",
+    "failedToShare": "Failed to share to",
+    "shareSuccess": "Check out this beautiful code snippet!"
+  },
+  "settingsPanel": {
+    "title": "Settings",
+    "tabs": {
+      "view": "View",
+      "theme": "Theme",
+      "makeup": "Makeup",
+      "decorate": "Decorate",
+      "template": "Template"
+    },
+    "resetToDefaults": "Reset to defaults",
+    "view": {
+      "fontSize": "Font Size",
+      "lineHeight": "Line Height",
+      "wordWrap": "Word Wrap",
+      "sizing": "Sizing",
+      "customSize": "Custom Size",
+      "width": "Width",
+      "height": "Height",
+      "auto": "Auto",
+      "socialMediaSize": "Social Media Size",
+      "presets": {
+        "igSquare": "IG Square",
+        "igPortrait": "IG Portrait",
+        "igStory": "IG Story",
+        "twitter": "Twitter/X",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn",
+        "youtube": "YouTube"
+      },
+      "lineNumbers": "Line Numbers",
+      "lineNumberOpacity": "Number Opacity",
+      "lineNumberBorder": "Number Border",
+      "lineNumberAlign": "Number Align",
+      "textAlign": {
+        "left": "Left",
+        "center": "Center",
+        "right": "Right"
+      }
+    },
+    "theme": {
+      "language": "Language",
+      "fontFamily": "Font Family",
+      "colorTheme": "Color Theme",
+      "background": "Background",
+      "backgroundTabs": {
+        "custom": "Custom",
+        "gradient": "Gradient",
+        "solid": "Solid",
+        "pattern": "Pattern"
+      },
+      "customImage": "Custom Image",
+      "upload": "Upload",
+      "uploadFromDevice": "Upload image from device",
+      "imageUrlPlaceholder": "Enter image URL or upload from device",
+      "gradientAngle": "Gradient Angle",
+      "solidColors": "Solid Colors"
+    },
+    "makeup": {
+      "padding": "Padding",
+      "borderRadius": "Border Radius",
+      "frameBorderRadius": "Frame Border Radius",
+      "codeBorderRadius": "Code Border Radius",
+      "windowHeader": "Window Header",
+      "showBorder": "Show Border",
+      "spacing": "Spacing",
+      "borderColor": "Border Color",
+      "trafficLight": "Traffic Light",
+      "alignment": "Alignment",
+      "alignments": {
+        "left": "Left",
+        "right": "Right",
+        "default": "Default",
+        "center": "Center"
+      },
+      "fileName": "File Name",
+      "fileNamePlaceholder": "Enter filename",
+      "opacity": "Opacity",
+      "fontWeight": "Font Weight",
+      "fontWeights": {
+        "thin": "Thin",
+        "normal": "Normal",
+        "bold": "Bold"
+      },
+      "fontSize": "Font Size",
+      "fileNameAlign": "File Name Align",
+      "projectName": "Project Name",
+      "projectNamePlaceholder": "Enter project name",
+      "customName": "Custom Name",
+      "showBackground": "Show Background",
+      "gradientAngle": "Gradient Angle",
+      "trafficLightColor": "Color",
+      "caption": "Caption",
+      "captionPlaceholder": "Enter figure caption...",
+      "captionStyle": "Style",
+      "captionStyles": {
+        "normal": "Normal",
+        "italic": "Italic"
+      },
+      "captionPosition": "Position",
+      "positions": {
+        "top": "Top",
+        "bottom": "Bottom",
+        "left": "Left",
+        "right": "Right"
+      },
+      "lineHighlights": "Line Highlights",
+      "addHighlight": "Add",
+      "preview": "Preview",
+      "lines": "Lines",
+      "startLine": "Start Line",
+      "endLine": "End Line",
+      "color": "Color",
+      "highlightType": "Type",
+      "highlightTypes": {
+        "add": "Add",
+        "remove": "Remove"
+      },
+      "delete": "Delete"
+    },
+    "decorate": {
+      "frameBorder": "Frame border",
+      "style": "Style",
+      "borderStyles": {
+        "none": "None",
+        "solid": "Solid",
+        "dashed": "Dashed",
+        "dotted": "Dotted",
+        "double": "Double"
+      },
+      "width": "Width",
+      "offset": "Offset",
+      "color": "Color",
+      "opacity": "Opacity",
+      "caption": "Caption",
+      "captionText": "Caption Text",
+      "captionPlaceholder": "Enter caption text",
+      "captionStyle": "Caption Style",
+      "captionOpacity": "Caption Opacity",
+      "captionPosition": "Caption Position",
+      "captionStyles": {
+        "normal": "Normal",
+        "italic": "Italic",
+        "bold": "Bold"
+      },
+      "captionPositions": {
+        "top": "Top",
+        "bottom": "Bottom"
+      },
+      "label": "Label",
+      "labelText": "Label Text",
+      "labelPlaceholder": "Created by @username",
+      "labelAlignment": "Label Alignment",
+      "labelOpacity": "Label Opacity",
+      "labelColor": "Label Color",
+      "labelFontSize": "Label Font Size",
+      "watermark": "Watermark",
+      "type": "Type",
+      "watermarkTypes": {
+        "text": "Text",
+        "image": "Image"
+      },
+      "watermarkTextPlaceholder": "Enter watermark text",
+      "fontSize": "Font Size",
+      "fontWeight": "Font Weight",
+      "fontWeights": {
+        "thin": "Thin",
+        "normal": "Normal",
+        "bold": "Bold"
+      },
+      "upload": "Upload",
+      "reset": "Reset",
+      "imageUrlPlaceholder": "Or enter image URL...",
+      "height": "Height",
+      "positionX": "Position X",
+      "positionY": "Position Y",
+      "rotation": "Rotation",
+      "headerGap": "Header Gap",
+      "headerBorder": "Header Border",
+      "headerBorderColor": "Header Border Color",
+      "imageFilters": "Image Filters",
+      "grayscale": "Grayscale",
+      "sepia": "Sepia",
+      "blur": "Blur",
+      "brightness": "Brightness",
+      "contrast": "Contrast",
+      "saturate": "Saturate",
+      "hueRotate": "Hue Rotate",
+      "invert": "Invert"
+    },
+    "template": {
+      "saveTemplate": "Save Template",
+      "loadTemplate": "Load Template",
+      "import": "Import",
+      "export": "Export",
+      "importDescription": "Import a saved template (JSON file) to restore settings and code",
+      "exportDescription": "Export current settings and code as a reusable template",
+      "dragDropDescription": "Drag & drop JSON file here",
+      "or": "or",
+      "selectFile": "Select file",
+      "invalidJson": "Invalid JSON file",
+      "importSuccess": "Template imported successfully",
+      "invalidTemplateFormat": "Invalid template format",
+      "errorParsingJson": "Error parsing JSON file",
+      "currentTemplate": "Current Template",
+      "exportSuccess": "Template exported successfully",
+      "description": "Save your current configuration as a template or load a previously saved one.",
+      "popularTemplates": "Popular Templates",
+      "templates": {
+        "cyberpunk-neon": {
+          "name": "Cyberpunk Neon",
+          "description": "High-contrast neon with futuristic vibes"
+        },
+        "minimal-zen": {
+          "name": "Minimal Zen",
+          "description": "Ultra-clean white space design"
+        },
+        "retro-sunset": {
+          "name": "Retro Sunset",
+          "description": "Warm 80s sunset vibes"
+        },
+        "arctic-ice": {
+          "name": "Arctic Ice",
+          "description": "Cool Nordic-inspired frost theme"
+        },
+        "dark-hacker": {
+          "name": "Dark Hacker",
+          "description": "Matrix-style terminal look"
+        }
+      }
+    }
+  },
+  "searchModal": {
+    "placeholder": "Search settings and features...",
+    "noResults": "No results found for",
+    "tryDifferent": "Try different keywords or check spelling",
+    "navigate": "Navigate",
+    "select": "Select",
+    "close": "Close",
+    "result": "result",
+    "results": "results",
+    "categories": {
+      "view": "View",
+      "theme": "Theme",
+      "decorate": "Decorate",
+      "general": "General"
+    },
+    "items": {
+      "fontSize": {
+        "title": "Font Size",
+        "description": "Adjust the size of code text"
+      },
+      "padding": {
+        "title": "Padding",
+        "description": "Control spacing around code block"
+      },
+      "borderRadius": {
+        "title": "Border Radius",
+        "description": "Adjust corner roundness"
+      },
+      "sizing": {
+        "title": "Image Sizing",
+        "description": "Set custom width and height"
+      },
+      "wordWrap": {
+        "title": "Word Wrap",
+        "description": "Enable text wrapping for long lines"
+      },
+      "projectName": {
+        "title": "Project Name",
+        "description": "Display custom project name in header"
+      },
+      "lineNumbers": {
+        "title": "Line Numbers",
+        "description": "Show or hide line numbers"
+      },
+      "windowHeader": {
+        "title": "Window Header",
+        "description": "Toggle window control buttons"
+      },
+      "filename": {
+        "title": "File Name",
+        "description": "Show or customize file name"
+      },
+      "language": {
+        "title": "Programming Language",
+        "description": "Select syntax highlighting language"
+      },
+      "fontFamily": {
+        "title": "Font Family",
+        "description": "Choose code font style"
+      },
+      "colorTheme": {
+        "title": "Color Theme",
+        "description": "Select syntax color scheme"
+      },
+      "background": {
+        "title": "Background",
+        "description": "Choose background color or gradient"
+      },
+      "pattern": {
+        "title": "Pattern Background",
+        "description": "Apply brand-inspired patterns"
+      },
+      "gradientAngle": {
+        "title": "Gradient Angle",
+        "description": "Adjust gradient direction"
+      },
+      "border": {
+        "title": "Border Customization",
+        "description": "Add and style borders"
+      },
+      "watermark": {
+        "title": "Watermark",
+        "description": "Add text or image watermark"
+      },
+      "label": {
+        "title": "Label",
+        "description": "Add custom label to image"
+      },
+      "highlights": {
+        "title": "Line Highlights",
+        "description": "Highlight specific code lines"
+      },
+      "export": {
+        "title": "Export Image",
+        "description": "Download as PNG, JPG, or SVG"
+      },
+      "copy": {
+        "title": "Copy to Clipboard",
+        "description": "Quick copy image or code"
+      },
+      "import": {
+        "title": "Import Code",
+        "description": "Load code from URL or GitHub"
+      },
+      "shortcuts": {
+        "title": "Keyboard Shortcuts",
+        "description": "View all available shortcuts"
+      }
+    }
+  },
+  "importDialog": {
+    "title": "Import Code",
+    "subtitle": "Paste raw code URL",
+    "placeholder": "https://raw.githubusercontent.com/...",
+    "urlRequired": "Please enter a URL",
+    "fetchFailed": "Failed to fetch",
+    "emptyContent": "The URL returned empty content",
+    "importError": "Failed to fetch code from URL",
+    "successMessage": "Code imported successfully!",
+    "exampleLabel": "Example:",
+    "exampleGithub": "• GitHub raw file",
+    "exampleGist": "• GitHub Gist raw",
+    "cancel": "Cancel",
+    "import": "Import",
+    "importing": "Importing..."
+  },
+  "tourGuide": {
+    "buttons": {
+      "next": "Next →",
+      "previous": "← Previous",
+      "done": "Done ✓",
+      "progress": "{{current}} of {{total}}"
+    },
+    "steps": {
+      "welcome": {
+        "title": "🎨 Welcome to Flashot Playground",
+        "description": "Welcome to Flashot! A powerful tool for creating beautiful, professional code screenshots with extensive customization options. Let's take a quick tour of all the features!"
+      },
+      "actionBar": {
+        "title": "🛠️ Main Action Bar",
+        "description": "Your command center with essential tools for managing your code screenshots. Let's explore each button in detail!"
+      },
+      "exportButton": {
+        "title": "📥 Export Button",
+        "description": "Download your code screenshot in various formats: PNG, JPG, WebP, AVIF for images, or Original/Plain Text for code. Click the dropdown to choose your preferred format. Each format has different quality and file size characteristics."
+      },
+      "moreMenu": {
+        "title": "⚙️ More Menu",
+        "description": "Access additional features: Guide (restart this tour), Info (quick tips and shortcuts), Share (share the page), and Report Issue (submit feedback on GitHub)."
+      },
+      "darkModeToggle": {
+        "title": "🌓 Dark Mode Toggle",
+        "description": "Switch between light and dark themes. Your preference is saved automatically for future visits."
+      },
+      "backgroundSelector": {
+        "title": "🎨 Background Canvas",
+        "description": "This is the canvas area where your code editor sits. The background can be customized from the Makeup tab in Settings. Choose solid colors, beautiful gradients, or even transparent backgrounds. The grid helps you align your code perfectly."
+      },
+      "codeEditor": {
+        "title": "📝 Interactive Code Editor",
+        "description": "This is your main workspace. Click anywhere on the code to start editing. You can drag the borders to resize, and the editor supports syntax highlighting for 26+ programming languages with real-time preview. Click on the filename to edit it!"
+      },
+      "settingsPanel": {
+        "title": "⚙️ Settings Panel",
+        "description": "Customize every aspect of your code screenshot here. Includes sections for: View (dimensions, language), Theme (editor themes), Makeup (colors, fonts), Decorate (window controls, shadows), and Templates (save/load presets). On desktop, this panel is always visible on the right side."
+      },
+      "proTips": {
+        "title": "💡 Pro Tips",
+        "description": "Remember: Use Ctrl+Enter or Esc to exit edit mode, Tab/Shift+Tab to indent/unindent code. Your editor position and size are preserved as you work. Export supports multiple formats with different compression levels. Click on filename to edit it directly!"
+      },
+      "finish": {
+        "title": "🎉 You're All Set!",
+        "description": "You now know all the features of Flashot Playground! Start creating beautiful code screenshots. If you need help anytime, click the Guide option in the More menu. Happy coding! 🚀"
+      }
+    }
+  }
+}

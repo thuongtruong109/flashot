@@ -1,7 +1,10 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { Move, CornerRightDown, Type, WrapText } from "lucide-react";
 import { CodeSettings } from "@/types";
 import HighlightOverlay from "../HighlightOverlay";
+import { useLocalization } from "../../../LocalizationContext";
 
 interface ViewSectionProps {
   settings: CodeSettings;
@@ -17,6 +20,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
   highlightItemId,
   onUpdateSetting,
 }) => {
+  const { t } = useLocalization();
   const [widthInput, setWidthInput] = useState(
     settings.width?.toString() || ""
   );
@@ -40,7 +44,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
           <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
             <div className="flex items-center text-orange-600">
               <Type className="w-3.5 h-3.5 mr-1.5" />
-              Font Size
+              {t("settingsPanel.view.fontSize")}
             </div>
             <span className="text-xs bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent font-bold">
               {settings.fontSize}px
@@ -73,7 +77,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
           <label className="text-xs font-semibold text-gray-700 flex items-center justify-between">
             <div className="flex items-center text-pink-600">
               <Move className="w-3.5 h-3.5 mr-1.5" />
-              Padding
+              {t("settingsPanel.makeup.padding")}
             </div>
             <span className="text-xs bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent font-bold">
               {settings.padding}px
@@ -108,11 +112,13 @@ const ViewSection: React.FC<ViewSectionProps> = ({
         <div>
           <label className="text-sm font-medium text-teal-600 dark:text-teal-400 flex items-center space-x-2 mb-4">
             <CornerRightDown className="w-3.5 h-3.5 mr-1.5" />
-            Border Radius
+            {t("settingsPanel.makeup.borderRadius")}
           </label>
           <div className="space-y-3">
             <div className="flex items-center space-x-3">
-              <span className="text-xs text-gray-500 w-24">All</span>
+              <span className="text-xs text-gray-500 w-24">
+                {t("common.all")}
+              </span>
               <span className="text-xs bg-gradient-to-r from-teal-500 to-cyan-500 bg-clip-text text-transparent font-bold">
                 {settings.borderRadius}px
               </span>
@@ -138,7 +144,9 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             </div>
 
             <div className="flex items-center space-x-3">
-              <span className="text-xs text-gray-500 w-24">Outer</span>
+              <span className="text-xs text-gray-500 w-24">
+                {t("common.outer")}
+              </span>
               <span className="text-xs bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent font-bold">
                 {settings.frameBorderRadius ?? settings.borderRadius}px
               </span>
@@ -161,7 +169,9 @@ const ViewSection: React.FC<ViewSectionProps> = ({
             </div>
 
             <div className="flex items-center space-x-3">
-              <span className="text-xs text-gray-500 w-24">Inner</span>
+              <span className="text-xs text-gray-500 w-24">
+                {t("common.inner")}
+              </span>
               <span className="text-xs bg-gradient-to-r from-indigo-500 to-blue-500 bg-clip-text text-transparent font-bold">
                 {settings.codeBorderRadius ?? settings.borderRadius}px
               </span>
@@ -191,7 +201,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
         <div className="space-y-2">
           <label className="text-blue-600 text-sm font-medium mb-4 flex items-center">
             <Move className="w-3.5 h-3.5 mr-1.5" />
-            Sizing
+            {t("settingsPanel.view.sizing")}
           </label>
 
           <div className="flex items-center space-x-2">
@@ -281,14 +291,14 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                   : "text-white bg-gradient-to-r from-blue-500 to-indigo-500 dark:from-blue-600 dark:to-indigo-600 hover:from-blue-600 hover:to-indigo-600 dark:hover:from-blue-700 dark:hover:to-indigo-700 shadow-md cursor-pointer"
               }`}
             >
-              Auto
+              {t("settingsPanel.view.auto")}
             </button>
           </div>
 
           {/* Social Media Size Presets */}
           <div className="mb-3 space-y-2">
             <p className="text-[10px] text-gray-500 font-medium mb-1.5">
-              Social Media Size
+              {t("settingsPanel.view.socialMediaSize")}
             </p>
             <div className="grid grid-cols-4 gap-1.5">
               <button
@@ -303,7 +313,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-pink-500 to-rose-500 text-white hover:from-pink-600 hover:to-rose-600 shadow-sm transition-all"
                 title="Instagram Square Post (1:1)"
               >
-                IG Square
+                {t("settingsPanel.view.presets.igSquare")}
               </button>
               <button
                 onClick={() => {
@@ -320,7 +330,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-sm transition-all"
                 title="Instagram Portrait Post (4:5)"
               >
-                IG Portrait
+                {t("settingsPanel.view.presets.igPortrait")}
               </button>
               <button
                 onClick={() => {
@@ -337,7 +347,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-fuchsia-500 to-purple-500 text-white hover:from-fuchsia-600 hover:to-purple-600 shadow-sm transition-all"
                 title="Instagram Story (9:16)"
               >
-                IG Story
+                {t("settingsPanel.view.presets.igStory")}
               </button>
               <button
                 onClick={() => {
@@ -354,7 +364,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 shadow-sm transition-all"
                 title="Twitter/X Post (16:9)"
               >
-                Twitter/X
+                {t("settingsPanel.view.presets.twitter")}
               </button>
               <button
                 onClick={() => {
@@ -371,7 +381,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-blue-600 to-blue-800 text-white hover:from-blue-700 hover:to-blue-900 shadow-sm transition-all"
                 title="Facebook Post (1.91:1)"
               >
-                Facebook
+                {t("settingsPanel.view.presets.facebook")}
               </button>
               <button
                 onClick={() => {
@@ -388,7 +398,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-blue-700 to-indigo-700 text-white hover:from-blue-800 hover:to-indigo-800 shadow-sm transition-all"
                 title="LinkedIn Post (1.91:1)"
               >
-                LinkedIn
+                {t("settingsPanel.view.presets.linkedin")}
               </button>
               <button
                 onClick={() => {
@@ -405,7 +415,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 className="px-2 py-1 text-[10px] rounded-md bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 shadow-sm transition-all"
                 title="YouTube Thumbnail (16:9)"
               >
-                YouTube
+                {t("settingsPanel.view.presets.youtube")}
               </button>
               <button
                 onClick={() => {
@@ -448,7 +458,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                     : "text-gray-500 group-hover:text-gray-700"
                 }`}
               >
-                Word Wrap
+                {t("settingsPanel.view.wordWrap")}
               </span>
             </div>
             <div className="relative">

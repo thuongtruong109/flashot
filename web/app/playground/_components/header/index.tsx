@@ -49,26 +49,28 @@ export default function Header({
         <Brand />
       </div>
 
-      <div data-tour="action-bar" className="flex-shrink-0 ml-auto">
-        <ActionBar
-          onCopy={onCopy}
-          onDownload={onDownload}
-          onShowSettings={onShowSettings}
-          onShowJSON={onShowJSON}
-          onShowTips={onShowTips}
-          onShowGuide={onShowGuide}
-          onShowShortcuts={onShowShortcuts}
-          onNavigateToSection={onNavigateToSection}
-          copySuccess={copySuccess}
-          isGenerating={isGenerating}
-          fileName={fileName}
-          onFileNameChange={onFileNameChange}
-          showSettingsPanel={showSettingsPanel}
-          showJSONPanel={showJSONPanel}
-          settings={settings}
-          onUpdateSetting={onUpdateSetting as any}
-          className="w-full lg:w-auto"
-        />
+      <div className="flex items-center gap-2 ml-auto">
+        <div data-tour="action-bar" className="flex-shrink-0">
+          <ActionBar
+            onCopy={onCopy}
+            onDownload={onDownload}
+            onShowSettings={onShowSettings}
+            onShowJSON={onShowJSON}
+            onShowTips={onShowTips}
+            onShowGuide={onShowGuide}
+            onShowShortcuts={onShowShortcuts}
+            onNavigateToSection={onNavigateToSection}
+            copySuccess={copySuccess}
+            isGenerating={isGenerating}
+            fileName={fileName}
+            onFileNameChange={onFileNameChange}
+            showSettingsPanel={showSettingsPanel}
+            showJSONPanel={showJSONPanel}
+            settings={settings}
+            onUpdateSetting={onUpdateSetting as any}
+            className="w-full lg:w-auto"
+          />
+        </div>
       </div>
     </div>
   );

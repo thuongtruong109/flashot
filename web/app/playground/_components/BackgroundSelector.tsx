@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Palette, Upload, X, Link as LinkIcon } from "lucide-react";
 import { cn, transparentGridPatterns } from "@/utils";
 import PatternSelector from "./PatternSelector";
+import { useLocalization } from "../LocalizationContext";
 
 interface BackgroundSelectorProps {
   selectedBackground: string;
@@ -122,6 +123,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
   selectedPattern = "none",
   onPatternChange,
 }) => {
+  const { t } = useLocalization();
   const [transparentGridDataUrl, setTransparentGridDataUrl] =
     useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
@@ -299,10 +301,22 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
       {/* Tab Buttons */}
       <div className="flex items-center space-x-2 mb-4">
         {[
-          { value: "custom", label: "Custom" },
-          { value: "gradient", label: "Gradient" },
-          { value: "solid", label: "Solid" },
-          { value: "pattern", label: "Pattern" },
+          {
+            value: "custom",
+            label: t("settingsPanel.theme.backgroundTabs.custom"),
+          },
+          {
+            value: "gradient",
+            label: t("settingsPanel.theme.backgroundTabs.gradient"),
+          },
+          {
+            value: "solid",
+            label: t("settingsPanel.theme.backgroundTabs.solid"),
+          },
+          {
+            value: "pattern",
+            label: t("settingsPanel.theme.backgroundTabs.pattern"),
+          },
         ].map((tab) => (
           <button
             key={tab.value}
@@ -326,7 +340,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
       {activeTab === "custom" && (
         <div className="space-y-1">
           <label className="text-[10px] font-medium text-gray-500 dark:text-gray-400 tracking-wider">
-            Custom Image
+            {t("settingsPanel.theme.customImage")}
           </label>
 
           {/* URL Input and Buttons */}
@@ -338,7 +352,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
                 onChange={handleUrlInputChange}
                 onBlur={handleUrlInputBlur}
                 readOnly={isImageUploaded}
-                placeholder="Enter image URL or upload from device"
+                placeholder={t("settingsPanel.theme.imageUrlPlaceholder")}
                 className={cn(
                   "w-full px-2 py-1.5 text-xs rounded-md border transition-all outline-none",
                   isImageUploaded
@@ -353,10 +367,12 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
               type="button"
               onClick={handleUploadButtonClick}
               className="px-2 py-1.5 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white shadow-sm hover:shadow-md transition-all duration-200 flex items-center gap-1.5"
-              title="Upload image from device"
+              title={t("settingsPanel.theme.uploadFromDevice")}
             >
               <Upload className="w-3.5 h-3.5" />
-              <span className="text-xs font-medium">Upload</span>
+              <span className="text-xs font-medium">
+                {t("settingsPanel.theme.upload")}
+              </span>
             </button>
 
             {/* Reset Button */}
@@ -392,7 +408,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
               <div className="py-3">
                 <label className="text-xs flex items-center justify-between">
                   <span className="text-gray-600 dark:text-gray-400">
-                    Gradient Angle
+                    {t("settingsPanel.theme.gradientAngle")}
                   </span>
                   <span className="text-purple-600 dark:text-purple-400 font-medium">
                     {gradientAngle}°
@@ -437,7 +453,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
       {activeTab === "solid" && (
         <div className="space-y-2">
           <p className="text-[10px] font-medium text-gray-500 dark:text-gray-400 tracking-wider">
-            Solid Colors
+            {t("settingsPanel.theme.solidColors")}
           </p>
           <div className="grid grid-cols-5 gap-2.5">
             {backgrounds

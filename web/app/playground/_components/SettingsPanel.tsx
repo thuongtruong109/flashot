@@ -1,3 +1,5 @@
+"use client";
+
 interface SettingsPanelProps {
   settings: CodeSettings;
   fileName: string;
@@ -34,6 +36,7 @@ import {
 import CustomSelect from "./base/Select";
 import { _PLAYGROUND_SETTINGS_TAB, DEFAULT_CODE_SETTINGS } from "@/shared";
 import ViewSection from "./setting/section/View";
+import { useLocalization } from "../LocalizationContext";
 
 const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
   (
@@ -55,6 +58,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
     },
     ref
   ) => {
+    const { t } = useLocalization();
     const [isEditingFileName, setIsEditingFileName] = useState(false);
     const [tempFileName, setTempFileName] = useState(fileName);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -178,7 +182,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                     label: (
                       <span className="flex items-center gap-1.5 text-green-600">
                         <Layers className="size-3" />{" "}
-                        {_PLAYGROUND_SETTINGS_TAB.VIEW}
+                        {t("settingsPanel.tabs.view")}
                       </span>
                     ),
                   },
@@ -187,7 +191,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                     label: (
                       <span className="flex items-center gap-1.5 text-purple-600">
                         <Palette className="size-3" />{" "}
-                        {_PLAYGROUND_SETTINGS_TAB.THEME}
+                        {t("settingsPanel.tabs.theme")}
                       </span>
                     ),
                   },
@@ -196,7 +200,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                     label: (
                       <span className="flex items-center gap-1.5 text-cyan-600">
                         <Move className="size-3" />{" "}
-                        {_PLAYGROUND_SETTINGS_TAB.MAKEUP}
+                        {t("settingsPanel.tabs.makeup")}
                       </span>
                     ),
                   },
@@ -205,7 +209,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                     label: (
                       <span className="flex items-center gap-1.5 text-rose-600">
                         <Stamp className="size-3" />{" "}
-                        {_PLAYGROUND_SETTINGS_TAB.DECORATE}
+                        {t("settingsPanel.tabs.decorate")}
                       </span>
                     ),
                   },
@@ -214,7 +218,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
                     label: (
                       <span className="flex items-center gap-1.5 text-indigo-600">
                         <FileJson className="size-3" />{" "}
-                        {_PLAYGROUND_SETTINGS_TAB.TEMPLATE}
+                        {t("settingsPanel.tabs.template")}
                       </span>
                     ),
                   },
@@ -227,8 +231,8 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
             <button
               type="button"
               onClick={handleResetToDefaults}
-              title="Reset to defaults"
-              aria-label="Toggle settings panel"
+              title={t("settingsPanel.resetToDefaults")}
+              aria-label={t("settingsPanel.resetToDefaults")}
               className="text-red-500 dark:text-red-400 font-light
       bg-white/70 dark:bg-gray-800/70 backdrop-blur-md
       shadow-[0_4px_16px_-4px_rgba(0,0,0,0.1),0_1px_1px_rgba(255,255,255,0.5)_inset]

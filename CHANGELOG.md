@@ -1,19 +1,29 @@
-## [v2.5.1 - 2025-11-10](https://github.com/thuongtruong109/flashot/releases/tag/v2.5.1)
+## [v2.7.0 - 2025-11-10](https://github.com/thuongtruong109/flashot/releases/tag/v2.7.0)
 
 ### 🚀 Features
 
 - ## **playground**:
-  - Match selected highlights with search results matching - by @thuongtruong109 [<samp>()</samp>]()
-  - Search functionality for finding settings - by @thuongtruong109 [<samp>()</samp>]()
+  - Custom reuse modals from base component - by @thuongtruong109 [<samp>()</samp>]()
+  - Comprehensive localization support with multi-language translations - by @thuongtruong109 [<samp>()</samp>]()
 
-##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.5.0...v2.5.1) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.5.1)
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.6.0...v2.7.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.7.0)
+
+## [v2.6.0 - 2025-11-09](https://github.com/thuongtruong109/flashot/releases/tag/v2.6.0)
+
+### 🚀 Features
+
+- ## **playground**:
+  - Match selected highlights with search results matching - by @thuongtruong109 [<samp>(a3816)</samp>](https://github.com/thuongtruong109/flashot/commit/a38161d9aae32db736ec9048c54bb3c56c7b6162)
+  - Search functionality for finding settings - by @thuongtruong109 [<samp>(8d00a)</samp>](https://github.com/thuongtruong109/flashot/commit/8d00a77b9ee1a53d9a3ca4e3c8f62aa7461a6308)
+  - Pattern choice for background - by @thuongtruong109 [<samp>(eb501)</samp>](https://github.com/thuongtruong109/flashot/commit/eb50172a555e6b655f1939b5bd1abec944670889)
+
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.5.0...v2.6.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.6.0)
 
 ## [v2.5.0 - 2025-11-04](https://github.com/thuongtruong109/flashot/releases/tag/v2.5.0)
 
 ### 🚀 Features
 
 - ## **playground**:
-  - Pattern choice for background - by @thuongtruong109 [<samp>(eb501)</samp>](https://github.com/thuongtruong109/flashot/commit/eb50172a555e6b655f1939b5bd1abec944670889)
   - Modal guide for keyboard shortcuts - by @thuongtruong109 [<samp>(52ae9)</samp>](https://github.com/thuongtruong109/flashot/commit/52ae97079b25a0337e03f4aad7ac30a103ff25c0)
   - Import and detect code from URL - by @thuongtruong109 [<samp>(204f3)</samp>](https://github.com/thuongtruong109/flashot/commit/204f3f376454ec5a870567d66def8430a5e1aad8)
   - Custom label setting (text, font size, color, opacity, alignment) - by @thuongtruong109 [<samp>(43ff4)</samp>](https://github.com/thuongtruong109/flashot/commit/43ff4ccd4f14ce2253b2bafac9ace494f8f5ff00)
