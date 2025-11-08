@@ -17,104 +17,35 @@ export const generateCodeImage = async (
   try {
     const html2canvas = (await import("html2canvas")).default;
 
-    // Determine background based on user settings and format
-    let backgroundColor: string | undefined = undefined;
+    // For transparent background option, temporarily remove the grid pattern
+    let originalBackground: string = "";
+    let originalBackgroundColor: string = "";
+    let originalBackgroundImage: string = "";
 
-    if (format === "jpg" || format === "jpeg") {
-      // JPG doesn't support transparency, use checkered pattern for transparent backgrounds
-      if (options.showBackground && options.background === "transparent") {
-        backgroundColor = "#ffffff"; // Use white background for JPG when transparent is selected
-      } else {
-        backgroundColor = "#ffffff"; // Default white for JPG
-      }
-    } else if (
-      (format === "png" || format === "webp" || format === "avif") &&
-      options.showBackground &&
-      options.background === "transparent"
-    ) {
-      // PNG, WebP, AVIF with transparent background - only make the outer container transparent
-      // Store original styles of the main element only
-      const mainOriginalStyles = {
-        background: elementRef.style.background,
-        backgroundColor: elementRef.style.backgroundColor,
-        backgroundImage: elementRef.style.backgroundImage,
-      };
+    if (options.showBackground && options.background === "transparent") {
+      originalBackground = elementRef.style.background;
+      originalBackgroundColor = elementRef.style.backgroundColor;
+      originalBackgroundImage = elementRef.style.backgroundImage;
 
-      // Make only the main element transparent (keep code editor backgrounds)
-      elementRef.style.background = "none";
+      // Remove transparent grid pattern for export
+      elementRef.style.background = "transparent";
       elementRef.style.backgroundColor = "transparent";
       elementRef.style.backgroundImage = "none";
-
-      // Capture with transparent outer background but preserve inner content backgrounds
-      const canvas = await html2canvas(elementRef, {
-        useCORS: true,
-        allowTaint: true,
-        logging: false,
-        backgroundColor: null, // Set to null for transparent background per docs
-        onclone: (clonedDoc: Document) => {
-          try {
-            // Hide resize handles during export
-            const resizeHandles = clonedDoc.querySelectorAll(
-              "[data-export-ignore]"
-            );
-            resizeHandles.forEach((handle) => {
-              (handle as HTMLElement).style.display = "none";
-            });
-
-            // Only fix vertical alignment - don't touch any other styles
-            const filenameEl = clonedDoc.querySelector(
-              "[data-export-filename]"
-            ) as HTMLElement | null;
-            const linecountEl = clonedDoc.querySelector(
-              "[data-export-linecount]"
-            ) as HTMLElement | null;
-
-            if (filenameEl) {
-              filenameEl.style.transform = "translateY(-7px)";
-              filenameEl.style.overflow = "visible";
-              filenameEl.style.lineHeight = "normal";
-            }
-
-            if (linecountEl) {
-              linecountEl.style.transform = "translateY(-8px)";
-              linecountEl.style.overflow = "visible";
-              linecountEl.style.lineHeight = "normal";
-            }
-          } catch (e) {
-            // Ignore clone styling errors
-          }
-        },
-      } as any);
-
-      // Restore main element styles
-      elementRef.style.background = mainOriginalStyles.background;
-      elementRef.style.backgroundColor = mainOriginalStyles.backgroundColor;
-      elementRef.style.backgroundImage = mainOriginalStyles.backgroundImage;
-
-      // Return with appropriate format and transparency
-      switch (format.toLowerCase()) {
-        case "webp":
-          return canvas.toDataURL("image/webp", 0.95);
-        case "avif":
-          if (canvas.toDataURL("image/avif")) {
-            return canvas.toDataURL("image/avif", 0.85);
-          }
-          return canvas.toDataURL("image/webp", 0.85);
-        case "png":
-        default:
-          return canvas.toDataURL("image/png", 1.0);
-      }
-    } else {
-      // All other cases - let html2canvas capture the element's actual background
-      backgroundColor = undefined;
     }
 
-    // Simple approach - just capture the element
+    // Determine background based on format
+    // ALWAYS use null for wrapper background to ensure transparency
+    const backgroundColor =
+      format === "jpg" || format === "jpeg"
+        ? "#ffffff" // JPG doesn't support transparency
+        : null; // PNG, WebP, AVIF - transparent wrapper
+
+    // Capture with transparent wrapper
     const canvas = await html2canvas(elementRef, {
       useCORS: true,
       allowTaint: true,
       logging: false,
-      background: backgroundColor,
+      backgroundColor: backgroundColor, // This controls the WRAPPER background
       onclone: (clonedDoc: Document) => {
         try {
           // Hide resize handles during export
@@ -145,10 +76,17 @@ export const generateCodeImage = async (
             linecountEl.style.lineHeight = "normal";
           }
         } catch (e) {
-          // ignore
+          // Ignore clone styling errors
         }
       },
     } as any);
+
+    // Restore original background for transparent grid pattern
+    if (options.showBackground && options.background === "transparent") {
+      elementRef.style.background = originalBackground;
+      elementRef.style.backgroundColor = originalBackgroundColor;
+      elementRef.style.backgroundImage = originalBackgroundImage;
+    }
 
     // Handle different formats
     switch (format.toLowerCase()) {

@@ -3,8 +3,13 @@
 ### 🚀 Features
 
 - ## **playground**:
-  - Custom reuse modals from base component - by @thuongtruong109 [<samp>()</samp>]()
-  - Comprehensive localization support with multi-language translations - by @thuongtruong109 [<samp>()</samp>]()
+  - Custom reuse modals from base component - by @thuongtruong109 [<samp>(56984)</samp>](https://github.com/thuongtruong109/flashot/commit/5698478b0224cea0629282080c5ffab58395cde8)
+  - Comprehensive localization support with multi-language translations - by @thuongtruong109 [<samp>(b2904)</samp>](https://github.com/thuongtruong109/flashot/commit/b2904de4096e7bd8821e88a87ae4e5fcdc9b3ca0)
+
+### 🐞 Bug Fixes
+
+- ## **playground**:
+  - Transparent export for wrapper frame - by @thuongtruong109 [<samp>()</samp>]()
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.6.0...v2.7.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.7.0)
 

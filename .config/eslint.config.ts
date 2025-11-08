@@ -18,5 +18,11 @@ export default defineConfig([
       "sonarjs/no-nested-conditional": "off",
     },
   },
-  globalIgnores(["*/dist/**/*", "*/dist/*", "*/dist/*", "web/**/*"]),
+  globalIgnores([
+    "*/dist/**/*",
+    "*/dist/*",
+    "*/dist/*",
+    "web/**/*",
+    "app/**/*",
+  ]),
 ]);
