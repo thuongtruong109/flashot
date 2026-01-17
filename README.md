@@ -102,15 +102,12 @@ flashot -h
 #### Build Instructions
 
 ```bash
-# Clone the repository
 git clone https://github.com/thuongtruong109/flashot.git
 cd flashot
 
-# Install dependencies
-npm install
+bun install
 
-# Build the desktop app
-npm run tauri build
+bun run app:build
 ```
 
 The built application will be available in `src-tauri/target/release/`.
@@ -311,7 +308,7 @@ const defaultOptions = {
 | 3   | 100 lines  | 343126433 ± 0.29%  | 343616650 ± 2711850   | 3 ± 0.29%              | 3 ± 0                  | 64      |
 | 4   | 1000 lines | 1726190939 ± 0.46% | 1715535300 ± 13138650 | 1 ± 0.45%              | 1 ± 0                  | 64      |
 
-## � Docker Deployment
+## ⚓ Docker Deployment
 
 Flashot API is available as Docker images on both GitHub Container Registry and Docker Hub.
 
@@ -379,7 +376,7 @@ curl -X POST http://localhost:8080/ \
 
 For detailed deployment instructions, see [api/DEPLOYMENT.md](./api/DEPLOYMENT.md).
 
-## �📚 Technologies
+## 📚 Technologies
 
 - ⚡ **[Bun](https://bun.sh)** - Fast all-in-one JavaScript runtime and toolkit
 - 🏗️ **[TypeScript](https://www.typescriptlang.org/)** - Type-safe development with strict mode enabled

@@ -23,6 +23,6 @@ export default defineConfig([
     "*/dist/*",
     "*/dist/*",
     "web/**/*",
-    "app/**/*",
+    "src-tauri/target/*",
   ]),
 ]);
