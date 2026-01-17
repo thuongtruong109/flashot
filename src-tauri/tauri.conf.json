@@ -1,6 +1,6 @@
 {
   "bundle": {
-    "active": false,
+    "active": true,
     "targets": ["nsis"],
     "windows": {
       "certificateThumbprint": null,
@@ -16,29 +16,30 @@
     ],
     "resources": [],
     "externalBin": [],
-    "copyright": "",
+    "copyright": "Tran Nguyen Thuong Truong",
     "category": "DeveloperTool",
-    "shortDescription": "",
-    "longDescription": "",
+    "shortDescription": "Rapidly snapshot code snippets as images",
+    "longDescription": "Flashot is the blazing-fast image generation tool for code snippets with elegant design and flawless performance",
     "macOS": {},
     "linux": {
       "deb": {}
     }
   },
   "build": {
-    "beforeBuildCommand": "cd web && bun run build",
+    "beforeBuildCommand": "bun run web:build",
     "frontendDist": "../web/out",
-    "beforeDevCommand": "cd web && bun run dev",
+    "beforeDevCommand": "bun run web:dev",
     "devUrl": "http://localhost:3000"
   },
   "productName": "Flashot",
-  "version": "1.5.1",
-  "identifier": "",
+  "version": "1.0.0",
+  "identifier": "com.thuongtruong109.flashot",
   "plugins": {},
   "app": {
     "windows": [
       {
         "title": "Flashot",
+        "label": "main",
         "width": 1366,
         "height": 768,
         "minWidth": 375,

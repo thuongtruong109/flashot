@@ -2,12 +2,23 @@
 
 use tauri::{
 	menu::{Menu, MenuItem},
-	tray::TrayIconBuilder
+	tray::TrayIconBuilder,
+	Manager
 };
 
 pub fn run() {
     tauri::Builder::default()
 		.setup(|app| {
+			if let Some(main) = app.get_webview_window("main") {
+				main.eval(r#"
+				(function () {
+					const target = "/playground";
+					if (window.location.pathname === "/" || window.location.pathname === "/index.html") {
+					window.location.replace(target);
+					}
+				})();
+				"#)?;
+			}
 			let quit_i = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
 			let menu = Menu::with_items(app, &[&quit_i])?;
 

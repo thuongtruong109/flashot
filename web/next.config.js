@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
+  output: "standalone",
+  distDir: "dist",
   trailingSlash: true,
   reactStrictMode: true,
   images: {
@@ -50,4 +51,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
