@@ -5,19 +5,24 @@
 - **app**:
   - Build desktop app for Window - by @thuongtruong109 [<samp>(573eb)</samp>](https://github.com/thuongtruong109/flashot/commit/573ebbb5a5157788400904c05e8c44a76a81e71e)
 
+### 🐞 Bug Fixes
+
+- **web**:
+  - Skip default Next optimize export assets path for app build - by @thuongtruong109 [<samp>(e77d2)</samp>](https://github.com/thuongtruong109/flashot/commit/e77d2e9bdf208669c2706f71382dc2e401078f57)
+
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.7.0...v2.8.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.8.0)
 
 ## [v2.7.0 - 2025-11-10](https://github.com/thuongtruong109/flashot/releases/tag/v2.7.0)
 
 ### 🚀 Features
 
-- **playground**:
+- **web**:
   - Custom reuse modals from base component - by @thuongtruong109 [<samp>(56984)</samp>](https://github.com/thuongtruong109/flashot/commit/5698478b0224cea0629282080c5ffab58395cde8)
   - Comprehensive localization support with multi-language translations - by @thuongtruong109 [<samp>(b2904)</samp>](https://github.com/thuongtruong109/flashot/commit/b2904de4096e7bd8821e88a87ae4e5fcdc9b3ca0)
 
 ### 🐞 Bug Fixes
 
-- **playground**:
+- **web**:
   - Transparent export for wrapper frame - by @thuongtruong109 [<samp>(be26d)</samp>](https://github.com/thuongtruong109/flashot/commit/be26d1a70010b94315e42233a1b166ba4eb012e1)
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.6.0...v2.7.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.7.0)
@@ -26,7 +31,7 @@
 
 ### 🚀 Features
 
-- **playground**:
+- **web**:
   - Match selected highlights with search results matching - by @thuongtruong109 [<samp>(a3816)</samp>](https://github.com/thuongtruong109/flashot/commit/a38161d9aae32db736ec9048c54bb3c56c7b6162)
   - Search functionality for finding settings - by @thuongtruong109 [<samp>(8d00a)</samp>](https://github.com/thuongtruong109/flashot/commit/8d00a77b9ee1a53d9a3ca4e3c8f62aa7461a6308)
   - Pattern choice for background - by @thuongtruong109 [<samp>(eb501)</samp>](https://github.com/thuongtruong109/flashot/commit/eb50172a555e6b655f1939b5bd1abec944670889)
@@ -37,7 +42,7 @@
 
 ### 🚀 Features
 
-- **playground**:
+- **web**:
   - Modal guide for keyboard shortcuts - by @thuongtruong109 [<samp>(52ae9)</samp>](https://github.com/thuongtruong109/flashot/commit/52ae97079b25a0337e03f4aad7ac30a103ff25c0)
   - Import and detect code from URL - by @thuongtruong109 [<samp>(204f3)</samp>](https://github.com/thuongtruong109/flashot/commit/204f3f376454ec5a870567d66def8430a5e1aad8)
   - Custom label setting (text, font size, color, opacity, alignment) - by @thuongtruong109 [<samp>(43ff4)</samp>](https://github.com/thuongtruong109/flashot/commit/43ff4ccd4f14ce2253b2bafac9ace494f8f5ff00)
@@ -51,7 +56,7 @@
 
 ### 🚀 Features
 
-- **playground**:
+- **web**:
   - stable gutter for setting scroll bar when dropdown open - by @thuongtruong109 [<samp>(18ab1)</samp>](https://github.com/thuongtruong109/flashot/commit/18ab1e0f70e513c845ee80deeb3f611f87f069cf)
   - Hide editor ruler when mouse out & enhance background UI - by @thuongtruong109 [<samp>(d0749)</samp>](https://github.com/thuongtruong109/flashot/commit/d07498bb5ff1e1df02a729d9c8b5b7ecddbc335e)
   - Improved manifest and social sharing support - by @thuongtruong109 [<samp>(1c382)</samp>](https://github.com/thuongtruong109/flashot/commit/1c382af38480049e77b6fee978d8e07dff1d6aea)
@@ -68,7 +73,7 @@
 
 ### 🚀 Features
 
-- **playground**:
+- **web**:
   - Custom watermark with text/image - by @thuongtruong109 [<samp>(e8cde)</samp>](https://github.com/thuongtruong109/flashot/commit/e8cde1d35a0020825f97040ea8478b5cee9b109f)
   - Custom highlight diff code changes - by @thuongtruong109 [<samp>(fdfe9)</samp>](https://github.com/thuongtruong109/flashot/commit/fdfe9a16d59ede975ef7ae8e4d18c51cafb9141b)
   - Custom background image with upload from device or external URL - by @thuongtruong109 [<samp>(ă0b7)</samp>](https://github.com/thuongtruong109/flashot/commit/a80b728a08c4c41edb536f8d15ce01263891658a)
@@ -79,7 +84,7 @@
 
 ### 🚀 Features
 
-- **playground**:
+- **web**:
   - add social size presets - by @thuongtruong109 [<samp>(120df)</samp>](https://github.com/thuongtruong109/flashot/commit/120df77d1058a0a64ea279b41ef0a480208f613a)
   - add ruler size indicator - by @thuongtruong109 [<samp>(7b896)</samp>](https://github.com/thuongtruong109/flashot/commit/7b896ba1c889e69bd057dc9e44bbda22af8874ce)
   - line count number style options - by @thuongtruong109 [<samp>(575c2)</samp>](https://github.com/thuongtruong109/flashot/commit/575c281e5120edfac75af34030f047c9a66b1a10)
@@ -100,7 +105,7 @@
 
 ### 🐞 Bug Fixes
 
-- **playground**:
+- **web**:
   - resolve header shift down after export - by @thuongtruong109 [<samp>(84432)</samp>](https://github.com/thuongtruong109/flashot/commit/84432ceb1516a4c9dab9f28ccc831b565cd681d0)
   - calculating caption position - by @thuongtruong109 [<samp>(33cca)</samp>](https://github.com/thuongtruong109/flashot/commit/33ccafcd7f97deeddd1b1a7241e8c81ff304e658)
   - auto full size code content match with frame - by @thuongtruong109 [<samp>(a646c)</samp>](https://github.com/thuongtruong109/flashot/commit/a646c4a18c730ccb8a7e2c9976cf3f0e6153b04c)
@@ -119,7 +124,7 @@
 
 ### 🐞 Bug Fixes
 
-- **playground**: fix export menu option & code editor background style matching setting - by @thuongtruong109 [<samp>(8d631)</samp>](https://github.com/thuongtruong109/flashot/commit/8d631a841e3d7606408e41ac3d5f11374f4d3aab)
+- **web**: fix export menu option & code editor background style matching setting - by @thuongtruong109 [<samp>(8d631)</samp>](https://github.com/thuongtruong109/flashot/commit/8d631a841e3d7606408e41ac3d5f11374f4d3aab)
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.0.0...v2.1.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.1.0)
 

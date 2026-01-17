@@ -18,11 +18,5 @@ export default defineConfig([
       "sonarjs/no-nested-conditional": "off",
     },
   },
-  globalIgnores([
-    "*/dist/**/*",
-    "*/dist/*",
-    "*/dist/*",
-    "web/**/*",
-    "src-tauri/target/*",
-  ]),
+  globalIgnores(["*/dist/**/*", "*/dist/*", "web/**/*", "src-tauri/target/*"]),
 ]);
