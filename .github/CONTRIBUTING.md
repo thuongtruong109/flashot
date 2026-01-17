@@ -24,15 +24,27 @@ Thank you for your interest in contributing! This guide covers setup, developmen
    ```
 
 3. **Configure Git hooks (recommended):**
+
    ```bash
    bunx lefthook install
    ```
 
+4. **Prerequisites for Desktop App (Tauri):**
+   - [Node.js](https://nodejs.org/) (version 18 or higher)
+   - [Rust](https://rustup.rs/) (latest stable)
+   - [Tauri CLI](https://tauri.app/v1/guides/getting-started/prerequisites)
+
 ## 🚀 Run
 
 - **Start development server (watch mode):**
+
   ```bash
   bun run dev
+  ```
+
+- **Start Tauri development (desktop app):**
+  ```bash
+  bun run tauri dev
   ```
 
 ## 🧪 Test
@@ -69,8 +81,14 @@ bun bench
   ```
 
 - **Build with Vite:**
+
   ```bash
   bun run build:vite
+  ```
+
+- **Build Tauri desktop app:**
+  ```bash
+  bun run tauri build
   ```
 
 ## 🧹 Lint & Format

@@ -36,6 +36,7 @@
   - 🌐 **URL support:** Fetch code snippets directly from URLs
   - 🗂️ **File path support:** Convert code snippets from local files
   - 🗃️ **Buffer support:** Convert code snippets from buffers
+- 🖼️ **Desktop App:** Native desktop application built with Tauri for a seamless user experience
 - 🎨 **Customizable styles:** Choose from various options to match your style
 - 📦 **Lightweight:** Minimal dependencies to keep your project lean
 - 📏 **Line numbers:** Support for displaying & customizing line numbers
@@ -89,6 +90,30 @@ Then quick check from terminal with CLI runner
 ```bash
 flashot -h
 ```
+
+### 🖥️ For Desktop app usage, build from source:
+
+#### Prerequisites
+
+- [Node.js](https://nodejs.org/) (version 18 or higher)
+- [Rust](https://rustup.rs/) (latest stable)
+- [Tauri CLI](https://tauri.app/v1/guides/getting-started/prerequisites)
+
+#### Build Instructions
+
+```bash
+# Clone the repository
+git clone https://github.com/thuongtruong109/flashot.git
+cd flashot
+
+# Install dependencies
+npm install
+
+# Build the desktop app
+npm run tauri build
+```
+
+The built application will be available in `src-tauri/target/release/`.
 
 ## 🪔 Usage Example
 
@@ -170,6 +195,10 @@ flashot buffer "<Buffer 54 68 69 73 20 69 73 20 61 20 62 75 66 66 65 72 20 65 78
 ```bash
 flashot path "../package.json" <...options>
 ```
+
+### 🖥️ For Desktop app usage, launch the built application:
+
+After building the desktop app as described in the installation section, run the executable from `src-tauri/target/release/`. The desktop app provides a graphical interface for all Flashot features, including code input, option customization, and image generation.
 
 ## Options
 
@@ -364,6 +393,7 @@ For detailed deployment instructions, see [api/DEPLOYMENT.md](./api/DEPLOYMENT.m
 - 🧩 **[Lefthook](https://github.com/evilmartians/lefthook)** and **[Commitlint](https://commitlint.js.org/)** - Automated Git hooks for linting and formatting
 - 🛠️ **[Tinybench](https://github.com/tinybench/tinybench)** - A tiny benchmarking library for measuring performance
 - 🖥️ **[Commander](https://github.com/tj/commander.js)** - A popular library for building command-line interfaces
+- 🖼️ **[Tauri](https://tauri.app/)** - Build smaller, faster, and more secure desktop applications with a web frontend
 
 ## 🤝 Contributing
 
