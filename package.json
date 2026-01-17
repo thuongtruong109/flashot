@@ -22,7 +22,14 @@
     "biome:fix": "biome check --write .",
     "check": "bun run lint && bun run biome",
     "check:fix": "bun run lint:fix && bun run biome:fix && bun run biome:lint && bun run biome:format",
-    "prepare": "bun lefthook run pre-commit && bun lefthook run pre-push"
+    "prepare": "bun lefthook run pre-commit && bun lefthook run pre-push",
+    "deps": "cd web && bun install",
+    "app:dev": "tauri dev",
+    "app:build": "tauri build",
+    "app:build:debug": "tauri build --debug",
+    "web:dev": "cd web && bun run dev",
+    "web:build": "cd web && bun run build",
+    "web:start": "cd web && bun run start"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.2",
@@ -34,6 +41,15 @@
     "eslint-plugin-sonarjs": "^3.0.5",
     "globals": "^16.3.0",
     "lefthook": "^1.12.4",
-    "typescript-eslint": "^8.46.0"
+    "typescript-eslint": "^8.46.0",
+    "@tauri-apps/cli": "^2.9.6"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.9.1",
+    "@tauri-apps/plugin-fs": "^2.4.4",
+    "@tauri-apps/plugin-notification": "^2.3.3",
+    "@tauri-apps/plugin-os": "^2.3.2",
+    "@tauri-apps/plugin-shell": "^2.3.3",
+    "@tauri-apps/plugin-store": "^2.4.1"
   }
 }

@@ -4,3 +4,8 @@ dist
 *.log
 .DS_Store
 app
+.data
+.cache
+.env
+.cargo
+src-tauri/target

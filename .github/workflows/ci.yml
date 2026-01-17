@@ -12,6 +12,7 @@ on:
       - "api/**"
       - "web/**"
       - "cli/**"
+      - "src-tauri/**"
   pull_request:
     branches: [main]
     paths:
@@ -23,6 +24,7 @@ on:
       - "api/**"
       - "web/**"
       - "cli/**"
+      - "src-tauri/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -37,6 +39,7 @@ jobs:
       api-changed: ${{ steps.changes.outputs.api }}
       web-changed: ${{ steps.changes.outputs.web }}
       cli-changed: ${{ steps.changes.outputs.cli }}
+      tauri-changed: ${{ steps.changes.outputs.tauri }}
 
     steps:
       - name: 📥 Checkout
@@ -55,6 +58,8 @@ jobs:
               - 'web/**'
             cli:
               - 'cli/**'
+            tauri:
+              - 'src-tauri/**'
 
       - name: ⚡ Setup Bun
         uses: oven-sh/setup-bun@v1
@@ -250,6 +255,65 @@ jobs:
           flashot --version || exit 1
         continue-on-error: true
 
+  build-app:
+    name: 🖥️ Build App
+    runs-on: ${{ matrix.os }}
+    needs: test-package
+    if: needs.test-package.outputs.tauri-changed == 'true' || needs.test-package.outputs.package-changed == 'true' || needs.test-package.outputs.web-changed == 'true' || contains(github.event.head_commit.message, '[build-tauri]') || github.event_name == 'pull_request'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+          - os: macos-latest
+            target: x86_64-apple-darwin
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: ⚡ Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: 🦀 Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: 📦 Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+
+      - name: 📦 Install package dependencies
+        working-directory: package
+        run: bun install
+
+      - name: 🏗️ Build package
+        working-directory: package
+        run: bun run build
+
+      - name: 📦 Install web dependencies
+        working-directory: web
+        run: bun install
+
+      - name: 🏗️ Build web
+        working-directory: web
+        run: bun run build
+
+      - name: 🏗️ Build Tauri app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectPath: src-tauri
+          tauriScript: tauri
+
   security-scan:
     name: 🔒 Security Scan
     runs-on: ubuntu-latest
@@ -289,7 +353,8 @@ jobs:
   summary:
     name: 📋 CI Summary
     runs-on: ubuntu-latest
-    needs: [test-package, test-api, test-web, test-cli, security-scan]
+    needs:
+      [test-package, test-api, test-web, test-cli, build-tauri, security-scan]
     if: always()
 
     steps:
@@ -302,6 +367,7 @@ jobs:
           echo "| 🚀 API | ${{ needs.test-api.result == 'success' && '✅ Passed' || needs.test-api.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
           echo "| 🌐 Web | ${{ needs.test-web.result == 'success' && '✅ Passed' || needs.test-web.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
           echo "| 🖥️ CLI | ${{ needs.test-cli.result == 'success' && '✅ Passed' || needs.test-cli.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🖥️ Tauri App | ${{ needs.build-tauri.result == 'success' && '✅ Passed' || needs.build-tauri.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
           echo "| 🔒 Security | ${{ needs.security-scan.result == 'success' && '✅ Passed' || needs.security-scan.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
 
           # Check if any required job failed
