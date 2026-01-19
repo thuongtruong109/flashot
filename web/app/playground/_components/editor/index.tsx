@@ -22,6 +22,7 @@ import Caption from "@/app/playground/_components/editor/Caption";
 import ActionButtons from "@/app/playground/_components/editor/ActionButtons";
 import Label from "@/app/playground/_components/editor/Label";
 import { useLocalization } from "../../LocalizationContext";
+import Image from "next/image";
 
 interface EditorProps {
   code: string;
@@ -32,7 +33,7 @@ interface EditorProps {
   className?: string;
   onUpdateSetting?: <K extends keyof CodeSettings>(
     key: K,
-    value: CodeSettings[K]
+    value: CodeSettings[K],
   ) => void;
   onPositionChange?: (position: { x: number; y: number }) => void;
   onSizeChange?: (size: { width: number; height: number }) => void;
@@ -55,7 +56,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       onHoverChange,
       onShowImport,
     },
-    ref
+    ref,
   ) => {
     const { t } = useLocalization();
     const [isEditing, setIsEditing] = useState(false);
@@ -93,7 +94,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       if (result) {
         return `rgba(${parseInt(result[1], 16)}, ${parseInt(
           result[2],
-          16
+          16,
         )}, ${parseInt(result[3], 16)}, ${opacity})`;
       }
       return hex;
@@ -105,12 +106,12 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
 
       // Match linear-gradient with any angle format
       const gradientMatch = background.match(
-        /linear-gradient\s*\(\s*(\d+)deg\s*,/
+        /linear-gradient\s*\(\s*(\d+)deg\s*,/,
       );
       if (gradientMatch) {
         return background.replace(
           /linear-gradient\s*\(\s*\d+deg\s*,/,
-          `linear-gradient(${angle}deg,`
+          `linear-gradient(${angle}deg,`,
         );
       }
 
@@ -119,7 +120,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       if (simpleGradientMatch) {
         return background.replace(
           /linear-gradient\s*\(/,
-          `linear-gradient(${angle}deg, `
+          `linear-gradient(${angle}deg, `,
         );
       }
 
@@ -148,7 +149,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
 
       return applyGradientAngle(
         settings.background,
-        settings.gradientAngle || 135
+        settings.gradientAngle || 135,
       );
     };
 
@@ -170,7 +171,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
           });
         }
       },
-      [ref, onSizeChange]
+      [ref, onSizeChange],
     );
 
     // Auto-focus when entering edit mode
@@ -280,7 +281,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       (e: React.ChangeEvent<HTMLInputElement>) => {
         setEditingFilename(e.target.value);
       },
-      []
+      [],
     );
 
     const handleFilenameBlur = useCallback(() => {
@@ -351,7 +352,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
           setEditingFilename("");
         }
       },
-      []
+      [],
     );
 
     // Auto-focus filename input when editing starts
@@ -428,7 +429,13 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
         });
         setStartPosition({ x: position.x, y: position.y });
       },
-      [isFullscreen, onUpdateSetting, settings.width, settings.height, position]
+      [
+        isFullscreen,
+        onUpdateSetting,
+        settings.width,
+        settings.height,
+        position,
+      ],
     );
 
     const handleResizeMove = useCallback(
@@ -461,7 +468,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
         const clampedWidth = Math.min(800, Math.max(360, Math.round(newWidth)));
         const clampedHeight = Math.min(
           800,
-          Math.max(100, Math.round(newHeight))
+          Math.max(100, Math.round(newHeight)),
         );
 
         onUpdateSetting("width", clampedWidth);
@@ -483,7 +490,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
         resizeDirection,
         startPosition,
         onSizeChange,
-      ]
+      ],
     );
 
     const handleResizeEnd = useCallback(() => {
@@ -553,7 +560,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
               setTimeout(() => {
                 target.setSelectionRange(
                   Math.max(0, start - removed),
-                  Math.max(0, start - removed)
+                  Math.max(0, start - removed),
                 );
               }, 0);
             }
@@ -568,14 +575,14 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
           }
         }
       },
-      [code, onChange]
+      [code, onChange],
     );
 
     const lineCount = code.split("\n").length;
 
     return (
       <div
-        className={`relative group transition-all duration-300 ${
+        className={`group transition-all duration-300${
           isFullscreen
             ? "fixed inset-0 z-50 bg-black/95 backdrop-blur-xl p-8 flex items-center justify-center"
             : ""
@@ -602,14 +609,14 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
               settings.showBackground && settings.background === "transparent"
                 ? "repeat"
                 : settings.background.startsWith("url(")
-                ? "no-repeat"
-                : "no-repeat",
+                  ? "no-repeat"
+                  : "no-repeat",
             backgroundSize:
               settings.showBackground && settings.background === "transparent"
                 ? "auto"
                 : settings.background.startsWith("url(")
-                ? "cover"
-                : "cover",
+                  ? "cover"
+                  : "cover",
             backgroundPosition: settings.background.startsWith("url(")
               ? "center"
               : "center",
@@ -633,31 +640,31 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
             width: isFullscreen
               ? "auto"
               : settings.width
-              ? `${settings.width}px`
-              : isEditing && previewWidth
-              ? `${previewWidth}px`
-              : "auto",
+                ? `${settings.width}px`
+                : isEditing && previewWidth
+                  ? `${previewWidth}px`
+                  : "auto",
+            minWidth: isFullscreen ? "auto" : "360px",
+            maxWidth: isFullscreen ? "none" : "800px",
             height: isFullscreen
               ? "auto"
               : settings.height
-              ? `${settings.height}px`
-              : "auto",
-            minWidth: isFullscreen ? "auto" : "360px",
-            maxWidth: isFullscreen ? "none" : "800px",
+                ? `${settings.height}px`
+                : "auto",
             maxHeight: isFullscreen
               ? "none"
               : settings.height
-              ? `${settings.height}px`
-              : "800px",
+                ? `${settings.height}px`
+                : "800px",
             display: "flex",
             flexDirection:
               settings.captionPosition === "top"
                 ? "column-reverse"
                 : settings.captionPosition === "left"
-                ? "row-reverse"
-                : settings.captionPosition === "right"
-                ? "row"
-                : "column",
+                  ? "row-reverse"
+                  : settings.captionPosition === "right"
+                    ? "row"
+                    : "column",
             transform: !isFullscreen
               ? `translate(-50%, -50%) translate(${position.x}px, ${position.y}px)`
               : undefined,
@@ -676,7 +683,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   backgroundImage: `url("${getPatternSvgDataUrl(
-                    settings.backgroundPattern
+                    settings.backgroundPattern,
                   )}")`,
                   backgroundRepeat: "repeat",
                   backgroundSize: "auto",
@@ -727,7 +734,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                 data-export-ignore
                 className="absolute right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                 style={{
-                  top: "-44px", // Position above the editor
+                  top: "-44px",
                   zIndex: 50,
                 }}
               >
@@ -756,7 +763,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                         settings.borderStyle ?? "solid"
                       } ${hexToRgba(
                         settings.borderColor ?? "#ffffff",
-                        settings.borderOpacity ?? 1
+                        settings.borderOpacity ?? 1,
                       )}`,
                       outlineOffset: `${settings.borderOffset}px`,
                     }
@@ -769,7 +776,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                         settings.borderStyle ?? "solid"
                       } ${hexToRgba(
                         settings.borderColor ?? "#ffffff",
-                        settings.borderOpacity ?? 1
+                        settings.borderOpacity ?? 1,
                       )}`,
                     }
                   : {}),
@@ -850,7 +857,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                             style={{
                               opacity: isEditingFilename
                                 ? 0
-                                : settings.fileNameOpacity ?? 1,
+                                : (settings.fileNameOpacity ?? 1),
                               fontWeight: settings.fileNameFontWeight ?? 400,
                               fontSize: settings.fileNameFontSize ?? 14,
                             }}
@@ -860,7 +867,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                             {settings.language === "plaintext"
                               ? fileName
                               : `${fileName}.${getFileExtension(
-                                  settings.language
+                                  settings.language,
                                 )}`}
                           </span>
                         )}
@@ -998,7 +1005,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                             style={{
                               opacity: isEditingFilename
                                 ? 0
-                                : settings.fileNameOpacity ?? 1,
+                                : (settings.fileNameOpacity ?? 1),
                               fontWeight: settings.fileNameFontWeight ?? 400,
                               fontSize: settings.fileNameFontSize ?? 14,
                             }}
@@ -1008,7 +1015,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                             {settings.language === "plaintext"
                               ? fileName
                               : `${fileName}.${getFileExtension(
-                                  settings.language
+                                  settings.language,
                                 )}`}
                           </span>
                         )}
@@ -1097,8 +1104,8 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                             settings.lineNumberTextAlign === "left"
                               ? "items-start"
                               : settings.lineNumberTextAlign === "center"
-                              ? "items-center"
-                              : "items-end"
+                                ? "items-center"
+                                : "items-end"
                           }`}
                           style={{
                             backgroundColor: currentTheme.background,
@@ -1143,7 +1150,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                                   const highlight = settings.highlights?.find(
                                     (h) =>
                                       lineIndex + 1 >= h.startLine &&
-                                      lineIndex + 1 <= h.endLine
+                                      lineIndex + 1 <= h.endLine,
                                   );
                                   return (
                                     <div
@@ -1188,7 +1195,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                               __html: syntaxHighlight(
                                 code,
                                 settings.language as SupportedLanguage,
-                                currentTheme
+                                currentTheme,
                               ),
                             }}
                           />
@@ -1227,8 +1234,8 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                           settings.lineNumberTextAlign === "left"
                             ? "items-start"
                             : settings.lineNumberTextAlign === "center"
-                            ? "items-center"
-                            : "items-end"
+                              ? "items-center"
+                              : "items-end"
                         }`}
                         style={{
                           color: currentTheme.foreground + "60",
@@ -1275,7 +1282,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                                 const highlight = settings.highlights?.find(
                                   (h) =>
                                     lineIndex + 1 >= h.startLine &&
-                                    lineIndex + 1 <= h.endLine
+                                    lineIndex + 1 <= h.endLine,
                                 );
                                 return (
                                   <div
@@ -1317,9 +1324,9 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                           minHeight: 0,
                           boxSizing: "border-box",
                           overflowY: "hidden",
-                          overflowX: "hidden", // Hide X scrollbar on textarea
-                          width: "100%", // Ensure full width
-                          minWidth: settings.wordWrap ? "100%" : "max-content", // Allow horizontal overflow
+                          overflowX: "hidden",
+                          width: "100%",
+                          minWidth: settings.wordWrap ? "100%" : "max-content",
                         }}
                         placeholder="Start typing your code..."
                       />
@@ -1333,7 +1340,9 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                 <>
                   {settings.watermark.type === "image" &&
                   settings.watermark.imageUrl ? (
-                    <img
+                    <Image
+                      width={settings.watermark.imageWidth}
+                      height={settings.watermark.imageHeight}
                       src={settings.watermark.imageUrl}
                       alt="Watermark"
                       className="absolute pointer-events-none select-none z-50"
@@ -1342,8 +1351,6 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                         top: `${settings.watermark.y}%`,
                         transform: `translate(-50%, -50%) rotate(${settings.watermark.rotation}deg)`,
                         opacity: settings.watermark.opacity,
-                        width: `${settings.watermark.imageWidth}px`,
-                        height: `${settings.watermark.imageHeight}px`,
                         objectFit: "contain",
                         filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.1))",
                       }}
@@ -1472,7 +1479,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 Editor.displayName = "Editor";
