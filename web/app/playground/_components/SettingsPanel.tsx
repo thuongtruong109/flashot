@@ -10,7 +10,7 @@ interface SettingsPanelProps {
   onChangeActiveMenu?: (menu: string | undefined) => void;
   onUpdateSetting: <K extends keyof CodeSettings>(
     key: K,
-    value: CodeSettings[K]
+    value: CodeSettings[K],
   ) => void;
   onFileNameChange: (fileName: string) => void;
   onCodeChange?: (code: string) => void;
@@ -56,17 +56,17 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       onExportTemplate,
       "data-tour": dataTour,
     },
-    ref
+    ref,
   ) => {
     const { t } = useLocalization();
     const [isEditingFileName, setIsEditingFileName] = useState(false);
     const [tempFileName, setTempFileName] = useState(fileName);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [widthInput, setWidthInput] = useState(
-      settings.width?.toString() || ""
+      settings.width?.toString() || "",
     );
     const [heightInput, setHeightInput] = useState(
-      settings.height?.toString() || ""
+      settings.height?.toString() || "",
     );
     const fileNameInputRef = useRef<HTMLInputElement>(null);
 
@@ -104,7 +104,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
       const checkForDropdowns = () => {
         // Check for dropdown elements with high z-index (portal dropdowns)
         const dropdownElements = document.querySelectorAll(
-          '[data-dropdown-type], [style*="z-index: 99999"], [style*="position: fixed"]'
+          '[data-dropdown-type], [style*="z-index: 99999"], [style*="position: fixed"]',
         );
         const hasDropdowns = Array.from(dropdownElements).some(
           (el) =>
@@ -115,7 +115,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
             (el.textContent && el.textContent.includes("Light")) ||
             (el.textContent && el.textContent.includes("Monokai")) ||
             (el.textContent && el.textContent.includes("Dracula")) ||
-            (el.textContent && el.textContent.includes("Background"))
+            (el.textContent && el.textContent.includes("Background")),
         );
         setIsDropdownOpen(hasDropdowns);
       };
@@ -164,7 +164,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
           className={`
         ${isVisible ? "translate-x-0 lg:w-80" : "translate-x-full lg:w-0"}
         w-80 fixed lg:relative top-0 right-0 z-30
-        h-[100vh] lg:max-h-[calc(100vh-60px)]
+        h-[100vh] lg:max-h-[calc(100vh-3rem)]
         bg-white/60 dark:bg-gray-900/40 backdrop-blur-xl shadow-2xl
         border-l border-white/20 dark:border-gray-700/30
         transition-all duration-300 ease-in-out
@@ -302,7 +302,7 @@ const SettingsPanel = forwardRef<HTMLDivElement, SettingsPanelProps>(
         </div>
       </>
     );
-  }
+  },
 );
 
 SettingsPanel.displayName = "SettingsPanel";

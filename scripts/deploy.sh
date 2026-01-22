@@ -1,11 +1,8 @@
 #!/bin/bash
 
-# Flashot Docker Deployment Setup Verification Script
-
 echo "🚀 Flashot Docker Deployment Setup Verification"
 echo "=============================================="
 
-# Check if required files exist
 echo -n "📁 Checking Dockerfile... "
 if [ -f "api/Dockerfile" ]; then
     echo "✅ Found"
@@ -93,7 +90,6 @@ echo ""
 echo "✅ All deployment files are properly configured!"
 echo "🚀 Ready for Docker deployment!"
 
-# Test local build (optional)
 echo ""
 read -p "🔨 Would you like to test the local Docker build? (y/N): " -n 1 -r
 echo

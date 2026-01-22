@@ -15,21 +15,12 @@ export default function WidthRuler({
   showJSONPanel = false,
   isHovered = false,
 }: WidthRulerProps) {
-  // Calculate position: center horizontally, below frame with 50px gap
-  const containerHeight =
-    typeof window !== "undefined" ? window.innerHeight : 800;
-  const containerCenterY = containerHeight / 2;
-  const editorCenterY = containerCenterY + editorPosition.y;
-  const editorBottom = editorCenterY + height / 2;
-  const rulerTop = editorBottom;
-
   return (
     <div
-      className={`absolute left-1/2 transform -translate-x-1/2 h-3 bg-transparent transition-opacity duration-200 ${
+      className={`absolute left-0 -bottom-10 transform h-3 bg-transparent transition-opacity duration-200 ${
         isHovered ? "opacity-100" : "opacity-0"
       }`}
       style={{
-        top: `${rulerTop}px`,
         width: `${width}px`,
       }}
     >

@@ -13,10 +13,9 @@ import TourGuide from "@/app/playground/_components/header/TourGuide";
 import ImportDialog from "@/app/playground/_components/header/ImportDialog";
 import Image from "next/image";
 import { DEFAULT_CODE_SETTINGS } from "@/shared";
-import WidthRuler from "@/app/playground/_components/editor/WidthRuler";
-import HeightRuler from "@/app/playground/_components/editor/HeightRuler";
 import GradientBg from "@/app/playground/_components/GradientBg";
 import { LocalizationProvider } from "./LocalizationContext";
+import Toast from "@/app/playground/_components/Toast";
 
 const defaultCode = `function mergeAndUniqueArrays(arrays) {
   if (!Array.isArray(arrays) || arrays.length === 0) return [];
@@ -51,13 +50,15 @@ export default function Page() {
   const [editorSize, setEditorSize] = useState({ width: 600, height: 400 });
   const [isEditorHovered, setIsEditorHovered] = useState(false);
   const [isEditorFocused, setIsEditorFocused] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   // Handle position change from CodeEditor
   const handleEditorPositionChange = useCallback(
     (position: { x: number; y: number }) => {
       setEditorPosition(position);
     },
-    []
+    [],
   );
 
   // Handle size change from CodeEditor
@@ -65,7 +66,7 @@ export default function Page() {
     (size: { width: number; height: number }) => {
       setEditorSize(size);
     },
-    []
+    [],
   );
 
   useEffect(() => {
@@ -164,14 +165,14 @@ export default function Page() {
     <K extends keyof CodeSettings>(key: K, value: CodeSettings[K]) => {
       setSettings((prev) => ({ ...prev, [key]: value }));
     },
-    []
+    [],
   );
 
   const [activeMenuLabel, setActiveMenuLabel] = useState<string | undefined>(
-    undefined
+    undefined,
   );
   const [highlightItemId, setHighlightItemId] = useState<string | undefined>(
-    undefined
+    undefined,
   );
 
   const handleCopyCode = async () => {
@@ -288,10 +289,15 @@ export default function Page() {
         const success = await generateAndDownloadImage(
           codeRef.current,
           { ...settings, code },
-          `${fileName}.${exportFormat}`
+          `${fileName}.${exportFormat}`,
         );
 
-        if (!success) {
+        if (success) {
+          setToastMessage(
+            `Image exported successfully as ${exportFormat.toUpperCase()}!`,
+          );
+          setShowToast(true);
+        } else {
           alert("Failed to generate image. Please try again.");
         }
       } catch (error) {
@@ -301,7 +307,7 @@ export default function Page() {
         setIsGenerating(false);
       }
     },
-    [code, settings, fileName]
+    [code, settings, fileName],
   );
 
   // Keyboard shortcuts handler inspired by ray.so
@@ -328,7 +334,7 @@ export default function Page() {
             const base64Image = await generateCodeImage(
               codeRef.current,
               { ...settings, code },
-              "png"
+              "png",
             );
 
             if (base64Image) {
@@ -361,7 +367,7 @@ export default function Page() {
             const base64Image = await generateCodeImage(
               codeRef.current,
               { ...settings, code },
-              "png"
+              "png",
             );
 
             if (base64Image) {
@@ -418,7 +424,7 @@ export default function Page() {
           setIsEditorFocused(true);
           // Find and focus the textarea in the editor
           const textarea = document.querySelector(
-            'textarea[placeholder="Paste or type your code here..."]'
+            'textarea[placeholder="Paste or type your code here..."]',
           ) as HTMLTextAreaElement;
           if (textarea) {
             textarea.focus();
@@ -582,8 +588,7 @@ export default function Page() {
         {/* Main Container with Sidebar Layout */}
         <div className="flex-1 flex h-[calc(100vh-3rem)] lg:h-[calc(100vh-4rem)] transition-all duration-300 w-full">
           {/* Main Content Area */}
-          <div className="flex-1 transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 h-full relative">
-            {/* Grid Background */}
+          <div className="flex-1 transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 relative h-full !max-h-[calc(100vh-3rem)] !overflow-y-auto">
             <div
               data-tour="background-selector"
               className="absolute inset-0 pointer-events-none grid-background opacity-60"
@@ -596,39 +601,20 @@ export default function Page() {
             />
 
             {/* Code Editor and Ruler Container */}
-            <div data-tour="code-editor" className="absolute inset-0 z-10">
-              <CodeEditor
-                ref={codeRef}
-                code={code}
-                onChange={handleCodeChange}
-                settings={settings}
-                fileName={fileName}
-                className="w-full h-full"
-                onUpdateSetting={updateSetting}
-                onPositionChange={handleEditorPositionChange}
-                onSizeChange={handleEditorSizeChange}
-                onHoverChange={setIsEditorHovered}
-                onShowImport={() => setShowImportDialog(true)}
-              />
-
-              {/* Width Ruler - positioned below with fixed spacing */}
-              <WidthRuler
-                width={editorSize.width}
-                height={editorSize.height}
-                editorPosition={editorPosition}
-                showJSONPanel={false}
-                isHovered={isEditorHovered}
-              />
-
-              {/* Height Ruler - positioned left with fixed spacing */}
-              <HeightRuler
-                width={editorSize.width}
-                height={editorSize.height}
-                editorPosition={editorPosition}
-                showJSONPanel={false}
-                isHovered={isEditorHovered}
-              />
-            </div>
+            <CodeEditor
+              data-tour="code-editor"
+              ref={codeRef}
+              code={code}
+              onChange={handleCodeChange}
+              settings={settings}
+              fileName={fileName}
+              className="size-full z-10"
+              onUpdateSetting={updateSetting}
+              onPositionChange={handleEditorPositionChange}
+              onSizeChange={handleEditorSizeChange}
+              onHoverChange={setIsEditorHovered}
+              onShowImport={() => setShowImportDialog(true)}
+            />
           </div>
 
           <SettingsPanel
@@ -668,6 +654,14 @@ export default function Page() {
           isOpen={showImportDialog}
           onClose={() => setShowImportDialog(false)}
           onImport={handleImportFromURL}
+        />
+
+        <Toast
+          message={toastMessage}
+          type="success"
+          isVisible={showToast}
+          onClose={() => setShowToast(false)}
+          duration={3000}
         />
       </div>
     </LocalizationProvider>
