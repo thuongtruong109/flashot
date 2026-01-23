@@ -262,6 +262,7 @@
       "fontSize": "フォントサイズ",
       "lineHeight": "行の高さ",
       "wordWrap": "ワードラップ",
+      "fixedHeight": "固定高さとオーバーフロー",
       "sizing": "サイズ調整",
       "customSize": "カスタムサイズ",
       "width": "幅",

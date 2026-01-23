@@ -262,6 +262,7 @@
       "fontSize": "Tamaño de fuente",
       "lineHeight": "Altura de línea",
       "wordWrap": "Ajuste de línea",
+      "fixedHeight": "Altura fija con desbordamiento",
       "sizing": "Dimensionamiento",
       "customSize": "Tamaño personalizado",
       "width": "Ancho",

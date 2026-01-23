@@ -11,7 +11,7 @@ interface ViewSectionProps {
   highlightItemId?: string;
   onUpdateSetting: <K extends keyof CodeSettings>(
     key: K,
-    value: CodeSettings[K]
+    value: CodeSettings[K],
   ) => void;
 }
 
@@ -22,10 +22,10 @@ const ViewSection: React.FC<ViewSectionProps> = ({
 }) => {
   const { t } = useLocalization();
   const [widthInput, setWidthInput] = useState(
-    settings.width?.toString() || ""
+    settings.width?.toString() || "",
   );
   const [heightInput, setHeightInput] = useState(
-    settings.height?.toString() || ""
+    settings.height?.toString() || "",
   );
 
   useEffect(() => {
@@ -478,6 +478,64 @@ const ViewSection: React.FC<ViewSectionProps> = ({
                 <svg
                   className={`size-3 text-blue-700 dark:text-blue-300 font-bold transition-opacity duration-200 ${
                     settings.wordWrap ? "opacity-100" : "opacity-0"
+                  }`}
+                  fill="currentColor"
+                  stroke="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="3"
+                >
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                </svg>
+              </div>
+            </div>
+          </label>
+        </div>
+      </HighlightOverlay>
+
+      {/* Fixed Height with Overflow */}
+      <HighlightOverlay
+        itemId="is-overflowing"
+        highlightItemId={highlightItemId}
+      >
+        <div>
+          <label className="flex items-center justify-between cursor-pointer">
+            <div className="flex items-center space-x-1.5">
+              <Move
+                className={`size-4 transition-colors ${
+                  settings.isOverflowing
+                    ? "text-purple-600 group-hover:text-purple-700"
+                    : "text-gray-400 group-hover:text-gray-500"
+                }`}
+              />
+              <span
+                className={`text-sm font-medium ${
+                  settings.isOverflowing
+                    ? "text-purple-600 group-hover:text-purple-700"
+                    : "text-gray-500 group-hover:text-gray-700"
+                }`}
+              >
+                {t("settingsPanel.view.fixedHeight")}
+              </span>
+            </div>
+            <div className="relative">
+              <input
+                type="checkbox"
+                checked={settings.isOverflowing ?? true}
+                onChange={(e) =>
+                  onUpdateSetting("isOverflowing", e.target.checked)
+                }
+                className="sr-only peer"
+              />
+              <div
+                className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.05)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
+                  settings.isOverflowing
+                    ? "bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-800 dark:to-purple-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
+                    : ""
+                }`}
+              >
+                <svg
+                  className={`size-3 text-purple-700 dark:text-purple-300 font-bold transition-opacity duration-200 ${
+                    settings.isOverflowing ? "opacity-100" : "opacity-0"
                   }`}
                   fill="currentColor"
                   stroke="none"

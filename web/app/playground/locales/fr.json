@@ -262,6 +262,7 @@
       "fontSize": "Taille de police",
       "lineHeight": "Hauteur de ligne",
       "wordWrap": "Retour à la ligne",
+      "fixedHeight": "Hauteur fixe avec débordement",
       "sizing": "Dimensionnement",
       "customSize": "Taille personnalisée",
       "width": "Largeur",

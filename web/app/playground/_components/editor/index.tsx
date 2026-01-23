@@ -24,6 +24,7 @@ import Label from "@/app/playground/_components/editor/Label";
 import WidthRuler from "@/app/playground/_components/editor/WidthRuler";
 import HeightRuler from "@/app/playground/_components/editor/HeightRuler";
 import { useLocalization } from "../../LocalizationContext";
+import Image from "next/image";
 
 interface EditorProps {
   code: string;
@@ -581,7 +582,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
 
     // const lineCount = code.split("\n").length;
 
-    const [isOverflowing, setIsOverflowing] = useState(true);
+    const isOverflowing = settings.isOverflowing ?? false;
 
     return (
       <div
@@ -589,7 +590,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
           isFullscreen
             ? "fixed inset-0 z-50 bg-black/95 backdrop-blur-xl p-8 flex items-center justify-center"
             : "flex justify-center items-center"
-        } ${isOverflowing ? "" : "pt-24"} ${className}`}
+        } ${isOverflowing ? "size-full" : "pt-8"} ${className}`}
         onMouseEnter={() => {
           setIsHovered(true);
           onHoverChange?.(true);
@@ -1323,9 +1324,9 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                           minHeight: 0,
                           boxSizing: "border-box",
                           overflowY: "hidden",
-                          overflowX: "hidden", // Hide X scrollbar on textarea
-                          width: "100%", // Ensure full width
-                          minWidth: settings.wordWrap ? "100%" : "max-content", // Allow horizontal overflow
+                          overflowX: "hidden",
+                          width: "100%",
+                          minWidth: settings.wordWrap ? "100%" : "max-content",
                         }}
                         placeholder="Start typing your code..."
                       />
@@ -1339,7 +1340,9 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                 <>
                   {settings.watermark.type === "image" &&
                   settings.watermark.imageUrl ? (
-                    <img
+                    <Image
+                      width={settings.watermark.imageWidth}
+                      height={settings.watermark.imageHeight}
                       src={settings.watermark.imageUrl}
                       alt="Watermark"
                       className="absolute pointer-events-none select-none z-50"
@@ -1348,8 +1351,6 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                         top: `${settings.watermark.y}%`,
                         transform: `translate(-50%, -50%) rotate(${settings.watermark.rotation}deg)`,
                         opacity: settings.watermark.opacity,
-                        width: `${settings.watermark.imageWidth}px`,
-                        height: `${settings.watermark.imageHeight}px`,
                         objectFit: "contain",
                         filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.1))",
                       }}

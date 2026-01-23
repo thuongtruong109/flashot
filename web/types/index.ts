@@ -112,6 +112,9 @@ export interface CodeSettings {
     hueRotate?: number; // 0-360
     invert?: number; // 0-100
   };
+
+  // Layout control
+  isOverflowing?: boolean; // Controls whether editor has fixed height with overflow or auto height
 }
 
 export interface SyntaxMatch {

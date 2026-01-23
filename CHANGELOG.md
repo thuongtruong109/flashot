@@ -6,7 +6,7 @@
   - Build desktop app for Window - by @thuongtruong109 [<samp>(573eb)</samp>](https://github.com/thuongtruong109/flashot/commit/573ebbb5a5157788400904c05e8c44a76a81e71e)
 
 - **web**:
-  - Add toast for notification when export image
+  - Add toast for notification when export image - by @thuongtruong109[<samp>(157f0)</samp>](https://github.com/thuongtruong109/flashot/commit/157f0e5613fb61f53217b5ca4c33ba0d8cc42ff5)
 
 ### 🐞 Bug Fixes
 

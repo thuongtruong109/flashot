@@ -262,6 +262,7 @@
       "fontSize": "字体大小",
       "lineHeight": "行高",
       "wordWrap": "自动换行",
+      "fixedHeight": "固定高度与溢出",
       "sizing": "尺寸调整",
       "customSize": "自定义大小",
       "width": "宽度",

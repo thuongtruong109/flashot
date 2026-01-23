@@ -262,6 +262,7 @@
       "fontSize": "Font Size",
       "lineHeight": "Line Height",
       "wordWrap": "Word Wrap",
+      "fixedHeight": "Fixed Height with Overflow",
       "sizing": "Sizing",
       "customSize": "Custom Size",
       "width": "Width",
