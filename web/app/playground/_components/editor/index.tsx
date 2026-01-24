@@ -7,7 +7,7 @@ import React, {
   useCallback,
   useLayoutEffect,
 } from "react";
-import { Edit3 } from "lucide-react";
+import { Edit3, Upload } from "lucide-react";
 import { CodeSettings, SupportedLanguage, ThemeName } from "@/types";
 import {
   themes,
@@ -41,6 +41,7 @@ interface EditorProps {
   onSizeChange?: (size: { width: number; height: number }) => void;
   onHoverChange?: (isHovered: boolean) => void;
   onShowImport?: () => void;
+  onUploadCode?: (file: File) => void;
 }
 
 const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
@@ -57,6 +58,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       onSizeChange,
       onHoverChange,
       onShowImport,
+      onUploadCode,
     },
     ref,
   ) => {
@@ -413,6 +415,27 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
       setPreviewWidth(null);
     }, []);
 
+    // Handle file upload
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleUploadClick = useCallback(() => {
+      fileInputRef.current?.click();
+    }, []);
+
+    const handleFileChange = useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file && onUploadCode) {
+          onUploadCode(file);
+        }
+        // Reset input value to allow uploading the same file again
+        if (e.target) {
+          e.target.value = "";
+        }
+      },
+      [onUploadCode],
+    );
+
     // Resize handlers
     const handleResizeStart = useCallback(
       (e: React.MouseEvent, direction: string) => {
@@ -697,34 +720,58 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
 
           {/* Snip Area Wrapper - Window Controls + Code Content */}
           <div className="relative flex-1 flex flex-col min-h-0">
-            {/* Import Button - Positioned on the left */}
-            {!isFullscreen && onShowImport && (
+            {/* Import & Upload Buttons - Positioned on the left */}
+            {!isFullscreen && (onShowImport || onUploadCode) && (
               <div
                 data-export-ignore
-                className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center gap-2"
                 style={{
                   top: "-44px",
                   zIndex: 50,
                 }}
               >
-                <button
-                  onClick={onShowImport}
-                  className="group relative flex items-center space-x-1.5 px-2 py-1 rounded-lg bg-gradient-to-r from-blue-500/80 to-cyan-500/80 hover:from-blue-600/90 hover:to-cyan-600/90 dark:from-blue-600/70 dark:to-cyan-600/70 dark:hover:from-blue-700/80 dark:hover:to-cyan-700/80 backdrop-blur-md border border-blue-400/50 dark:border-blue-700/50 shadow-[0_8px_32px_0_rgba(59,130,246,0.25)] hover:shadow-[0_8px_32px_0_rgba(59,130,246,0.35)] dark:shadow-[0_8px_32px_0_rgba(59,130,246,0.15)] dark:hover:shadow-[0_8px_32px_0_rgba(59,130,246,0.25)] transition-all"
-                  title={t("editor.importCodeFromUrl")}
-                >
-                  <svg
-                    className="size-3.5 text-white drop-shadow-sm"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
+                {onShowImport && (
+                  <button
+                    onClick={onShowImport}
+                    className="group relative flex items-center space-x-1.5 px-2 py-1 rounded-lg bg-gradient-to-r from-blue-500/80 to-cyan-500/80 hover:from-blue-600/90 hover:to-cyan-600/90 dark:from-blue-600/70 dark:to-cyan-600/70 dark:hover:from-blue-700/80 dark:hover:to-cyan-700/80 backdrop-blur-md border border-blue-400/50 dark:border-blue-700/50 shadow-[0_8px_32px_0_rgba(59,130,246,0.25)] hover:shadow-[0_8px_32px_0_rgba(59,130,246,0.35)] dark:shadow-[0_8px_32px_0_rgba(59,130,246,0.15)] dark:hover:shadow-[0_8px_32px_0_rgba(59,130,246,0.25)] transition-all"
+                    title={t("editor.importCodeFromUrl")}
                   >
-                    <path d="M3 16l4 4m0 0l4-4m-4 4V4m11 0l4 4m0 0l-4 4m4-4H11" />
-                  </svg>
-                  <span className="text-[13px] text-white font-medium drop-shadow-sm">
-                    {t("editor.import")}
-                  </span>
-                </button>
+                    <svg
+                      className="size-3.5 text-white drop-shadow-sm"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M3 16l4 4m0 0l4-4m-4 4V4m11 0l4 4m0 0l-4 4m4-4H11" />
+                    </svg>
+                    <span className="text-[13px] text-white font-medium drop-shadow-sm">
+                      {t("editor.import")}
+                    </span>
+                  </button>
+                )}
+
+                {onUploadCode && (
+                  <>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept=".js,.jsx,.ts,.tsx,.py,.java,.cpp,.c,.go,.rs,.rb,.php,.html,.css,.json,.xml,.yaml,.yml,.md,.txt"
+                      onChange={handleFileChange}
+                      className="hidden"
+                    />
+                    <button
+                      onClick={handleUploadClick}
+                      className="group relative flex items-center space-x-1.5 px-2 py-1 rounded-lg bg-gradient-to-r from-purple-500/80 to-pink-500/80 hover:from-purple-600/90 hover:to-pink-600/90 dark:from-purple-600/70 dark:to-pink-600/70 dark:hover:from-purple-700/80 dark:hover:to-pink-700/80 backdrop-blur-md border border-purple-400/50 dark:border-purple-700/50 shadow-[0_8px_32px_0_rgba(168,85,247,0.25)] hover:shadow-[0_8px_32px_0_rgba(168,85,247,0.35)] dark:shadow-[0_8px_32px_0_rgba(168,85,247,0.15)] dark:hover:shadow-[0_8px_32px_0_rgba(168,85,247,0.25)] transition-all"
+                      title={t("editor.uploadCode")}
+                    >
+                      <Upload className="size-3.5 text-white drop-shadow-sm" />
+                      <span className="text-[13px] text-white font-medium drop-shadow-sm">
+                        {t("editor.upload")}
+                      </span>
+                    </button>
+                  </>
+                )}
               </div>
             )}
 

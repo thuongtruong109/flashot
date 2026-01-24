@@ -221,6 +221,8 @@
     "addLabel": "添加标签...",
     "import": "导入",
     "importCodeFromUrl": "从URL导入代码",
+    "upload": "上传",
+    "uploadCode": "从文件上传代码",
     "clear": "清除",
     "clearConfirm": "确定要清除代码吗？",
     "copy": "复制",

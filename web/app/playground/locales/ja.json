@@ -221,6 +221,8 @@
     "addLabel": "ラベルを追加...",
     "import": "インポート",
     "importCodeFromUrl": "URLからコードをインポート",
+    "upload": "アップロード",
+    "uploadCode": "ファイルからコードをアップロード",
     "clear": "クリア",
     "clearConfirm": "コードをクリアしてもよろしいですか？",
     "copy": "コピー",

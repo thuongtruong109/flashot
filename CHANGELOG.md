@@ -6,12 +6,13 @@
   - Build desktop app for Window - by @thuongtruong109 [<samp>(573eb)</samp>](https://github.com/thuongtruong109/flashot/commit/573ebbb5a5157788400904c05e8c44a76a81e71e)
 
 - **web**:
+  - Add upload code file from local feature - by @thuongtruong109 [<samp>()</samp>]()
   - Add toast for notification when export image - by @thuongtruong109[<samp>(157f0)</samp>](https://github.com/thuongtruong109/flashot/commit/157f0e5613fb61f53217b5ca4c33ba0d8cc42ff5)
 
 ### 🐞 Bug Fixes
 
 - **web**:
-  - Toggle overfowing for block code - by @thuongtruong109 [<samp>()</samp>]()
+  - Toggle overflowing for block code - by @thuongtruong109 [<samp>(73274)</samp>](https://github.com/thuongtruong109/flashot/commit/732745ea3111b4ba6c75f3849dafbf9c0732404e)
   - Skip default Next optimize export assets path for app build - by @thuongtruong109 [<samp>(e77d2)</samp>](https://github.com/thuongtruong109/flashot/commit/e77d2e9bdf208669c2706f71382dc2e401078f57)
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.7.0...v2.8.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.8.0)

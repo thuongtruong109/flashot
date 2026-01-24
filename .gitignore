@@ -3,7 +3,6 @@ dist
 .idea
 *.log
 .DS_Store
-app
 .data
 .cache
 .env

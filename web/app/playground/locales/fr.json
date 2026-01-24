@@ -221,6 +221,8 @@
     "addLabel": "Ajouter une étiquette...",
     "import": "Importer",
     "importCodeFromUrl": "Importer le code depuis l'URL",
+    "upload": "Télécharger",
+    "uploadCode": "Télécharger le code depuis un fichier",
     "clear": "Effacer",
     "clearConfirm": "Êtes-vous sûr de vouloir effacer le code ?",
     "copy": "Copier",

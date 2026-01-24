@@ -221,6 +221,8 @@
     "addLabel": "Add label...",
     "import": "Import",
     "importCodeFromUrl": "Import code from URL",
+    "upload": "Upload",
+    "uploadCode": "Upload code from file",
     "clear": "Clear",
     "clearConfirm": "Are you sure you want to clear the code?",
     "copy": "Copy",

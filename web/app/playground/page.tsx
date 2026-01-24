@@ -15,7 +15,7 @@ import Image from "next/image";
 import { DEFAULT_CODE_SETTINGS } from "@/shared";
 import GradientBg from "@/app/playground/_components/GradientBg";
 import { LocalizationProvider } from "./LocalizationContext";
-import Toast from "@/app/playground/_components/Toast";
+import ToastItem from "@/app/playground/_components/ToastItem";
 
 const defaultCode = `function mergeAndUniqueArrays(arrays) {
   if (!Array.isArray(arrays) || arrays.length === 0) return [];
@@ -194,6 +194,47 @@ export default function Page() {
   const handleImportFromURL = (code: string, language: string) => {
     setCode(code);
     updateSetting("language", language);
+  };
+
+  const handleUploadCode = async (file: File) => {
+    try {
+      const text = await file.text();
+      setCode(text);
+
+      // Detect language from file extension
+      const extension = file.name.split(".").pop()?.toLowerCase();
+      const languageMap: Record<string, string> = {
+        js: "javascript",
+        jsx: "javascript",
+        ts: "typescript",
+        tsx: "typescript",
+        py: "python",
+        java: "java",
+        cpp: "cpp",
+        c: "c",
+        go: "go",
+        rs: "rust",
+        rb: "ruby",
+        php: "php",
+        html: "html",
+        css: "css",
+        json: "json",
+        xml: "xml",
+        yaml: "yaml",
+        yml: "yaml",
+        md: "markdown",
+        txt: "plaintext",
+      };
+
+      if (extension && languageMap[extension]) {
+        updateSetting("language", languageMap[extension]);
+      }
+
+      // Update filename
+      setFileName(file.name);
+    } catch (error) {
+      console.error("Error reading file:", error);
+    }
   };
 
   const handleExportJSON = () => {
@@ -501,7 +542,6 @@ export default function Page() {
           break;
 
         case "?":
-          // Show shortcuts help
           e.preventDefault();
           setShowShortcutsModal(true);
           break;
@@ -521,7 +561,6 @@ export default function Page() {
     };
   }, [code, settings, handleDownloadImage, updateSetting]);
 
-  // Bridge export event from SettingsPanel
   useEffect(() => {
     const onExport = () => {
       handleDownloadImage();
@@ -550,9 +589,7 @@ export default function Page() {
   const handleNavigateToSection = (section: string, itemId?: string) => {
     // Open settings panel if not already open
     setShowSettingsPanel(true);
-    // Set active menu to the specified section
     setActiveMenuLabel(section);
-    // Set highlight item id for 500ms
     if (itemId) {
       setHighlightItemId(itemId);
       setTimeout(() => {
@@ -600,7 +637,6 @@ export default function Page() {
               fill
             />
 
-            {/* Code Editor and Ruler Container */}
             <CodeEditor
               data-tour="code-editor"
               ref={codeRef}
@@ -613,6 +649,7 @@ export default function Page() {
               onSizeChange={handleEditorSizeChange}
               onHoverChange={setIsEditorHovered}
               onShowImport={() => setShowImportDialog(true)}
+              onUploadCode={handleUploadCode}
             />
           </div>
 
@@ -655,7 +692,7 @@ export default function Page() {
           onImport={handleImportFromURL}
         />
 
-        <Toast
+        <ToastItem
           message={toastMessage}
           type="success"
           isVisible={showToast}
