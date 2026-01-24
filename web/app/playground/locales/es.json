@@ -214,6 +214,10 @@
   },
   "editor": {
     "clickToEdit": "Haz clic para editar el código",
+    "clickToEditFilename": "Haz clic para editar el nombre del archivo",
+    "press": "Presiona",
+    "orClickOutsideToFinish": "o haz clic fuera para terminar",
+    "clickToEditHover": "Haz clic para editar",
     "dragToResize": "Arrastra para redimensionar",
     "caption": "Subtítulo",
     "addCaption": "Añadir subtítulo...",
@@ -288,7 +292,8 @@
         "left": "Izquierda",
         "center": "Centro",
         "right": "Derecha"
-      }
+      },
+      "textAlignLabel": "Alineación del texto"
     },
     "theme": {
       "language": "Idioma",
@@ -368,7 +373,8 @@
         "add": "Agregar",
         "remove": "Eliminar"
       },
-      "delete": "Eliminar"
+      "delete": "Eliminar",
+      "noHighlightsAdded": "No se han agregado resaltados. Haz clic en \"Agregar\" para crear uno."
     },
     "decorate": {
       "frameBorder": "Borde del marco",

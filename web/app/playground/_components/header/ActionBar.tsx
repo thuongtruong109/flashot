@@ -64,7 +64,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   const { t } = useLocalization();
   const [moreValue, setMoreValue] = useState<string>("_placeholder_");
   const [exportFormat, setExportFormat] = useState<string>(
-    settings?.exportFormat || "webp"
+    settings?.exportFormat || "webp",
   );
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -73,7 +73,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
     if (typeof window !== "undefined") {
       const savedMode = localStorage.getItem("darkMode");
       const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
+        "(prefers-color-scheme: dark)",
       ).matches;
       const isDark = savedMode === "true" || (!savedMode && prefersDark);
       setIsDarkMode(isDark);
@@ -211,7 +211,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
     } else if (value === "report") {
       window.open(
         "https://github.com/thuongtruong109/flashot/issues/new/choose",
-        "_blank"
+        "_blank",
       );
     }
   };
@@ -234,7 +234,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   const getButtonStyles = (
     variant: "primary" | "secondary",
     color: string,
-    disabled: boolean
+    disabled: boolean,
   ) => {
     const baseStyles =
       "group relative flex items-center rounded-lg transition-all duration-200 " +
@@ -355,7 +355,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
             className={`${getButtonStyles(
               "secondary",
               "purple",
-              false
+              false,
             )} h-[1.95rem] w-[1.98rem] !px-0 justify-center`}
             title="Keyboard Shortcuts (Press ?)"
           >
@@ -370,7 +370,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
           className={`${getButtonStyles(
             "secondary",
             "purple",
-            false
+            false,
           )} h-[1.95rem] w-[2rem] !px-0 justify-center`}
           title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
         >

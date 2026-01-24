@@ -18,7 +18,7 @@ const Brand: React.FC<BrandProps> = ({ className = "" }) => {
         height={28}
         className="hidden xs:inline-flex"
       />
-      <h1 className="bg-gradient-to-r from-purple-600 via-orange-600 to-pink-600 bg-clip-text text-transparent tracking-tight font-bold text-2xl">
+      <h1 className="bg-gradient-to-r from-[#ff1e56] via-[#0096ff] to-pink-600 bg-clip-text text-transparent tracking-tight font-bold text-2xl">
         Flashot
       </h1>
     </div>

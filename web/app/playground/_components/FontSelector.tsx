@@ -137,7 +137,7 @@ const FontSelector: React.FC<FontSelectorProps> = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const selectedFontObj = fontFamilies.find(
-    (font) => font.name === selectedFont
+    (font) => font.name === selectedFont,
   );
 
   // Set position using useLayoutEffect
@@ -241,16 +241,18 @@ const FontSelector: React.FC<FontSelectorProps> = ({
           ))}
         </div>
       </div>,
-      document.body
+      document.body,
     );
   };
 
   return (
     <div>
-      <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
-        <Type className="w-3.5 h-3.5 text-green-600 mr-1.5" />
-        {t("settingsPanel.theme.fontFamily")}
-      </label>
+      <div className="flex items-center space-x-1.5 text-green-600 mb-2">
+        <Type className="w-3.5 h-3.5" />
+        <span className="text-sm font-medium">
+          {t("settingsPanel.theme.fontFamily")}
+        </span>
+      </div>
 
       <div className="relative">
         <button
@@ -258,11 +260,11 @@ const FontSelector: React.FC<FontSelectorProps> = ({
           onClick={() => setIsOpen(!isOpen)}
           className="w-full bg-gradient-to-r from-white/80 via-white/70 to-white/80 dark:from-gray-800/60 dark:via-gray-800/40 dark:to-gray-800/60 backdrop-blur-sm hover:bg-gradient-to-r hover:from-white/90 hover:via-white/80 hover:to-white/90 dark:hover:from-gray-800/80 dark:hover:via-gray-800/60 dark:hover:to-gray-800/80 border border-gray-200/60 dark:border-gray-700/60 hover:border-gray-300/80 dark:hover:border-gray-600/80 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/60 transition-all duration-200 font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 flex items-center justify-between shadow-sm hover:shadow-md hover:shadow-gray-200/40 dark:hover:shadow-gray-900/40 group"
         >
-          <div className="flex items-center space-x-3">
-            <div className="text-base group-hover:scale-110 transition-transform duration-200">
+          <div className="flex items-center space-x-2">
+            <span className="text-base group-hover:scale-110 transition-transform duration-200">
               {selectedFontObj?.icon}
-            </div>
-            <span className="text-sm" style={{ fontFamily: selectedFont }}>
+            </span>
+            <span className="text-xs" style={{ fontFamily: selectedFont }}>
               {selectedFontObj?.label}
             </span>
           </div>

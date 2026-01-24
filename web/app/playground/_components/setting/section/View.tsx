@@ -41,8 +41,8 @@ const ViewSection: React.FC<ViewSectionProps> = ({
       {/* Font Size */}
       <HighlightOverlay itemId="font-size" highlightItemId={highlightItemId}>
         <div>
-          <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center justify-between">
-            <div className="flex items-center text-orange-600">
+          <label className="text-xs font-semibold text-gray-700 mb-1 flex items-center justify-between">
+            <div className="flex items-center text-orange-600 text-sm">
               <Type className="w-3.5 h-3.5 mr-1.5" />
               {t("settingsPanel.view.fontSize")}
             </div>
@@ -75,7 +75,7 @@ const ViewSection: React.FC<ViewSectionProps> = ({
       <HighlightOverlay itemId="padding" highlightItemId={highlightItemId}>
         <div>
           <label className="text-xs font-semibold text-gray-700 flex items-center justify-between">
-            <div className="flex items-center text-pink-600">
+            <div className="flex items-center text-pink-600 text-sm">
               <Move className="w-3.5 h-3.5 mr-1.5" />
               {t("settingsPanel.makeup.padding")}
             </div>

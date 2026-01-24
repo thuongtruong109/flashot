@@ -214,6 +214,10 @@
   },
   "editor": {
     "clickToEdit": "Click to edit code",
+    "clickToEditFilename": "Click to edit filename",
+    "press": "Press",
+    "orClickOutsideToFinish": "or click outside to finish",
+    "clickToEditHover": "Click to edit",
     "dragToResize": "Drag to resize",
     "caption": "Caption",
     "addCaption": "Add caption...",
@@ -288,7 +292,8 @@
         "left": "Left",
         "center": "Center",
         "right": "Right"
-      }
+      },
+      "textAlignLabel": "Text Align"
     },
     "theme": {
       "language": "Language",
@@ -368,7 +373,8 @@
         "add": "Add",
         "remove": "Remove"
       },
-      "delete": "Delete"
+      "delete": "Delete",
+      "noHighlightsAdded": "No highlights added. Click \"Add\" to create one."
     },
     "decorate": {
       "frameBorder": "Frame border",

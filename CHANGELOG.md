@@ -6,12 +6,13 @@
   - Build desktop app for Window - by @thuongtruong109 [<samp>(573eb)</samp>](https://github.com/thuongtruong109/flashot/commit/573ebbb5a5157788400904c05e8c44a76a81e71e)
 
 - **web**:
-  - Add upload code file from local feature - by @thuongtruong109 [<samp>()</samp>]()
+  - Add upload code file from local feature - by @thuongtruong109 [<samp>(00c64)</samp>](https://github.com/thuongtruong109/flashot/commit/00c64a1a9b80d17e91691b873befbd99408df527)
   - Add toast for notification when export image - by @thuongtruong109[<samp>(157f0)</samp>](https://github.com/thuongtruong109/flashot/commit/157f0e5613fb61f53217b5ca4c33ba0d8cc42ff5)
 
 ### 🐞 Bug Fixes
 
 - **web**:
+  - Hidden vertical edge handles adjust when fixed height overflow - by @thuongtruong109 [<samp>()</samp>]()
   - Toggle overflowing for block code - by @thuongtruong109 [<samp>(73274)</samp>](https://github.com/thuongtruong109/flashot/commit/732745ea3111b4ba6c75f3849dafbf9c0732404e)
   - Skip default Next optimize export assets path for app build - by @thuongtruong109 [<samp>(e77d2)</samp>](https://github.com/thuongtruong109/flashot/commit/e77d2e9bdf208669c2706f71382dc2e401078f57)
 
@@ -81,7 +82,7 @@
 - **web**:
   - Custom watermark with text/image - by @thuongtruong109 [<samp>(e8cde)</samp>](https://github.com/thuongtruong109/flashot/commit/e8cde1d35a0020825f97040ea8478b5cee9b109f)
   - Custom highlight diff code changes - by @thuongtruong109 [<samp>(fdfe9)</samp>](https://github.com/thuongtruong109/flashot/commit/fdfe9a16d59ede975ef7ae8e4d18c51cafb9141b)
-  - Custom background image with upload from device or external URL - by @thuongtruong109 [<samp>(ă0b7)</samp>](https://github.com/thuongtruong109/flashot/commit/a80b728a08c4c41edb536f8d15ce01263891658a)
+  - Custom background image with upload from device or external URL - by @thuongtruong109 [<samp>(a80b7)</samp>](https://github.com/thuongtruong109/flashot/commit/a80b728a08c4c41edb536f8d15ce01263891658a)
 
 ##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.2.0...v2.3.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.3.0)
 

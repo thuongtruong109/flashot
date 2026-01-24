@@ -7,7 +7,7 @@ import LanguageSelector from "@/app/playground/_components/LanguageSelector";
 import FontSelector from "@/app/playground/_components/FontSelector";
 import ThemeSelector from "@/app/playground/_components/ThemeSelector";
 import BackgroundSelector from "@/app/playground/_components/BackgroundSelector";
-import HighlightOverlay from "../HighlightOverlay";
+import HighlightOverlay from "@/app/playground/_components/setting/HighlightOverlay";
 import { useLocalization } from "../../../LocalizationContext";
 
 interface ThemeSectionProps {
@@ -15,7 +15,7 @@ interface ThemeSectionProps {
   highlightItemId?: string;
   onUpdateSetting: <K extends keyof CodeSettings>(
     key: K,
-    value: CodeSettings[K]
+    value: CodeSettings[K],
   ) => void;
   handleLanguageChange: (language: SupportedLanguage) => void;
 }
@@ -59,14 +59,14 @@ const ThemeSection: React.FC<ThemeSectionProps> = ({
               <Palette
                 className={`size-4 transition-colors ${
                   settings.showBackground
-                    ? "text-purple-600 group-hover:text-purple-700"
+                    ? "text-blue-600 group-hover:text-blue-700"
                     : "text-gray-400 group-hover:text-gray-500"
                 }`}
               />
               <span
                 className={`text-sm font-medium ${
                   settings.showBackground
-                    ? "text-purple-600 group-hover:text-purple-700"
+                    ? "text-blue-600 group-hover:text-blue-700"
                     : "text-gray-500 group-hover:text-gray-700"
                 }`}
               >
@@ -85,12 +85,12 @@ const ThemeSection: React.FC<ThemeSectionProps> = ({
               <div
                 className={`w-5 h-5 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-lg shadow-[inset_2px_2px_6px_rgba(0,0,0,0.1),inset_-2px_-2px_6px_rgba(255,255,255,0.8)] dark:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.3),inset_-2px_-2px_6px_rgba(255,255,255,0.05)] transition-all duration-300 cursor-pointer flex items-center justify-center ${
                   settings.showBackground
-                    ? "bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-800 dark:to-purple-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
+                    ? "bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-800 dark:to-blue-900 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.2)] dark:shadow-[inset_1px_1px_3px_rgba(0,0,0,0.4)]"
                     : ""
                 }`}
               >
                 <svg
-                  className={`size-3 text-purple-700 dark:text-purple-300 font-bold transition-opacity duration-200 ${
+                  className={`size-3 text-blue-700 dark:text-blue-300 font-bold transition-opacity duration-200 ${
                     settings.showBackground ? "opacity-100" : "opacity-0"
                   }`}
                   fill="currentColor"

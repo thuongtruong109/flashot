@@ -799,7 +799,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
               className="relative flex flex-col flex-1 min-h-0"
               style={{
                 borderRadius: `${
-                  settings.codeBorderRadius ?? settings.borderRadius
+                  (settings.codeBorderRadius ?? settings.borderRadius) + 2
                 }px`,
                 // Apply custom border if borderOffset is set
                 ...(settings.borderOffset &&
@@ -909,7 +909,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                               fontSize: settings.fileNameFontSize ?? 14,
                             }}
                             onClick={handleFilenameClick}
-                            title="Click to edit filename"
+                            title={t("editor.clickToEditFilename")}
                           >
                             {settings.language === "plaintext"
                               ? fileName
@@ -1057,7 +1057,7 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                               fontSize: settings.fileNameFontSize ?? 14,
                             }}
                             onClick={handleFilenameClick}
-                            title="Click to edit filename"
+                            title={t("editor.clickToEditFilename")}
                           >
                             {settings.language === "plaintext"
                               ? fileName
@@ -1445,85 +1445,103 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
           {!isFullscreen && onUpdateSetting && (
             <>
               {/* Edge handles - positioned on outer frame */}
+              {/* North Edge Handle - Only visible when isOverflowing is enabled */}
+              {isOverflowing && (
+                <div
+                  data-export-ignore
+                  className={`absolute top-[-4px] left-1/2 transform -translate-x-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-row-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                    isHovered ? "opacity-100" : "opacity-0"
+                  }`}
+                  onMouseDown={(e) => handleResizeStart(e, "top")}
+                />
+              )}
+              {/* South Edge Handle - Only visible when isOverflowing is enabled */}
+              {isOverflowing && (
+                <div
+                  data-export-ignore
+                  className={`absolute bottom-[-4px] left-1/2 transform -translate-x-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-row-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                    isHovered ? "opacity-100" : "opacity-0"
+                  }`}
+                  onMouseDown={(e) => handleResizeStart(e, "bottom")}
+                />
+              )}
               <div
                 data-export-ignore
-                className={`absolute top-[-4px] left-1/2 transform -translate-x-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-n-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
-                  isHovered ? "opacity-100" : "opacity-0"
-                }`}
-                onMouseDown={(e) => handleResizeStart(e, "top")}
-              />
-              <div
-                data-export-ignore
-                className={`absolute bottom-[-4px] left-1/2 transform -translate-x-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-s-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
-                  isHovered ? "opacity-100" : "opacity-0"
-                }`}
-                onMouseDown={(e) => handleResizeStart(e, "bottom")}
-              />
-              <div
-                data-export-ignore
-                className={`absolute top-1/2 left-[-4px] transform -translate-y-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-w-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                className={`absolute top-1/2 left-[-4px] transform -translate-y-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-col-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
                   isHovered ? "opacity-100" : "opacity-0"
                 }`}
                 onMouseDown={(e) => handleResizeStart(e, "left")}
               />
               <div
                 data-export-ignore
-                className={`absolute top-1/2 right-[-4px] transform -translate-y-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-e-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                className={`absolute top-1/2 right-[-4px] transform -translate-y-1/2 size-2 bg-white dark:bg-gray-800 rounded-full cursor-col-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
                   isHovered ? "opacity-100" : "opacity-0"
                 }`}
                 onMouseDown={(e) => handleResizeStart(e, "right")}
               />
 
               {/* Corner handles - positioned at frame corners */}
-              <div
-                data-export-ignore
-                className={`absolute top-[-4px] left-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-nw-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
-                  isHovered ? "opacity-100" : "opacity-0"
-                }`}
-                onMouseDown={(e) => handleResizeStart(e, "top-left")}
-              />
-              <div
-                data-export-ignore
-                className={`absolute top-[-4px] right-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-ne-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
-                  isHovered ? "opacity-100" : "opacity-0"
-                }`}
-                onMouseDown={(e) => handleResizeStart(e, "top-right")}
-              />
-              <div
-                data-export-ignore
-                className={`absolute bottom-[-4px] left-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-sw-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
-                  isHovered ? "opacity-100" : "opacity-0"
-                }`}
-                onMouseDown={(e) => handleResizeStart(e, "bottom-left")}
-              />
-              <div
-                data-export-ignore
-                className={`absolute bottom-[-4px] right-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-se-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
-                  isHovered ? "opacity-100" : "opacity-0"
-                }`}
-                onMouseDown={(e) => handleResizeStart(e, "bottom-right")}
-              />
+              {/* Top-Left Corner Handle - Only visible when isOverflowing is enabled */}
+              {isOverflowing && (
+                <div
+                  data-export-ignore
+                  className={`absolute top-[-4px] left-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-nw-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                    isHovered ? "opacity-100" : "opacity-0"
+                  }`}
+                  onMouseDown={(e) => handleResizeStart(e, "top-left")}
+                />
+              )}
+              {/* Top-Right Corner Handle - Only visible when isOverflowing is enabled */}
+              {isOverflowing && (
+                <div
+                  data-export-ignore
+                  className={`absolute top-[-4px] right-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-ne-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                    isHovered ? "opacity-100" : "opacity-0"
+                  }`}
+                  onMouseDown={(e) => handleResizeStart(e, "top-right")}
+                />
+              )}
+              {/* Bottom-Left Corner Handle - Only visible when isOverflowing is enabled */}
+              {isOverflowing && (
+                <div
+                  data-export-ignore
+                  className={`absolute bottom-[-4px] left-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-sw-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                    isHovered ? "opacity-100" : "opacity-0"
+                  }`}
+                  onMouseDown={(e) => handleResizeStart(e, "bottom-left")}
+                />
+              )}
+              {/* Bottom-Right Corner Handle - Only visible when isOverflowing is enabled */}
+              {isOverflowing && (
+                <div
+                  data-export-ignore
+                  className={`absolute bottom-[-4px] right-[-4px] size-2 bg-white dark:bg-gray-800 rounded-full cursor-se-resize hover:bg-blue-200 dark:hover:bg-blue-600 transition-all duration-200 border border-gray-300 dark:border-gray-600 shadow-sm ${
+                    isHovered ? "opacity-100" : "opacity-0"
+                  }`}
+                  onMouseDown={(e) => handleResizeStart(e, "bottom-right")}
+                />
+              )}
             </>
           )}
           {isEditing ? (
             <div className="absolute bottom-1 right-1">
               <div className="text-slate-300 text-xs px-2">
-                Press{" "}
+                {t("editor.press")}{" "}
                 <kbd className="bg-white/30 px-1 rounded text-slate-300">
                   Esc
                 </kbd>{" "}
-                or click outside to finish
+                {t("editor.orClickOutsideToFinish")}
               </div>
             </div>
           ) : (
             <div className="absolute bottom-1 right-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
               <div className="text-slate-300 text-xs flex items-center space-x-1">
                 <Edit3 className="w-3 h-3" />
-                <span>Click to edit</span>
+                <span>{t("editor.clickToEditHover")}</span>
               </div>
             </div>
           )}
-          {/* Width Ruler - positioned below with fixed spacing */}
+
           <WidthRuler
             width={containerRef.current?.getBoundingClientRect().width || 0}
             height={containerRef.current?.getBoundingClientRect().height || 0}
@@ -1532,7 +1550,6 @@ const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
             isHovered={isHovered}
           />
 
-          {/* Height Ruler - positioned left with fixed spacing */}
           <HeightRuler
             width={containerRef.current?.getBoundingClientRect().width || 0}
             height={containerRef.current?.getBoundingClientRect().height || 0}

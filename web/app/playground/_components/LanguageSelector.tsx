@@ -184,7 +184,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const selectedLang = supportedLanguages.find(
-    (lang) => lang.value === selectedLanguage
+    (lang) => lang.value === selectedLanguage,
   );
 
   // Set position using useLayoutEffect
@@ -287,25 +287,27 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           ))}
         </div>
       </div>,
-      document.body
+      document.body,
     );
   };
 
   return (
     <div>
-      <label className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
-        <Code className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
-        {t("settingsPanel.theme.language")}
-      </label>
+      <div className="flex items-center space-x-1.5 text-yellow-600 mb-2">
+        <Code className="w-3.5 h-3.5" />
+        <span className="text-sm font-medium">
+          {t("settingsPanel.theme.language")}
+        </span>
+      </div>
 
       <button
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className="w-full bg-gradient-to-r from-white/95 to-gray-50/95 dark:from-gray-800/60 dark:to-gray-900/60 hover:from-white hover:to-gray-50 dark:hover:from-gray-800/80 dark:hover:to-gray-900/80 border border-gray-200/60 dark:border-gray-700/60 rounded-lg px-3 py-2 transition-all duration-300 font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 flex items-center justify-between shadow-sm hover:shadow dark:hover:shadow-gray-900/40 group backdrop-blur-sm"
       >
-        <div className="flex items-center space-x-3">
-          <div className="flex-shrink-0">{selectedLang?.icon}</div>
-          <span className="text-sm">{selectedLang?.label}</span>
+        <div className="flex items-center space-x-2">
+          <span className="flex-shrink-0">{selectedLang?.icon}</span>
+          <span className="text-xs">{selectedLang?.label}</span>
         </div>
         <ChevronDown
           className={`w-4 h-4 text-gray-400 dark:text-gray-500 transition-all duration-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 group-hover:scale-110 ${

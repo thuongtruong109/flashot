@@ -625,7 +625,7 @@ export default function Page() {
         {/* Main Container with Sidebar Layout */}
         <div className="flex-1 flex h-[calc(100vh-3rem)] lg:h-[calc(100vh-4rem)] transition-all duration-300 w-full">
           {/* Main Content Area */}
-          <div className="flex-1 transition-all duration-300 ease-in-out relative h-full max-h-[calc(100vh-3rem)] overflow-y-auto">
+          <div className="flex-1 transition-all duration-300 ease-in-out relative h-full max-h-[calc(100vh-3rem)] overflow-y-auto custom-scrollbar">
             <div
               data-tour="background-selector"
               className="absolute inset-0 pointer-events-none grid-background opacity-60"

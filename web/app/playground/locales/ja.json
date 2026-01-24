@@ -214,6 +214,10 @@
   },
   "editor": {
     "clickToEdit": "コードを編集するにはクリック",
+    "clickToEditFilename": "クリックしてファイル名を編集",
+    "press": "押す",
+    "orClickOutsideToFinish": "または外側をクリックして終了",
+    "clickToEditHover": "クリックして編集",
     "dragToResize": "ドラッグしてサイズ変更",
     "caption": "キャプション",
     "addCaption": "キャプションを追加...",
@@ -288,7 +292,8 @@
         "left": "左",
         "center": "中央",
         "right": "右"
-      }
+      },
+      "textAlignLabel": "テキスト配置"
     },
     "theme": {
       "language": "言語",
@@ -368,7 +373,8 @@
         "add": "追加",
         "remove": "削除"
       },
-      "delete": "削除"
+      "delete": "削除",
+      "noHighlightsAdded": "ハイライトが追加されていません。「追加」をクリックして作成してください。"
     },
     "decorate": {
       "frameBorder": "フレーム枠線",

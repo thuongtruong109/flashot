@@ -41,7 +41,6 @@ const backgrounds = [
   // Vibrant Gradients
   "linear-gradient(135deg, #f76b1c 0%, #fad961 100%)",
   "linear-gradient(135deg, #ee0979 0%, #ff6a00 100%)",
-  "linear-gradient(135deg, #56ab2f 0%, #a8e063 100%)",
   "linear-gradient(135deg, #136a8a 0%, #267871 100%)",
   "linear-gradient(135deg, #c94b4b 0%, #4b134f 100%)",
   "linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%)",
@@ -56,7 +55,6 @@ const backgrounds = [
   "linear-gradient(135deg, #e65c00 0%, #f9d423 100%)",
   "linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)",
   "linear-gradient(135deg, #56ccf2 0%, #2f80ed 100%)",
-  "linear-gradient(135deg, #eb3349 0%, #f45c43 100%)",
   "linear-gradient(135deg, #614385 0%, #516395 100%)",
   "linear-gradient(135deg, #02aab0 0%, #00cdac 100%)",
 
@@ -220,7 +218,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
   const renderBackgroundButton = (
     bg: string,
     index: number,
-    isGradient: boolean = false
+    isGradient: boolean = false,
   ) => {
     const isTransparent = bg === "transparent";
     const isSelected = selectedBackground === bg;
@@ -229,7 +227,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
     const isThemeColor = isWhite || isDark;
 
     return (
-      <button
+      <div
         key={bg}
         onClick={() => {
           onBackgroundChange(bg);
@@ -245,28 +243,25 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
           // Ultra minimal border - học từ Apple/Radix
           isSelected
             ? "ring-[1.5px] ring-blue-500 dark:ring-blue-400 ring-offset-2 ring-offset-white dark:ring-offset-gray-950"
-            : "ring-1 ring-black/[0.06] dark:ring-white/[0.06] hover:ring-black/[0.12] dark:hover:ring-white/[0.12]"
+            : "ring-1 ring-black/[0.06] dark:ring-white/[0.06] hover:ring-black/[0.12] dark:hover:ring-white/[0.12]",
         )}
         style={{
           background: isTransparent
             ? transparentGridDataUrl
-              ? `url("${transparentGridDataUrl}")`
-              : "repeating-conic-gradient(#e5e7eb 0deg 90deg, #f9fafb 90deg 180deg) 0 0/12px 12px"
-            : bg,
-          backgroundRepeat: isTransparent ? "repeat" : "no-repeat",
-          backgroundSize: isTransparent ? "auto" : "cover",
-          backgroundPosition: "center",
+              ? `url("${transparentGridDataUrl}") 0 0 / 12px 12px repeat`
+              : `repeating-conic-gradient(#e5e7eb 0deg 90deg, #f9fafb 90deg 180deg) 0 0 / 12px 12px repeat`
+            : `${bg} center / cover no-repeat`,
         }}
         title={
           isTransparent
             ? "Transparent Background"
             : isWhite
-            ? "Light Theme"
-            : isDark
-            ? "Dark Theme"
-            : isGradient
-            ? `Gradient ${index}`
-            : bg
+              ? "Light Theme"
+              : isDark
+                ? "Dark Theme"
+                : isGradient
+                  ? `Gradient ${index}`
+                  : bg
         }
       >
         {/* Ultra simple checkmark - chỉ khi selected */}
@@ -292,7 +287,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
             </div>
           </div>
         )}
-      </button>
+      </div>
     );
   };
 
@@ -322,7 +317,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
             key={tab.value}
             onClick={() =>
               setActiveTab(
-                tab.value as "custom" | "gradient" | "solid" | "pattern"
+                tab.value as "custom" | "gradient" | "solid" | "pattern",
               )
             }
             className={`flex-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
@@ -357,7 +352,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
                   "w-full px-2 py-1.5 text-xs rounded-md border transition-all outline-none",
                   isImageUploaded
                     ? "bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 cursor-not-allowed"
-                    : "bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400"
+                    : "bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400",
                 )}
               />
             </div>
@@ -442,7 +437,8 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
           <div className="grid grid-cols-5 gap-2.5">
             {backgrounds
               .filter(
-                (bg) => bg.startsWith("linear-gradient") || bg === "transparent"
+                (bg) =>
+                  bg.startsWith("linear-gradient") || bg === "transparent",
               )
               .map((bg, index) => renderBackgroundButton(bg, index, true))}
           </div>
@@ -459,10 +455,10 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({
             {backgrounds
               .filter(
                 (bg) =>
-                  !bg.startsWith("linear-gradient") && bg !== "transparent"
+                  !bg.startsWith("linear-gradient") && bg !== "transparent",
               )
               .map((bg, index) =>
-                renderBackgroundButton(bg, index + 20, false)
+                renderBackgroundButton(bg, index + 20, false),
               )}
           </div>
         </div>

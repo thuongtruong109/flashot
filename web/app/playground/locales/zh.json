@@ -214,7 +214,11 @@
   },
   "editor": {
     "clickToEdit": "点击编辑代码",
-    "dragToResize": "拖动调整大小",
+    "clickToEditFilename": "点击编辑文件名",
+    "press": "按",
+    "orClickOutsideToFinish": "或点击外部区域完成",
+    "clickToEditHover": "点击编辑",
+    "dragToResize": "拖拽调整大小",
     "caption": "标题",
     "addCaption": "添加标题...",
     "label": "标签",
@@ -283,12 +287,13 @@
       "lineNumbers": "行号",
       "lineNumberOpacity": "行号不透明度",
       "lineNumberBorder": "行号边框",
-      "lineNumberAlign": "行号对齐",
+      "lineNumberAlign": "数字对齐",
       "textAlign": {
         "left": "左对齐",
         "center": "居中",
         "right": "右对齐"
-      }
+      },
+      "textAlignLabel": "文本对齐"
     },
     "theme": {
       "language": "语言",
@@ -366,9 +371,10 @@
       "highlightType": "类型",
       "highlightTypes": {
         "add": "添加",
-        "remove": "删除"
+        "remove": "移除"
       },
-      "delete": "删除"
+      "delete": "删除",
+      "noHighlightsAdded": "尚未添加高亮。点击\"添加\"来创建一个。"
     },
     "decorate": {
       "frameBorder": "框架边框",
