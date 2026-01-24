@@ -29,7 +29,7 @@
     "beforeBuildCommand": "cd web && bun run build",
     "frontendDist": "../web/out",
     "beforeDevCommand": "cd web && bun run dev",
-    "devUrl": "http://localhost:3000"
+    "devUrl": "http://localhost:3000/playground"
   },
   "productName": "Flashot",
   "version": "1.5.1",

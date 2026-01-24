@@ -10,15 +10,15 @@ interface BrandProps {
 
 const Brand: React.FC<BrandProps> = ({ className = "" }) => {
   return (
-    <div className={`flex items-center ${className}`}>
+    <div className={`flex items-center drop-shadow-sm ${className}`}>
       <Image
         src="/favicon.png"
         alt="Flashot"
-        width={28}
-        height={28}
+        width={26}
+        height={26}
         className="hidden xs:inline-flex"
       />
-      <h1 className="bg-gradient-to-r from-[#ff1e56] via-[#0096ff] to-pink-600 bg-clip-text text-transparent tracking-tight font-bold text-2xl">
+      <h1 className="bg-gradient-to-r from-yellow-600 via-[#ff1e56] to-[#0096ff] bg-clip-text text-transparent tracking-tight font-bold text-2xl">
         Flashot
       </h1>
     </div>

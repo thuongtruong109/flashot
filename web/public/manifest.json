@@ -1,5 +1,5 @@
 {
-  "name": "Flashot - Code to Image Converter",
+  "name": "Flashot - Rapidly snapshot code snippets as images",
   "short_name": "Flashot",
   "description": "Transform your code snippets into beautiful, shareable images with syntax highlighting and customizable themes. Perfect for developers!",
   "icons": [
@@ -34,7 +34,11 @@
   "orientation": "any",
   "start_url": "/",
   "scope": "/",
-  "categories": ["productivity", "development", "utilities"],
+  "categories": [
+    "productivity",
+    "development",
+    "utilities"
+  ],
   "lang": "en-US",
   "dir": "ltr",
   "prefer_related_applications": false,
@@ -53,14 +57,24 @@
       "short_name": "Playground",
       "description": "Create beautiful code snippets",
       "url": "/playground",
-      "icons": [{ "src": "/favicon.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "/favicon.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "Documentation",
       "short_name": "Docs",
       "description": "View documentation",
       "url": "/docs",
-      "icons": [{ "src": "/favicon.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "/favicon.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

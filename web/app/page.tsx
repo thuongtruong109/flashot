@@ -8,6 +8,7 @@ import FeaturesSection from "@/app/components/FeaturesSection";
 import TechnologyStackSection from "@/app/components/TechnologyStackSection";
 import Footer from "@/app/components/Footer";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const FlashotLanding: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -24,6 +25,18 @@ const FlashotLanding: React.FC = () => {
     window?.addEventListener("mousemove", handleMouseMove);
     return () => window?.removeEventListener("mousemove", handleMouseMove);
   }, []);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const isTauri =
+      typeof window !== "undefined" &&
+      ("__TAURI__" in window || (window as any).__TAURI_INTERNALS__);
+
+    if (isTauri) {
+      router.replace("/playground");
+    }
+  }, [router]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white overflow-hidden relative">

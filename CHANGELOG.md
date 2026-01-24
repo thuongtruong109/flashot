@@ -12,7 +12,7 @@
 ### 🐞 Bug Fixes
 
 - **web**:
-  - Hidden vertical edge handles adjust when fixed height overflow - by @thuongtruong109 [<samp>()</samp>]()
+  - Hidden vertical edge handles adjust when fixed height overflow - by @thuongtruong109 [<samp>(c54c4)</samp>](https://github.com/thuongtruong109/flashot/commit/c54c497c633776372c84c4ee85448cf44645e43a)
   - Toggle overflowing for block code - by @thuongtruong109 [<samp>(73274)</samp>](https://github.com/thuongtruong109/flashot/commit/732745ea3111b4ba6c75f3849dafbf9c0732404e)
   - Skip default Next optimize export assets path for app build - by @thuongtruong109 [<samp>(e77d2)</samp>](https://github.com/thuongtruong109/flashot/commit/e77d2e9bdf208669c2706f71382dc2e401078f57)
 

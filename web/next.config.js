@@ -38,7 +38,7 @@ const nextConfig = {
         ],
       },
       {
-        source: "/site.webmanifest",
+        source: "/manifest.json",
         headers: [
           {
             key: "Content-Type",

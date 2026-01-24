@@ -1,10 +1,12 @@
 import { MetadataRoute } from "next";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: "https://flashot.vercel.app",
-      lastModified: new Date(),
+      lastModified: "2026-01-24",
       changeFrequency: "monthly",
       priority: 1,
     },
