@@ -9,11 +9,13 @@ on:
     paths:
       - ".github/workflows/cd.yml"
       - "api/**"
+      - "web/**"
   workflow_dispatch:
 
 env:
   REGISTRY_GHCR: ghcr.io
-  IMAGE_NAME: flashot-api
+  IMAGE_NAME_API: flashot-api
+  IMAGE_NAME_WEB: flashot
 
 jobs:
   check-ci:
@@ -37,7 +39,7 @@ jobs:
             echo "❌ CI workflow failed, skipping deployment"
           fi
 
-  build-and-push:
+  build-and-push-api:
     needs: check-ci
     runs-on: ubuntu-latest
     if: needs.check-ci.outputs.should_deploy == 'true'
@@ -61,12 +63,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: 📝 Extract metadata
+      - name: 📝 Extract metadata (API)
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+            ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME_API }}
           tags: |
             type=ref,event=branch
             type=sha,prefix={{branch}}-
@@ -74,7 +76,7 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
 
-      - name: 🏗️ Build and push Docker image
+      - name: 🏗️ Build and push API Docker image
         id: push
         uses: docker/build-push-action@v5
         with:
@@ -91,40 +93,142 @@ jobs:
             VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
             REVISION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
 
-      - name: 🛡️ Generate artifact attestation for GHCR
+      - name: 🛡️ Generate artifact attestation for GHCR (API)
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+          subject-name: ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME_API }}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
 
-  security-scan:
-    needs: build-and-push
+  build-and-pus-api:
+    needs: build-and-push-api
     runs-on: ubuntu-latest
     permissions:
       security-events: write
 
     steps:
-      - name: 🔍 Run Trivy vulnerability scanner
+      - name: 🔍 Run Trivy vulnerability scanner (API)
         id: trivy-scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+          image-ref: ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME_API }}:latest
           format: "sarif"
-          output: "trivy-results.sarif"
+          output: "trivy-results-api.sarif"
         continue-on-error: true
 
-      - name: 📤 Upload Trivy scan results to GitHub Security tab
+      - name: 📤 Upload Trivy scan results to GitHub Security tab (API)
         uses: github/codeql-action/upload-sarif@v3
-        if: always() && hashFiles('trivy-results.sarif') != ''
+        if: always() && hashFiles('trivy-results-api.sarif') != ''
         with:
-          sarif_file: "trivy-results.sarif"
+          sarif_file: "trivy-results-api.sarif"
 
-  deploy-notification:
-    needs: [build-and-push, security-scan]
+  security-scan-web:
+    needs: build-and-push-web
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+
+    steps:
+      - name: 🔍 Run Trivy vulnerability scanner (Web)
+        id: trivy-scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME_WEB }}:latest
+          format: "sarif"
+          output: "trivy-results-web.sarif"
+        continue-on-error: true
+
+      - name: 📤 Upload Trivy scan results to GitHub Security tab (Web)
+        uses: github/codeql-action/upload-sarif@v3
+        if: always() && hashFiles('trivy-results-web.sarif') != ''
+        with:
+          sarif_file: "trivy-results-web_GHCR }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_TOKEN }}
+
+      - name: 📝 Extract metadata (Web)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME_WEB }}
+          tags: |
+            type=ref,event=branch
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+
+      - name: 🏗️ Build and push Web Docker image
+        id: push
+        uses: docker/build-push-action@v5
+        with:
+          context: ./web
+          file: ./web/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            BUILDTIME=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
+            VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+            REVISION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
+
+      - name: 🛡️ Generate artifact attestation for GHCR (Web)
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME_WEB }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
+
+  security-scan:
+    needs: build-and-push-api, build-and-push-web, security-scan-api, security-scan-web]
     runs-on: ubuntu-latest
     if: always()
 
+    steps:
+      - name: 📋 Deployment Status
+        run: |
+          API_SUCCESS="${{ needs.build-and-push-api.result }}"
+          WEB_SUCCESS="${{ needs.build-and-push-web.result }}"
+
+          echo "## 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [[ "$API_SUCCESS" == "success" ]] && [[ "$WEB_SUCCESS" == "success" ]]; then
+            echo "✅ All Docker images successfully built and pushed!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 📦 Available Images:" >> $GITHUB_STEP_SUMMARY
+            echo "- 🔧 **API:** \`${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME_API }}\`" >> $GITHUB_STEP_SUMMARY
+            echo "- 🌐 **Web:** \`${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME_WEB }}\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 🔧 Usage:" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
+            echo "# Pull API from GitHub Container Registry" >> $GITHUB_STEP_SUMMARY
+            echo "docker pull ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME_API }}:latest" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "# Pull Web from GitHub Container Registry" >> $GITHUB_STEP_SUMMARY
+            echo "docker pull ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME_WEB }}:latest" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
+            echo "✅ All Docker images successfully built and pushed!"
+            echo "🔧 API: ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME_API }}"
+            echo "🌐 Web: ${{ env.REGISTRY_GHCR }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME_WEB }}"
+          else
+            echo "❌ Deployment partially failed!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- API Build: $API_SUCCESS" >> $GITHUB_STEP_SUMMARY
+            echo "- Web Build: $WEB_SUCCESS" >> $GITHUB_STEP_SUMMARY
+            echo "- API Security Scan: ${{ needs.security-scan-api.result }}" >> $GITHUB_STEP_SUMMARY
+            echo "- Web Security Scan: ${{ needs.security-scan-web.result }}" >> $GITHUB_STEP_SUMMARY
+
+            echo "❌ Deployment failed!"
+            echo "API Build: $API_SUCCESS"
+            echo "Web Build: $WEB_SUCCESS"
+            echo "API Security Scan: ${{ needs.security-scan-api.result }}"
+            echo "Web Security Scan: ${{ needs.security-scan-web
     steps:
       - name: 📋 Deployment Status
         run: |

@@ -1,3 +1,12 @@
+## [v2.9.0 - 2026-01-29](https://github.com/thuongtruong109/flashot/releases/tag/v2.9.0)
+
+### 🚀 Features
+
+- **web**:
+  - Packaged service image - by @thuongtruong109 [<samp>(25797)</samp>](https://github.com/thuongtruong109/flashot/commit/25797f1b78759b7c52e1edd0302e5ffd83342ab4)
+
+##### [View changes on GitHub](https://github.com/thuongtruong109/flashot/compare/v2.8.0...v2.9.0) - [Full Changelog](https://github.com/thuongtruong109/flashot/commits/v2.9.0)
+
 ## [v2.8.0 - 2026-01-17](https://github.com/thuongtruong109/flashot/releases/tag/v2.8.0)
 
 ### 🚀 Features
