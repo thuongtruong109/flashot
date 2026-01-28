@@ -1,7 +1,8 @@
 version: "3.8"
 
 services:
-  flashot-api:
+  api:
+    image: thuongtruong1009/flashot-api:latest
     build:
       context: ./api
       dockerfile: Dockerfile
@@ -19,6 +20,25 @@ services:
     networks:
       - flashot-network
 
+  web:
+    image: thuongtruong1009/flashot:latest
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - flashot-network
+
   nginx:
     image: nginx:alpine
     ports:
@@ -27,7 +47,8 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      - flashot-api
+      - api
+      - web
     networks:
       - flashot-network
     profiles:
